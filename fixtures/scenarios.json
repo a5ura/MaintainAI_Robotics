@@ -1,0 +1,1399 @@
+{
+  "normal": {
+    "samples": [
+      {
+        "t": 0,
+        "phase": "pre-pick",
+        "tcp": [
+          1.5493556469959913,
+          0.9139926074979805,
+          1.30500425866958
+        ],
+        "joints": [
+          -0.7,
+          0.8,
+          -1.2
+        ],
+        "grip_command": false,
+        "object_present": false,
+        "pressure_kpa": 0,
+        "verification": "source",
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 2,
+        "phase": "post-pick",
+        "tcp": [
+          1.9631068707397992,
+          0.217220472657565,
+          1.653502106831369
+        ],
+        "joints": [
+          -0.7,
+          0.15000000000000002,
+          -0.4
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 3,
+        "phase": "post-pick",
+        "tcp": [
+          1.9631068707397992,
+          0.21722047265756494,
+          1.653502106831369
+        ],
+        "joints": [
+          -0.7,
+          0.15,
+          -0.4
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": "held",
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 4,
+        "phase": "transport",
+        "tcp": [
+          1.5493556469959913,
+          0.9139926074979805,
+          1.30500425866958
+        ],
+        "joints": [
+          -0.7,
+          0.8,
+          -1.2
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 5,
+        "phase": "transport",
+        "tcp": [
+          1.8609061375225324,
+          0.9139926074979805,
+          0.8003545360370465
+        ],
+        "joints": [
+          -0.40617283950617283,
+          0.8,
+          -1.2
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 6,
+        "phase": "transport",
+        "tcp": [
+          1.8609061375225322,
+          0.9139926074979805,
+          -0.800354536037047
+        ],
+        "joints": [
+          0.406172839506173,
+          0.8,
+          -1.2
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 7,
+        "phase": "transport",
+        "tcp": [
+          1.5493556469959913,
+          0.9139926074979805,
+          -1.30500425866958
+        ],
+        "joints": [
+          0.7,
+          0.8,
+          -1.2
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 8,
+        "phase": "pre-place",
+        "tcp": [
+          1.8118661250989827,
+          0.5995888952872911,
+          -1.5261137841255372
+        ],
+        "joints": [
+          0.7,
+          0.47500000000000003,
+          -0.8
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 9,
+        "phase": "pre-place",
+        "tcp": [
+          1.9631068707397992,
+          0.217220472657565,
+          -1.653502106831369
+        ],
+        "joints": [
+          0.7,
+          0.15000000000000002,
+          -0.4
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": "held",
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 10,
+        "phase": "post-place",
+        "tcp": [
+          1.9631068707397992,
+          0.21722047265756494,
+          -1.653502106831369
+        ],
+        "joints": [
+          0.7,
+          0.15,
+          -0.4
+        ],
+        "grip_command": false,
+        "object_present": false,
+        "pressure_kpa": 0,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 12,
+        "phase": "post-place",
+        "tcp": [
+          1.5493556469959913,
+          0.9139926074979805,
+          -1.30500425866958
+        ],
+        "joints": [
+          0.7,
+          0.8,
+          -1.2
+        ],
+        "grip_command": false,
+        "object_present": false,
+        "pressure_kpa": 0,
+        "verification": "target",
+        "controller": {
+          "state": "running",
+          "motion_expected": false,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": [],
+        "placement": {
+          "target": [
+            1.9631068707397992,
+            0.21722047265756494,
+            -1.653502106831369
+          ],
+          "commanded_target": [
+            1.9631068707397992,
+            0.21722047265756494,
+            -1.653502106831369
+          ],
+          "observed": [
+            1.9631068707397992,
+            0.21722047265756494,
+            -1.653502106831369
+          ],
+          "object_present": true,
+          "source": "independent_sensor",
+          "calibration_age_days": 2
+        },
+        "vision": {
+          "acquired_t": 12,
+          "status": "ok",
+          "confidence": 0.98,
+          "object_detected": true
+        }
+      }
+    ]
+  },
+  "drop": {
+    "samples": [
+      {
+        "t": 0,
+        "phase": "pre-pick",
+        "tcp": [
+          1.5493556469959913,
+          0.9139926074979805,
+          1.30500425866958
+        ],
+        "joints": [
+          -0.7,
+          0.8,
+          -1.2
+        ],
+        "grip_command": false,
+        "object_present": false,
+        "pressure_kpa": 0,
+        "verification": "source",
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 2,
+        "phase": "post-pick",
+        "tcp": [
+          1.9631068707397992,
+          0.217220472657565,
+          1.653502106831369
+        ],
+        "joints": [
+          -0.7,
+          0.15000000000000002,
+          -0.4
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 3,
+        "phase": "post-pick",
+        "tcp": [
+          1.9631068707397992,
+          0.21722047265756494,
+          1.653502106831369
+        ],
+        "joints": [
+          -0.7,
+          0.15,
+          -0.4
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": "held",
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 4,
+        "phase": "transport",
+        "tcp": [
+          1.5493556469959913,
+          0.9139926074979805,
+          1.30500425866958
+        ],
+        "joints": [
+          -0.7,
+          0.8,
+          -1.2
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 5,
+        "phase": "transport",
+        "tcp": [
+          1.8609061375225324,
+          0.9139926074979805,
+          0.8003545360370465
+        ],
+        "joints": [
+          -0.40617283950617283,
+          0.8,
+          -1.2
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 6,
+        "phase": "transport",
+        "tcp": [
+          1.8609061375225322,
+          0.9139926074979805,
+          -0.800354536037047
+        ],
+        "joints": [
+          0.406172839506173,
+          0.8,
+          -1.2
+        ],
+        "grip_command": true,
+        "object_present": false,
+        "pressure_kpa": 12,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 7,
+        "phase": "transport",
+        "tcp": [
+          1.5493556469959913,
+          0.9139926074979805,
+          -1.30500425866958
+        ],
+        "joints": [
+          0.7,
+          0.8,
+          -1.2
+        ],
+        "grip_command": true,
+        "object_present": false,
+        "pressure_kpa": 12,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 8,
+        "phase": "pre-place",
+        "tcp": [
+          1.8118661250989827,
+          0.5995888952872911,
+          -1.5261137841255372
+        ],
+        "joints": [
+          0.7,
+          0.47500000000000003,
+          -0.8
+        ],
+        "grip_command": true,
+        "object_present": false,
+        "pressure_kpa": 12,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 9,
+        "phase": "pre-place",
+        "tcp": [
+          1.9631068707397992,
+          0.217220472657565,
+          -1.653502106831369
+        ],
+        "joints": [
+          0.7,
+          0.15000000000000002,
+          -0.4
+        ],
+        "grip_command": true,
+        "object_present": false,
+        "pressure_kpa": 12,
+        "verification": "missing",
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 10,
+        "phase": "post-place",
+        "tcp": [
+          1.9631068707397992,
+          0.21722047265756494,
+          -1.653502106831369
+        ],
+        "joints": [
+          0.7,
+          0.15,
+          -0.4
+        ],
+        "grip_command": false,
+        "object_present": false,
+        "pressure_kpa": 0,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 12,
+        "phase": "post-place",
+        "tcp": [
+          1.5493556469959913,
+          0.9139926074979805,
+          -1.30500425866958
+        ],
+        "joints": [
+          0.7,
+          0.8,
+          -1.2
+        ],
+        "grip_command": false,
+        "object_present": false,
+        "pressure_kpa": 0,
+        "verification": "missing",
+        "controller": {
+          "state": "running",
+          "motion_expected": false,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": [],
+        "placement": {
+          "target": [
+            1.9631068707397992,
+            0.21722047265756494,
+            -1.653502106831369
+          ],
+          "commanded_target": [
+            1.9631068707397992,
+            0.21722047265756494,
+            -1.653502106831369
+          ],
+          "observed": null,
+          "object_present": false,
+          "source": "independent_sensor",
+          "calibration_age_days": 2
+        },
+        "vision": {
+          "acquired_t": 12,
+          "status": "ok",
+          "confidence": 0.98,
+          "object_detected": false
+        }
+      }
+    ]
+  },
+  "position": {
+    "samples": [
+      {
+        "t": 0,
+        "phase": "pre-pick",
+        "tcp": [
+          1.5493556469959913,
+          0.9139926074979805,
+          1.30500425866958
+        ],
+        "joints": [
+          -0.7,
+          0.8,
+          -1.2
+        ],
+        "grip_command": false,
+        "object_present": false,
+        "pressure_kpa": 0,
+        "verification": "source",
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 2,
+        "phase": "post-pick",
+        "tcp": [
+          1.9631068707397992,
+          0.217220472657565,
+          1.653502106831369
+        ],
+        "joints": [
+          -0.7,
+          0.15000000000000002,
+          -0.4
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 3,
+        "phase": "post-pick",
+        "tcp": [
+          1.9631068707397992,
+          0.21722047265756494,
+          1.653502106831369
+        ],
+        "joints": [
+          -0.7,
+          0.15,
+          -0.4
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": "held",
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 4,
+        "phase": "transport",
+        "tcp": [
+          1.5493556469959913,
+          0.9139926074979805,
+          1.30500425866958
+        ],
+        "joints": [
+          -0.7,
+          0.8,
+          -1.2
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 5,
+        "phase": "transport",
+        "tcp": [
+          1.8609061375225324,
+          0.9139926074979805,
+          0.8003545360370465
+        ],
+        "joints": [
+          -0.40617283950617283,
+          0.8,
+          -1.2
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 6,
+        "phase": "transport",
+        "tcp": [
+          1.8609061375225322,
+          0.9139926074979805,
+          -0.800354536037047
+        ],
+        "joints": [
+          0.406172839506173,
+          0.8,
+          -1.2
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 7,
+        "phase": "transport",
+        "tcp": [
+          1.5493556469959913,
+          0.9139926074979805,
+          -1.30500425866958
+        ],
+        "joints": [
+          0.7,
+          0.8,
+          -1.2
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 8,
+        "phase": "pre-place",
+        "tcp": [
+          1.8118661250989827,
+          0.5995888952872911,
+          -1.5261137841255372
+        ],
+        "joints": [
+          0.7,
+          0.47500000000000003,
+          -0.8
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 9,
+        "phase": "pre-place",
+        "tcp": [
+          1.9631068707397992,
+          0.217220472657565,
+          -1.653502106831369
+        ],
+        "joints": [
+          0.7,
+          0.15000000000000002,
+          -0.4
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": "held",
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 10,
+        "phase": "post-place",
+        "tcp": [
+          1.9631068707397992,
+          0.21722047265756494,
+          -1.653502106831369
+        ],
+        "joints": [
+          0.7,
+          0.15,
+          -0.4
+        ],
+        "grip_command": false,
+        "object_present": false,
+        "pressure_kpa": 0,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 12,
+        "phase": "post-place",
+        "tcp": [
+          1.5493556469959913,
+          0.9139926074979805,
+          -1.30500425866958
+        ],
+        "joints": [
+          0.7,
+          0.8,
+          -1.2
+        ],
+        "grip_command": false,
+        "object_present": false,
+        "pressure_kpa": 0,
+        "verification": "offset",
+        "controller": {
+          "state": "running",
+          "motion_expected": false,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": [
+          {
+            "t": 12,
+            "source": "calibration",
+            "code": "FRAME_OFFSET",
+            "message": "Independent fixture measurement shows +0.45 m X discrepancy; calibration age 90 days."
+          }
+        ],
+        "placement": {
+          "target": [
+            1.9631068707397992,
+            0.21722047265756494,
+            -1.653502106831369
+          ],
+          "commanded_target": [
+            1.9631068707397992,
+            0.21722047265756494,
+            -1.653502106831369
+          ],
+          "observed": [
+            2.4131068707397993,
+            0.21722047265756494,
+            -1.653502106831369
+          ],
+          "object_present": true,
+          "source": "independent_sensor",
+          "calibration_age_days": 90
+        },
+        "vision": {
+          "acquired_t": 12,
+          "status": "ok",
+          "confidence": 0.98,
+          "object_detected": true
+        }
+      }
+    ]
+  },
+  "vision": {
+    "samples": [
+      {
+        "t": 0,
+        "phase": "pre-pick",
+        "tcp": [
+          1.5493556469959913,
+          0.9139926074979805,
+          1.30500425866958
+        ],
+        "joints": [
+          -0.7,
+          0.8,
+          -1.2
+        ],
+        "grip_command": false,
+        "object_present": false,
+        "pressure_kpa": 0,
+        "verification": "source",
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 2,
+        "phase": "post-pick",
+        "tcp": [
+          1.9631068707397992,
+          0.217220472657565,
+          1.653502106831369
+        ],
+        "joints": [
+          -0.7,
+          0.15000000000000002,
+          -0.4
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 3,
+        "phase": "post-pick",
+        "tcp": [
+          1.9631068707397992,
+          0.21722047265756494,
+          1.653502106831369
+        ],
+        "joints": [
+          -0.7,
+          0.15,
+          -0.4
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": "held",
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 4,
+        "phase": "transport",
+        "tcp": [
+          1.5493556469959913,
+          0.9139926074979805,
+          1.30500425866958
+        ],
+        "joints": [
+          -0.7,
+          0.8,
+          -1.2
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 5,
+        "phase": "transport",
+        "tcp": [
+          1.8609061375225324,
+          0.9139926074979805,
+          0.8003545360370465
+        ],
+        "joints": [
+          -0.40617283950617283,
+          0.8,
+          -1.2
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 6,
+        "phase": "transport",
+        "tcp": [
+          1.8609061375225322,
+          0.9139926074979805,
+          -0.800354536037047
+        ],
+        "joints": [
+          0.406172839506173,
+          0.8,
+          -1.2
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 7,
+        "phase": "transport",
+        "tcp": [
+          1.5493556469959913,
+          0.9139926074979805,
+          -1.30500425866958
+        ],
+        "joints": [
+          0.7,
+          0.8,
+          -1.2
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 8,
+        "phase": "pre-place",
+        "tcp": [
+          1.8118661250989827,
+          0.5995888952872911,
+          -1.5261137841255372
+        ],
+        "joints": [
+          0.7,
+          0.47500000000000003,
+          -0.8
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 9,
+        "phase": "pre-place",
+        "tcp": [
+          1.9631068707397992,
+          0.217220472657565,
+          -1.653502106831369
+        ],
+        "joints": [
+          0.7,
+          0.15000000000000002,
+          -0.4
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": "held",
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 10,
+        "phase": "post-place",
+        "tcp": [
+          1.9631068707397992,
+          0.21722047265756494,
+          -1.653502106831369
+        ],
+        "joints": [
+          0.7,
+          0.15,
+          -0.4
+        ],
+        "grip_command": false,
+        "object_present": false,
+        "pressure_kpa": 0,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 12,
+        "phase": "post-place",
+        "tcp": [
+          1.5493556469959913,
+          0.9139926074979805,
+          -1.30500425866958
+        ],
+        "joints": [
+          0.7,
+          0.8,
+          -1.2
+        ],
+        "grip_command": false,
+        "object_present": false,
+        "pressure_kpa": 0,
+        "verification": "unreliable",
+        "controller": {
+          "state": "running",
+          "motion_expected": false,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": [
+          {
+            "t": 12,
+            "source": "camera",
+            "code": "CAMERA_TIMEOUT",
+            "message": "No fresh image received at post-place verification."
+          }
+        ],
+        "placement": {
+          "target": [
+            1.9631068707397992,
+            0.21722047265756494,
+            -1.653502106831369
+          ],
+          "commanded_target": [
+            1.9631068707397992,
+            0.21722047265756494,
+            -1.653502106831369
+          ],
+          "observed": [
+            1.9631068707397992,
+            0.21722047265756494,
+            -1.653502106831369
+          ],
+          "object_present": true,
+          "source": "independent_sensor",
+          "calibration_age_days": 2
+        },
+        "vision": {
+          "acquired_t": 8,
+          "status": "timeout",
+          "confidence": null,
+          "object_detected": null
+        }
+      }
+    ]
+  },
+  "stop": {
+    "samples": [
+      {
+        "t": 0,
+        "phase": "pre-pick",
+        "tcp": [
+          1.5493556469959913,
+          0.9139926074979805,
+          1.30500425866958
+        ],
+        "joints": [
+          -0.7,
+          0.8,
+          -1.2
+        ],
+        "grip_command": false,
+        "object_present": false,
+        "pressure_kpa": 0,
+        "verification": "source",
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 2,
+        "phase": "post-pick",
+        "tcp": [
+          1.9631068707397992,
+          0.217220472657565,
+          1.653502106831369
+        ],
+        "joints": [
+          -0.7,
+          0.15000000000000002,
+          -0.4
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 3,
+        "phase": "post-pick",
+        "tcp": [
+          1.9631068707397992,
+          0.21722047265756494,
+          1.653502106831369
+        ],
+        "joints": [
+          -0.7,
+          0.15,
+          -0.4
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": "held",
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 4,
+        "phase": "transport",
+        "tcp": [
+          1.5493556469959913,
+          0.9139926074979805,
+          1.30500425866958
+        ],
+        "joints": [
+          -0.7,
+          0.8,
+          -1.2
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 5,
+        "phase": "transport",
+        "tcp": [
+          1.8609061375225324,
+          0.9139926074979805,
+          0.8003545360370465
+        ],
+        "joints": [
+          -0.40617283950617283,
+          0.8,
+          -1.2
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": null,
+        "controller": {
+          "state": "running",
+          "motion_expected": true,
+          "safety_gate_open": false,
+          "drive_warning": false
+        },
+        "events": []
+      },
+      {
+        "t": 6,
+        "phase": "transport",
+        "tcp": [
+          1.8609061375225322,
+          0.9139926074979805,
+          -0.800354536037047
+        ],
+        "joints": [
+          0.406172839506173,
+          0.8,
+          -1.2
+        ],
+        "grip_command": true,
+        "object_present": true,
+        "pressure_kpa": 65,
+        "verification": null,
+        "controller": {
+          "state": "protective_stop",
+          "motion_expected": true,
+          "safety_gate_open": true,
+          "drive_warning": false
+        },
+        "events": [
+          {
+            "t": 6,
+            "source": "safety",
+            "code": "SAFETY_GATE_OPEN",
+            "message": "Synthetic safety gate opened during transfer."
+          },
+          {
+            "t": 6,
+            "source": "controller",
+            "code": "PROTECTIVE_STOP",
+            "message": "Controller halted expected joint motion; authorized recovery required."
+          }
+        ]
+      }
+    ]
+  }
+}
