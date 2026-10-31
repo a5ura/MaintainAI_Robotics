@@ -65,7 +65,7 @@ def diagnose(cycle: Cycle):
     hypotheses = []
     if lost:
         hypotheses = [
-            {"cause": "Insufficient vacuum / seal loss", "support": low + lost, "contradiction": [], "check": "Inspect cup seal, tubing, and vacuum supply; repeat a stationary hold test."},
+            {"cause": "Insufficient vacuum / seal loss", "support": list(dict.fromkeys(low + lost)), "contradiction": [], "check": "Inspect cup seal, tubing, and vacuum supply; repeat a stationary hold test."},
             {"cause": "Premature release command", "support": release, "contradiction": lost if not release else [], "check": "Check controller output timing against the gripper command trace."},
             {"cause": "Object sensor or verification error", "support": contradictory, "contradiction": lost + missing, "check": "Inspect sensor alignment and compare independent target verification with a physical count."},
         ]

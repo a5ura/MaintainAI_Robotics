@@ -1,4 +1,3 @@
-from copy import deepcopy
 import pytest
 from fastapi.testclient import TestClient
 from backend.app import app
@@ -20,6 +19,7 @@ def test_drop_uses_temporal_evidence():
     assert d["hypotheses"][1]["contradiction"]
     ids={e["id"] for e in d["timeline"]}
     assert all(set(h["support"]+h["contradiction"])<=ids for h in d["hypotheses"])
+    assert all(len(h["support"]) == len(set(h["support"])) for h in d["hypotheses"])
 
 def test_normal_cycle():
     assert run(fixture())["status"]=="normal"
