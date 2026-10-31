@@ -1,0 +1,161 @@
+{
+  "status": "detected",
+  "failure": "Dropped object",
+  "summary": "Object lost between pick and place; root cause remains a hypothesis.",
+  "observations": [
+    {
+      "text": "Object verified held after pick.",
+      "evidence": [
+        "E2"
+      ]
+    },
+    {
+      "text": "Object-presence signal lost during commanded grip before placement.",
+      "evidence": [
+        "E3",
+        "E4"
+      ]
+    },
+    {
+      "text": "Post-place verification found no object at target.",
+      "evidence": [
+        "E5"
+      ]
+    },
+    {
+      "text": "Vacuum magnitude fell below the 30 kPa demonstration threshold near loss.",
+      "evidence": [
+        "E3"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "cause": "Insufficient vacuum / seal loss",
+      "support": [
+        "E3",
+        "E4"
+      ],
+      "contradiction": [],
+      "check": "Inspect cup seal, tubing, and vacuum supply; repeat a stationary hold test."
+    },
+    {
+      "cause": "Premature release command",
+      "support": [],
+      "contradiction": [
+        "E3",
+        "E4"
+      ],
+      "check": "Check controller output timing against the gripper command trace."
+    },
+    {
+      "cause": "Object sensor or verification error",
+      "support": [],
+      "contradiction": [
+        "E3",
+        "E4",
+        "E5"
+      ],
+      "check": "Inspect sensor alignment and compare independent target verification with a physical count."
+    }
+  ],
+  "timeline": [
+    {
+      "id": "E1",
+      "t": 0.0,
+      "phase": "pre-pick",
+      "tcp": [
+        1.0,
+        1.0,
+        0.0
+      ],
+      "joints": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "grip_command": false,
+      "object_present": false,
+      "pressure_kpa": 0.0,
+      "verification": "source"
+    },
+    {
+      "id": "E2",
+      "t": 3.0,
+      "phase": "post-pick",
+      "tcp": [
+        1.0,
+        1.0,
+        0.0
+      ],
+      "joints": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "grip_command": true,
+      "object_present": true,
+      "pressure_kpa": 65.0,
+      "verification": "held"
+    },
+    {
+      "id": "E3",
+      "t": 6.0,
+      "phase": "transport",
+      "tcp": [
+        1.0,
+        1.0,
+        0.0
+      ],
+      "joints": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "grip_command": true,
+      "object_present": false,
+      "pressure_kpa": 12.0,
+      "verification": null
+    },
+    {
+      "id": "E4",
+      "t": 9.0,
+      "phase": "pre-place",
+      "tcp": [
+        1.0,
+        1.0,
+        0.0
+      ],
+      "joints": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "grip_command": true,
+      "object_present": false,
+      "pressure_kpa": 12.0,
+      "verification": "missing"
+    },
+    {
+      "id": "E5",
+      "t": 12.0,
+      "phase": "post-place",
+      "tcp": [
+        1.0,
+        1.0,
+        0.0
+      ],
+      "joints": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "grip_command": false,
+      "object_present": false,
+      "pressure_kpa": 0.0,
+      "verification": "missing"
+    }
+  ],
+  "warnings": [],
+  "ranking_basis": "Ordinal rule evidence, not calibrated probabilities."
+}
