@@ -348,3 +348,176 @@ test("guided pause/reset stays isolated from another browser simulation", async 
     await b.close();
   }
 });
+
+test("manual diagnosis ticket takeover cancels the remaining guided save", async ({
+  page,
+}) => {
+  const posts: Record<string, unknown>[] = [];
+  page.on("request", (request) => {
+    if (request.url().endsWith("/api/tickets") && request.method() === "POST")
+      posts.push(request.postDataJSON());
+  });
+  await page.goto("/");
+  await page
+    .getByRole("button", { name: "Start Guided Demo", exact: true })
+    .click();
+  await page
+    .getByRole("button", { name: "Skip to Results", exact: true })
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "Dropped object", exact: true }),
+  ).toBeVisible();
+  await page
+    .getByRole("button", { name: "Create maintenance ticket", exact: true })
+    .click();
+  await expect(
+    page.getByRole("region", { name: "Guided Demo", exact: true }),
+  ).toHaveCount(0);
+  const title = "Manual guided handoff " + Date.now();
+  await page.getByLabel("Title", { exact: true }).fill(title);
+  await page
+    .getByRole("textbox", { name: "Description", exact: true })
+    .fill("Keep these manually entered investigation details.");
+  await page.waitForTimeout(5000); // Beyond the guide's former automatic-save deadline.
+  expect(posts).toHaveLength(0);
+  await expect(page.getByLabel("Title", { exact: true })).toHaveValue(title);
+  await expect(
+    page.getByRole("textbox", { name: "Description", exact: true }),
+  ).toHaveValue("Keep these manually entered investigation details.");
+  const creation = page.waitForResponse(
+    (r) => r.url().endsWith("/api/tickets") && r.request().method() === "POST",
+  );
+  await page
+    .getByRole("button", { name: "Create ticket", exact: true })
+    .click();
+  const saved = await (await creation).json();
+  await expect(
+    page.getByRole("region", { name: "Ticket details", exact: true }),
+  ).toContainText(saved.ticket.id);
+  await page
+    .getByLabel("Repair note / operator observation")
+    .fill("Unsaved operator repair draft");
+  await page.waitForTimeout(500);
+  expect(posts).toHaveLength(1);
+  expect(posts[0]).not.toHaveProperty("request_id");
+  await expect(
+    page.getByLabel("Repair note / operator observation"),
+  ).toHaveValue("Unsaved operator repair draft");
+  await expect(
+    page.getByRole("region", { name: "Ticket details", exact: true }),
+  ).toContainText(saved.ticket.id);
+});
+
+test("committed but pending guided response cannot replace manual ticket selection or drafts", async ({
+  page,
+  request,
+}) => {
+  let release!: () => void;
+  const responseGate = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  let notifySaved!: (detail: { ticket: { id: string } }) => void;
+  const serverSaved = new Promise<{ ticket: { id: string } }>((resolve) => {
+    notifySaved = resolve;
+  });
+  const posts: Record<string, unknown>[] = [],
+    detailReads: string[] = [];
+  page.on("request", (req) => {
+    if (req.url().endsWith("/api/tickets") && req.method() === "POST")
+      posts.push(req.postDataJSON());
+    if (req.url().includes("/api/tickets/") && req.method() === "GET")
+      detailReads.push(req.url());
+  });
+  await page.route("**/api/tickets", async (route) => {
+    if (
+      route.request().method() === "POST" &&
+      route.request().postDataJSON().request_id
+    ) {
+      const response = await route.fetch(); // Real backend transaction commits before takeover.
+      notifySaved(await response.json());
+      await responseGate;
+      await route.fulfill({ response });
+    } else await route.continue();
+  });
+  try {
+    await page.goto("/");
+    await page
+      .getByRole("button", { name: "Start Guided Demo", exact: true })
+      .click();
+    await page
+      .getByRole("button", { name: "Skip to Results", exact: true })
+      .click();
+    const automatic = await serverSaved;
+    await page
+      .getByRole("button", { name: "Create maintenance ticket", exact: true })
+      .click();
+    await expect(
+      page.getByRole("region", { name: "Guided Demo", exact: true }),
+    ).toHaveCount(0);
+    const title = "Manual selection during pending guide " + Date.now();
+    await page.getByLabel("Title", { exact: true }).fill(title);
+    await page
+      .getByRole("textbox", { name: "Description", exact: true })
+      .fill("Manual description must be stored intact.");
+    const creation = page.waitForResponse(
+      (r) =>
+        r.url().endsWith("/api/tickets") &&
+        r.request().method() === "POST" &&
+        !r.request().postDataJSON().request_id,
+    );
+    await page
+      .getByRole("button", { name: "Create ticket", exact: true })
+      .click();
+    const manual = await (await creation).json();
+    await expect(
+      page.getByRole("region", { name: "Ticket details", exact: true }),
+    ).toContainText(manual.ticket.id);
+    await page
+      .getByLabel("Repair note / operator observation")
+      .fill("Do not erase this unsaved repair note.");
+    await page
+      .getByLabel("Ticket status", { exact: true })
+      .selectOption("In Progress");
+    await page
+      .getByLabel("Title", { exact: true })
+      .fill("Next manual incident draft");
+    await page
+      .getByRole("textbox", { name: "Description", exact: true })
+      .fill("Preserve the next incident details too.");
+    const lateResponse = page.waitForResponse(
+      (r) =>
+        r.url().endsWith("/api/tickets") &&
+        r.request().method() === "POST" &&
+        !!r.request().postDataJSON().request_id,
+    );
+    release();
+    await lateResponse;
+    await page.waitForTimeout(500);
+    const selection = page.getByRole("region", {
+      name: "Ticket details",
+      exact: true,
+    });
+    await expect(selection).toContainText(manual.ticket.id);
+    await expect(selection).not.toContainText(automatic.ticket.id);
+    await expect(
+      page.getByLabel("Repair note / operator observation"),
+    ).toHaveValue("Do not erase this unsaved repair note.");
+    await expect(page.getByLabel("Ticket status", { exact: true })).toHaveValue(
+      "In Progress",
+    );
+    await expect(page.getByLabel("Title", { exact: true })).toHaveValue(
+      "Next manual incident draft",
+    );
+    await expect(
+      page.getByRole("textbox", { name: "Description", exact: true }),
+    ).toHaveValue("Preserve the next incident details too.");
+    expect(posts).toHaveLength(2); // The already-submitted guide write plus the deliberate manual write.
+    expect(
+      detailReads.some((url) => url.endsWith("/" + automatic.ticket.id)),
+    ).toBe(false);
+    const committed = await request.get("/api/tickets/" + automatic.ticket.id);
+    expect(committed.status()).toBe(200); // We did not pretend cancellation rolled back a server write.
+  } finally {
+    release();
+  }
+});

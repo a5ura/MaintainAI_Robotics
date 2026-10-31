@@ -478,6 +478,8 @@ export function App() {
                     {result.id && (
                       <button
                         onClick={() => {
+                          guide.takeover();
+                          setInitialTicketId(undefined);
                           setFromDiagnosis(true);
                           setView("maintenance");
                         }}

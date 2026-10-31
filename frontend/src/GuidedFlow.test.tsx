@@ -126,3 +126,172 @@ it("reset invalidates an in-flight diagnosis rather than surfacing old results",
   ).not.toBeInTheDocument();
   expect(screen.getByRole("progressbar")).toHaveAttribute("value", "0");
 });
+
+function ticketWorkflow(deferAutomaticSave = false) {
+  let finishAutomatic!: () => void;
+  let manual = {
+    ...detail,
+    ticket: { ...detail.ticket, id: "T-manual", title: "Manual review" },
+  };
+  const fetchMock = vi.fn().mockImplementation(async (url, options) => {
+    const path = String(url);
+    if (path.endsWith("/diagnose")) return response(computed);
+    if (path.endsWith("/equipment"))
+      return response([
+        {
+          id: "R-01",
+          name: "Robot",
+          description: "demo",
+          status: "Operational",
+          ticket_count: 1,
+        },
+      ]);
+    if (path.endsWith("/tickets") && options.method === "POST") {
+      const body = JSON.parse(options.body);
+      if (body.request_id) {
+        if (!deferAutomaticSave) return response(detail);
+        return new Promise((resolve) => {
+          finishAutomatic = () => resolve(response(detail));
+        });
+      }
+      manual = {
+        ...manual,
+        ticket: {
+          ...manual.ticket,
+          title: body.title,
+          description: body.description,
+        },
+      };
+      return response(manual);
+    }
+    if (path.endsWith("/tickets")) return response([manual.ticket]);
+    return response(path.endsWith("/T-guide") ? detail : manual);
+  });
+  vi.stubGlobal("fetch", fetchMock);
+  return {
+    fetchMock,
+    finishAutomatic: () => finishAutomatic(),
+    posts: () =>
+      fetchMock.mock.calls.filter(
+        (c) => String(c[0]).endsWith("/tickets") && c[1].method === "POST",
+      ),
+  };
+}
+
+async function skipGuidedReplay() {
+  fireEvent.click(screen.getByRole("button", { name: "Start Guided Demo" }));
+  fireEvent.click(screen.getByRole("button", { name: "Skip to Results" }));
+  await act(async () => {});
+}
+
+it("manual ticket creation cancels the guide without replacing unsaved form details", async () => {
+  vi.useFakeTimers();
+  const workflow = ticketWorkflow();
+  render(<App />);
+  await skipGuidedReplay();
+  fireEvent.click(
+    screen.getByRole("button", { name: "Create maintenance ticket" }),
+  );
+  await act(async () => {});
+  fireEvent.change(screen.getByLabelText("Title", { exact: true }), {
+    target: { value: "Manual investigation draft" },
+  });
+  fireEvent.change(screen.getByLabelText("Description", { exact: true }), {
+    target: { value: "Keep these operator details" },
+  });
+  await act(async () => vi.advanceTimersByTime(10000));
+  expect(workflow.posts()).toHaveLength(0);
+  expect(
+    screen.queryByRole("region", { name: "Guided Demo" }),
+  ).not.toBeInTheDocument();
+  expect(screen.getByLabelText("Title", { exact: true })).toHaveValue(
+    "Manual investigation draft",
+  );
+  expect(screen.getByLabelText("Description", { exact: true })).toHaveValue(
+    "Keep these operator details",
+  );
+});
+
+it("an already-pending guide save cannot select its ticket or erase manual repair-note drafts", async () => {
+  vi.useFakeTimers();
+  const workflow = ticketWorkflow(true);
+  render(<App />);
+  await skipGuidedReplay();
+  await act(async () => vi.advanceTimersByTime(4100));
+  expect(workflow.posts()).toHaveLength(1);
+  fireEvent.click(
+    screen.getByRole("button", { name: "Create maintenance ticket" }),
+  );
+  await act(async () => {});
+  fireEvent.change(screen.getByLabelText("Title", { exact: true }), {
+    target: { value: "Manual review" },
+  });
+  fireEvent.click(screen.getByRole("button", { name: "Create ticket" }));
+  await act(async () => {});
+  fireEvent.change(
+    screen.getByLabelText("Repair note / operator observation"),
+    { target: { value: "Unsaved repair note must remain" } },
+  );
+  fireEvent.change(screen.getByLabelText("Ticket status", { exact: true }), {
+    target: { value: "In Progress" },
+  });
+  fireEvent.change(screen.getByLabelText("Title", { exact: true }), {
+    target: { value: "Next incident draft" },
+  });
+  fireEvent.change(screen.getByLabelText("Description", { exact: true }), {
+    target: { value: "Do not replace this draft" },
+  });
+  await act(async () => workflow.finishAutomatic());
+  await act(async () => vi.advanceTimersByTime(10000));
+  expect(workflow.posts()).toHaveLength(2); // One submitted guide save, one intentional manual save.
+  expect(
+    screen.getByRole("region", { name: "Ticket details" }),
+  ).toHaveTextContent("T-manual");
+  expect(
+    screen.getByRole("region", { name: "Ticket details" }),
+  ).not.toHaveTextContent("T-guide");
+  expect(
+    screen.getByLabelText("Repair note / operator observation"),
+  ).toHaveValue("Unsaved repair note must remain");
+  expect(screen.getByLabelText("Ticket status", { exact: true })).toHaveValue(
+    "In Progress",
+  );
+  expect(screen.getByLabelText("Title", { exact: true })).toHaveValue(
+    "Next incident draft",
+  );
+  expect(screen.getByLabelText("Description", { exact: true })).toHaveValue(
+    "Do not replace this draft",
+  );
+  expect(
+    workflow.fetchMock.mock.calls.some((c) =>
+      String(c[0]).endsWith("/T-guide"),
+    ),
+  ).toBe(false);
+});
+
+it("manual ticket creation clears the selection from a previously completed guide", async () => {
+  vi.useFakeTimers();
+  const workflow = ticketWorkflow();
+  render(<App />);
+  await skipGuidedReplay();
+  await act(async () => vi.advanceTimersByTime(4100));
+  expect(
+    screen.getByRole("region", { name: "Ticket details" }),
+  ).toHaveTextContent("T-guide");
+  fireEvent.click(screen.getByRole("button", { name: "Return to operations" }));
+  const reads = workflow.fetchMock.mock.calls.filter((c) =>
+    String(c[0]).endsWith("/T-guide"),
+  ).length;
+  fireEvent.click(
+    screen.getByRole("button", { name: "Create maintenance ticket" }),
+  );
+  await act(async () => {});
+  expect(
+    screen.getByRole("region", { name: "Ticket details" }),
+  ).toHaveTextContent("Choose an incident.");
+  expect(
+    workflow.fetchMock.mock.calls.filter((c) =>
+      String(c[0]).endsWith("/T-guide"),
+    ),
+  ).toHaveLength(reads);
+});
