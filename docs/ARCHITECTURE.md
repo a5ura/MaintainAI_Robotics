@@ -18,7 +18,11 @@ The object is attached to the TCP from pick until release, or detached at t=6 in
 
 `POST /api/diagnose` accepts `{samples:[...]}` (1–2000 rows). Each row contains `t` (nonnegative finite cycle seconds), `phase` (pre-pick/post-pick/transport/pre-place/post-place), `joints` (3 radians), `tcp` (3 metres), `grip_command` (boolean), nullable `object_present`, nullable `pressure_kpa` (vacuum magnitude 0–100), nullable `verification` (source/held/missing/target).
 
-No scenario name is accepted or required. Input arrays are sorted by time and evidence IDs assigned in that order. Duplicated timestamps, out-of-order phases, missing sensor values, and selected contradictory observations produce an inconclusive result. Malformed payloads produce HTTP 422. Joint/TCP vectors must be finite; the backend records these supplied values but does not independently validate their FK correspondence.
+No scenario name is accepted or required. Input arrays are sorted by time and evidence IDs assigned in that order. Duplicated timestamps, out-of-order phases, missing sensor values, and selected contradictory observations produce an inconclusive result. Malformed payloads produce HTTP 422. Joint/TCP vectors must be finite. Malformed/nonfinite values return HTTP 422 with safe validation details (no nonfinite input echoed into JSON). Structurally valid but physically inconsistent telemetry returns HTTP 200 with `status: inconclusive`, `failure: null`, per-evidence warnings, and no ranked hypotheses from corrupted kinematics.
+
+The backend independently reproduces the approved 3R model in `backend/kinematics.py` and enforces inclusive joint limits (yaw ±1, shoulder ±1.4, elbow ±2 radians). Euclidean TCP position error must be ≤0.0001 m (0.1 mm), with at most 1e-12 m absolute boundary roundoff. This accommodates floating-point/serialization rounding in exact simulated trajectories, not real sensor uncertainty. Each timeline entry includes `kinematics: {valid, expected_tcp, error_m, tolerance_m, violations}`. Out-of-limit vectors are rejected as inconsistent before FK evaluation; for unrepresentably large distance error, `error_m` is null and validity remains false.
+
+Frontend/backend golden-pose regression fixtures live in `fixtures/kinematics.json`; both implementations are tested against the same simple geometries. Browser regression tests additionally send actual frontend cycle trajectories to backend validation.
 
 Detection requires verified held post-pick → later absence during commanded grip before place → later missing post-place verification, without input-quality warnings. Vacuum <30 kPa within 1 s of loss supports seal/supply loss. Premature release and sensor error remain competing hypotheses with explicit supporting/contradicting evidence. Cause order uses count of supporting evidence, then fewer contradictions; it is a transparent demonstration heuristic, not probability or proof.
 
@@ -31,3 +35,7 @@ Simulated: grip command, object sensor, pressure, verification observations, cyc
 ## Operational boundaries
 
 Loopback-only dev servers; no authentication or production hardening. No persistent records, real sensors, safety guarantees, calibrated confidence, hosted URL, or cloud storage. Those V1/V2 distinctions are preserved in PRD. Stop both dev processes when not needed. Rendering is capped at 1.5 device pixel ratio with low-poly geometry, no shadows, and no physics/GPU requirement beyond browser WebGL.
+
+## Evidence traceability — stabilization
+
+Observation, supporting, and contradictory evidence references are labelled links to focusable timeline rows (`#evidence-E…`). Links expose phase, grip command, object presence, pressure, verification, and timestamp in accessible descriptions/tooltips. Targeted rows highlight and retain keyboard focus; the timeline includes FK consistency. No supporting readings and contradictory evidence are explicitly labelled; links missing from a response are marked unavailable rather than fabricated. Hypotheses and operator checks remain distinct from observations.

@@ -31,21 +31,19 @@ it("renders computed backend results and evidence references", async () => {
   vi.useFakeTimers();
   vi.stubGlobal(
     "fetch",
-    vi
-      .fn()
-      .mockResolvedValue({
-        ok: true,
-        json: async () => ({
-          status: "detected",
-          failure: "Dropped object",
-          summary: "Computed test evidence",
-          observations: [{ text: "Signal lost", evidence: ["E3"] }],
-          hypotheses: [],
-          timeline: [],
-          warnings: [],
-          ranking_basis: "ordinal",
-        }),
+    vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        status: "detected",
+        failure: "Dropped object",
+        summary: "Computed test evidence",
+        observations: [{ text: "Signal lost", evidence: ["E3"] }],
+        hypotheses: [],
+        timeline: [],
+        warnings: [],
+        ranking_basis: "ordinal",
       }),
+    }),
   );
   render(<App />);
   fireEvent.click(screen.getByRole("button", { name: "Start" }));
@@ -53,7 +51,7 @@ it("renders computed backend results and evidence references", async () => {
   expect(
     screen.getByRole("heading", { name: "Dropped object" }),
   ).toBeInTheDocument();
-  expect(screen.getByText("E3")).toBeInTheDocument();
+  expect(screen.getByText("E3 · reference unavailable")).toBeInTheDocument();
   const payload = JSON.parse(vi.mocked(fetch).mock.calls[0][1]!.body as string);
   expect(payload.samples.length).toBe(11);
 });

@@ -1,3 +1,4 @@
+import goldenPoses from "../../fixtures/kinematics.json";
 import { describe, it, expect } from "vitest";
 import { isValidElement, type ReactElement } from "react";
 import { Object3D, Vector3 } from "three";
@@ -12,6 +13,13 @@ import {
   SAMPLE_TIMES,
 } from "./model";
 describe("kinematic integrity", () => {
+  it("matches shared golden poses used by backend checks", () => {
+    goldenPoses.forEach(({ joints, tcp }) =>
+      fk(joints as [number, number, number]).tcp.forEach((v, i) =>
+        expect(v).toBeCloseTo(tcp[i], 8),
+      ),
+    );
+  });
   it("matches independently defined straight and vertical poses", () => {
     expect(fk([0, 0, 0]).tcp[0]).toBeCloseTo(2.7);
     expect(fk([0, 0, 0]).tcp[1]).toBeCloseTo(0.28);

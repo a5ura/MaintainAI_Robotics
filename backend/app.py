@@ -3,7 +3,10 @@ from math import isfinite
 from typing import Literal
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, model_validator
+from backend.kinematics import check_kinematics
 
 class Sample(BaseModel):
     t: float = Field(ge=0, allow_inf_nan=False)
@@ -27,6 +30,14 @@ class Cycle(BaseModel):
 app = FastAPI(title="MaintainAI Robotics", version="0.1.0")
 app.add_middleware(CORSMiddleware, allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"], allow_methods=["GET", "POST"], allow_headers=["Content-Type"])
 
+@app.exception_handler(RequestValidationError)
+async def invalid_payload(_request, exc):
+    # Never echo nonfinite inputs into JSON (NaN/Infinity cannot be serialized).
+    return JSONResponse(status_code=422, content={"detail": [
+        {"loc": error["loc"], "type": error["type"], "msg": error["msg"]}
+        for error in exc.errors()
+    ]})
+
 @app.get("/api/health")
 def health():
     return {"status": "ok"}
@@ -36,8 +47,13 @@ def diagnose(cycle: Cycle):
     samples = sorted(cycle.samples, key=lambda s: s.t)
     timeline = []
     for i, s in enumerate(samples):
-        timeline.append({"id": f"E{i+1}", **s.model_dump()})
+        timeline.append({"id": f"E{i+1}", **s.model_dump(),
+                         "kinematics": check_kinematics(s.joints, s.tcp)})
     observations, warnings = [], []
+    inconsistent = [e for e in timeline if not e["kinematics"]["valid"]]
+    for e in inconsistent:
+        warnings.append(f"{e['id']} at {e['t']:g}s: inconsistent kinematic telemetry; "
+                        + "; ".join(e["kinematics"]["violations"]))
     def evidence(predicate):
         return [e["id"] for e in timeline if predicate(e)]
     held = evidence(lambda e: e["phase"] == "post-pick" and e["object_present"] is True and e["verification"] == "held")
@@ -63,7 +79,7 @@ def diagnose(cycle: Cycle):
     detected = bool(held and lost and missing and not warnings)
     status = "detected" if detected else "inconclusive" if warnings or not complete else "normal"
     hypotheses = []
-    if lost:
+    if lost and not inconsistent:
         hypotheses = [
             {"cause": "Insufficient vacuum / seal loss", "support": list(dict.fromkeys(low + lost)), "contradiction": [], "check": "Inspect cup seal, tubing, and vacuum supply; repeat a stationary hold test."},
             {"cause": "Premature release command", "support": release, "contradiction": lost if not release else [], "check": "Check controller output timing against the gripper command trace."},

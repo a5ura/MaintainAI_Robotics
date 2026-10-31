@@ -5,7 +5,7 @@ client = TestClient(app)
 
 def fixture(drop=False):
     rows = [(0,"pre-pick",False,False,0,"source"),(3,"post-pick",True,True,65,"held"),(6,"transport",True,not drop,12 if drop else 65,None),(9,"pre-place",True,not drop,12 if drop else 65,"missing" if drop else "held"),(12,"post-place",False,False,0,"missing" if drop else "target")]
-    return {"samples":[dict(t=t,phase=p,grip_command=g,object_present=o,pressure_kpa=v,verification=c,tcp=[1,1,0],joints=[0,0,0]) for t,p,g,o,v,c in rows]}
+    return {"samples":[dict(t=t,phase=p,grip_command=g,object_present=o,pressure_kpa=v,verification=c,tcp=[2.7,0.28,0],joints=[0,0,0]) for t,p,g,o,v,c in rows]}
 
 def run(payload):
     response=client.post("/api/diagnose",json=payload)

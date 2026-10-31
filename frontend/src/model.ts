@@ -69,8 +69,8 @@ export type Sample = {
   tcp: Vec;
   joints: Joints;
   grip_command: boolean;
-  object_present: boolean;
-  pressure_kpa: number;
+  object_present: boolean | null;
+  pressure_kpa: number | null;
   verification: string | null;
 };
 export function sample(t: number, drop: boolean): Sample {
@@ -115,7 +115,16 @@ export function advance(c: Clock, dt: number): Clock {
   const t = c.running ? Math.min(DURATION, c.t + Math.max(0, dt)) : c.t;
   return { t, running: c.running && t < DURATION };
 }
-export type Evidence = Sample & { id: string };
+export type Evidence = Sample & {
+  id: string;
+  kinematics?: {
+    valid: boolean;
+    expected_tcp: Vec | null;
+    error_m: number | null;
+    tolerance_m: number;
+    violations: string[];
+  };
+};
 export type Diagnosis = {
   status: string;
   failure: string | null;
