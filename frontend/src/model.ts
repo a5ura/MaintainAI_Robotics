@@ -115,22 +115,26 @@ export function advance(c: Clock, dt: number): Clock {
   const t = c.running ? Math.min(DURATION, c.t + Math.max(0, dt)) : c.t;
   return { t, running: c.running && t < DURATION };
 }
-export type Evidence = Sample & {
-  id: string;
-  kinematics?: {
-    valid: boolean;
-    expected_tcp: Vec | null;
-    error_m: number | null;
-    tolerance_m: number;
-    violations: string[];
+export type Evidence = Sample &
+  import("./scenarios").ScenarioSample & {
+    id: string;
+    kinematics?: {
+      valid: boolean;
+      expected_tcp: Vec | null;
+      error_m: number | null;
+      tolerance_m: number;
+      violations: string[];
+    };
   };
-};
 export type Diagnosis = {
+  id?: string;
+  anomalies?: { kind: string; summary: string }[];
   status: string;
   failure: string | null;
   summary: string;
   observations: { text: string; evidence: string[] }[];
   hypotheses: {
+    anomaly?: string;
     cause: string;
     support: string[];
     contradiction: string[];

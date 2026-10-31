@@ -52,12 +52,12 @@ test("real normal and dropped-object cycles use FastAPI and display evidence", a
   await expect(page.locator("#evidence-E6")).toBeFocused();
   await expect(page.locator("#evidence-E6")).toContainText("CONSISTENT");
   await page.screenshot({
-    path: "../docs/stabilization-desktop.png",
+    path: "../docs/m2-drop-desktop.png",
     fullPage: true,
   });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.screenshot({
-    path: "../docs/stabilization-mobile.png",
+    path: "../docs/m2-drop-mobile.png",
     fullPage: true,
   });
   expect(
