@@ -12,7 +12,8 @@
 - Verified base: `44f8d44bf171ad82f2250938298861e97b267836` (merged PR #2, with PR #1 ancestry).
 - Branch: `feature/m2-diagnostics-maintenance`.
 - Incremental implementation commits: `c183661` backend/rules/storage; `f7066f2` simulation/UI/integration; documentation/review commits follow in branch log.
-- PR URL/status: creation not yet attempted for final reviewed branch; no PR URL claimed. No merge performed. Final access outcome will be recorded here after the attempt.
+- Branch push succeeded. Automated PR creation failed with `Post "https://api.github.com/graphql": Forbidden`. **No M2 PR exists or is claimed.**
+- [Prefilled PR creation form](https://github.com/a5ura/MaintainAI_Robotics/compare/main...feature/m2-diagnostics-maintenance?expand=1&title=M2%3A+Multi-scenario+diagnostics+and+durable+maintenance+workflows&body=Adds+four+evidence-driven+failures%2C+seeded+replay+and+SQLite-backed+maintenance.+Verified%3A+91+backend+tests%2C+26+frontend+tests%2C+production+build%2C+7+browser+tests+and+a+real+backend+restart.+Full+description%3A+https%3A%2F%2Fgithub.com%2Fa5ura%2FMaintainAI_Robotics%2Fblob%2Ffeature%2Fm2-diagnostics-maintenance%2Fdocs%2FM2_PR_DESCRIPTION.md); [ready-to-use full PR description](M2_PR_DESCRIPTION.md). The remaining step is creating the PR from this pushed branch to main through configured API access or the GitHub web form. No merge performed.
 
 ## C. Implemented scenarios
 
@@ -74,7 +75,7 @@ Browser evidence files: [maintenance desktop](m2-maintenance-desktop.png), [main
 | 11 | Automated + genuine integrated smoke | PASS — final suite: 7 passed |
 | 12 | Run instructions/docs/status | PASS |
 | 13 | No new billable dependencies/services | PASS for actions/dependencies; **UNVERIFIED account-level cost/entitlement** |
-| 14 | Review PR prepared when access permits | UNVERIFIED pending final push/API attempt |
+| 14 | Review PR prepared when access permits | UNVERIFIED — branch pushed and description/form ready; actual PR blocked by GraphQL Forbidden |
 
 ## H. Remaining issues
 
@@ -86,4 +87,4 @@ Browser evidence files: [maintenance desktop](m2-maintenance-desktop.png), [main
 
 ## I. Recommendation
 
-Technical implementation and regression verification are ready for Planning review, subject to the review-access outcome. Do not merge automatically or call the entire V1 complete. Account-level cost uncertainty and hosted persistence remain explicit limitations.
+Technical implementation and regression verification are ready for Planning review, with actual PR creation blocked by GitHub GraphQL Forbidden. Do not merge automatically or call the entire V1 complete. Account-level cost uncertainty and hosted persistence remain explicit limitations.

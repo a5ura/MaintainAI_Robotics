@@ -7,7 +7,7 @@
 - Execution: existing managed cloud Linux x86_64, `/workspace/MaintainAI_Robotics`; Python 3.12.14, Node 24.19.0, npm 11.9.0, Git 2.52.0. Cloud-reported 5 CPUs and ~34 GB memory; these are not Windows laptop measurements or guaranteed limits.
 - Baseline before behavior changes: 46 backend tests, 14 frontend tests, TypeScript/production build passed.
 - Implementation commits: `c183661` (backend/rules/storage) and `f7066f2` (simulation/UI/integration), followed by documentation/review commits.
-- Four evidence-driven failures, deterministic seeded random selection, maintenance APIs/UI and local durable SQLite are implemented. Full fresh verification and PR/access status: [M2 completion report](M2_COMPLETION_REPORT.md).
+- Four evidence-driven failures, deterministic seeded random selection, maintenance APIs/UI and local durable SQLite are implemented. Fresh checks: 91 backend tests, 26 frontend tests, TypeScript/build and 7 integrated Chromium tests passed. Branch pushed; new PR creation failed with `Post "https://api.github.com/graphql": Forbidden`. No M2 PR exists or was merged. Full fresh verification and PR/access status: [M2 completion report](M2_COMPLETION_REPORT.md).
 - Real FastAPI stop/restart verification preserved ticket `T-eb0743092e25413e`, version 2, three history events, operator note and immutable linked diagnosis/evidence. This proves the local file survives that process restart, not cloud durability.
 - No environment configuration was reapplied or published, and no new dependency, paid API/service, billing, credits, hosting or cloud database was activated. Account entitlement/actual incremental charges remain unverified.
 
