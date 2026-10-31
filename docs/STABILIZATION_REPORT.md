@@ -1,5 +1,7 @@
 # Milestone 1 Stabilization Report
 
+Historical handoff. Subsequent update verified during M2 preflight: the user created and merged PR #2 at `44f8d44bf171ad82f2250938298861e97b267836`. The original API blocker below describes the coding agent's earlier attempt; see current `DEVELOPMENT_STATUS.md`.
+
 ## Repository and baseline
 
 - Repository: https://github.com/a5ura/MaintainAI_Robotics
