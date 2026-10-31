@@ -18,3 +18,11 @@ Read `docs/PRD.md` (full approved October 31, 2026 handoff), `docs/DEVELOPMENT_S
 - `fixtures/scenarios.json` is the frontend/backend contract. Regenerate with the existing esbuild CLI from `src/scenarios.ts` when evidence generation intentionally changes, then run both language suites.
 - Random seed selection is per browser; debug scenario/seed appear in run context and diagnosis-linked ticket descriptions. No global active robot session.
 - No M3 deployment, cloud storage, full Guided Demo, overlays, or V2 work without a new assignment.
+
+## Milestone 3 experience and release gate
+
+- M3 is authorized by its bounded assignment: preserve interactive default, real backend guidance, optional engineering tools and no automatic Git merge.
+- Guide state/reducer and effect orchestration are separate; do not fabricate a result for Skip to Results. Cancel old UI sequences on reset/takeover; submitted writes may complete and must use stable retry IDs.
+- Engineering positions, transforms and path derive from the existing joint model. Keep overlays off by default, keyboard equivalents for 3D picking, on-demand rendering and independent FK tests.
+- `MAINTAINAI_PUBLIC_DEMO=1` enables only a per-process write budget, not production security. Tests must use temporary DBs; retention is dry-run unless explicitly applied with a fresh backup.
+- Public hosting is gated by `docs/HOSTING_DECISION.md` and `docs/RELEASE_CHECKLIST.md`. No provider was provisioned. Do not equate local SQLite restart tests with hosted redeploy durability or assume a free-tier label proves no billing risk.

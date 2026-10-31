@@ -868,3 +868,9 @@ input:focus-visible {
     overflow-x: auto;
   }
 }
+.workspace {
+  align-items: start;
+}
+.diagnosis-body {
+  max-height: none;
+}

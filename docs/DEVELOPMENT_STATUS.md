@@ -1,6 +1,18 @@
 # Development status — October 31, 2026
 
-## Current M2 baseline and execution — independently verified
+## Current M3 baseline and local release candidate
+
+- Verified `origin/main` includes M2 PR #3: https://github.com/a5ura/MaintainAI_Robotics/pull/3, merged at `76e00f2c6396f7a5614baeb1434449b88e543ca0` (parents: PR #2 merge `44f8d44bf171ad82f2250938298861e97b267836` and M2 tip `7f2fcb53f32319eba78a22a489cdd7bbb2a352ef`). This is fetched Git merge-history evidence, not API merged-at metadata.
+- M3 branch: `feature/m3-experience-release`; clean baseline; no reset of user work, additional worktree or automatic merge.
+- Execution remains existing managed cloud Linux x86_64, `/workspace/MaintainAI_Robotics`; Python 3.12.14, Node 24.19.0, npm 11.9.0, Git 2.52.0. Windows/Desktop and account cost remain unverified.
+- Baseline before M3 behavior changes: 91 backend tests, 26 frontend tests and production build passed. Current implementation adds live guidance, engineering tools and release safeguards; fresh results are in M3_COMPLETION_REPORT.
+- Fresh M3 verification: 97 backend tests, 36 frontend tests, production build and 13 real Chromium tests passed. No skipped tests; existing upstream deprecation/3D chunk-size warnings remain.
+- Source commits: `5e094bd` retry-safe ticket/security helpers, `164df80` guided/engineering UI, followed by final readability/docs/review commits.
+- Real process-restart check retained guided ticket `T-189937a33c5d56fb89d3247920ed5670`, version 2, repair note/history and diagnosis `D-973774d225afd7785d537ddd` with its immutable evidence. This is local SQLite proof, not hosted redeploy durability.
+- Deployment: **not performed / blocked**. HOSTING_DECISION records official-source evidence, candidate comparisons and exact account/network/runtime/adapter gates. No provider, billing, credentials, record migration, public URL or environment publication was activated.
+- Current review/PR status and acceptance: [M3 completion report](M3_COMPLETION_REPORT.md); full public V1 remains incomplete until release gates pass.
+
+## Historical M2 baseline and execution
 
 - Fetched `origin/main` includes PR #2 merge `44f8d44bf171ad82f2250938298861e97b267836`, with PR #1 and stabilized M1 in its ancestry. PR #2: https://github.com/a5ura/MaintainAI_Robotics/pull/2 — merged, verified from Git merge history. API merged-at metadata remains unavailable.
 - M2 branch: `feature/m2-diagnostics-maintenance`, created from that clean verified main. Main is not modified or merged by this task.

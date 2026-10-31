@@ -1,0 +1,78 @@
+{
+  "environment": "Cloud Chromium software WebGL; not a Windows performance benchmark",
+  "navigation": {
+    "name": "http://127.0.0.1:5173/",
+    "entryType": "navigation",
+    "startTime": 0,
+    "duration": 29.100000001490116,
+    "navigationId": 5110,
+    "initiatorType": "navigation",
+    "deliveryType": "cache",
+    "nextHopProtocol": "",
+    "renderBlockingStatus": "non-blocking",
+    "contentType": "text/html",
+    "contentEncoding": "",
+    "workerStart": 0,
+    "workerRouterEvaluationStart": 0,
+    "workerCacheLookupStart": 0,
+    "workerMatchedSourceType": "",
+    "workerFinalSourceType": "",
+    "redirectStart": 0,
+    "redirectEnd": 0,
+    "fetchStart": 3.900000000372529,
+    "domainLookupStart": 3.900000000372529,
+    "domainLookupEnd": 3.900000000372529,
+    "connectStart": 3.900000000372529,
+    "secureConnectionStart": 0,
+    "connectEnd": 3.900000000372529,
+    "requestStart": 5,
+    "responseStart": 6.900000000372529,
+    "firstInterimResponseStart": 0,
+    "finalResponseHeadersStart": 6.900000000372529,
+    "responseEnd": 7.300000000745058,
+    "transferSize": 300,
+    "encodedBodySize": 418,
+    "decodedBodySize": 418,
+    "responseStatus": 200,
+    "serverTiming": [],
+    "unloadEventStart": 9.300000000745058,
+    "unloadEventEnd": 9.300000000745058,
+    "domInteractive": 19.40000000037253,
+    "domContentLoadedEventStart": 28.90000000037253,
+    "domContentLoadedEventEnd": 28.90000000037253,
+    "domComplete": 29.100000001490116,
+    "loadEventStart": 29.100000001490116,
+    "loadEventEnd": 29.100000001490116,
+    "type": "reload",
+    "redirectCount": 0,
+    "activationStart": 0,
+    "criticalCHRestart": 0,
+    "notRestoredReasons": null,
+    "confidence": {
+      "randomizedTriggerRate": 0.4994798,
+      "value": "low"
+    }
+  },
+  "paint": [
+    {
+      "name": "first-paint",
+      "startTime": 44
+    },
+    {
+      "name": "first-contentful-paint",
+      "startTime": 76
+    }
+  ],
+  "javascript": [
+    {
+      "name": "index-CyYd259e.js",
+      "duration": 10.699999999254942,
+      "encodedBodySize": 0
+    },
+    {
+      "name": "Workcell-oHKGCQII.js",
+      "duration": 35.90000000037253,
+      "encodedBodySize": 226691
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+# Public hosting decision — October 31, 2026
+
+**Decision: do not deploy in this task.** The local M3 candidate is functional; no complete hosted architecture has passed account/cost, runtime, and durable-redeployment verification. No provider account, database, billing method, or service was created. The assignment's section 5 approval/access gate remains in force.
+
+## Evidence and access
+
+Current official documentation was read from provider-owned public GitHub sources (links below), not third-party free-tier roundups. Direct requests to `render.com/docs/free`, `render.com/docs/billing`, `render.com/docs/deploy-fastapi`, `neon.com/docs/introduction/free-tier`, and `supabase.com/pricing` returned proxy **HTTP 403**. Guessed Render GitHub documentation locations returned 404/repository-not-found and were not treated as evidence.
+
+Cloud environment metadata exposed no configured provider identity/secret bindings. Names-only checks found CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID, NEON_API_KEY, DATABASE_URL and RENDER_API_KEY unset. This does not prove the user lacks accounts; it means account entitlement, plan, card requirements and deploy authorization are **not verified here**. GitHub Git access does not establish hosting-provider access. No credentials were read or printed.
+
+## Complete architecture candidates
+
+| | A — Workers Static Assets + Python Workers/FastAPI + D1 | B — Cloudflare Pages React + native Render FastAPI + Neon Free PostgreSQL |
+|---|---|---|
+| Public frontend | Static Assets; static requests free/unlimited, API-only Worker routing | Pages static assets free/unlimited; 500 builds/month, 1 concurrent, 20-minute build limit, 20,000 files |
+| Backend compatibility | Official Python Workers FastAPI/ASGI support; Pyodide/Wasm, Python 3.13 example | Expected native Python fit, but current Render compatibility/free/billing pages blocked; not verified |
+| Central persistent store | D1, independent of individual Worker execution/deployment; requires new repository adapter | Neon managed PostgreSQL, independent of Render filesystem; requires PostgreSQL repository adapter |
+| Shared anonymous records | Same-origin API → centrally bound D1; per-browser simulation state retained | Explicit public API origin/CORS → Render API → Neon; per-browser state retained |
+| Free allowances verified | Workers: 100,000 API requests/day, **10 ms CPU/request**, 128 MB/isolate. D1: 5M rows read/day, 100k rows written/day, 500 MB/database, 5 GB/account, 10 databases, 50 queries/invocation. 7-day Time Travel recovery | Pages quotas above. Neon docs updated Oct 23: $0/month, 100 CU-hours/project/month, 1 GB/project (20 GB/account total), 5 GB transfer/project/month, 10 branches/project |
+| Sleep/inactivity | No always-running container; Python initialization snapshot documented. No storage-expiration guarantee inferred; confirm provider account/retention terms before release | Neon compute suspends after 5 minutes idle. CU-hours/network exhaustion suspends compute until next period/upgrade; storage-growth operations fail at cap. Render cold-start/sleep/quota terms unverified |
+| Overage behavior | Workers Free CPU/request exhaustion fails; static routing that invokes a Worker returns 429 at request limits. D1 Free read/write exhaustion returns errors; storage cap prevents growth. Paid-plan usage can bill, so **Free-only account verification is mandatory** | Neon Free limits suspend/refuse operations and do not delete data per official FAQ; paid plans have metered charges. Render account/billing/overage policy unverified, so $0 safety cannot be established |
+| Card/eligibility | Default Workers Free access documented; an explicit no-card guarantee and this user's actual account eligibility were **not independently established** | Neon $0 plan documented; this user's card/eligibility/account configuration unverified. Render billing/card requirement unknown because official pages inaccessible |
+| Required code work | Existing synchronous sqlite3/file adapter is not a D1 binding. Port repository/transactions/version checks/seeding to D1, test Python ASGI package compatibility and the **10 ms Free CPU budget**, reduce public request size if necessary | Port repository to PostgreSQL, configure backend API/CORS/build origins; verify Render startup and cold-start behavior against current 10-second client timeout |
+| Restart/redeploy durability | Expected from separate managed database, **not actually tested**. Must test independent browsers, Worker redeployment and recovery | Expected from separate managed PostgreSQL, **not actually tested**. Must test Render restart/redeploy, Neon sleep/wake and cross-browser records |
+| Verdict | Best evidence-backed **conditional candidate**, not a drop-in or deploy-verified solution | Complete conceptual layout, **not verified viable at $0** until current Render terms/access are available |
+
+An alternate layout splits A's static frontend onto Cloudflare Pages while keeping Python Workers+D1. It has the same backend/storage/CPU constraints plus CORS/API-origin configuration; this is not a second independently validated backend provider.
+
+**Why fewer than two fully verified viable architectures:** A still needs runtime/adapter/account proof; B lacks current official backend billing evidence; no configured provider access permits real durability tests. Therefore there are **zero fully verified $0 deployments**, not two purportedly free solutions. No paid fallback is selected.
+
+## Rejected or incomplete alternatives
+
+- **Hugging Face Docker/Gradio Spaces:** current official overview explicitly says creating compute Spaces requires a paid PRO/Team/Enterprise plan even though CPU Basic is listed at $0/hour. Static Spaces are free but cannot supply this FastAPI backend; the limited free ZeroGPU/Gradio exception is not a drop-in native FastAPI deployment. Default 50 GB disk is nonpersistent. Reject for this architecture/budget.
+- **Render local SQLite:** no free persistent-volume entitlement was verified. Never treat an instance's local SQLite file as durable across service redeployment.
+- **GitHub Pages:** can host a noncommercial portfolio static frontend (published site ≤1 GB, soft bandwidth 100 GB/month and 10 builds/hour), not FastAPI or a central writable database. Terms prohibit using it as free hosting for commercial SaaS/business; this project is an engineering demo. It does not solve backend/storage alone.
+- **Supabase:** current pricing/eligibility/inactivity/durability terms inaccessible here. Do not repeat historical free-tier numbers as current verification.
+- **Neon:** useful evidence-backed database candidate, not proof of a free native Python backend. Free-plan hard limits avoid automatic paid overages only while the account actually remains on Free; no plan upgrade is authorized.
+
+## Recommendation and precise gate
+
+1. Review A as the first **technical feasibility spike**, without enabling a paid plan. Confirm an existing Cloudflare account is eligible for Workers/D1 **Free only**, no required billing enrollment, no auto-upgrade/metered add-on and no incremental charges. If a card/chargeable step is required, stop; do not assume approval.
+2. Provide scoped deployment access through secure environment settings (never chat/frontend secrets), after selecting the architecture. Current provider access is unverified. Read-only research of B additionally needs network access to `render.com`; this task did not change environment networking.
+3. Complete/test the D1 adapter and ASGI package/runtime path, including atomic optimistic updates, idempotent guided writes and the 10 ms/128 MB limits. Local CPython tests do not validate Pyodide. If it fails the Free budget, report the $0 limitation rather than upgrading.
+4. Enforce cross-instance anonymous write/read budgets at the platform/database boundary, explicit CORS, retention/backups and seed recovery. The optional local per-process limiter alone is not sufficient for distributed Workers.
+5. Only after verified terms/access and the assignment's publication authorization are satisfied: deploy a labelled public demo, keep credentials server-side, then test separate browser sessions and record survival across **real service redeployment**. Back up before any approved record migration. Never migrate/publish existing records implicitly.
+
+## Official references actually read
+
+All checked October 31, 2026. Official source repositories are linked where website access was restricted.
+
+- [Cloudflare FastAPI support and ASGI/static frontend example](https://github.com/cloudflare/cloudflare-docs/blob/production/src/content/docs/workers/languages/python/packages/fastapi.mdx)
+- [Python Workers runtime/Pyodide and deployment snapshots](https://github.com/cloudflare/cloudflare-docs/blob/production/src/content/docs/workers/languages/python/how-python-workers-work.mdx)
+- [Workers Free/Paid pricing](https://github.com/cloudflare/cloudflare-docs/blob/production/src/content/docs/workers/platform/pricing.mdx)
+- [Workers limits, CPU and memory](https://github.com/cloudflare/cloudflare-docs/blob/production/src/content/docs/workers/platform/limits.mdx)
+- [Static Assets billing/limits and fail-closed request behavior](https://github.com/cloudflare/cloudflare-docs/blob/production/src/content/docs/workers/static-assets/billing-and-limitations.mdx)
+- [D1 pricing metrics](https://github.com/cloudflare/cloudflare-docs/blob/production/src/content/partials/workers/d1-pricing.mdx), [Free-quota failure behavior](https://github.com/cloudflare/cloudflare-docs/blob/production/src/content/partials/d1/faq-pricing.mdx), [database/Time Travel limits](https://github.com/cloudflare/cloudflare-docs/blob/production/src/content/docs/d1/platform/limits.mdx)
+- [Pages build/file limits](https://github.com/cloudflare/cloudflare-docs/blob/production/src/content/docs/pages/platform/limits.mdx), [static-asset pricing](https://github.com/cloudflare/cloudflare-docs/blob/production/src/content/docs/pages/functions/pricing.mdx)
+- [Neon current plans and Free-limit consequences](https://github.com/neondatabase/website/blob/main/content/docs/introduction/plans.md), [application connection guidance](https://github.com/neondatabase/website/blob/main/content/docs/connect/connect-from-any-app.md)
+- [Hugging Face current compute-plan requirement and disk limits](https://github.com/huggingface/hub-docs/blob/main/docs/hub/spaces-overview.md)
+- [GitHub Pages scope and limits](https://github.com/github/docs/blob/main/content/pages/getting-started-with-github-pages/github-pages-limits.md)
+
+Unverified website pages attempted (not cited as read): [Render Free](https://render.com/docs/free), [Render billing](https://render.com/docs/billing), [Render FastAPI](https://render.com/docs/deploy-fastapi), [Supabase pricing](https://supabase.com/pricing). A free-tier label is not an account-specific no-billing guarantee.
