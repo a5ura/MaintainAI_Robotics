@@ -6,6 +6,7 @@
 - Merge commit: `ad1fdfe0b162c324883850974ef1ca0c6bdb9c2e`, fetched from `origin/main`. Its parents are initial main `cbba271e95e86cabf3e152793140faec67c63a34` and M1 tip `940a183ff0362fe3d4c221b3e3c346c90c63f37b`; commit subject identifies PR #1. This is Git-history verification; API metadata such as exact merged-at time remains unavailable (`Forbidden`).
 - Stabilization branch: `fix/m1-stabilization`, created from that verified merge, with a clean working tree before edits. No stabilization merge performed.
 - Actual stabilization execution: published environment's existing managed cloud Linux workspace `/workspace/MaintainAI_Robotics`; Python 3.12.14, Node 24.19.0, npm 11.9.0, Git 2.52.0. This does not verify Codex Desktop or Windows execution.
+- Stabilization branch pushed at implementation commit `ba77812`; automated new PR creation failed with `Post "https://api.github.com/graphql": Forbidden`. No stabilization PR has been created or merged.
 - Current stabilization results and review status: [stabilization report](STABILIZATION_REPORT.md).
 
 ## Historical M1 execution and repository

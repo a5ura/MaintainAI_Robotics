@@ -6,7 +6,10 @@
 - Branch: `fix/m1-stabilization`.
 - Verified base: `ad1fdfe0b162c324883850974ef1ca0c6bdb9c2e` on fetched `origin/main`.
 - M1 PR #1: https://github.com/a5ura/MaintainAI_Robotics/pull/1 — merged, verified by fetched merge subject and both parents (initial main and M1 feature tip). GitHub API metadata remains unavailable.
-- Stabilization commits: use this branch's `git log`; review PR creation is pending the authenticated API attempt. No stabilization merge authorized or performed.
+- Implementation commit: `ba77812` (followed by a review-status documentation commit; see branch log).
+- Branch push succeeded. Automated PR creation failed with `Post "https://api.github.com/graphql": Forbidden`. **No stabilization PR URL exists or is claimed.** The exact remaining step is creating a PR targeting main from the pushed branch once GitHub API access is configured, or using the GitHub form below.
+- [Create the stabilization PR](https://github.com/a5ura/MaintainAI_Robotics/pull/new/fix/m1-stabilization); ready-to-use body: [PR description](STABILIZATION_PR_DESCRIPTION.md).
+- No stabilization merge authorized or performed.
 
 ## Actual execution
 
@@ -47,4 +50,4 @@ Approved PRD, V1 roadmap, Project 1, package manifests and dependency locks unch
 
 Account entitlement/actual incremental cost, Windows/Codex Desktop performance, public deployment and persistent cloud storage remain unverified. No purchase, billing activation, paid API, additional credits or new infrastructure was performed. FK checks validate position and joint bounds for the simplified model, not collisions, dynamic limits, real sensors or physical safety. The 0.1 mm tolerance is simulation-specific.
 
-Recommendation: **technical fixes ready for Planning review**, with PR availability subject to GitHub API access. No automatic merge.
+Recommendation: **technical fixes ready for Planning review**, with PR creation blocked by the verified GitHub GraphQL Forbidden response. No automatic merge.
