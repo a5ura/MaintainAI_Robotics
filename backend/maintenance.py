@@ -1,4 +1,5 @@
 import os
+from uuid import UUID
 from pathlib import Path
 from typing import Literal
 from fastapi import APIRouter, Depends, Request, Query
@@ -11,6 +12,7 @@ def get_repository(request: Request):
 
 class TicketCreate(BaseModel):
     model_config=ConfigDict(str_strip_whitespace=True)
+    request_id: UUID | None = None
     equipment_id: str = Field(min_length=1,max_length=80)
     diagnosis_id: str | None = Field(default=None,min_length=1,max_length=80)
     title: str = Field(min_length=1,max_length=120)
