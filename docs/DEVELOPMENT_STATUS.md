@@ -10,6 +10,7 @@
 - Source commits: `5e094bd` retry-safe ticket/security helpers, `164df80` guided/engineering UI, followed by final readability/docs/review commits.
 - Real process-restart check retained guided ticket `T-189937a33c5d56fb89d3247920ed5670`, version 2, repair note/history and diagnosis `D-973774d225afd7785d537ddd` with its immutable evidence. This is local SQLite proof, not hosted redeploy durability.
 - Deployment: **not performed / blocked**. HOSTING_DECISION records official-source evidence, candidate comparisons and exact account/network/runtime/adapter gates. No provider, billing, credentials, record migration, public URL or environment publication was activated.
+- M3 branch pushed; automated PR creation returned `Post "https://api.github.com/graphql": Forbidden`. No M3 PR or merge is claimed; a prefilled web form and description are provided in the report.
 - Current review/PR status and acceptance: [M3 completion report](M3_COMPLETION_REPORT.md); full public V1 remains incomplete until release gates pass.
 
 ## Historical M2 baseline and execution

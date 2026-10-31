@@ -7,7 +7,8 @@
 - Branch: `feature/m3-experience-release`. Initial working tree clean; existing work preserved; no worktree/rebuild of architecture, PRD or Project 1 change.
 - Execution: existing managed **cloud Linux x86_64**, `/workspace/MaintainAI_Robotics`, Python 3.12.14, Node 24.19.0, Git 2.52.0 (npm 11.9.0). Desktop/Windows and physical laptop performance are not established.
 - Source commits: `5e094bd` backend safety/idempotent tickets; `164df80` guide/engineering experience; final readability/docs/review commits follow in branch log.
-- PR: final branch push/API attempt pending in this report draft; no PR URL claimed. No automatic merge or environment publication.
+- Branch push verified through `6a3916d` (followed by a final review-status documentation commit). Automated PR creation failed with `Post "https://api.github.com/graphql": Forbidden`; **no M3 PR exists or is claimed**.
+- [Prefilled GitHub PR form](https://github.com/a5ura/MaintainAI_Robotics/compare/main...feature/m3-experience-release?expand=1&title=M3%3A+Guided+investigation%2C+engineering+tools+and+release+readiness&body=Live+guided+simulation%2Fdiagnosis%2Fticket+flow%2C+optional+engineering+tools+and+release+safeguards.+Verified%3A+97+backend+tests%2C+36+frontend+tests%2C+build+and+13+browser+tests.+Deployment+blocked%3B+no+paid+services+activated.+Full+description%3A+https%3A%2F%2Fgithub.com%2Fa5ura%2FMaintainAI_Robotics%2Fblob%2Ffeature%2Fm3-experience-release%2Fdocs%2FM3_PR_DESCRIPTION.md); [ready-to-use description](M3_PR_DESCRIPTION.md). Remaining Git step: create the PR targeting main with configured API access or the web form. No automatic merge or environment publication.
 
 ## 2. Live Guided Demo and controls
 
@@ -97,8 +98,8 @@ No unexplained application defect remains in tested local flows. Limitations: si
 | Official-source provider comparison and risks | PASS research with explicit inaccessible/conditional items |
 | Actual cost and hosting-account Free-only guarantee | UNVERIFIED; no billable resources activated |
 | Hosted shared durability/public URL/redeployment smoke | UNVERIFIED — not deployed, blocked at gate |
-| Reviewable PR | UNVERIFIED pending push/API attempt; no auto-merge |
+| Reviewable PR | UNVERIFIED — branch pushed, actual PR creation blocked by GraphQL Forbidden; no auto-merge |
 
 ## 12. Recommendation
 
-Ready for Planning review of the **local M3 release candidate** with final refreshed browser results recorded; Git review handoff remains subject to API access. Keep public V1 release blocked until hosting/access/runtime/security/durability items are verified. Do not merge or publish automatically, change the PRD, or start V2.
+Ready for Planning review of the **local M3 release candidate** with final refreshed browser results recorded and branch/description available; actual PR creation is blocked by GitHub API access. Keep public V1 release blocked until hosting/access/runtime/security/durability items are verified. Do not merge or publish automatically, change the PRD, or start V2.
