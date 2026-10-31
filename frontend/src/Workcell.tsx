@@ -1,3 +1,4 @@
+import { scenarioObjectPosition, type Scenario } from "./scenarios";
 import { Canvas } from "@react-three/fiber";
 import { Component, type ReactNode } from "react";
 import {
@@ -65,7 +66,16 @@ class Boundary extends Component<{ children: ReactNode }, { failed: boolean }> {
     );
   }
 }
-export default function Workcell({ t, drop }: { t: number; drop: boolean }) {
+export default function Workcell({
+  t,
+  drop = false,
+  scenario,
+}: {
+  t: number;
+  drop?: boolean;
+  scenario?: Scenario;
+}) {
+  const outcome = scenario ?? (drop ? "drop" : "normal");
   const source = fk(trajectory(2)).tcp,
     target = fk(trajectory(10)).tcp;
   return (
@@ -91,10 +101,16 @@ export default function Workcell({ t, drop }: { t: number; drop: boolean }) {
           </mesh>
         ))}
         <Robot t={t} />
-        <mesh position={objectPosition(t, drop)}>
+        <mesh position={scenarioObjectPosition(t, outcome)}>
           <boxGeometry args={[0.24, 0.24, 0.24]} />
           <meshStandardMaterial
-            color={drop && t >= 6 ? "#ff766b" : "#8be0ce"}
+            color={
+              outcome === "drop" && t >= 6
+                ? "#ff766b"
+                : outcome === "position" && t >= 10
+                  ? "#eab15a"
+                  : "#8be0ce"
+            }
           />
         </mesh>
       </Canvas>

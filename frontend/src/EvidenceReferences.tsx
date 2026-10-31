@@ -1,7 +1,21 @@
 import type { Evidence } from "./model";
 
 export function evidenceDescription(e: Evidence) {
-  return `${e.phase} · grip ${e.grip_command ? "HOLD" : "RELEASE"} · object ${e.object_present === null ? "UNKNOWN" : e.object_present ? "PRESENT" : "ABSENT"} · vacuum ${e.pressure_kpa ?? "unknown"} kPa · verification ${e.verification ?? "not sampled"}`;
+  const extra = [
+    e.vision
+      ? `camera ${e.vision.status}, acquired ${e.vision.acquired_t}s, confidence ${e.vision.confidence ?? "unknown"}`
+      : "",
+    e.placement
+      ? `observed placement ${e.placement.observed?.map((v) => v.toFixed(3)).join(", ") ?? "absent"} (${e.placement.source})`
+      : "",
+    e.controller ? `controller ${e.controller.state}` : "",
+    ...(e.events ?? []).map(
+      (event) => `${event.t}s ${event.code}: ${event.message}`,
+    ),
+  ]
+    .filter(Boolean)
+    .join(" · ");
+  return `${e.phase} · grip ${e.grip_command ? "HOLD" : "RELEASE"} · object ${e.object_present === null ? "UNKNOWN" : e.object_present ? "PRESENT" : "ABSENT"} · vacuum ${e.pressure_kpa ?? "unknown"} kPa · verification ${e.verification ?? "not sampled"}${extra ? " · " + extra : ""}`;
 }
 
 export function EvidenceReferences({

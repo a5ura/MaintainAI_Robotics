@@ -17,3 +17,13 @@
 - Use 0.1 mm Euclidean simulation tolerance, inclusive plus 1e-12 m floating-point boundary slack. Joint limits are inclusive with no added joint slack.
 - Distinguish invalid API input (422) from physically inconsistent telemetry (200/inconclusive). Suppress cause rankings and failure conclusions when kinematic evidence is inconsistent. Return per-row violations instead of inventing a new fault scenario.
 - Use native accessible anchor links and target-row highlighting for traceability, preserving the existing UI architecture and adding no dependency.
+
+## Milestone 2 implementation decisions
+
+- Verified main includes PR #2 merge `44f8d44bf171ad82f2250938298861e97b267836`; build on it without resetting existing work or creating another worktree.
+- Retain M1 FK/trajectory and API fields; add optional typed camera/placement/controller/event fields, a pure rule registry, multiple anomaly results and immutable persisted diagnostic IDs.
+- Use independent fixture observations for positioning discrepancy; keep commanded robot kinematics valid. Treat failed vision as unreliable verification, not proof of physical loss. Clamp protective-stop motion at 6 seconds; recovery uses Reset only.
+- Use a reproducible single Mulberry32 seed draw; record resolved scenario and seed in active context and linked ticket description. Never send a diagnostic answer label in simulation payloads.
+- Use Python standard-library SQLite and a repository adapter rather than another framework or hosted account. Transactional idempotent seed, parameterized queries, foreign keys, versioned updates and temporary test databases are required. Local SQLite is not the final hosted durability solution.
+- Persist diagnosis snapshots before ticket linkage; a ticket references the backend's immutable result, not a client-supplied replacement. Public/no-login semantics are explicit; no visitor-private identity claims.
+- No dependency additions, Docker, external APIs, paid services, infrastructure provisioning or environment publication. Account entitlement/actual cost remains unobservable; $0 billing cannot be certified from this session.

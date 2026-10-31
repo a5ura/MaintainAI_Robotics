@@ -1,5 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import Workcell from "./Workcell";
+import Maintenance from "./Maintenance";
+import {
+  SCENARIOS,
+  resolveScenario,
+  advanceScenario,
+  scenarioSample,
+  cyclePayload,
+  endTime,
+  type Selection,
+} from "./scenarios";
 import { EvidenceReferences } from "./EvidenceReferences";
 import {
   advance,
@@ -15,8 +25,13 @@ import {
 import "./style.css";
 export function App() {
   const [clock, setClock] = useState<Clock>({ t: 0, running: false });
-  const [drop, setDrop] = useState(false),
-    [result, setResult] = useState<Diagnosis | null>(null);
+  const [selection, setSelection] = useState<Selection>("normal");
+  const [seed, setSeed] = useState(42);
+  const scenario = resolveScenario(selection, seed),
+    drop = scenario === "drop";
+  const [view, setView] = useState<"operations" | "maintenance">("operations");
+  const [fromDiagnosis, setFromDiagnosis] = useState(false);
+  const [result, setResult] = useState<Diagnosis | null>(null);
   const [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
   const generation = useRef(0),
@@ -28,10 +43,10 @@ export function App() {
       const now = performance.now();
       const dt = Math.min((now - last) / 1000, 0.25);
       last = now;
-      setClock((c) => advance(c, dt));
+      setClock((c) => advanceScenario(c, dt, scenario));
     }, 33);
     return () => clearInterval(id);
-  }, [clock.running]);
+  }, [clock.running, scenario]);
   async function diagnose() {
     const run = generation.current;
     setBusy(true);
@@ -40,9 +55,7 @@ export function App() {
       const response = await fetch("/api/diagnose", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          samples: SAMPLE_TIMES.map((t) => sample(t, drop)),
-        }),
+        body: JSON.stringify(cyclePayload(scenario)),
         signal: AbortSignal.timeout(10000),
       });
       if (!response.ok) throw new Error(`Backend returned ${response.status}`);
@@ -56,7 +69,7 @@ export function App() {
     }
   }
   useEffect(() => {
-    if (clock.t >= DURATION && !requested.current) {
+    if (clock.t >= endTime(scenario) && !requested.current) {
       requested.current = true;
       void diagnose();
     }
@@ -70,7 +83,7 @@ export function App() {
     setBusy(false);
   }
   const tcp = fk(trajectory(clock.t)).tcp;
-  const sensor = sample(clock.t, drop);
+  const sensor = scenarioSample(clock.t, scenario);
   return (
     <div className="shell">
       <header>
@@ -82,288 +95,418 @@ export function App() {
         </span>
         <span className="live-dot">LOCAL DEMO</span>
       </header>
-      <main>
-        <div className="eyebrow">OPERATIONS / CELL 01</div>
-        <div className="title-row">
-          <div>
-            <h1>
-              Precision in motion.
-              <br />
-              <span>Clarity when it stops.</span>
-            </h1>
-            <p>A robotic failure investigation, grounded in evidence.</p>
-          </div>
-          <div className="cell-tag">
-            R-01 <span>3-AXIS DEMONSTRATOR</span>
-          </div>
-        </div>
-        <div className="workspace">
-          <section className="cell-panel">
-            <div className="panel-top">
-              <span>01 / ROBOT WORKCELL</span>
-              <span
-                className={result?.status === "detected" ? "fault" : "good"}
-              >
-                {result?.status === "detected"
-                  ? "FAULT DETECTED"
-                  : clock.running
-                    ? "CYCLE ACTIVE"
-                    : clock.t === 12
-                      ? "CYCLE COMPLETE"
-                      : "STANDBY"}
-              </span>
-            </div>
-            <div className="viewport">
-              <Workcell t={clock.t} drop={drop} />
-              <div className="viewport-label">
-                SIMULATION • NOT LIVE HARDWARE
-              </div>
-              <div className="tcp">
-                TCP / WORLD [m]
+      <nav className="workspace-nav" aria-label="Workspace">
+        <button
+          aria-pressed={view === "operations"}
+          onClick={() => setView("operations")}
+        >
+          Operations
+        </button>
+        <button
+          aria-pressed={view === "maintenance"}
+          onClick={() => {
+            setFromDiagnosis(false);
+            setView("maintenance");
+          }}
+        >
+          Maintenance
+        </button>
+      </nav>
+      {view === "maintenance" ? (
+        <Maintenance
+          diagnosis={result}
+          fromDiagnosis={fromDiagnosis}
+          runContext={`${SCENARIOS[scenario]} · seed ${seed}`}
+          onReturn={() => setView("operations")}
+        />
+      ) : (
+        <main>
+          <div className="eyebrow">OPERATIONS / CELL 01</div>
+          <div className="title-row">
+            <div>
+              <h1>
+                Precision in motion.
                 <br />
-                {tcp.map((n) => n.toFixed(3)).join(" / ")}
-              </div>
+                <span>Clarity when it stops.</span>
+              </h1>
+              <p>A robotic failure investigation, grounded in evidence.</p>
             </div>
-            <div className="sensor-strip">
-              <span>GRIP / {sensor.grip_command ? "HOLD" : "RELEASE"}</span>
-              <span
-                className={
-                  drop && clock.t >= 6 && clock.t < 10 ? "fault" : "good"
-                }
-              >
-                OBJECT / {sensor.object_present ? "PRESENT" : "ABSENT"}
-              </span>
-              <span>VACUUM / {sensor.pressure_kpa} kPa</span>
+            <div className="cell-tag">
+              R-01 <span>3-AXIS DEMONSTRATOR</span>
             </div>
-            <div className="transport">
-              <div>
-                <span className="eyebrow">CURRENT PHASE</span>
-                <strong data-testid="phase">
-                  {phase(clock.t).replaceAll("-", " ")}
-                </strong>
-              </div>
-              <span className="time">{clock.t.toFixed(1)} / 12.0 s</span>
-            </div>
-            <progress aria-label="Cycle progress" max={12} value={clock.t} />
-            <div className="controls">
-              <button
-                className="primary"
-                onClick={() => setClock((c) => ({ ...c, running: true }))}
-                disabled={clock.running || clock.t === 12}
-              >
-                Start
-              </button>
-              <button
-                onClick={() => setClock((c) => ({ ...c, running: false }))}
-                disabled={!clock.running}
-              >
-                Pause
-              </button>
-              <button onClick={reset}>Reset</button>
-              <label className="scenario">
-                SCENARIO
-                <select
-                  aria-label="Scenario"
-                  value={drop ? "drop" : "normal"}
-                  disabled={clock.t > 0 || clock.running}
-                  onChange={(e) => setDrop(e.target.value === "drop")}
-                >
-                  <option value="normal">Valid cycle</option>
-                  <option value="drop">Dropped object</option>
-                </select>
-              </label>
-            </div>
-            <div className="checkpoints">
-              {[
-                { t: 0, label: "Pre-pick" },
-                { t: 3, label: "Post-pick" },
-                { t: 9, label: "Pre-place" },
-                { t: 12, label: "Post-place" },
-              ].map((c) => (
-                <div key={c.t} className={clock.t >= c.t ? "done" : ""}>
-                  <span>
-                    {clock.t >= c.t ? "●" : "○"} {c.label}
-                  </span>
-                  <small>
-                    {clock.t >= c.t
-                      ? sample(c.t, drop).verification
-                      : "Awaiting observation"}
-                  </small>
-                </div>
-              ))}
-            </div>
-          </section>
-          <aside className="diagnostics" id="diagnostics">
-            <div className="panel-top">
-              <span>02 / DIAGNOSTICS</span>
-              <span>RULES ENGINE</span>
-            </div>
-            <div className="diagnosis-body" aria-live="polite">
-              {!result && !busy && !error && (
-                <>
-                  <div className="radar">◎</div>
-                  <h2>Every signal tells a story.</h2>
-                  <p>
-                    Run a cycle to collect sensor readings and checkpoint
-                    observations. The backend correlates the evidence when the
-                    cycle completes.
-                  </p>
-                  <div className="instruction">
-                    <b>Try the failure path</b>
-                    <p>
-                      Select Dropped object, then Start. Watch the grip signal
-                      change during transport.
-                    </p>
-                  </div>
-                </>
-              )}
-              {busy && <p>Correlating cycle evidence…</p>}
-              {error && (
-                <div role="alert">
-                  <h2>Backend unavailable</h2>
-                  <p>{error}</p>
-                  <button onClick={() => void diagnose()}>
-                    Retry diagnosis
-                  </button>
-                </div>
-              )}
-              {result && (
-                <>
-                  <span
-                    className={
-                      "result-badge " +
-                      (result.status === "detected" ? "fault" : "good")
-                    }
-                  >
-                    {result.status.toUpperCase()}
-                  </span>
-                  <h2>
-                    {result.failure ??
-                      (result.status === "normal"
-                        ? "Placement verified"
-                        : "Review evidence")}
-                  </h2>
-                  <p>{result.summary}</p>
-                  {result.warnings.map((w) => (
-                    <p className="fault" key={w}>
-                      {w}
-                    </p>
-                  ))}
-                  <h3>CONFIRMED OBSERVATIONS</h3>
-                  {result.observations.map((o) => (
-                    <div className="observation" key={o.text}>
-                      {o.text}
-                      <EvidenceReferences
-                        ids={o.evidence}
-                        timeline={result.timeline}
-                        label="Observation"
-                      />
-                    </div>
-                  ))}
-                  {result.hypotheses.length > 0 && (
-                    <>
-                      <h3>PLAUSIBLE CAUSES</h3>
-                      <p className="muted">
-                        Ordinal evidence ranking · not probabilities. Select a
-                        reference to inspect its measured timeline row.
-                      </p>
-                      {result.hypotheses.map((h, i) => (
-                        <details key={h.cause} open={i === 0}>
-                          <summary>
-                            <span>0{i + 1}</span> {h.cause}
-                          </summary>
-                          {h.support.length === 0 && (
-                            <p className="limited-support">
-                              Limited support: no supporting readings.
-                            </p>
-                          )}
-                          {h.contradiction.length > 0 && (
-                            <p className="limited-support">
-                              Contradictory evidence exists. This is not a
-                              confirmed cause.
-                            </p>
-                          )}
-                          <EvidenceReferences
-                            ids={h.support}
-                            timeline={result.timeline}
-                            label="Supports"
-                          />
-                          <EvidenceReferences
-                            ids={h.contradiction}
-                            timeline={result.timeline}
-                            label="Contradicts"
-                          />
-                          <b>OPERATOR CHECK</b>
-                          <p>{h.check}</p>
-                        </details>
-                      ))}
-                    </>
-                  )}
-                </>
-              )}
-            </div>
-          </aside>
-        </div>
-        <section className="evidence-panel">
-          <div className="panel-top">
-            <span>03 / EVIDENCE TIMELINE</span>
-            <span>SIMULATED INPUTS · CYCLE-RELATIVE TIME</span>
           </div>
-          {result ? (
-            <div className="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>REF / TIME</th>
-                    <th>PHASE</th>
-                    <th>GRIP COMMAND</th>
-                    <th>OBJECT SENSOR</th>
-                    <th>VACUUM</th>
-                    <th>VERIFICATION</th>
-                    <th>FK CHECK</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {result.timeline.map((e) => (
-                    <tr key={e.id} id={`evidence-${e.id}`} tabIndex={-1}>
-                      <td>
-                        {e.id} / {e.t.toFixed(1)}s
-                      </td>
-                      <td>{e.phase}</td>
-                      <td>{e.grip_command ? "HOLD" : "RELEASE"}</td>
-                      <td>
-                        {e.object_present === null
-                          ? "UNKNOWN"
-                          : e.object_present
-                            ? "PRESENT"
-                            : "ABSENT"}
-                      </td>
-                      <td>{e.pressure_kpa ?? "UNKNOWN"} kPa</td>
-                      <td>{e.verification ?? "—"}</td>
-                      <td>
-                        {e.kinematics
-                          ? e.kinematics.valid
-                            ? "CONSISTENT"
-                            : "INCONSISTENT"
-                          : "UNVERIFIED"}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          <div className="workspace">
+            <section className="cell-panel">
+              <div className="panel-top">
+                <span>01 / ROBOT WORKCELL</span>
+                <span
+                  className={result?.status === "detected" ? "fault" : "good"}
+                >
+                  {result?.status === "detected"
+                    ? "FAULT DETECTED"
+                    : clock.running
+                      ? "CYCLE ACTIVE"
+                      : clock.t === 12
+                        ? "CYCLE COMPLETE"
+                        : "STANDBY"}
+                </span>
+              </div>
+              <div className="viewport">
+                <Workcell t={clock.t} scenario={scenario} />
+                {scenario === "stop" && clock.t >= 6 && (
+                  <div className="outcome-banner" role="status">
+                    PROTECTIVE STOP · CYCLE INTERRUPTED
+                  </div>
+                )}
+                {scenario === "vision" && clock.t >= 12 && (
+                  <div className="outcome-banner" role="status">
+                    CAMERA TIMEOUT · VERIFICATION UNAVAILABLE
+                  </div>
+                )}
+                {scenario === "position" && clock.t >= 12 && (
+                  <div className="outcome-banner" role="status">
+                    PLACEMENT OFFSET · INDEPENDENT OBSERVATION
+                  </div>
+                )}
+                <div className="viewport-label">
+                  SIMULATION • NOT LIVE HARDWARE
+                </div>
+                <div className="tcp">
+                  TCP / WORLD [m]
+                  <br />
+                  {tcp.map((n) => n.toFixed(3)).join(" / ")}
+                </div>
+              </div>
+              <div className="sensor-strip">
+                <span>GRIP / {sensor.grip_command ? "HOLD" : "RELEASE"}</span>
+                <span
+                  className={
+                    drop && clock.t >= 6 && clock.t < 10 ? "fault" : "good"
+                  }
+                >
+                  OBJECT / {sensor.object_present ? "PRESENT" : "ABSENT"}
+                </span>
+                <span>VACUUM / {sensor.pressure_kpa} kPa</span>
+              </div>
+              <div className="transport">
+                <div>
+                  <span className="eyebrow">CURRENT PHASE</span>
+                  <strong data-testid="phase">
+                    {scenario === "stop" && clock.t >= 6
+                      ? "Interrupted · transport"
+                      : phase(clock.t).replaceAll("-", " ")}
+                  </strong>
+                </div>
+                <span className="time">{clock.t.toFixed(1)} / 12.0 s</span>
+              </div>
+              <progress aria-label="Cycle progress" max={12} value={clock.t} />
+              <div className="controls">
+                <button
+                  className="primary"
+                  onClick={() => setClock((c) => ({ ...c, running: true }))}
+                  disabled={clock.running || clock.t >= endTime(scenario)}
+                >
+                  Start
+                </button>
+                <button
+                  onClick={() => setClock((c) => ({ ...c, running: false }))}
+                  disabled={!clock.running}
+                >
+                  Pause
+                </button>
+                <button onClick={reset}>Reset</button>
+                <label className="scenario">
+                  SCENARIO
+                  <select
+                    aria-label="Scenario"
+                    value={selection}
+                    disabled={clock.t > 0 || clock.running}
+                    onChange={(e) => setSelection(e.target.value as Selection)}
+                  >
+                    {Object.entries(SCENARIOS).map(([key, label]) => (
+                      <option key={key} value={key}>
+                        {label}
+                      </option>
+                    ))}
+                    <option value="random">Random failure</option>
+                  </select>
+                </label>
+              </div>
+              <div className="run-context">
+                <label>
+                  Reproducible seed{" "}
+                  <input
+                    aria-label="Reproducible seed"
+                    type="number"
+                    min={0}
+                    max={4294967295}
+                    value={seed}
+                    disabled={clock.t > 0 || clock.running}
+                    onChange={(e) =>
+                      setSeed(
+                        Math.min(
+                          4294967295,
+                          Math.max(0, Math.floor(Number(e.target.value) || 0)),
+                        ),
+                      )
+                    }
+                  />
+                </label>
+                <span data-testid="run-context">
+                  {SCENARIOS[scenario]} · seed {seed}
+                </span>
+              </div>
+              <div className="checkpoints">
+                {[
+                  { t: 0, label: "Pre-pick" },
+                  { t: 3, label: "Post-pick" },
+                  { t: 9, label: "Pre-place" },
+                  { t: 12, label: "Post-place" },
+                ].map((c) => (
+                  <div key={c.t} className={clock.t >= c.t ? "done" : ""}>
+                    <span>
+                      {clock.t >= c.t ? "●" : "○"} {c.label}
+                    </span>
+                    <small>
+                      {clock.t >= c.t
+                        ? (scenarioSample(c.t, scenario).verification ??
+                          "No reliable observation")
+                        : scenario === "stop" && clock.t >= 6
+                          ? "Not reached"
+                          : "Awaiting observation"}
+                    </small>
+                  </div>
+                ))}
+              </div>
+            </section>
+            <aside className="diagnostics" id="diagnostics">
+              <div className="panel-top">
+                <span>02 / DIAGNOSTICS</span>
+                <span>RULES ENGINE</span>
+              </div>
+              <div className="diagnosis-body" aria-live="polite">
+                {!result && !busy && !error && (
+                  <>
+                    <div className="radar">◎</div>
+                    <h2>Every signal tells a story.</h2>
+                    <p>
+                      Run a cycle to collect sensor readings and checkpoint
+                      observations. The backend correlates the evidence when the
+                      cycle completes.
+                    </p>
+                    <div className="instruction">
+                      <b>Try the failure path</b>
+                      <p>
+                        Select Dropped object, then Start. Watch the grip signal
+                        change during transport.
+                      </p>
+                    </div>
+                  </>
+                )}
+                {busy && <p>Correlating cycle evidence…</p>}
+                {error && (
+                  <div role="alert">
+                    <h2>Backend unavailable</h2>
+                    <p>{error}</p>
+                    <button onClick={() => void diagnose()}>
+                      Retry diagnosis
+                    </button>
+                  </div>
+                )}
+                {result && (
+                  <>
+                    <span
+                      className={
+                        "result-badge " +
+                        (result.status === "detected" ? "fault" : "good")
+                      }
+                    >
+                      {result.status.toUpperCase()}
+                    </span>
+                    <h2>
+                      {result.failure ??
+                        (result.status === "normal"
+                          ? "Placement verified"
+                          : "Review evidence")}
+                    </h2>
+                    <p>{result.summary}</p>
+                    {result.id && (
+                      <button
+                        onClick={() => {
+                          setFromDiagnosis(true);
+                          setView("maintenance");
+                        }}
+                      >
+                        Create maintenance ticket
+                      </button>
+                    )}
+                    {(result.anomalies?.length ?? 0) > 1 && (
+                      <p className="fault">
+                        {result.anomalies!.length} independently detected
+                        anomalies
+                      </p>
+                    )}
+                    {result.warnings.map((w) => (
+                      <p className="fault" key={w}>
+                        {w}
+                      </p>
+                    ))}
+                    <h3>CONFIRMED OBSERVATIONS</h3>
+                    {result.observations.map((o) => (
+                      <div className="observation" key={o.text}>
+                        {o.text}
+                        <EvidenceReferences
+                          ids={o.evidence}
+                          timeline={result.timeline}
+                          label="Observation"
+                        />
+                      </div>
+                    ))}
+                    {result.hypotheses.length > 0 && (
+                      <>
+                        <h3>PLAUSIBLE CAUSES</h3>
+                        <p className="muted">
+                          Ordinal evidence ranking · not probabilities. Select a
+                          reference to inspect its measured timeline row.
+                        </p>
+                        {result.hypotheses.map((h, i) => (
+                          <details
+                            key={`${h.anomaly ?? ""}-${h.cause}`}
+                            open={i === 0}
+                          >
+                            <summary>
+                              <span>0{i + 1}</span> {h.cause}
+                            </summary>
+                            {h.support.length === 0 && (
+                              <p className="limited-support">
+                                Limited support: no supporting readings.
+                              </p>
+                            )}
+                            {h.contradiction.length > 0 && (
+                              <p className="limited-support">
+                                Contradictory evidence exists. This is not a
+                                confirmed cause.
+                              </p>
+                            )}
+                            <EvidenceReferences
+                              ids={h.support}
+                              timeline={result.timeline}
+                              label="Supports"
+                            />
+                            <EvidenceReferences
+                              ids={h.contradiction}
+                              timeline={result.timeline}
+                              label="Contradicts"
+                            />
+                            {h.anomaly && (
+                              <p className="muted">
+                                Related anomaly: {h.anomaly}
+                              </p>
+                            )}
+                            <b>OPERATOR CHECK</b>
+                            <p>{h.check}</p>
+                          </details>
+                        ))}
+                      </>
+                    )}
+                  </>
+                )}
+              </div>
+            </aside>
+          </div>
+          <section className="evidence-panel">
+            <div className="panel-top">
+              <span>03 / EVIDENCE TIMELINE</span>
+              <span>SIMULATED INPUTS · CYCLE-RELATIVE TIME</span>
             </div>
-          ) : (
-            <p className="empty">
-              No completed run. Evidence will appear here after backend
-              analysis.
-            </p>
-          )}
-        </section>
-        <footer>
-          <span>MAINTAINAI / ENGINEERING DEMONSTRATOR</span>
-          <span>MILESTONE 01 · DETERMINISTIC, EXPLAINABLE, REPRODUCIBLE</span>
-        </footer>
-      </main>
+            {result ? (
+              <div className="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>REF / TIME</th>
+                      <th>PHASE</th>
+                      <th>GRIP COMMAND</th>
+                      <th>OBJECT SENSOR</th>
+                      <th>VACUUM</th>
+                      <th>VERIFICATION</th>
+                      <th>FK CHECK</th>
+                      <th>EVENTS / OBSERVATIONS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {result.timeline.map((e) => (
+                      <tr key={e.id} id={`evidence-${e.id}`} tabIndex={-1}>
+                        <td>
+                          {e.id} / {e.t.toFixed(1)}s
+                        </td>
+                        <td>{e.phase}</td>
+                        <td>{e.grip_command ? "HOLD" : "RELEASE"}</td>
+                        <td>
+                          {e.object_present === null
+                            ? "UNKNOWN"
+                            : e.object_present
+                              ? "PRESENT"
+                              : "ABSENT"}
+                        </td>
+                        <td>{e.pressure_kpa ?? "UNKNOWN"} kPa</td>
+                        <td>{e.verification ?? "—"}</td>
+                        <td>
+                          {e.kinematics
+                            ? e.kinematics.valid
+                              ? "CONSISTENT"
+                              : "INCONSISTENT"
+                            : "UNVERIFIED"}
+                        </td>
+                        <td className="engineering-cell">
+                          {e.events?.map((event) => (
+                            <div key={`${event.code}-${event.t}`}>
+                              {event.t}s / {event.source}: {event.code} —{" "}
+                              {event.message}
+                            </div>
+                          ))}
+                          {e.vision && (
+                            <div>
+                              Camera: {e.vision.status}; acquired{" "}
+                              {e.vision.acquired_t}s; confidence{" "}
+                              {e.vision.confidence ?? "unknown"}
+                            </div>
+                          )}
+                          {e.placement && (
+                            <div>
+                              Target:{" "}
+                              {e.placement.target
+                                .map((v) => v.toFixed(3))
+                                .join(", ")}{" "}
+                              / Observed:{" "}
+                              {e.placement.observed
+                                ?.map((v) => v.toFixed(3))
+                                .join(", ") ?? "absent"}{" "}
+                              ({e.placement.source})
+                            </div>
+                          )}
+                          {e.controller && (
+                            <div>Controller: {e.controller.state}</div>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <p className="empty">
+                No completed run. Evidence will appear here after backend
+                analysis.
+              </p>
+            )}
+          </section>
+          <footer>
+            <span>MAINTAINAI / ENGINEERING DEMONSTRATOR</span>
+            <span>MILESTONE 02 · DETERMINISTIC, EXPLAINABLE, REPRODUCIBLE</span>
+          </footer>
+        </main>
+      )}
     </div>
   );
 }
