@@ -83,12 +83,12 @@ test("positioning error, diagnosis ticket, concurrent edit recovery and durable 
     page.getByRole("region", { name: "Ticket details" }),
   ).toContainText(result.id);
   await page.screenshot({
-    path: "../docs/m2-maintenance-desktop.png",
+    path: "../docs/m3-regression-maintenance-desktop.png",
     fullPage: true,
   });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.screenshot({
-    path: "../docs/m2-maintenance-mobile.png",
+    path: "../docs/m3-regression-maintenance-mobile.png",
     fullPage: true,
   });
   expect(
@@ -124,7 +124,10 @@ test("vision failure is unreliable verification and not physical loss", async ({
       { exact: true },
     ),
   ).toBeVisible();
-  await page.screenshot({ path: "../docs/m2-vision.png", fullPage: true });
+  await page.screenshot({
+    path: "../docs/m3-regression-vision.png",
+    fullPage: true,
+  });
 });
 test("unexpected stop freezes displayed robot TCP and clock at interruption", async ({
   page,
@@ -143,7 +146,10 @@ test("unexpected stop freezes displayed robot TCP and clock at interruption", as
     page.getByRole("button", { name: "Start", exact: true }),
   ).toBeDisabled();
   await expect(page.getByText("Not reached")).toHaveCount(2);
-  await page.screenshot({ path: "../docs/m2-stop.png", fullPage: true });
+  await page.screenshot({
+    path: "../docs/m3-regression-stop.png",
+    fullPage: true,
+  });
   await page.getByRole("button", { name: "Reset", exact: true }).click();
   await expect(page.locator("progress")).toHaveAttribute("value", "0");
 });
