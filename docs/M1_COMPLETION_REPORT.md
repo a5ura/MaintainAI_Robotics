@@ -1,5 +1,7 @@
 # MaintainAI Robotics — Milestone 1 Completion Report
 
+Historical implementation report. Update: PR #1 was subsequently merged at `ad1fdfe0b162c324883850974ef1ca0c6bdb9c2e`; the original API blocker below describes the earlier attempt. See [current status](DEVELOPMENT_STATUS.md) and [stabilization report](STABILIZATION_REPORT.md) for subsequent changes and fresh tests.
+
 1. **Environment:** Existing managed cloud Linux, `/workspace/MaintainAI_Robotics`. Python 3.12.14, Node 24.19.0. Desktop/Windows not verified.
 2. **Git:** https://github.com/a5ura/MaintainAI_Robotics ; branch `feature/m1-robot-simulation-diagnostics`; base `cbba271e95e86cabf3e152793140faec67c63a34`; initial implementation `003bf70`, followed by evidence/report commits. Feature push succeeded; PR blocked by GitHub GraphQL `Forbidden`. No merge.
 3. **Implementation:** React/TypeScript/Tailwind/R3F workcell and FastAPI rules service, normal/fault runs, operator controls, checkpoint observations, evidence timeline, cause ranking, operator checks and API-error recovery.

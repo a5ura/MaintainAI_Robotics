@@ -65,8 +65,8 @@
       "t": 0.0,
       "phase": "pre-pick",
       "tcp": [
-        1.0,
-        1.0,
+        2.7,
+        0.28,
         0.0
       ],
       "joints": [
@@ -77,15 +77,26 @@
       "grip_command": false,
       "object_present": false,
       "pressure_kpa": 0.0,
-      "verification": "source"
+      "verification": "source",
+      "kinematics": {
+        "valid": true,
+        "expected_tcp": [
+          2.7,
+          0.27999999999999997,
+          -0.0
+        ],
+        "error_m": 5.551115123125783e-17,
+        "tolerance_m": 0.0001,
+        "violations": []
+      }
     },
     {
       "id": "E2",
       "t": 3.0,
       "phase": "post-pick",
       "tcp": [
-        1.0,
-        1.0,
+        2.7,
+        0.28,
         0.0
       ],
       "joints": [
@@ -96,15 +107,26 @@
       "grip_command": true,
       "object_present": true,
       "pressure_kpa": 65.0,
-      "verification": "held"
+      "verification": "held",
+      "kinematics": {
+        "valid": true,
+        "expected_tcp": [
+          2.7,
+          0.27999999999999997,
+          -0.0
+        ],
+        "error_m": 5.551115123125783e-17,
+        "tolerance_m": 0.0001,
+        "violations": []
+      }
     },
     {
       "id": "E3",
       "t": 6.0,
       "phase": "transport",
       "tcp": [
-        1.0,
-        1.0,
+        2.7,
+        0.28,
         0.0
       ],
       "joints": [
@@ -115,15 +137,26 @@
       "grip_command": true,
       "object_present": false,
       "pressure_kpa": 12.0,
-      "verification": null
+      "verification": null,
+      "kinematics": {
+        "valid": true,
+        "expected_tcp": [
+          2.7,
+          0.27999999999999997,
+          -0.0
+        ],
+        "error_m": 5.551115123125783e-17,
+        "tolerance_m": 0.0001,
+        "violations": []
+      }
     },
     {
       "id": "E4",
       "t": 9.0,
       "phase": "pre-place",
       "tcp": [
-        1.0,
-        1.0,
+        2.7,
+        0.28,
         0.0
       ],
       "joints": [
@@ -134,15 +167,26 @@
       "grip_command": true,
       "object_present": false,
       "pressure_kpa": 12.0,
-      "verification": "missing"
+      "verification": "missing",
+      "kinematics": {
+        "valid": true,
+        "expected_tcp": [
+          2.7,
+          0.27999999999999997,
+          -0.0
+        ],
+        "error_m": 5.551115123125783e-17,
+        "tolerance_m": 0.0001,
+        "violations": []
+      }
     },
     {
       "id": "E5",
       "t": 12.0,
       "phase": "post-place",
       "tcp": [
-        1.0,
-        1.0,
+        2.7,
+        0.28,
         0.0
       ],
       "joints": [
@@ -153,7 +197,18 @@
       "grip_command": false,
       "object_present": false,
       "pressure_kpa": 0.0,
-      "verification": "missing"
+      "verification": "missing",
+      "kinematics": {
+        "valid": true,
+        "expected_tcp": [
+          2.7,
+          0.27999999999999997,
+          -0.0
+        ],
+        "error_m": 5.551115123125783e-17,
+        "tolerance_m": 0.0001,
+        "violations": []
+      }
     }
   ],
   "warnings": [],

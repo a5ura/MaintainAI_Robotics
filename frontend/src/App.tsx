@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Workcell from "./Workcell";
+import { EvidenceReferences } from "./EvidenceReferences";
 import {
   advance,
   DURATION,
@@ -250,28 +251,48 @@ export function App() {
                   ))}
                   <h3>CONFIRMED OBSERVATIONS</h3>
                   {result.observations.map((o) => (
-                    <p className="observation" key={o.text}>
+                    <div className="observation" key={o.text}>
                       {o.text}
-                      <small>{o.evidence.join(" · ")}</small>
-                    </p>
+                      <EvidenceReferences
+                        ids={o.evidence}
+                        timeline={result.timeline}
+                        label="Observation"
+                      />
+                    </div>
                   ))}
                   {result.hypotheses.length > 0 && (
                     <>
                       <h3>PLAUSIBLE CAUSES</h3>
                       <p className="muted">
-                        Ordinal evidence ranking · not probabilities
+                        Ordinal evidence ranking · not probabilities. Select a
+                        reference to inspect its measured timeline row.
                       </p>
                       {result.hypotheses.map((h, i) => (
                         <details key={h.cause} open={i === 0}>
                           <summary>
                             <span>0{i + 1}</span> {h.cause}
                           </summary>
-                          <p>
-                            Supports: {h.support.join(", ") || "None observed"}
-                            <br />
-                            Contradicts:{" "}
-                            {h.contradiction.join(", ") || "None observed"}
-                          </p>
+                          {h.support.length === 0 && (
+                            <p className="limited-support">
+                              Limited support: no supporting readings.
+                            </p>
+                          )}
+                          {h.contradiction.length > 0 && (
+                            <p className="limited-support">
+                              Contradictory evidence exists. This is not a
+                              confirmed cause.
+                            </p>
+                          )}
+                          <EvidenceReferences
+                            ids={h.support}
+                            timeline={result.timeline}
+                            label="Supports"
+                          />
+                          <EvidenceReferences
+                            ids={h.contradiction}
+                            timeline={result.timeline}
+                            label="Contradicts"
+                          />
                           <b>OPERATOR CHECK</b>
                           <p>{h.check}</p>
                         </details>
@@ -299,19 +320,33 @@ export function App() {
                     <th>OBJECT SENSOR</th>
                     <th>VACUUM</th>
                     <th>VERIFICATION</th>
+                    <th>FK CHECK</th>
                   </tr>
                 </thead>
                 <tbody>
                   {result.timeline.map((e) => (
-                    <tr key={e.id}>
+                    <tr key={e.id} id={`evidence-${e.id}`} tabIndex={-1}>
                       <td>
                         {e.id} / {e.t.toFixed(1)}s
                       </td>
                       <td>{e.phase}</td>
                       <td>{e.grip_command ? "HOLD" : "RELEASE"}</td>
-                      <td>{e.object_present ? "PRESENT" : "ABSENT"}</td>
-                      <td>{e.pressure_kpa} kPa</td>
+                      <td>
+                        {e.object_present === null
+                          ? "UNKNOWN"
+                          : e.object_present
+                            ? "PRESENT"
+                            : "ABSENT"}
+                      </td>
+                      <td>{e.pressure_kpa ?? "UNKNOWN"} kPa</td>
                       <td>{e.verification ?? "—"}</td>
+                      <td>
+                        {e.kinematics
+                          ? e.kinematics.valid
+                            ? "CONSISTENT"
+                            : "INCONSISTENT"
+                          : "UNVERIFIED"}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
