@@ -68,3 +68,8 @@ All checked October 31, 2026. Official source repositories are linked where webs
 - [GitHub Pages scope and limits](https://github.com/github/docs/blob/main/content/pages/getting-started-with-github-pages/github-pages-limits.md)
 
 Unverified website pages attempted (not cited as read): [Render Free](https://render.com/docs/free), [Render billing](https://render.com/docs/billing), [Render FastAPI](https://render.com/docs/deploy-fastapi), [Supabase pricing](https://supabase.com/pricing). A free-tier label is not an account-specific no-billing guarantee.
+
+
+## Phase A.1 runtime-first checkpoint
+
+Phase A PR #5 is verified merged at `e940a83`. A dependency-free official-pattern Worker reproduces the package-index CONNECT 403 before app initialization; supported offline CLI resolution also lacks the required SDK cache. Runtime and billed resources remain unverified. Under the assignment's blocked-index gate, storage chunking, pre-ASGI enforcement and retained-data changes are deferred. No environment configuration, hosted resource, billing, production data or deployment was changed. Current evidence and exact next experiment: [Phase A.1 report](PHASE_A1_COMPLETION_REPORT.md).

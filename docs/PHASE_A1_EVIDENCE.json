@@ -1,0 +1,73 @@
+{
+  "date_utc": "2026-11-01",
+  "base": "e940a834857580d28791d3af50ea53d84d5d115c",
+  "branch": "feature/v1-deployment-phase-a1",
+  "environment": "Existing managed cloud Linux x86_64",
+  "tools": {
+    "native_python": "3.12.14",
+    "tools_python": "3.13.5",
+    "node": "24.19.0",
+    "npm": "11.9.0",
+    "git": "2.52.0",
+    "workers_py": "1.17.9",
+    "sdk": "1.9.5",
+    "uv": "0.13.6",
+    "wrangler": "4.156.0"
+  },
+  "policy": {
+    "observations_current": true,
+    "state": "enforced",
+    "mode": "restricted",
+    "index_host_allowed": false,
+    "vpn_configured": false,
+    "provider_identity_count": 0
+  },
+  "experiments": [
+    {
+      "name": "exact-index-connect",
+      "url": "https://index.pyodide.org/314.0.7/workers-runtime-sdk/",
+      "exit_code": 56,
+      "result": "CONNECT 403 before destination TLS",
+      "evidence": "evidence/a1/index-connect.txt"
+    },
+    {
+      "name": "minimal-official-pattern-worker",
+      "cli_exit_code": 1,
+      "dependency_compile_exit_code": 2,
+      "result": "blocked before initialization",
+      "selected_wasm": "cpython-3.14.2-emscripten-wasm32-musl",
+      "evidence": "evidence/a1/minimal-runtime.txt"
+    },
+    {
+      "name": "actual-cli-existing-cache-offline",
+      "cli_exit_code": 1,
+      "dependency_compile_exit_code": 1,
+      "result": "required SDK unavailable in selected offline resolver cache",
+      "evidence": "evidence/a1/minimal-offline-runtime.txt"
+    }
+  ],
+  "sdk_asgi_sha256": "dc50b5f4b3e8b815f963ecd8d8706bfea5f2d5bc72a26a94602ed8665ca8af5a",
+  "new_worker_request_samples": 0,
+  "authoritative_worker_cpu": "UNVERIFIED",
+  "worker_memory": "UNVERIFIED",
+  "decision": "CONDITIONAL GO",
+  "conditional_implementation": "Deferred under assignment section 3.3 blocked-index bounded-offline gate",
+  "test_results": {
+    "backend": 97,
+    "frontend": 39,
+    "build": "passed",
+    "local_d1": 44,
+    "chromium": 15
+  },
+  "new_dependencies": [],
+  "new_hosted_resources": [],
+  "account_cost_verification": "UNVERIFIED",
+  "skipped_tests": 0,
+  "github": {
+    "source_commit": "3d85a59",
+    "pr_created": false,
+    "command_exit_code": 1,
+    "error": "Post \"https://api.github.com/graphql\": Forbidden",
+    "compare_url": "https://github.com/a5ura/MaintainAI_Robotics/compare/main...feature/v1-deployment-phase-a1?expand=1"
+  }
+}

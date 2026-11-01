@@ -57,3 +57,8 @@ Checked November 1, 2026 UTC, via provider-owned sources through the configured 
 - [Static Assets billing/routing](https://github.com/cloudflare/cloudflare-docs/blob/production/src/content/docs/workers/static-assets/billing-and-limitations.mdx)
 
 Account entitlement and hosted behavior are separate, unverified evidence categories.
+
+
+## Phase A.1 runtime-first checkpoint
+
+Phase A PR #5 is verified merged at `e940a83`. A dependency-free official-pattern Worker reproduces the package-index CONNECT 403 before app initialization; supported offline CLI resolution also lacks the required SDK cache. Runtime and billed resources remain unverified. Under the assignment's blocked-index gate, storage chunking, pre-ASGI enforcement and retained-data changes are deferred. No environment configuration, hosted resource, billing, production data or deployment was changed. Current evidence and exact next experiment: [Phase A.1 report](PHASE_A1_COMPLETION_REPORT.md).
