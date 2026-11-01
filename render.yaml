@@ -5,7 +5,7 @@ services:
     runtime: python
     plan: free
     autoDeploy: false
-    buildCommand: pip install -r backend/requirements-postgres.txt
+    buildCommand: ./scripts/build-native.sh
     startCommand: ./scripts/start-native.sh
     healthCheckPath: /api/health
     envVars:
@@ -19,5 +19,9 @@ services:
         value: "1"
       - key: PG_POOL_MAX
         value: "4"
+      - key: MAINTAINAI_STATIC_DIR
+        value: frontend/dist
+      - key: NODE_VERSION
+        value: 24.19.0
       - key: DEMO_READONLY
         value: "0"

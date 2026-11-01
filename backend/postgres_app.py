@@ -43,11 +43,17 @@ def create_app():
     parsed=urlsplit(url)
     if parsed.scheme not in ('postgres','postgresql') or not parsed.hostname:raise RuntimeError('Invalid database configuration')
     origins=[v.strip() for v in os.environ.get('MAINTAINAI_ALLOWED_ORIGINS','http://localhost:5173,http://127.0.0.1:5173').split(',') if v.strip()]
-    if os.environ.get('MAINTAINAI_HOSTED')=='1' and (not origins or any(not v.startswith('https://') for v in origins)):
+    hosted=os.environ.get('MAINTAINAI_HOSTED')=='1'
+    def valid_origin(value):
+        try:
+            origin=urlsplit(value)
+            return origin.scheme=='https' and bool(origin.hostname) and origin.username is None and origin.password is None and origin.path=='' and not origin.query and not origin.fragment and '*' not in value and (origin.port is None or origin.port>0)
+        except ValueError:return False
+    if hosted and (not origins or any(not valid_origin(v) for v in origins)):
         raise RuntimeError('Hosted origins must be explicit HTTPS origins')
     maximum=int(os.environ.get('PG_POOL_MAX','4'))
     if not 1<=maximum<=8:raise RuntimeError('PG_POOL_MAX must be between 1 and 8')
-    app=build_app(get_repository,origins,request_policy=PostgresPolicy)
+    app=build_app(get_repository,origins,request_policy=PostgresPolicy,public_docs=not hosted)
     app.state.settings=dict(readonly=os.environ.get('DEMO_READONLY')=='1',requests=int(os.environ.get('DEMO_DAILY_REQUESTS','2000')),writes=int(os.environ.get('DEMO_DAILY_WRITES','250')),bytes=int(os.environ.get('DEMO_DAILY_SNAPSHOT_BYTES','67108864')),capacity=int(os.environ.get('DEMO_MAX_DATABASE_BYTES','536870912')))
     @asynccontextmanager
     async def lifespan(_app):
@@ -72,8 +78,13 @@ def create_app():
         if not (root/'index.html').is_file():raise RuntimeError('Frontend build missing')
         @app.get('/{path:path}')
         async def frontend(path:str):
-            if path=='api' or path.startswith('api/'):return JSONResponse({'detail':'Not found'},status_code=404)
+            if path=='api' or path.startswith('api/') or (hosted and path in ('docs','redoc','openapi.json')) or any(part.startswith('.') for part in path.split('/') if part):return JSONResponse({'detail':'Not found'},status_code=404)
             target=(root/path).resolve()
             if not target.is_relative_to(root):return JSONResponse({'detail':'Not found'},status_code=404)
-            return FileResponse(target if target.is_file() else root/'index.html')
+            if path.startswith('assets/') and not target.is_file():return JSONResponse({'detail':'Not found'},status_code=404)
+            file=target if target.is_file() else root/'index.html'
+            # Never cache an old HTML entry across a release. Vite assets carry
+            # content hashes, so those files can safely be cached immutably.
+            cache='public, max-age=31536000, immutable' if path.startswith('assets/') else 'no-store'
+            return FileResponse(file,headers={'Cache-Control':cache,'X-Content-Type-Options':'nosniff','Referrer-Policy':'strict-origin-when-cross-origin'})
     return app
