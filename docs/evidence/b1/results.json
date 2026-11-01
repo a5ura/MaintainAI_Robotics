@@ -1,0 +1,86 @@
+{
+  "date_client": "2026-11-01",
+  "timezone": "America/New_York",
+  "baseline": "8d39f2af9dee9a1d21d658950ddb15a228651848",
+  "branch": "feature/v1-hosting-phase-b1",
+  "environment": "existing managed Linux x86_64; not Windows/Local or hosted deployment",
+  "tests": [
+    {
+      "command": ".venv/bin/python -m pytest backend/tests cloudflare/tests postgres/tests -q",
+      "phase": "baseline",
+      "passed": 220,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": ".venv/bin/python -m pytest backend/tests cloudflare/tests postgres/tests -q",
+      "phase": "final",
+      "passed": 228,
+      "failed": 0,
+      "skipped": 0,
+      "native": 97,
+      "d1_shared": 95,
+      "real_postgres": 36
+    },
+    {
+      "command": "npm --prefix frontend test",
+      "passed": 43,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "PATH=\"$PWD/.venv/bin:$PATH\" ./scripts/build-native.sh",
+      "status": "passed (pinned installation, lockfile, TypeScript and production build)"
+    },
+    {
+      "command": ".venv/bin/python -m postgres.release_rehearsal",
+      "status": "passed",
+      "chromium": {
+        "adapter": "PostgreSQL restricted SCRAM production startup",
+        "passed": 16,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "command": "CHROMIUM_PATH=/usr/bin/chromium npm --prefix frontend run smoke",
+      "adapter": "SQLite",
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": ".venv/bin/python -m postgres.durability_probe",
+      "status": "passed"
+    },
+    {
+      "command": ".venv/bin/python -m postgres.native_backup_probe",
+      "status": "passed"
+    },
+    {
+      "command": "sh -n scripts/build-native.sh scripts/start-native.sh",
+      "status": "passed"
+    }
+  ],
+  "unmet_acceptance": [
+    "Pre-existing missing user-facing data/report exports; no export UI/download implementation exists in merged V1"
+  ],
+  "hosted_verified": false,
+  "account_free_verified": false,
+  "provider_resources_created": 0,
+  "billing_actions": 0,
+  "deployments": 0,
+  "production_migrations": 0,
+  "new_spending_actions": 0,
+  "actual_invoice_verified": false,
+  "verdict": "TARGETED FIXES REQUIRED",
+  "github": {
+    "branch_push": "succeeded",
+    "pr_creation": "blocked",
+    "error": "Post \"https://api.github.com/graphql\": Forbidden",
+    "attempts": 1,
+    "pr_created": false,
+    "merged": false,
+    "comparison": "https://github.com/a5ura/MaintainAI_Robotics/compare/main...feature/v1-hosting-phase-b1"
+  }
+}

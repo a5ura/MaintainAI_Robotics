@@ -1,0 +1,56 @@
+{
+  "render-free": {
+    "url": "https://render.com/docs/free",
+    "observed_date_client": "2026-11-01",
+    "timezone": "America/New_York",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  "render-billing": {
+    "url": "https://render.com/docs/billing",
+    "observed_date_client": "2026-11-01",
+    "timezone": "America/New_York",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  "render-runtimes": {
+    "url": "https://render.com/docs/native-runtimes",
+    "observed_date_client": "2026-11-01",
+    "timezone": "America/New_York",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+  },
+  "render-source-readme": {
+    "url": "https://raw.githubusercontent.com/renderinc/docs/main/README.md",
+    "observed_date_client": "2026-11-01",
+    "timezone": "America/New_York",
+    "error": "HTTP Error 404: Not Found"
+  },
+  "render-source-free": {
+    "url": "https://raw.githubusercontent.com/renderinc/docs/main/free.mdx",
+    "observed_date_client": "2026-11-01",
+    "timezone": "America/New_York",
+    "error": "HTTP Error 404: Not Found"
+  },
+  "neon-plans": {
+    "url": "https://raw.githubusercontent.com/neondatabase/website/main/content/docs/introduction/plans.md",
+    "observed_date_client": "2026-11-01",
+    "timezone": "America/New_York",
+    "status": 200,
+    "bytes": 42746,
+    "sha256": "ccc368b80bc448b4a6220478fba9c13d589fceea9f45af758a5c005b97524886"
+  },
+  "neon-python": {
+    "url": "https://raw.githubusercontent.com/neondatabase/website/main/content/docs/guides/python.md",
+    "observed_date_client": "2026-11-01",
+    "timezone": "America/New_York",
+    "status": 200,
+    "bytes": 22805,
+    "sha256": "547733566ae536ab4f780e7988687a6a8dbe4e4989a4760c4d3c1b212178e174"
+  },
+  "pages-pricing": {
+    "url": "https://raw.githubusercontent.com/cloudflare/cloudflare-docs/production/src/content/docs/pages/functions/pricing.mdx",
+    "observed_date_client": "2026-11-01",
+    "timezone": "America/New_York",
+    "status": 200,
+    "bytes": 1564,
+    "sha256": "0fb71a6f78247ebe4978030b75c9165375c437105a7d14f1a6fa1d505ebc7252"
+  }
+}

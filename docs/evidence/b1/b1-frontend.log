@@ -1,0 +1,22 @@
+
+> maintainai-robotics@0.1.0 test
+> vitest run
+
+
+ RUN  v3.1.3 /workspace/MaintainAI_Robotics/frontend
+
+ ✓ src/App.test.tsx (3 tests) 354ms
+ ✓ src/GuidedFlow.test.tsx (6 tests) 737ms
+ ✓ src/Maintenance.test.tsx (5 tests) 882ms
+   ✓ loads another incident page using the last record cursor  686ms
+ ✓ src/scenarios.test.ts (9 tests) 20ms
+ ✓ src/EvidenceReferences.test.tsx (3 tests) 72ms
+ ✓ src/model.test.tsx (8 tests) 197ms
+ ✓ src/guided.test.ts (4 tests) 4ms
+ ✓ src/engineering.test.ts (3 tests) 74ms
+ ✓ src/api.test.ts (2 tests) 4ms
+
+ Test Files  9 passed (9)
+      Tests  43 passed (43)
+   Start at  16:44:22
+   Duration  2.24s (transform 457ms, setup 0ms, collect 1.33s, tests 2.34s, environment 1.18s, prepare 513ms)

@@ -1,0 +1,41 @@
+Requirement already satisfied: fastapi==0.115.12 in ./.venv/lib/python3.12/site-packages (from -r backend/requirements-postgres.txt (line 2)) (0.115.12)
+Requirement already satisfied: uvicorn==0.34.2 in ./.venv/lib/python3.12/site-packages (from -r backend/requirements-postgres.txt (line 3)) (0.34.2)
+Requirement already satisfied: pydantic==2.11.4 in ./.venv/lib/python3.12/site-packages (from -r backend/requirements-postgres.txt (line 4)) (2.11.4)
+Requirement already satisfied: psycopg==3.3.6 in ./.venv/lib/python3.12/site-packages (from psycopg[binary]==3.3.6->-r backend/requirements-postgres.txt (line 5)) (3.3.6)
+Requirement already satisfied: psycopg-pool==3.3.3 in ./.venv/lib/python3.12/site-packages (from -r backend/requirements-postgres.txt (line 6)) (3.3.3)
+Requirement already satisfied: starlette<0.47.0,>=0.40.0 in ./.venv/lib/python3.12/site-packages (from fastapi==0.115.12->-r backend/requirements-postgres.txt (line 2)) (0.46.2)
+Requirement already satisfied: typing-extensions>=4.8.0 in ./.venv/lib/python3.12/site-packages (from fastapi==0.115.12->-r backend/requirements-postgres.txt (line 2)) (4.16.0)
+Requirement already satisfied: click>=7.0 in ./.venv/lib/python3.12/site-packages (from uvicorn==0.34.2->-r backend/requirements-postgres.txt (line 3)) (8.5.0)
+Requirement already satisfied: h11>=0.8 in ./.venv/lib/python3.12/site-packages (from uvicorn==0.34.2->-r backend/requirements-postgres.txt (line 3)) (0.16.0)
+Requirement already satisfied: annotated-types>=0.6.0 in ./.venv/lib/python3.12/site-packages (from pydantic==2.11.4->-r backend/requirements-postgres.txt (line 4)) (0.8.0)
+Requirement already satisfied: pydantic-core==2.33.2 in ./.venv/lib/python3.12/site-packages (from pydantic==2.11.4->-r backend/requirements-postgres.txt (line 4)) (2.33.2)
+Requirement already satisfied: typing-inspection>=0.4.0 in ./.venv/lib/python3.12/site-packages (from pydantic==2.11.4->-r backend/requirements-postgres.txt (line 4)) (0.4.4)
+Requirement already satisfied: psycopg-binary==3.3.6 in ./.venv/lib/python3.12/site-packages (from psycopg[binary]==3.3.6->-r backend/requirements-postgres.txt (line 5)) (3.3.6)
+Requirement already satisfied: anyio<5,>=3.6.2 in ./.venv/lib/python3.12/site-packages (from starlette<0.47.0,>=0.40.0->fastapi==0.115.12->-r backend/requirements-postgres.txt (line 2)) (4.15.1)
+Requirement already satisfied: idna>=2.8 in ./.venv/lib/python3.12/site-packages (from anyio<5,>=3.6.2->starlette<0.47.0,>=0.40.0->fastapi==0.115.12->-r backend/requirements-postgres.txt (line 2)) (3.20)
+
+[notice] A new release of pip is available: 25.0.1 -> 26.2.2
+[notice] To update, run: pip install --upgrade pip
+npm warn deprecated whatwg-encoding@3.1.1: Use @exodus/bytes instead for a more spec-conformant and faster implementation
+
+added 202 packages in 3s
+
+> maintainai-robotics@0.1.0 build
+> tsc -b && vite build
+
+vite v6.3.5 building for production...
+transforming...
+✓ 71 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                        0.42 kB │ gzip:   0.30 kB
+dist/assets/index-CAcPX2Go.css        16.25 kB │ gzip:   4.66 kB
+dist/assets/Maintenance-BY0vDSTB.js    8.46 kB │ gzip:   2.90 kB
+dist/assets/index-DIF4mRps.js        215.43 kB │ gzip:  69.02 kB
+dist/assets/Workcell-ncfHhlAK.js     843.84 kB │ gzip: 226.69 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 2.19s

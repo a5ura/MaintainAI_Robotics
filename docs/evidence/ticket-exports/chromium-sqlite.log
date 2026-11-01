@@ -1,0 +1,30 @@
+
+> maintainai-robotics@0.1.0 smoke
+> playwright test
+
+
+Running 19 tests using 1 worker
+
+(node:98491) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 e2e/a2.spec.ts:3:1 › paged maintenance history preserves all events and an unsaved repair draft (2.5s)
+  ✓   2 e2e/cycle.spec.ts:2:1 › real normal and dropped-object cycles use FastAPI and display evidence (26.1s)
+  ✓   3 e2e/exports.spec.ts:11:1 › saved JSON and Markdown downloads include complete diagnosis/history and preserve every draft without maintenance writes (2.5s)
+  ✓   4 e2e/exports.spec.ts:113:1 › failed or concurrently changed exports create no partial file; manual Unicode Markdown/JSON work after retry (1.6s)
+  ✓   5 e2e/exports.spec.ts:198:1 › large Unicode saved evidence downloads intact as JSON and Markdown (2.8s)
+  ✓   6 e2e/m2.spec.ts:3:1 › positioning error, diagnosis ticket, concurrent edit recovery and durable history (15.0s)
+  ✓   7 e2e/m2.spec.ts:109:1 › vision failure is unreliable verification and not physical loss (13.0s)
+  ✓   8 e2e/m2.spec.ts:132:1 › unexpected stop freezes displayed robot TCP and clock at interruption (7.7s)
+  ✓   9 e2e/m2.spec.ts:156:1 › random failure replays same evidence for explicit seed (24.6s)
+  ✓  10 e2e/m2.spec.ts:182:1 › separate browser simulations remain independent across reset and scenario changes (13.4s)
+  ✓  11 e2e/m2.spec.ts:219:1 › manual ticket UI and initial API error recovery (1.3s)
+  ✓  12 e2e/m3.spec.ts:6:1 › guided live failure, evidence, checks and real idempotent maintenance ticket (22.2s)
+  ✓  13 e2e/m3.spec.ts:91:1 › guided reset, skip and manual takeover preserve real results without auto-writing (5.4s)
+  ✓  14 e2e/m3.spec.ts:129:1 › engineering model values, real 3D component picking and keyboard navigation (1.3s)
+  ✓  15 e2e/m3.spec.ts:226:1 › guided backend error recovers through real API retry (669ms)
+  ✓  16 e2e/m3.spec.ts:264:1 › 3D lazy-load error is contained and application reload recovers (1.0s)
+  ✓  17 e2e/m3.spec.ts:306:1 › guided pause/reset stays isolated from another browser simulation (7.3s)
+  ✓  18 e2e/m3.spec.ts:352:1 › manual diagnosis ticket takeover cancels the remaining guided save (7.0s)
+  ✓  19 e2e/m3.spec.ts:411:1 › committed but pending guided response cannot replace manual ticket selection or drafts (6.0s)
+
+  19 passed (2.7m)

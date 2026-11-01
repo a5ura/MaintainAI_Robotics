@@ -17,9 +17,9 @@ async def call_repository(repository,method,*args):
     from starlette.concurrency import run_in_threadpool
     return await run_in_threadpool(function,*args)
 
-def build_app(get_repository,origins=('http://localhost:5173','http://127.0.0.1:5173'),local_write_limit=False,request_policy=None):
+def build_app(get_repository,origins=('http://localhost:5173','http://127.0.0.1:5173'),local_write_limit=False,request_policy=None,public_docs=True):
     if '*' in origins:raise ValueError('Use explicit allowed origins, not wildcard CORS')
-    app=FastAPI(title='MaintainAI Robotics',version='0.2.0')
+    app=FastAPI(title='MaintainAI Robotics',version='0.2.0',docs_url='/docs' if public_docs else None,redoc_url='/redoc' if public_docs else None,openapi_url='/openapi.json' if public_docs else None)
     if request_policy is not None:app.add_middleware(request_policy)
     app.add_middleware(BodyLimitMiddleware,max_bytes=2*1024*1024)
     if local_write_limit:

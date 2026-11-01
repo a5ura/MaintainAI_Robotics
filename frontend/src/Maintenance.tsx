@@ -1,7 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { api } from "./api";
 import { EvidenceReferences } from "./EvidenceReferences";
 import type { Diagnosis } from "./model";
+import {
+  collectTicketReport,
+  downloadTicketReport,
+  type ReportFormat,
+} from "./ticketReports";
 export type Equipment = {
   id: string;
   name: string;
@@ -25,6 +30,8 @@ export type Detail = {
   ticket: Ticket;
   diagnosis: Diagnosis | null;
   history_next_seq?: number;
+  history_total?: number;
+  history_last_seq?: number | null;
   history: { seq: number; at: string; kind: string; body: string }[];
 };
 export default function Maintenance({
@@ -44,6 +51,9 @@ export default function Maintenance({
     [tickets, setTickets] = useState<Ticket[]>([]),
     [detail, setDetail] = useState<Detail | null>(null);
   const [moreTickets, setMoreTickets] = useState(false);
+  const [exporting, setExporting] = useState(false);
+  const [exportError, setExportError] = useState("");
+  const exportEpoch = useRef(0);
   const [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
     [loading, setLoading] = useState(true);
@@ -92,13 +102,34 @@ export default function Maintenance({
       });
     return () => {
       active = false;
+      exportEpoch.current++;
     };
   }, [initialTicketId]);
   function select(d: Detail) {
+    exportEpoch.current++;
+    setExporting(false);
+    setExportError("");
     setDetail(d);
     setStatus(d.ticket.status);
     setNote("");
     setResolution("");
+  }
+  async function exportSaved(format: ReportFormat) {
+    if (!detail || exporting) return;
+    const epoch = ++exportEpoch.current;
+    setExporting(true);
+    setExportError("");
+    try {
+      const report = await collectTicketReport(detail.ticket.id);
+      if (epoch === exportEpoch.current) downloadTicketReport(report, format);
+    } catch (e) {
+      if (epoch === exportEpoch.current)
+        setExportError(
+          e instanceof Error ? e.message : "Download failed. Please retry.",
+        );
+    } finally {
+      if (epoch === exportEpoch.current) setExporting(false);
+    }
   }
   async function perform(operation: () => Promise<void>) {
     setBusy(true);
@@ -313,6 +344,37 @@ export default function Maintenance({
                     Created {detail.ticket.created_at} · Updated{" "}
                     {detail.ticket.updated_at}
                   </p>
+                  <div
+                    className="form-actions"
+                    aria-label="Saved ticket downloads"
+                  >
+                    <button
+                      disabled={busy || exporting}
+                      onClick={() => void exportSaved("json")}
+                    >
+                      Download JSON
+                    </button>
+                    <button
+                      disabled={busy || exporting}
+                      onClick={() => void exportSaved("markdown")}
+                    >
+                      Download Markdown
+                    </button>
+                  </div>
+                  <p className="muted">
+                    Downloads contain saved records only. Unsaved edits are not
+                    included.
+                  </p>
+                  {exporting && (
+                    <p role="status">Preparing complete saved report…</p>
+                  )}
+                  {exportError && (
+                    <p role="alert">
+                      Download failed: {exportError} No partial file was
+                      created. Retry the download when ready; your drafts are
+                      unchanged.
+                    </p>
+                  )}
                   <form
                     aria-label="Update ticket"
                     onSubmit={(e) => {

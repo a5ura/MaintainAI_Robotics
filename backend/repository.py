@@ -91,11 +91,14 @@ class Repository:
 
     def ticket(self,ticket_id):
         with self.connection() as db:
+            # One read snapshot anchors export pagination without any mutation.
+            db.execute('BEGIN')
             row=db.execute('SELECT * FROM tickets WHERE id=?',(ticket_id,)).fetchone()
             if row is None: raise RepositoryError('Ticket not found',404)
             diagnosis=db.execute('SELECT snapshot FROM diagnoses WHERE id=?',(row['diagnosis_id'],)).fetchone() if row['diagnosis_id'] else None
             history=[dict(h) for h in db.execute('SELECT * FROM ticket_history WHERE ticket_id=? ORDER BY seq LIMIT 201',(ticket_id,))]
-            detail={'ticket':dict(row),'diagnosis':json.loads(diagnosis['snapshot']) if diagnosis else None,'history':history[:200]}
+            bounds=db.execute('SELECT COUNT(*) AS total,MAX(seq) AS last_seq FROM ticket_history WHERE ticket_id=?',(ticket_id,)).fetchone()
+            detail={'ticket':dict(row),'diagnosis':json.loads(diagnosis['snapshot']) if diagnosis else None,'history':history[:200],'history_total':bounds['total'],'history_last_seq':bounds['last_seq']}
             if len(history)>200:detail['history_next_seq']=history[199]['seq']
             return detail
 

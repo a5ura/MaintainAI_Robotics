@@ -140,3 +140,16 @@ def test_restore_sql_failure_preserves_complete_destination(run_pg):
             assert (await repo.query("SELECT tgenabled FROM pg_trigger WHERE tgname='manifest_budget'"))[0]['tgenabled']=='O'
         finally:await repo.query('ALTER TABLE tickets DROP CONSTRAINT reject_restore')
     run_pg(check)
+
+def test_export_history_bounds_and_reads_preserve_all_tables(run_pg):
+    from postgres.native_backup_probe import fingerprints
+    async def check(repo):
+        ticket=(await repo.create_ticket(data()))['ticket']['id']
+        await repo.batch([("INSERT INTO ticket_history(ticket_id,version,at,kind,body) VALUES(?,?,'2026-11-01','note',?)",(ticket,-i-1,str(i))) for i in range(250)])
+        before=await fingerprints(repo.pool)
+        detail=await repo.ticket(ticket)
+        page=await repo.history_page(ticket,detail['history_next_seq'])
+        assert detail['history_total']==251 and len(detail['history'])==200 and len(page['history'])==51
+        assert detail['history_last_seq']==page['history'][-1]['seq']
+        assert await fingerprints(repo.pool)==before
+    run_pg(check)

@@ -1,0 +1,20 @@
+
+> maintainai-robotics@0.1.0 build
+> tsc -b && vite build
+
+vite v6.3.5 building for production...
+transforming...
+✓ 72 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                        0.42 kB │ gzip:   0.30 kB
+dist/assets/index-CAcPX2Go.css        16.25 kB │ gzip:   4.66 kB
+dist/assets/Maintenance-DVubPv2o.js   15.24 kB │ gzip:   5.52 kB
+dist/assets/index-Bd2PaRzf.js        215.43 kB │ gzip:  69.02 kB
+dist/assets/Workcell-D41-JlhO.js     843.84 kB │ gzip: 226.69 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 2.17s

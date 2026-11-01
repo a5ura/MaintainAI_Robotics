@@ -1,6 +1,12 @@
 # MaintainAI Robotics — Project 2 V1
 
-## Current Phase B.0 checkpoint — November 1, 2026 UTC
+## Current Phase B.1 checkpoint — November 1, 2026 (America/New_York)
+
+B.0 PR #8 is merged at `8d39f2af9dee9a1d21d658950ddb15a228651848`. B.1 branch `feature/v1-hosting-phase-b1` prepares one same-origin Render Free Python service plus external Neon Free: production frontend build, hosted route/static/CORS hardening, restricted runtime SQL and constrained real PostgreSQL rehearsal. SQLite/D1, PRD, robot and diagnostic algorithms remain intact. See [B.1 setup](docs/DEPLOYMENT_PHASE_B1.md), [completion](docs/PHASE_B1_COMPLETION_REPORT.md) and future-only [B.2 runbook](docs/PHASE_B1_HOSTED_RUNBOOK.md).
+
+Authorized PR #9 follow-up implements per-ticket saved JSON/Markdown downloads, complete validated history pagination, captured-version checks and draft preservation. See [export acceptance](docs/TICKET_EXPORTS_ACCEPTANCE.md) for local checks and limits. The previously missing download workflow is now implemented; public-release approval remains separate. Render current Free/runtime terms and all account/card/hard-cap eligibility remain unverified. No provisioning, billing, deployment, production migration, environment publication or merge. Hosted verification requires separate B.2 authorization; anonymous availability cannot be guaranteed by global quotas. Earlier checkpoint text below is historical.
+
+## Historical Phase B.0 checkpoint — November 1, 2026 UTC
 
 Main includes merged A.2 PR #7 at `8b8491035cfcf388378376dd8b9b2e649dcfed94`. Branch `feature/v1-hosting-phase-b0` adds a native async Psycopg/PostgreSQL adapter and explicit FastAPI hosting entry point while preserving SQLite, D1, diagnostic algorithms and the approved PRD. Real local PostgreSQL integration, independent API/process/database restart, immutable full evidence, concurrency, idempotency and protected backup/recovery are tested in managed Linux. Desktop/Windows and hosted durability remain unverified. See [B.0 setup](docs/DEPLOYMENT_PHASE_B0.md), [adapter](docs/POSTGRESQL_ADAPTER.md), [hosting gates](docs/PHASE_B0_HOSTING_DECISION.md) and [completion report](docs/PHASE_B0_COMPLETION_REPORT.md).
 

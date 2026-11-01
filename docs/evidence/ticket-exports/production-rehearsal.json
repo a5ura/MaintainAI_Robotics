@@ -1,0 +1,111 @@
+{
+  "environment": "Existing managed Linux; local native production startup, actual PostgreSQL 17.11; NOT Render/Neon hosted tests",
+  "profile": {
+    "api_virtual_address_limit_bytes": 536870912,
+    "api_cpu_affinity_cores": 1,
+    "postgres_container_memory_bytes": 536870912,
+    "postgres_container_cpu_limit": 1,
+    "note": "Virtual-address limit and one-core affinity are local approximations, not provider RAM/CPU guarantees"
+  },
+  "runtime_role": "restricted non-owner, SCRAM password authenticated; no DELETE/CREATE/ALTER",
+  "browser": {
+    "passed": 19,
+    "failed": 0,
+    "skipped": 0
+  },
+  "startup_liveness_wall_ms": [
+    371.789,
+    327.658,
+    326.086,
+    325.756,
+    330.297
+  ],
+  "api_memory_before_restart": {
+    "VmHWM": "89060 kB",
+    "VmRSS": "77900 kB"
+  },
+  "payloads_single_pass": {
+    "normal": {
+      "request_bytes": 3934,
+      "response_bytes": 6566,
+      "api_wall_ms": 8.846,
+      "api_cpu_ms_10ms_ticks": 10.0
+    },
+    "drop": {
+      "request_bytes": 3889,
+      "response_bytes": 8554,
+      "api_wall_ms": 5.475,
+      "api_cpu_ms_10ms_ticks": 0.0
+    },
+    "position": {
+      "request_bytes": 4086,
+      "response_bytes": 8252,
+      "api_wall_ms": 5.373,
+      "api_cpu_ms_10ms_ticks": 10.0
+    },
+    "vision": {
+      "request_bytes": 4056,
+      "response_bytes": 8209,
+      "api_wall_ms": 5.221,
+      "api_cpu_ms_10ms_ticks": 0.0
+    },
+    "stop": {
+      "request_bytes": 2191,
+      "response_bytes": 5434,
+      "api_wall_ms": 4.748,
+      "api_cpu_ms_10ms_ticks": 0.0
+    },
+    "multi": {
+      "request_bytes": 4205,
+      "response_bytes": 9935,
+      "api_wall_ms": 6.285,
+      "api_cpu_ms_10ms_ticks": 10.0
+    },
+    "small": {
+      "request_bytes": 328,
+      "response_bytes": 827,
+      "api_wall_ms": 4.936,
+      "api_cpu_ms_10ms_ticks": 0.0
+    },
+    "max-samples": {
+      "request_bytes": 1425849,
+      "response_bytes": 1851859,
+      "api_wall_ms": 178.599,
+      "api_cpu_ms_10ms_ticks": 160.0
+    },
+    "max-body": {
+      "request_bytes": 2097152,
+      "response_bytes": 1851859,
+      "api_wall_ms": 223.038,
+      "api_cpu_ms_10ms_ticks": 210.0
+    },
+    "max-evidence": {
+      "request_bytes": 1790569,
+      "response_bytes": 2216579,
+      "api_wall_ms": 242.13,
+      "api_cpu_ms_10ms_ticks": 220.0
+    },
+    "unicode": {
+      "request_bytes": 1600569,
+      "response_bytes": 2026579,
+      "api_wall_ms": 249.043,
+      "api_cpu_ms_10ms_ticks": 250.0
+    }
+  },
+  "api_restart_record_equal": true,
+  "database_stop_unavailable_safe_503": true,
+  "same_api_recovers_after_database_restart": true,
+  "unknown_schema_migration_refused_without_record_change": true,
+  "wrong_password_safe_503_without_secret_in_logs": true,
+  "readonly_preserves_reads_and_records": true,
+  "request_budget_statuses": [
+    200,
+    200,
+    429
+  ],
+  "oversized_body_status": 413,
+  "test_only_browser_budgets": {
+    "daily_writes": 2000,
+    "daily_requests": 10000
+  }
+}

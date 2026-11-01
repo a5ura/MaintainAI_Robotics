@@ -1,0 +1,1 @@
+Native archive restored to fresh test DB; all table fingerprints match; malformed restore preserved complete destination.
