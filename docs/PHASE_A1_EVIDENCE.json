@@ -62,5 +62,12 @@
   "new_dependencies": [],
   "new_hosted_resources": [],
   "account_cost_verification": "UNVERIFIED",
-  "skipped_tests": 0
+  "skipped_tests": 0,
+  "github": {
+    "source_commit": "3d85a59",
+    "pr_created": false,
+    "command_exit_code": 1,
+    "error": "Post \"https://api.github.com/graphql\": Forbidden",
+    "compare_url": "https://github.com/a5ura/MaintainAI_Robotics/compare/main...feature/v1-deployment-phase-a1?expand=1"
+  }
 }

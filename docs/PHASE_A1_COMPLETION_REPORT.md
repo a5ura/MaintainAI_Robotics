@@ -43,7 +43,7 @@ Fresh commands, raw outputs and evidence categories: `PHASE_A1_EVIDENCE.json`, `
 - `CHROMIUM_PATH=/usr/bin/chromium npm --prefix frontend run smoke`: **15 passed (2.5m)**, actual Chromium against native SQLite API.
 - Minimal real Python CLI online/offline: **blocked**, not skipped passes. No new decisive Wasm, chunking or stream-bound tests ran.
 
-Upstream Starlette/AnyIO deprecation, Node color and Vite 3D chunk warnings remain. No existing tests disabled. No production source was changed after baselines, so duplicate full-suite reruns are unnecessary. Generated M3 screenshots/timing are restored after browser completion.
+Upstream Starlette/AnyIO deprecation, Node color and Vite 3D chunk warnings remain. Verbatim CLI logs preserve their original alignment/CRLF (including trailing whitespace). No existing tests disabled. No production source was changed after baselines, so duplicate full-suite reruns are unnecessary. Generated M3 screenshots/timing are restored after browser completion.
 
 ## J. Cost and security
 
@@ -51,7 +51,7 @@ No new resource, account, billing enrollment, paid trial/capacity, dependency, h
 
 ## K. GitHub
 
-Branch `feature/v1-deployment-phase-a1`, targeting main and referencing merged PR #5. Prepared body: [PHASE_A1_PR.md](PHASE_A1_PR.md). PR creation outcome will be recorded after the push; no PR is claimed at this checkpoint.
+Probe/evidence commit: `3d85a59` on pushed branch `feature/v1-deployment-phase-a1`, targeting main and referencing merged PR #5. `gh pr create --repo a5ura/MaintainAI_Robotics --base main --head feature/v1-deployment-phase-a1 --title "Investigate Phase A.1 Python Worker runtime access" --body-file docs/PHASE_A1_PR.md` returned exit 1: `Post "https://api.github.com/graphql": Forbidden`. **No new PR is confirmed.** [Create PR](https://github.com/a5ura/MaintainAI_Robotics/compare/main...feature/v1-deployment-phase-a1?expand=1) with [prepared description](PHASE_A1_PR.md). Git push succeeded independently. Final documentation commit/remote SHA is returned in the final handoff; no merge performed.
 
 Changed files: isolated three-file minimal probe; four required A.1 reports; raw logs and JSON evidence; prepared PR body; README/AGENTS and current compatibility/hosting/release/status notes. Production application, approved PRD, Project 1 and V2 unchanged. Final pushed HEAD is supplied in the completion handoff.
 
