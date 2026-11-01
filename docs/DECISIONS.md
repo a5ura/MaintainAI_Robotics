@@ -46,3 +46,8 @@
 - Genuine local D1/Static Assets, concurrency and synthetic recovery tests provide local SQL evidence only. An isolated official workers-py CLI attempt was blocked by the required Pyodide index; do not infer Wasm support or Free CPU from CPython.
 - A valid dense payload yields a >2 MB immutable snapshot, exceeding the documented D1 row cap. Preserve evidence and fail explicitly; chunked storage is a release prerequisite, not an approved input reduction. Pre-ASGI upload buffering and anonymous availability also need verification.
 - Verdict: **CONDITIONAL GO** to resolve technical/account gaps. Keep strict $0, no paid fallback, no-login approved requirements and V2 deferral. A read-only/local-interaction fallback, if necessary, needs a Planning decision.
+
+
+## November 1, 2026 UTC — Phase A.2 reliability
+
+Build from merged A.1 PR #6 (`966c809`) and advance local storage regardless of the single unchanged index access check. Use supported D1 transactional batches with immutable versioned manifest/ASCII TEXT chunks and SHA-256, preserving public evidence IDs and all diagnostic content. Debit actual stored canonical bytes plus conservative per-record overhead inside the same transaction; default allowance 64 MiB/day, no retry double-charge. Use cached equipment counts and indexed keyset/history pages with explicit UI continuation, not retention by silent truncation. Keep local SQLite and the Python engine; no second TypeScript engine or architecture switch. Hosting remains a Planning decision with actual runtime/account/body-bound/durability gates; no deployment or paid capacity.

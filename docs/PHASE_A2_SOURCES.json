@@ -1,0 +1,44 @@
+{
+  "verification_date_utc": "2026-11-01",
+  "account_verified": false,
+  "sources": {
+    "render-free": {
+      "url": "https://render.com/docs/free",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "render-billing": {
+      "url": "https://render.com/docs/billing",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "neon-plans": {
+      "url": "https://raw.githubusercontent.com/neondatabase/website/main/content/docs/introduction/plans.md",
+      "status": 200,
+      "bytes": 42746,
+      "sha256": "ccc368b80bc448b4a6220478fba9c13d589fceea9f45af758a5c005b97524886"
+    },
+    "workers-pricing": {
+      "url": "https://raw.githubusercontent.com/cloudflare/cloudflare-docs/production/src/content/docs/workers/platform/pricing.mdx",
+      "status": 200,
+      "bytes": 18602,
+      "sha256": "433c1ef43e3adc53b7272a02b0ddb893f9514ac99c949635f7ff90423f819d75"
+    },
+    "d1-limits": {
+      "url": "https://raw.githubusercontent.com/cloudflare/cloudflare-docs/production/src/content/docs/d1/platform/limits.mdx",
+      "status": 200,
+      "bytes": 7774,
+      "sha256": "5ede988a7821c2b44da32856430e1137a56502c80d11f7cf15e33559fed05dca"
+    },
+    "hf-spaces": {
+      "url": "https://raw.githubusercontent.com/huggingface/hub-docs/main/docs/hub/spaces-overview.md",
+      "status": 200,
+      "bytes": 15692,
+      "sha256": "79deb52af48a6f07e1ee91491d26971ab33e0487998e18c2a0507b0723f5b507"
+    },
+    "assets": {
+      "url": "https://raw.githubusercontent.com/cloudflare/cloudflare-docs/production/src/content/docs/workers/static-assets/billing-and-limitations.mdx",
+      "status": 200,
+      "bytes": 1487,
+      "sha256": "85b3b803ef7304d495bed99deb4b343825176238cec6b5fcc6dcb3a75122a10f"
+    }
+  }
+}

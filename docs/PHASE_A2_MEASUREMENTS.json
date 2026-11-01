@@ -1,0 +1,1110 @@
+{
+  "environment": "CPython + genuine local workerd D1, NOT Python Workers or hosted billing",
+  "datasets": [
+    100,
+    1000,
+    7500
+  ],
+  "history_rows": 2501,
+  "snapshot_manifest": {
+    "diagnosis_id": "D-49fa1a08888b4a0ab55fb188",
+    "format": "json-ascii-v1",
+    "schema_version": 1,
+    "byte_length": 2216579,
+    "chunk_count": 9,
+    "sha256": "70ef900bf369b79187bc6ba9d8f43b0e97816689066dffc5e1b92ed7fed7a2fd",
+    "created_at": "2026-11-01T03:03:43.132500+00:00",
+    "storage_bytes": 2380419,
+    "budget_day": "2026-11-01",
+    "budget_limit": 67108864
+  },
+  "operations": [
+    {
+      "operation": "insert-to-100",
+      "wall_ms": 28.905,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 167936
+    },
+    {
+      "operation": "equipment-100",
+      "wall_ms": 21.151,
+      "binding_calls": 1,
+      "statements": 1,
+      "rows_read": 4,
+      "rows_written": 0,
+      "sql_duration_ms": 0,
+      "size_after": 167936
+    },
+    {
+      "operation": "global-first-100",
+      "wall_ms": 22.663,
+      "binding_calls": 1,
+      "statements": 1,
+      "rows_read": 101,
+      "rows_written": 0,
+      "sql_duration_ms": 0,
+      "size_after": 167936
+    },
+    {
+      "operation": "filtered-first-100",
+      "wall_ms": 23.372,
+      "binding_calls": 1,
+      "statements": 1,
+      "rows_read": 101,
+      "rows_written": 0,
+      "sql_duration_ms": 0,
+      "size_after": 167936
+    },
+    {
+      "operation": "global-next-100",
+      "wall_ms": 27.774,
+      "binding_calls": 1,
+      "statements": 1,
+      "rows_read": 4,
+      "rows_written": 0,
+      "sql_duration_ms": 1,
+      "size_after": 167936
+    },
+    {
+      "operation": "filtered-next-100",
+      "wall_ms": 23.06,
+      "binding_calls": 1,
+      "statements": 1,
+      "rows_read": 4,
+      "rows_written": 0,
+      "sql_duration_ms": 0,
+      "size_after": 167936
+    },
+    {
+      "operation": "insert-to-1000",
+      "wall_ms": 25.922,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 1,
+      "size_after": 245760
+    },
+    {
+      "operation": "insert-to-1000",
+      "wall_ms": 31.028,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 2,
+      "size_after": 303104
+    },
+    {
+      "operation": "insert-to-1000",
+      "wall_ms": 28.064,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 364544
+    },
+    {
+      "operation": "insert-to-1000",
+      "wall_ms": 29.771,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 2,
+      "size_after": 421888
+    },
+    {
+      "operation": "insert-to-1000",
+      "wall_ms": 27.769,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 2,
+      "size_after": 483328
+    },
+    {
+      "operation": "insert-to-1000",
+      "wall_ms": 32.18,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 540672
+    },
+    {
+      "operation": "insert-to-1000",
+      "wall_ms": 29.542,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 606208
+    },
+    {
+      "operation": "insert-to-1000",
+      "wall_ms": 29.403,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 2,
+      "size_after": 675840
+    },
+    {
+      "operation": "insert-to-1000",
+      "wall_ms": 27.916,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 720896
+    },
+    {
+      "operation": "equipment-1000",
+      "wall_ms": 22.397,
+      "binding_calls": 1,
+      "statements": 1,
+      "rows_read": 4,
+      "rows_written": 0,
+      "sql_duration_ms": 0,
+      "size_after": 720896
+    },
+    {
+      "operation": "global-first-1000",
+      "wall_ms": 22.772,
+      "binding_calls": 1,
+      "statements": 1,
+      "rows_read": 200,
+      "rows_written": 0,
+      "sql_duration_ms": 1,
+      "size_after": 720896
+    },
+    {
+      "operation": "filtered-first-1000",
+      "wall_ms": 27.515,
+      "binding_calls": 1,
+      "statements": 1,
+      "rows_read": 200,
+      "rows_written": 0,
+      "sql_duration_ms": 1,
+      "size_after": 720896
+    },
+    {
+      "operation": "global-next-1000",
+      "wall_ms": 24.433,
+      "binding_calls": 1,
+      "statements": 1,
+      "rows_read": 411,
+      "rows_written": 0,
+      "sql_duration_ms": 1,
+      "size_after": 720896
+    },
+    {
+      "operation": "filtered-next-1000",
+      "wall_ms": 26.007,
+      "binding_calls": 1,
+      "statements": 1,
+      "rows_read": 411,
+      "rows_written": 0,
+      "sql_duration_ms": 1,
+      "size_after": 720896
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 34.378,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 2,
+      "size_after": 786432
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 27.578,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 851968
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 32.828,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 909312
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 29.011,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 966656
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 32.424,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 1,
+      "size_after": 1036288
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 28.864,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 1093632
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 30.081,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 4,
+      "size_after": 1150976
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 27.623,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 1208320
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 28.742,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 4,
+      "size_after": 1273856
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 27.834,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 2,
+      "size_after": 1335296
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 28.96,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 2,
+      "size_after": 1388544
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 30.106,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 4,
+      "size_after": 1445888
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 31.596,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 2,
+      "size_after": 1519616
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 27.638,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 1572864
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 32.529,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 1638400
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 28.691,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 4,
+      "size_after": 1708032
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 32.574,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 5,
+      "size_after": 1761280
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 29.419,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 1818624
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 30.267,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 2,
+      "size_after": 1884160
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 29.466,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 1937408
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 32.018,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 5,
+      "size_after": 2007040
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 28.548,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 1,
+      "size_after": 2068480
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 33.43,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 2134016
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 45.853,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 2199552
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 30.285,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 4,
+      "size_after": 2248704
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 27.759,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 2322432
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 38.094,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 2,
+      "size_after": 2379776
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 31.377,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 2428928
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 46.076,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 2510848
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 30.388,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 2568192
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 28.817,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 2,
+      "size_after": 2617344
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 27.37,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 2670592
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 28.781,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 2732032
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 28.119,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 2793472
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 31.377,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 5,
+      "size_after": 2842624
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 31.406,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 2916352
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 29.833,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 2973696
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 33.283,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 4,
+      "size_after": 3051520
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 29.288,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 4,
+      "size_after": 3100672
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 27.419,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 4,
+      "size_after": 3158016
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 28.551,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 2,
+      "size_after": 3231744
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 30.427,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 2,
+      "size_after": 3284992
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 40.759,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 7,
+      "size_after": 3358720
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 27.432,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 2,
+      "size_after": 3420160
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 29.291,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 3477504
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 26.844,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 4,
+      "size_after": 3530752
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 32.158,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 3588096
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 30.851,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 2,
+      "size_after": 3653632
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 34.415,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 3715072
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 30.485,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 1,
+      "size_after": 3788800
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 37.851,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 3854336
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 31.205,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 2,
+      "size_after": 3911680
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 33.267,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 3977216
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 29.262,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 4,
+      "size_after": 4050944
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 30.436,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 5,
+      "size_after": 4116480
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 28.625,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 0,
+      "size_after": 4182016
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 28.73,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 4239360
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 27.495,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 2,
+      "size_after": 4296704
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 31.847,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 3,
+      "size_after": 4362240
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 35.552,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 2,
+      "size_after": 4419584
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 31.157,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 4,
+      "size_after": 4489216
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 29.348,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 5,
+      "size_after": 4550656
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 30.008,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 1,
+      "size_after": 4608000
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 32.538,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 4,
+      "size_after": 4681728
+    },
+    {
+      "operation": "insert-to-7500",
+      "wall_ms": 30.992,
+      "binding_calls": 1,
+      "statements": 100,
+      "rows_read": 300,
+      "rows_written": 1000,
+      "sql_duration_ms": 2,
+      "size_after": 4747264
+    },
+    {
+      "operation": "equipment-7500",
+      "wall_ms": 21.324,
+      "binding_calls": 1,
+      "statements": 1,
+      "rows_read": 4,
+      "rows_written": 0,
+      "sql_duration_ms": 0,
+      "size_after": 4747264
+    },
+    {
+      "operation": "global-first-7500",
+      "wall_ms": 22.644,
+      "binding_calls": 1,
+      "statements": 1,
+      "rows_read": 200,
+      "rows_written": 0,
+      "sql_duration_ms": 1,
+      "size_after": 4747264
+    },
+    {
+      "operation": "filtered-first-7500",
+      "wall_ms": 27.336,
+      "binding_calls": 1,
+      "statements": 1,
+      "rows_read": 200,
+      "rows_written": 0,
+      "sql_duration_ms": 1,
+      "size_after": 4747264
+    },
+    {
+      "operation": "global-next-7500",
+      "wall_ms": 23.873,
+      "binding_calls": 1,
+      "statements": 1,
+      "rows_read": 468,
+      "rows_written": 0,
+      "sql_duration_ms": 1,
+      "size_after": 4747264
+    },
+    {
+      "operation": "filtered-next-7500",
+      "wall_ms": 24.855,
+      "binding_calls": 1,
+      "statements": 1,
+      "rows_read": 468,
+      "rows_written": 0,
+      "sql_duration_ms": 1,
+      "size_after": 4747264
+    },
+    {
+      "operation": "history-first-2501",
+      "wall_ms": 30.771,
+      "binding_calls": 1,
+      "statements": 3,
+      "rows_read": 203,
+      "rows_written": 0,
+      "sql_duration_ms": 1,
+      "size_after": 10129408
+    },
+    {
+      "operation": "history-next-2501",
+      "wall_ms": 36.214,
+      "binding_calls": 1,
+      "statements": 1,
+      "rows_read": 201,
+      "rows_written": 0,
+      "sql_duration_ms": 1,
+      "size_after": 10129408
+    },
+    {
+      "operation": "history-next-2501",
+      "wall_ms": 30.106,
+      "binding_calls": 1,
+      "statements": 1,
+      "rows_read": 201,
+      "rows_written": 0,
+      "sql_duration_ms": 1,
+      "size_after": 10129408
+    },
+    {
+      "operation": "history-next-2501",
+      "wall_ms": 29.053,
+      "binding_calls": 1,
+      "statements": 1,
+      "rows_read": 201,
+      "rows_written": 0,
+      "sql_duration_ms": 0,
+      "size_after": 10129408
+    },
+    {
+      "operation": "history-next-2501",
+      "wall_ms": 26.434,
+      "binding_calls": 1,
+      "statements": 1,
+      "rows_read": 201,
+      "rows_written": 0,
+      "sql_duration_ms": 0,
+      "size_after": 10129408
+    },
+    {
+      "operation": "history-next-2501",
+      "wall_ms": 26.654,
+      "binding_calls": 1,
+      "statements": 1,
+      "rows_read": 201,
+      "rows_written": 0,
+      "sql_duration_ms": 1,
+      "size_after": 10129408
+    },
+    {
+      "operation": "history-next-2501",
+      "wall_ms": 26.286,
+      "binding_calls": 1,
+      "statements": 1,
+      "rows_read": 201,
+      "rows_written": 0,
+      "sql_duration_ms": 1,
+      "size_after": 10129408
+    },
+    {
+      "operation": "history-next-2501",
+      "wall_ms": 25.844,
+      "binding_calls": 1,
+      "statements": 1,
+      "rows_read": 201,
+      "rows_written": 0,
+      "sql_duration_ms": 1,
+      "size_after": 10129408
+    },
+    {
+      "operation": "history-next-2501",
+      "wall_ms": 29.223,
+      "binding_calls": 1,
+      "statements": 1,
+      "rows_read": 201,
+      "rows_written": 0,
+      "sql_duration_ms": 0,
+      "size_after": 10129408
+    },
+    {
+      "operation": "history-next-2501",
+      "wall_ms": 29.309,
+      "binding_calls": 1,
+      "statements": 1,
+      "rows_read": 201,
+      "rows_written": 0,
+      "sql_duration_ms": 1,
+      "size_after": 10129408
+    },
+    {
+      "operation": "history-next-2501",
+      "wall_ms": 33.79,
+      "binding_calls": 1,
+      "statements": 1,
+      "rows_read": 201,
+      "rows_written": 0,
+      "sql_duration_ms": 1,
+      "size_after": 10129408
+    },
+    {
+      "operation": "history-next-2501",
+      "wall_ms": 26.943,
+      "binding_calls": 1,
+      "statements": 1,
+      "rows_read": 201,
+      "rows_written": 0,
+      "sql_duration_ms": 0,
+      "size_after": 10129408
+    },
+    {
+      "operation": "history-next-2501",
+      "wall_ms": 23.013,
+      "binding_calls": 1,
+      "statements": 1,
+      "rows_read": 102,
+      "rows_written": 0,
+      "sql_duration_ms": 0,
+      "size_after": 10129408
+    },
+    {
+      "operation": "dense-snapshot-save",
+      "wall_ms": 104.444,
+      "binding_calls": 2,
+      "statements": 12,
+      "rows_read": 11,
+      "rows_written": 24,
+      "sql_duration_ms": 2,
+      "size_after": 12353536
+    },
+    {
+      "operation": "dense-snapshot-load",
+      "wall_ms": 122.796,
+      "binding_calls": 2,
+      "statements": 2,
+      "rows_read": 10,
+      "rows_written": 0,
+      "sql_duration_ms": 1,
+      "size_after": 12353536
+    },
+    {
+      "operation": "dense-snapshot-retry",
+      "wall_ms": 163.761,
+      "binding_calls": 3,
+      "statements": 3,
+      "rows_read": 11,
+      "rows_written": 0,
+      "sql_duration_ms": 2,
+      "size_after": 12353536
+    }
+  ],
+  "query_plans": {
+    "global": [
+      {
+        "id": 4,
+        "parent": 0,
+        "notused": 211,
+        "detail": "SCAN tickets USING COVERING INDEX tickets_global_page"
+      }
+    ],
+    "equipment": [
+      {
+        "id": 4,
+        "parent": 0,
+        "notused": 54,
+        "detail": "SEARCH tickets USING COVERING INDEX tickets_equipment_page (equipment_id=?)"
+      }
+    ],
+    "history": [
+      {
+        "id": 4,
+        "parent": 0,
+        "notused": 47,
+        "detail": "SEARCH ticket_history USING COVERING INDEX ticket_history_ticket (ticket_id=? AND seq>?)"
+      }
+    ]
+  },
+  "worker_cpu": "UNVERIFIED"
+}
