@@ -1,0 +1,77 @@
+{
+  "render-free": {
+    "url": "https://render.com/docs/free",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+    "observed_date_utc": "2026-11-01"
+  },
+  "render-billing": {
+    "url": "https://render.com/docs/billing",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+    "observed_date_utc": "2026-11-01"
+  },
+  "render-python": {
+    "url": "https://render.com/docs/deploy-fastapi",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+    "observed_date_utc": "2026-11-01"
+  },
+  "neon-plans": {
+    "url": "https://raw.githubusercontent.com/neondatabase/website/main/content/docs/introduction/plans.md",
+    "status": 200,
+    "bytes": 42746,
+    "sha256": "ccc368b80bc448b4a6220478fba9c13d589fceea9f45af758a5c005b97524886",
+    "observed_date_utc": "2026-11-01"
+  },
+  "neon-free": {
+    "url": "https://raw.githubusercontent.com/neondatabase/website/main/content/docs/introduction/free-tier.md",
+    "error": "HTTP Error 404: Not Found",
+    "observed_date_utc": "2026-11-01"
+  },
+  "neon-python": {
+    "url": "https://raw.githubusercontent.com/neondatabase/website/main/content/docs/guides/python.md",
+    "status": 200,
+    "bytes": 22805,
+    "sha256": "547733566ae536ab4f780e7988687a6a8dbe4e4989a4760c4d3c1b212178e174",
+    "observed_date_utc": "2026-11-01"
+  },
+  "vercel-hobby": {
+    "url": "https://vercel.com/docs/plans/hobby",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+    "observed_date_utc": "2026-11-01"
+  },
+  "vercel-python": {
+    "url": "https://raw.githubusercontent.com/vercel/vercel/main/packages/python/README.md",
+    "error": "HTTP Error 404: Not Found",
+    "observed_date_utc": "2026-11-01"
+  },
+  "postgres-transactions": {
+    "url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+    "error": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+    "observed_date_utc": "2026-11-01"
+  },
+  "vercel-runtime-source": {
+    "url": "https://raw.githubusercontent.com/vercel/vercel/main/packages/python/src/index.ts",
+    "status": 200,
+    "bytes": 95242,
+    "sha256": "6944ac40b0050c5e2f166426e85c31a796d276987b5a5215d1c71b09119e07d8",
+    "observed_date_utc": "2026-11-01"
+  },
+  "vercel-fastapi-example": {
+    "url": "https://raw.githubusercontent.com/vercel/examples/main/python/fastapi/README.md",
+    "status": 200,
+    "bytes": 1573,
+    "sha256": "35c52a57cab99b930d7c6d8e9cf534278e46fbca61989d3dee8fe152b835f4c4",
+    "observed_date_utc": "2026-11-01"
+  },
+  "pages-pricing": {
+    "url": "https://raw.githubusercontent.com/cloudflare/cloudflare-docs/production/src/content/docs/pages/functions/pricing.mdx",
+    "status": 200,
+    "bytes": 1564,
+    "sha256": "0fb71a6f78247ebe4978030b75c9165375c437105a7d14f1a6fa1d505ebc7252",
+    "observed_date_utc": "2026-11-01"
+  },
+  "neon-billing": {
+    "url": "https://raw.githubusercontent.com/neondatabase/website/main/content/docs/introduction/billing.md",
+    "error": "HTTP Error 404: Not Found",
+    "observed_date_utc": "2026-11-01"
+  }
+}

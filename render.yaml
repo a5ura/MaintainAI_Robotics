@@ -1,0 +1,23 @@
+# REVIEW ONLY. No resource exists from this manifest; importing it provisions.
+services:
+  - type: web
+    name: maintainai-robotics-api
+    runtime: python
+    plan: free
+    autoDeploy: false
+    buildCommand: pip install -r backend/requirements-postgres.txt
+    startCommand: ./scripts/start-native.sh
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.14
+      - key: DATABASE_URL
+        sync: false
+      - key: MAINTAINAI_ALLOWED_ORIGINS
+        sync: false
+      - key: MAINTAINAI_HOSTED
+        value: "1"
+      - key: PG_POOL_MAX
+        value: "4"
+      - key: DEMO_READONLY
+        value: "0"

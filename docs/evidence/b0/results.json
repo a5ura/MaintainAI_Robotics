@@ -1,0 +1,65 @@
+{
+  "observed_date_utc": "2026-11-01",
+  "environment": "existing managed Linux x86_64; not Windows/Desktop; no hosted infrastructure",
+  "baseline": "8b8491035cfcf388378376dd8b9b2e649dcfed94",
+  "branch": "feature/v1-hosting-phase-b0",
+  "tests": [
+    {
+      "command": ".venv/bin/python -m pytest backend/tests cloudflare/tests postgres/tests -q",
+      "passed": 220,
+      "failed": 0,
+      "skipped": 0,
+      "native": 97,
+      "d1_shared": 95,
+      "postgres_real": 28
+    },
+    {
+      "command": "npm --prefix frontend test",
+      "passed": 43,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "npm --prefix frontend run build",
+      "result": "TypeScript and production build passed"
+    },
+    {
+      "command": "CHROMIUM_PATH=/usr/bin/chromium npm --prefix frontend run smoke",
+      "adapter": "PostgreSQL",
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "CHROMIUM_PATH=/usr/bin/chromium npm --prefix frontend run smoke",
+      "adapter": "SQLite",
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0
+    }
+  ],
+  "probes": {
+    "two_native_processes_api_and_postgres_restart": "passed",
+    "native_archive_roundtrip_and_invalid_archive_destination_unchanged": "passed",
+    "fresh_database_write_timings_and_evidence_equality_11_cases": "passed",
+    "full_api_measurements_11_cases_5_repetitions": "passed",
+    "compose_validation": "passed"
+  },
+  "hosted_verified": false,
+  "account_free_verified": false,
+  "provider_resources_created": 0,
+  "billing_actions": 0,
+  "deployments": 0,
+  "production_migrations": 0,
+  "new_spending_actions": 0,
+  "actual_account_billing_total_verified": false,
+  "github": {
+    "branch_push": "succeeded",
+    "pr_creation": "blocked",
+    "error": "Post \"https://api.github.com/graphql\": Forbidden",
+    "attempts": 1,
+    "pr_created": false,
+    "merged": false,
+    "comparison": "https://github.com/a5ura/MaintainAI_Robotics/compare/main...feature/v1-hosting-phase-b0"
+  }
+}

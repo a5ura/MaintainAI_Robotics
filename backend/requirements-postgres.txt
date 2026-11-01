@@ -1,0 +1,6 @@
+# Native PostgreSQL production runtime; SQLite-only setup stays unchanged.
+fastapi==0.115.12
+uvicorn==0.34.2
+pydantic==2.11.4
+psycopg[binary]==3.3.6
+psycopg-pool==3.3.3

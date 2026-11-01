@@ -1,0 +1,13 @@
+# LOCAL DISPOSABLE TESTING ONLY. Never expose trust authentication publicly.
+services:
+  postgres:
+    image: postgres:17-bookworm@sha256:839fbb5a4942a7758dd93e18b42ea5649807491a0545b5eeeb8f0b8bb11857a5
+    ports: ["127.0.0.1:55432:5432"]
+    environment:
+      POSTGRES_DB: maintainai_b0_test
+      POSTGRES_HOST_AUTH_METHOD: trust
+    mem_limit: 512m
+    cpus: 1
+    volumes: ["postgres-test:/var/lib/postgresql/data"]
+volumes:
+  postgres-test:

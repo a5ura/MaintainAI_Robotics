@@ -1,0 +1,24 @@
+{
+  "environment": "Real local PostgreSQL 17 container, two native Uvicorn processes; NOT hosted durability",
+  "api_processes": 2,
+  "restart_count": 1,
+  "database_container_restart": true,
+  "startup_wall_ms": [
+    355.915,
+    329.906,
+    326.035
+  ],
+  "diagnosis_id": "D-973774d225afd7785d537ddd",
+  "ticket_id": "T-67433f2307b050589901c00b2cec0410",
+  "version": 3,
+  "history_events": 4,
+  "full_evidence_equal": true,
+  "chunked_oversize_upload_status": 413,
+  "concurrent_updates": [
+    200,
+    409
+  ],
+  "guided_duplicate_prevented": true,
+  "conflict_status": 409,
+  "observed_database_connections": 2
+}
