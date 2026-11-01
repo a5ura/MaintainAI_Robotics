@@ -1,0 +1,600 @@
+{
+  "status": "detected",
+  "failure": "Dropped object",
+  "summary": "Object lost between pick and place; root cause remains a hypothesis.",
+  "observations": [
+    {
+      "text": "Object verified held after pick.",
+      "evidence": [
+        "E3"
+      ]
+    },
+    {
+      "text": "Object-presence signal lost during commanded grip before placement.",
+      "evidence": [
+        "E6",
+        "E7",
+        "E8",
+        "E9"
+      ]
+    },
+    {
+      "text": "Post-place verification found no object at target.",
+      "evidence": [
+        "E11"
+      ]
+    },
+    {
+      "text": "Vacuum magnitude fell below the 30 kPa demonstration threshold near loss.",
+      "evidence": [
+        "E6",
+        "E7"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "cause": "Insufficient vacuum / seal loss",
+      "support": [
+        "E6",
+        "E7",
+        "E8",
+        "E9"
+      ],
+      "contradiction": [],
+      "check": "Inspect cup seal, tubing, and vacuum supply; repeat a stationary hold test.",
+      "anomaly": "Dropped object"
+    },
+    {
+      "cause": "Premature release command",
+      "support": [],
+      "contradiction": [
+        "E6",
+        "E7",
+        "E8",
+        "E9"
+      ],
+      "check": "Check controller output timing against the gripper command trace.",
+      "anomaly": "Dropped object"
+    },
+    {
+      "cause": "Object sensor or verification error",
+      "support": [],
+      "contradiction": [
+        "E6",
+        "E7",
+        "E8",
+        "E9",
+        "E11"
+      ],
+      "check": "Inspect sensor alignment and compare independent target verification with a physical count.",
+      "anomaly": "Dropped object"
+    }
+  ],
+  "timeline": [
+    {
+      "id": "E1",
+      "t": 0.0,
+      "phase": "pre-pick",
+      "tcp": [
+        1.5493556469959913,
+        0.9139926074979805,
+        1.30500425866958
+      ],
+      "joints": [
+        -0.7,
+        0.8,
+        -1.2
+      ],
+      "grip_command": false,
+      "object_present": false,
+      "pressure_kpa": 0.0,
+      "verification": "source",
+      "vision": null,
+      "placement": null,
+      "controller": {
+        "state": "running",
+        "motion_expected": true,
+        "safety_gate_open": false,
+        "drive_warning": false
+      },
+      "events": [],
+      "kinematics": {
+        "valid": true,
+        "expected_tcp": [
+          1.5493556469959913,
+          0.9139926074979806,
+          1.30500425866958
+        ],
+        "error_m": 1.1102230246251565e-16,
+        "tolerance_m": 0.0001,
+        "violations": []
+      }
+    },
+    {
+      "id": "E2",
+      "t": 2.0,
+      "phase": "post-pick",
+      "tcp": [
+        1.9631068707397992,
+        0.217220472657565,
+        1.653502106831369
+      ],
+      "joints": [
+        -0.7,
+        0.15000000000000002,
+        -0.4
+      ],
+      "grip_command": true,
+      "object_present": true,
+      "pressure_kpa": 65.0,
+      "verification": null,
+      "vision": null,
+      "placement": null,
+      "controller": {
+        "state": "running",
+        "motion_expected": true,
+        "safety_gate_open": false,
+        "drive_warning": false
+      },
+      "events": [],
+      "kinematics": {
+        "valid": true,
+        "expected_tcp": [
+          1.9631068707397992,
+          0.21722047265756494,
+          1.653502106831369
+        ],
+        "error_m": 5.551115123125783e-17,
+        "tolerance_m": 0.0001,
+        "violations": []
+      }
+    },
+    {
+      "id": "E3",
+      "t": 3.0,
+      "phase": "post-pick",
+      "tcp": [
+        1.9631068707397992,
+        0.21722047265756494,
+        1.653502106831369
+      ],
+      "joints": [
+        -0.7,
+        0.15,
+        -0.4
+      ],
+      "grip_command": true,
+      "object_present": true,
+      "pressure_kpa": 65.0,
+      "verification": "held",
+      "vision": null,
+      "placement": null,
+      "controller": {
+        "state": "running",
+        "motion_expected": true,
+        "safety_gate_open": false,
+        "drive_warning": false
+      },
+      "events": [],
+      "kinematics": {
+        "valid": true,
+        "expected_tcp": [
+          1.9631068707397992,
+          0.21722047265756494,
+          1.653502106831369
+        ],
+        "error_m": 0.0,
+        "tolerance_m": 0.0001,
+        "violations": []
+      }
+    },
+    {
+      "id": "E4",
+      "t": 4.0,
+      "phase": "transport",
+      "tcp": [
+        1.5493556469959913,
+        0.9139926074979805,
+        1.30500425866958
+      ],
+      "joints": [
+        -0.7,
+        0.8,
+        -1.2
+      ],
+      "grip_command": true,
+      "object_present": true,
+      "pressure_kpa": 65.0,
+      "verification": null,
+      "vision": null,
+      "placement": null,
+      "controller": {
+        "state": "running",
+        "motion_expected": true,
+        "safety_gate_open": false,
+        "drive_warning": false
+      },
+      "events": [],
+      "kinematics": {
+        "valid": true,
+        "expected_tcp": [
+          1.5493556469959913,
+          0.9139926074979806,
+          1.30500425866958
+        ],
+        "error_m": 1.1102230246251565e-16,
+        "tolerance_m": 0.0001,
+        "violations": []
+      }
+    },
+    {
+      "id": "E5",
+      "t": 5.0,
+      "phase": "transport",
+      "tcp": [
+        1.8609061375225324,
+        0.9139926074979805,
+        0.8003545360370465
+      ],
+      "joints": [
+        -0.40617283950617283,
+        0.8,
+        -1.2
+      ],
+      "grip_command": true,
+      "object_present": true,
+      "pressure_kpa": 65.0,
+      "verification": null,
+      "vision": null,
+      "placement": null,
+      "controller": {
+        "state": "running",
+        "motion_expected": true,
+        "safety_gate_open": false,
+        "drive_warning": false
+      },
+      "events": [],
+      "kinematics": {
+        "valid": true,
+        "expected_tcp": [
+          1.8609061375225324,
+          0.9139926074979806,
+          0.8003545360370465
+        ],
+        "error_m": 1.1102230246251565e-16,
+        "tolerance_m": 0.0001,
+        "violations": []
+      }
+    },
+    {
+      "id": "E6",
+      "t": 6.0,
+      "phase": "transport",
+      "tcp": [
+        1.8609061375225322,
+        0.9139926074979805,
+        -0.800354536037047
+      ],
+      "joints": [
+        0.406172839506173,
+        0.8,
+        -1.2
+      ],
+      "grip_command": true,
+      "object_present": false,
+      "pressure_kpa": 12.0,
+      "verification": null,
+      "vision": null,
+      "placement": null,
+      "controller": {
+        "state": "running",
+        "motion_expected": true,
+        "safety_gate_open": false,
+        "drive_warning": false
+      },
+      "events": [],
+      "kinematics": {
+        "valid": true,
+        "expected_tcp": [
+          1.8609061375225322,
+          0.9139926074979806,
+          -0.800354536037047
+        ],
+        "error_m": 1.1102230246251565e-16,
+        "tolerance_m": 0.0001,
+        "violations": []
+      }
+    },
+    {
+      "id": "E7",
+      "t": 7.0,
+      "phase": "transport",
+      "tcp": [
+        1.5493556469959913,
+        0.9139926074979805,
+        -1.30500425866958
+      ],
+      "joints": [
+        0.7,
+        0.8,
+        -1.2
+      ],
+      "grip_command": true,
+      "object_present": false,
+      "pressure_kpa": 12.0,
+      "verification": null,
+      "vision": null,
+      "placement": null,
+      "controller": {
+        "state": "running",
+        "motion_expected": true,
+        "safety_gate_open": false,
+        "drive_warning": false
+      },
+      "events": [],
+      "kinematics": {
+        "valid": true,
+        "expected_tcp": [
+          1.5493556469959913,
+          0.9139926074979806,
+          -1.30500425866958
+        ],
+        "error_m": 1.1102230246251565e-16,
+        "tolerance_m": 0.0001,
+        "violations": []
+      }
+    },
+    {
+      "id": "E8",
+      "t": 8.0,
+      "phase": "pre-place",
+      "tcp": [
+        1.8118661250989827,
+        0.5995888952872911,
+        -1.5261137841255372
+      ],
+      "joints": [
+        0.7,
+        0.47500000000000003,
+        -0.8
+      ],
+      "grip_command": true,
+      "object_present": false,
+      "pressure_kpa": 12.0,
+      "verification": null,
+      "vision": null,
+      "placement": null,
+      "controller": {
+        "state": "running",
+        "motion_expected": true,
+        "safety_gate_open": false,
+        "drive_warning": false
+      },
+      "events": [],
+      "kinematics": {
+        "valid": true,
+        "expected_tcp": [
+          1.8118661250989827,
+          0.5995888952872912,
+          -1.5261137841255372
+        ],
+        "error_m": 1.1102230246251565e-16,
+        "tolerance_m": 0.0001,
+        "violations": []
+      }
+    },
+    {
+      "id": "E9",
+      "t": 9.0,
+      "phase": "pre-place",
+      "tcp": [
+        1.9631068707397992,
+        0.217220472657565,
+        -1.653502106831369
+      ],
+      "joints": [
+        0.7,
+        0.15000000000000002,
+        -0.4
+      ],
+      "grip_command": true,
+      "object_present": false,
+      "pressure_kpa": 12.0,
+      "verification": "missing",
+      "vision": null,
+      "placement": null,
+      "controller": {
+        "state": "running",
+        "motion_expected": true,
+        "safety_gate_open": false,
+        "drive_warning": false
+      },
+      "events": [],
+      "kinematics": {
+        "valid": true,
+        "expected_tcp": [
+          1.9631068707397992,
+          0.21722047265756494,
+          -1.653502106831369
+        ],
+        "error_m": 5.551115123125783e-17,
+        "tolerance_m": 0.0001,
+        "violations": []
+      }
+    },
+    {
+      "id": "E10",
+      "t": 10.0,
+      "phase": "post-place",
+      "tcp": [
+        1.9631068707397992,
+        0.21722047265756494,
+        -1.653502106831369
+      ],
+      "joints": [
+        0.7,
+        0.15,
+        -0.4
+      ],
+      "grip_command": false,
+      "object_present": false,
+      "pressure_kpa": 0.0,
+      "verification": null,
+      "vision": null,
+      "placement": null,
+      "controller": {
+        "state": "running",
+        "motion_expected": true,
+        "safety_gate_open": false,
+        "drive_warning": false
+      },
+      "events": [],
+      "kinematics": {
+        "valid": true,
+        "expected_tcp": [
+          1.9631068707397992,
+          0.21722047265756494,
+          -1.653502106831369
+        ],
+        "error_m": 0.0,
+        "tolerance_m": 0.0001,
+        "violations": []
+      }
+    },
+    {
+      "id": "E11",
+      "t": 12.0,
+      "phase": "post-place",
+      "tcp": [
+        1.5493556469959913,
+        0.9139926074979805,
+        -1.30500425866958
+      ],
+      "joints": [
+        0.7,
+        0.8,
+        -1.2
+      ],
+      "grip_command": false,
+      "object_present": false,
+      "pressure_kpa": 0.0,
+      "verification": "missing",
+      "vision": {
+        "acquired_t": 12.0,
+        "status": "ok",
+        "confidence": 0.98,
+        "object_detected": false
+      },
+      "placement": {
+        "target": [
+          1.9631068707397992,
+          0.21722047265756494,
+          -1.653502106831369
+        ],
+        "commanded_target": [
+          1.9631068707397992,
+          0.21722047265756494,
+          -1.653502106831369
+        ],
+        "observed": null,
+        "object_present": false,
+        "source": "independent_sensor",
+        "calibration_age_days": 2.0
+      },
+      "controller": {
+        "state": "running",
+        "motion_expected": false,
+        "safety_gate_open": false,
+        "drive_warning": false
+      },
+      "events": [],
+      "kinematics": {
+        "valid": true,
+        "expected_tcp": [
+          1.5493556469959913,
+          0.9139926074979806,
+          -1.30500425866958
+        ],
+        "error_m": 1.1102230246251565e-16,
+        "tolerance_m": 0.0001,
+        "violations": []
+      }
+    }
+  ],
+  "warnings": [],
+  "anomalies": [
+    {
+      "kind": "Dropped object",
+      "summary": "Object lost between pick and place; root cause remains a hypothesis.",
+      "observations": [
+        {
+          "text": "Object verified held after pick.",
+          "evidence": [
+            "E3"
+          ]
+        },
+        {
+          "text": "Object-presence signal lost during commanded grip before placement.",
+          "evidence": [
+            "E6",
+            "E7",
+            "E8",
+            "E9"
+          ]
+        },
+        {
+          "text": "Post-place verification found no object at target.",
+          "evidence": [
+            "E11"
+          ]
+        },
+        {
+          "text": "Vacuum magnitude fell below the 30 kPa demonstration threshold near loss.",
+          "evidence": [
+            "E6",
+            "E7"
+          ]
+        }
+      ],
+      "hypotheses": [
+        {
+          "cause": "Insufficient vacuum / seal loss",
+          "support": [
+            "E6",
+            "E7",
+            "E8",
+            "E9"
+          ],
+          "contradiction": [],
+          "check": "Inspect cup seal, tubing, and vacuum supply; repeat a stationary hold test."
+        },
+        {
+          "cause": "Premature release command",
+          "support": [],
+          "contradiction": [
+            "E6",
+            "E7",
+            "E8",
+            "E9"
+          ],
+          "check": "Check controller output timing against the gripper command trace."
+        },
+        {
+          "cause": "Object sensor or verification error",
+          "support": [],
+          "contradiction": [
+            "E6",
+            "E7",
+            "E8",
+            "E9",
+            "E11"
+          ],
+          "check": "Inspect sensor alignment and compare independent target verification with a physical count."
+        }
+      ]
+    }
+  ],
+  "ranking_basis": "Ordinal rule evidence, not calibrated probabilities.",
+  "id": "D-973774d225afd7785d537ddd"
+}

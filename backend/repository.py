@@ -4,7 +4,7 @@ import sqlite3
 from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
-from uuid import uuid4
+from uuid import uuid4, uuid5, NAMESPACE_URL
 
 class RepositoryError(Exception):
     def __init__(self, message, status=400): super().__init__(message);self.status=status
@@ -75,9 +75,15 @@ class Repository:
         with self.connection(write=True) as db:
             if not db.execute('SELECT 1 FROM equipment WHERE id=?',(data['equipment_id'],)).fetchone(): raise RepositoryError('Equipment not found',404)
             if data.get('diagnosis_id') and not db.execute('SELECT 1 FROM diagnoses WHERE id=?',(data['diagnosis_id'],)).fetchone(): raise RepositoryError('Diagnosis not found',404)
-            ticket_id='T-'+uuid4().hex[:16];stamp=now()
-            db.execute('''INSERT INTO tickets(id,equipment_id,diagnosis_id,title,description,status,created_at,updated_at) VALUES(?,?,?,?,?,'Open',?,?)''',(ticket_id,data['equipment_id'],data.get('diagnosis_id'),data['title'],data['description'],stamp,stamp))
-            db.execute('INSERT INTO ticket_history(ticket_id,at,kind,body) VALUES(?,?,?,?)',(ticket_id,stamp,'created','Open — '+data['title']))
+            ticket_id='T-'+(uuid5(NAMESPACE_URL,str(data['request_id'])).hex if data.get('request_id') else uuid4().hex[:16]);stamp=now()
+            existing=db.execute('SELECT * FROM tickets WHERE id=?',(ticket_id,)).fetchone()
+            if existing:
+                if any(existing[key]!=data.get(key) for key in ('equipment_id','diagnosis_id','title','description')):
+                    raise RepositoryError('Request ID already used for different ticket content',409)
+                # The original transaction already committed; retry returns that ticket.
+            else:
+                db.execute('''INSERT INTO tickets(id,equipment_id,diagnosis_id,title,description,status,created_at,updated_at) VALUES(?,?,?,?,?,'Open',?,?)''',(ticket_id,data['equipment_id'],data.get('diagnosis_id'),data['title'],data['description'],stamp,stamp))
+                db.execute('INSERT INTO ticket_history(ticket_id,at,kind,body) VALUES(?,?,?,?)',(ticket_id,stamp,'created','Open — '+data['title']))
         return self.ticket(ticket_id)
 
     def list_tickets(self, equipment_id=None):

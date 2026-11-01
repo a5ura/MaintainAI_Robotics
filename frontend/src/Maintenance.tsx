@@ -31,7 +31,9 @@ export default function Maintenance({
   fromDiagnosis,
   runContext,
   onReturn,
+  initialTicketId,
 }: {
+  initialTicketId?: string;
   diagnosis: Diagnosis | null;
   fromDiagnosis: boolean;
   runContext: string;
@@ -64,11 +66,18 @@ export default function Maintenance({
   }
   useEffect(() => {
     let active = true;
-    Promise.all([api<Equipment[]>("/equipment"), api<Ticket[]>("/tickets")])
-      .then(([e, t]) => {
+    Promise.all([
+      api<Equipment[]>("/equipment"),
+      api<Ticket[]>("/tickets"),
+      initialTicketId
+        ? api<Detail>(`/tickets/${initialTicketId}`)
+        : Promise.resolve(null),
+    ])
+      .then(([e, t, d]) => {
         if (active) {
           setEquipment(e);
           setTickets(t);
+          if (d) select(d);
         }
       })
       .catch((e) => {
@@ -80,7 +89,7 @@ export default function Maintenance({
     return () => {
       active = false;
     };
-  }, []);
+  }, [initialTicketId]);
   function select(d: Detail) {
     setDetail(d);
     setStatus(d.ticket.status);
@@ -107,7 +116,7 @@ export default function Maintenance({
     setDescription(link ? `${diagnosis?.summary ?? ""}\n${runContext}` : "");
   }
   return (
-    <main className="maintenance">
+    <main className="maintenance" id="main-content" tabIndex={-1}>
       <div className="eyebrow">MAINTENANCE / LOCAL DURABLE RECORDS</div>
       <div className="title-row">
         <div>

@@ -27,3 +27,13 @@
 - Use Python standard-library SQLite and a repository adapter rather than another framework or hosted account. Transactional idempotent seed, parameterized queries, foreign keys, versioned updates and temporary test databases are required. Local SQLite is not the final hosted durability solution.
 - Persist diagnosis snapshots before ticket linkage; a ticket references the backend's immutable result, not a client-supplied replacement. Public/no-login semantics are explicit; no visitor-private identity claims.
 - No dependency additions, Docker, external APIs, paid services, infrastructure provisioning or environment publication. Account entitlement/actual cost remains unobservable; $0 billing cannot be certified from this session.
+
+## Milestone 3 implementation and release decisions
+
+- Verify PR #3 merge `76e00f2c6396f7a5614baeb1434449b88e543ca0` before branching. Preserve all M1/M2 behavior and the approved PRD.
+- Guide a single meaningful dropped-object investigation in ~20 seconds of automatic progression, with real backend computation and a labelled Open ticket; retain interactive default and manual takeover.
+- Use idempotent optional UUID request keys for guided ticket retry/concurrency, without a schema change or replacing the existing API.
+- Derive engineering values/frames/path from the approved model; use keyboard component buttons alongside real mesh picking. Disable overlays by default.
+- Split optional views and render the workcell on demand. Report measured bundle components and limits; do not claim total payload savings or Windows FPS from cloud tests.
+- Add opt-in local write budgets and offline backup/dry-run retention. No public reset route, login, external API or new dependency.
+- Recommend only a conditional Cloudflare FastAPI/D1 feasibility route after current official-source research; no provider selection/provisioning, paid plan, record migration or deployment. Account/card terms, 10 ms runtime compatibility, managed-store adapter and redeploy durability remain release gates. See HOSTING_DECISION.

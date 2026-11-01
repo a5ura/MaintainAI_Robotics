@@ -93,3 +93,40 @@ Initialization and deterministic seeded equipment/resolved incident are one idem
 | `PATCH /api/tickets/{id}` | Required `expected_version`, optional status, note (≤2000), resolution notes (≤2000) |
 
 Transitions: Open ↔ In Progress; either may resolve; Resolved may reopen to Open. Resolution requires notes. Adding a note also increments version. Stale expected version returns 409 without applying changes; UI offers reload instead of overwriting. Missing references return 404, invalid/no-op updates 422. Ticket UUID-derived IDs are stable; diagnosis IDs derive from canonical computed content. Both notes and status/history commit together. Records are shared by users of the same backend and are not private. This is not production security hardening; hosting, retention/backups and production durability remain M3 decisions.
+
+## M3 live guidance
+
+Interactive mode remains default. `guided.ts` defines a reducer for simulation → evidence → checks → saving → complete; `useGuidedDemo.ts` orchestrates existing simulation clock, FastAPI and ticket APIs. Start selects the deterministic dropped-object case. Input loss occurs at t=6; the actual completed cycle reaches FastAPI at t=12. The evidence/checks stages each advance after 4 seconds unless paused. The narrative reads observations/hypotheses/checks from the returned result, not a cached diagnosis.
+
+Pause freezes the clock/tour; Resume continues the stage. Reset demo starts a new labelled run. Skip to Results advances deterministic simulation time to its endpoint and invokes the real backend; it does not fabricate results. Take Manual Control stops the tour and freezes current pose while retaining available results. Request generations invalidate stale diagnosis responses after simulation reset; a separate guide epoch prevents old auto-navigation/saves from changing a newer UI sequence.
+
+The guide creates one labelled synthetic Open maintenance ticket and opens its real detail/snapshot. POST accepts optional UUID `request_id`; its deterministic ticket ID and transaction lookup make retries/concurrent repeats idempotent. Reusing the same key with different original content returns 409. No schema migration is required; existing ticket IDs and manual workflows remain valid. Resetting/closing/taking over cannot undo a write already committed on the server; such a ticket remains discoverable in Maintenance. Retrying the same submitted guide request does not create a second ticket.
+
+## M3 engineering view
+
+Overlays default off. `engineering.ts` derives current joint angles, five frame origins/orientations, an executed-only TCP path and row-major 4×4 transforms. For world translation `(x,y,z)`, yaw `c` and pitch `a`, rotation is `Ry(c) Rz(a)`:
+
+```
+[ cos(c)cos(a)  -cos(c)sin(a)  sin(c)  x ]
+[ sin(a)        cos(a)        0       y ]
+[-sin(c)cos(a)   sin(c)sin(a)  cos(c)  z ]
+[ 0             0            0       1 ]
+```
+
+Shoulder pitch uses J2; elbow/TCP pitch uses J2+J3; translations come from the existing FK/tool offset. Frame axes use the same rotations as nested render groups. Unit checks compare against independent Three.js matrices and existing rendered-hierarchy/FK tests. The TCP polyline samples only times already executed (0.1-second steps plus current endpoint), not the future nominal trajectory.
+
+Clickable base/shoulder/elbow/tool meshes highlight selection; equivalent named buttons provide keyboard access. Component context shows axes/dimensions/live TCP and real related evidence references, explicitly not a proven component fault. Transform tables and angle values update with actual current simulation time; protective stop therefore freezes them too.
+
+## M3 UX and performance
+
+React lazy/Suspense splits Workcell and Maintenance; loading states and error boundaries contain chunk/render failures with an application reload recovery. Operations/Diagnostics/Maintenance navigation, skip-to-main link, focusable evidence rows, clear focus outlines, labelled controls, readable non-trapping diagnostic content and responsive panels extend the existing UI. `VITE_API_BASE` can specify a public API root at build time (default `/api`); it must never contain credentials. Explicit server CORS origins are configured via `MAINTAINAI_ALLOWED_ORIGINS` (wildcard refused).
+
+R3F uses on-demand rendering; simulation state updates at ~30 Hz, with no continuous idle render loop. Low-poly meshes, no shadows, capped DPR and small optional helpers remain. Observed build: initial entry 215.23 kB / 68.92 kB gzip, Workcell 843.84 / 226.69, Maintenance 7.72 / 2.65, CSS 16.25 / 4.66. The main entry is smaller than M2's 1055.67 / 293.96 single bundle; combined JS is ~1066.79 / 298.26 and the 3D chunk still loads on Operations. This is responsiveness/code-loading separation, not a claimed total bandwidth reduction. The 3D chunk-size warning remains. Cloud software WebGL checks and navigation timing do not establish Windows FPS or accessibility certification.
+
+## M3 anonymous-demo safeguards and maintenance
+
+Existing body/field limits, parameterized SQL, foreign keys, immutable snapshots and optimistic versions remain. Optional `MAINTAINAI_PUBLIC_DEMO=1` enables a 60-second fixed-window write budget (20 per peer, 120 process total; bounded 4096 peers; forwarded headers ignored). Invalid write attempts count; reads remain available; 429 includes Retry-After. Defaults leave local tests/development unaffected. This is single-process protection, reset on restart, not a distributed quota/billing limit or authentication.
+
+`python -m backend.manage backup` uses SQLite's consistent backup API without overwriting an existing destination. `prune` defaults to dry-run; explicit `--apply --backup NEW_FILE` removes only old resolved non-seed tickets and old unreferenced diagnoses in a transaction. History is removed atomically; Open/In Progress and seed records remain. Applied pruning takes a write reservation before a separate consistent backup. Commands were tested on temporary databases only; no real/production records were migrated or pruned. A hosted D1/PostgreSQL adapter needs its own backup/retention implementation and deployment validation.
+
+See `HOSTING_DECISION.md` and `RELEASE_CHECKLIST.md` for the public-write threat model, Free-plan/access gate, runtime/adapter gaps and unverified cloud durability. No public endpoint or database was provisioned.

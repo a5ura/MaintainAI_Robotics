@@ -1,5 +1,7 @@
 # MaintainAI Robotics — Milestone 2 Completion Report
 
+Historical M2 handoff. Subsequent M3 preflight verified that the user created and merged PR #3 at `76e00f2c6396f7a5614baeb1434449b88e543ca0`. The original automated PR blocker below is historical; current status is in DEVELOPMENT_STATUS and M3_COMPLETION_REPORT.
+
 ## A. Environment
 
 - Existing managed **cloud Linux x86_64**, `/workspace/MaintainAI_Robotics`; not a verified Windows/Codex Desktop run.

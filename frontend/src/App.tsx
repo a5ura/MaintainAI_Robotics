@@ -1,6 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
-import Workcell from "./Workcell";
-import Maintenance from "./Maintenance";
+import React, { useEffect, useRef, useState, lazy, Suspense } from "react";
+import EngineeringPanel from "./EngineeringPanel";
+import GuidedBanner from "./GuidedBanner";
+import ViewBoundary from "./ViewBoundary";
+import { api } from "./api";
+import { useGuidedDemo } from "./useGuidedDemo";
+import { NO_OVERLAYS, type ComponentId, type Overlays } from "./engineering";
+const Workcell = lazy(() => import("./Workcell"));
+const Maintenance = lazy(() => import("./Maintenance"));
 import {
   SCENARIOS,
   resolveScenario,
@@ -31,6 +37,11 @@ export function App() {
     drop = scenario === "drop";
   const [view, setView] = useState<"operations" | "maintenance">("operations");
   const [fromDiagnosis, setFromDiagnosis] = useState(false);
+  const [initialTicketId, setInitialTicketId] = useState<string | undefined>();
+  const [engineeringEnabled, setEngineeringEnabled] = useState(false);
+  const [overlays, setOverlays] = useState<Overlays>(NO_OVERLAYS);
+  const [selectedComponent, setSelectedComponent] =
+    useState<ComponentId | null>(null);
   const [result, setResult] = useState<Diagnosis | null>(null);
   const [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
@@ -52,14 +63,11 @@ export function App() {
     setBusy(true);
     setError("");
     try {
-      const response = await fetch("/api/diagnose", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(cyclePayload(scenario)),
-        signal: AbortSignal.timeout(10000),
-      });
-      if (!response.ok) throw new Error(`Backend returned ${response.status}`);
-      const data: Diagnosis = await response.json();
+      const data = await api<Diagnosis>(
+        "/diagnose",
+        "POST",
+        cyclePayload(scenario),
+      );
       if (generation.current === run) setResult(data);
     } catch (e) {
       if (generation.current === run)
@@ -74,7 +82,7 @@ export function App() {
       void diagnose();
     }
   }, [clock.t]);
-  function reset() {
+  function resetSimulation() {
     generation.current++;
     requested.current = false;
     setClock({ t: 0, running: false });
@@ -82,10 +90,41 @@ export function App() {
     setError("");
     setBusy(false);
   }
+  const guide = useGuidedDemo(clock, result, {
+    reset: resetSimulation,
+    selectDrop: () => {
+      setSelection("drop");
+      setSeed(42);
+    },
+    play: () => setClock((c) => ({ ...c, running: true })),
+    pause: () => setClock((c) => ({ ...c, running: false })),
+    skip: () => setClock({ t: 12, running: false }),
+    showOperations: () => setView("operations"),
+    openTicket: (id) => {
+      setInitialTicketId(id);
+      setFromDiagnosis(false);
+      setView("maintenance");
+    },
+  });
+  function reset() {
+    guide.stop();
+    resetSimulation();
+  }
+  function openDiagnostics() {
+    setView("operations");
+    setTimeout(() => {
+      const section = document.getElementById("diagnostics");
+      section?.focus();
+      section?.scrollIntoView({ block: "start" });
+    }, 0);
+  }
   const tcp = fk(trajectory(clock.t)).tcp;
   const sensor = scenarioSample(clock.t, scenario);
   return (
     <div className="shell">
+      <a className="skip-link" href="#main-content">
+        Skip to main content
+      </a>
       <header>
         <a className="brand" href="#">
           M<span> / </span>MaintainAI <b>ROBOTICS</b>
@@ -98,29 +137,61 @@ export function App() {
       <nav className="workspace-nav" aria-label="Workspace">
         <button
           aria-pressed={view === "operations"}
-          onClick={() => setView("operations")}
+          onClick={() => {
+            if (guide.state) guide.takeover();
+            setView("operations");
+          }}
         >
           Operations
         </button>
         <button
           aria-pressed={view === "maintenance"}
           onClick={() => {
+            if (guide.state) guide.takeover();
+            setInitialTicketId(undefined);
             setFromDiagnosis(false);
             setView("maintenance");
           }}
         >
           Maintenance
         </button>
+        <button onClick={openDiagnostics}>Diagnostics</button>
       </nav>
+      <GuidedBanner
+        state={guide.state}
+        t={clock.t}
+        result={result}
+        backendError={error}
+        onPause={guide.pause}
+        onResume={guide.resume}
+        onReset={guide.start}
+        onSkip={guide.skip}
+        onManual={guide.takeover}
+        onRetry={guide.retry}
+      />
       {view === "maintenance" ? (
-        <Maintenance
-          diagnosis={result}
-          fromDiagnosis={fromDiagnosis}
-          runContext={`${SCENARIOS[scenario]} · seed ${seed}`}
-          onReturn={() => setView("operations")}
-        />
+        <ViewBoundary label="Maintenance">
+          <Suspense
+            fallback={
+              <main id="main-content" role="status">
+                Loading maintenance…
+              </main>
+            }
+          >
+            <Maintenance
+              initialTicketId={initialTicketId}
+              diagnosis={result}
+              fromDiagnosis={fromDiagnosis}
+              runContext={`${SCENARIOS[scenario]} · seed ${seed}`}
+              onReturn={() => {
+                if (guide.state) guide.takeover();
+                setView("operations");
+              }}
+            />
+          </Suspense>
+        </ViewBoundary>
       ) : (
-        <main>
+        <main id="main-content" tabIndex={-1}>
           <div className="eyebrow">OPERATIONS / CELL 01</div>
           <div className="title-row">
             <div>
@@ -135,6 +206,23 @@ export function App() {
               R-01 <span>3-AXIS DEMONSTRATOR</span>
             </div>
           </div>
+          {!guide.state && (
+            <section
+              className="demo-entry"
+              aria-label="Guided demo introduction"
+            >
+              <div>
+                <b>A failure investigation in under a minute.</b>
+                <p>
+                  Run a live simulated failure, compute its diagnosis and create
+                  one labelled demo maintenance ticket.
+                </p>
+              </div>
+              <button className="primary" onClick={guide.start}>
+                Start Guided Demo
+              </button>
+            </section>
+          )}
           <div className="workspace">
             <section className="cell-panel">
               <div className="panel-top">
@@ -152,7 +240,43 @@ export function App() {
                 </span>
               </div>
               <div className="viewport">
-                <Workcell t={clock.t} scenario={scenario} />
+                <ViewBoundary label="3D workcell">
+                  {" "}
+                  <Suspense
+                    fallback={
+                      <div className="canvas-error" role="status">
+                        Loading 3D workcell…
+                      </div>
+                    }
+                  >
+                    <Workcell
+                      t={clock.t}
+                      scenario={scenario}
+                      engineering={engineeringEnabled}
+                      overlays={overlays}
+                      selected={selectedComponent}
+                      onSelect={setSelectedComponent}
+                    />
+                  </Suspense>
+                </ViewBoundary>
+                {engineeringEnabled && overlays.angles && (
+                  <div
+                    className="angle-overlay"
+                    aria-label="Joint angle overlay"
+                  >
+                    {trajectory(clock.t).map((q, i) => (
+                      <div key={i}>
+                        J{i + 1} / {q.toFixed(3)} rad ·{" "}
+                        {((q * 180) / Math.PI).toFixed(1)}°
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {drop && clock.t >= 6 && clock.t < 12 && (
+                  <div className="outcome-banner" role="status">
+                    OBJECT PRESENCE LOST · GRIP STILL COMMANDED
+                  </div>
+                )}
                 {scenario === "stop" && clock.t >= 6 && (
                   <div className="outcome-banner" role="status">
                     PROTECTIVE STOP · CYCLE INTERRUPTED
@@ -203,13 +327,19 @@ export function App() {
               <div className="controls">
                 <button
                   className="primary"
-                  onClick={() => setClock((c) => ({ ...c, running: true }))}
+                  onClick={() => {
+                    if (guide.state) guide.resume();
+                    else setClock((c) => ({ ...c, running: true }));
+                  }}
                   disabled={clock.running || clock.t >= endTime(scenario)}
                 >
                   Start
                 </button>
                 <button
-                  onClick={() => setClock((c) => ({ ...c, running: false }))}
+                  onClick={() => {
+                    if (guide.state) guide.pause();
+                    else setClock((c) => ({ ...c, running: false }));
+                  }}
                   disabled={!clock.running}
                 >
                   Pause
@@ -278,8 +408,23 @@ export function App() {
                   </div>
                 ))}
               </div>
+              <EngineeringPanel
+                t={clock.t}
+                enabled={engineeringEnabled}
+                setEnabled={setEngineeringEnabled}
+                overlays={overlays}
+                setOverlays={setOverlays}
+                selected={selectedComponent}
+                setSelected={setSelectedComponent}
+                result={result}
+              />
             </section>
-            <aside className="diagnostics" id="diagnostics">
+            <aside
+              className="diagnostics"
+              id="diagnostics"
+              tabIndex={-1}
+              aria-label="Diagnostics Workspace"
+            >
               <div className="panel-top">
                 <span>02 / DIAGNOSTICS</span>
                 <span>RULES ENGINE</span>
@@ -333,6 +478,8 @@ export function App() {
                     {result.id && (
                       <button
                         onClick={() => {
+                          guide.takeover();
+                          setInitialTicketId(undefined);
                           setFromDiagnosis(true);
                           setView("maintenance");
                         }}
@@ -503,7 +650,7 @@ export function App() {
           </section>
           <footer>
             <span>MAINTAINAI / ENGINEERING DEMONSTRATOR</span>
-            <span>MILESTONE 02 · DETERMINISTIC, EXPLAINABLE, REPRODUCIBLE</span>
+            <span>MILESTONE 03 · DETERMINISTIC, EXPLAINABLE, REPRODUCIBLE</span>
           </footer>
         </main>
       )}

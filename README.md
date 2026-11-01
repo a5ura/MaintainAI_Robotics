@@ -1,6 +1,6 @@
 # MaintainAI Robotics
 
-Evidence-driven robotic failure investigation. **Milestone 2:** a 3-axis pick-and-place demonstrator, preserved FK integrity, four evidence-driven diagnoses, reproducible Random Failure, and local SQLite maintenance records. No paid APIs, login, GPU, Docker, or external runtime service.
+Evidence-driven robotic failure investigation. **Milestone 3:** live guided investigation, optional model-derived engineering tools, four evidence-driven diagnoses, reproducible Random Failure and local SQLite maintenance records. No paid APIs, login, GPU, Docker, or external runtime service.
 
 ## Run locally
 
@@ -45,6 +45,12 @@ $env:MAINTAINAI_DB_PATH = 'C:\path\maintainai.sqlite3'
 
 Use a local writable path. No external database account is needed. Equipment, tickets, history and immutable diagnostic evidence are shared by visitors of this backend; they are not private. This does **not** satisfy V1 hosted shared storage or prove cloud durability. Back up the file while the backend is stopped; do not commit or casually delete it. Schema is v1; newer unsupported versions are refused rather than overwritten.
 
+## Guided experience and engineering tools
+
+Interactive mode is the default. Choose **Start Guided Demo** to run a real dropped-object cycle, inspect FastAPI-computed evidence/checks, then automatically create one labelled synthetic Open maintenance ticket. This writes an actual local shared record. Pause/Resume, Reset demo, Skip to Results and Take Manual Control are supported. Skip skips visual replay and still calls FastAPI. A submitted ticket request may finish after takeover/reset; retry IDs prevent duplicates for that request, and saved tickets remain in Maintenance.
+
+**Advanced Engineering View** is off by default. Enable joint angles, frames, executed TCP path or transforms individually. Click a robot component or use the named component buttons with the keyboard to inspect axes/live values and linked evidence. No IK/physics engine or hardware is involved.
+
 ## Demo walkthrough
 
 1. Start the default Valid cycle. Pause/resume if desired. At 12 cycle seconds, target verification produces a normal backend result.
@@ -78,6 +84,27 @@ With both services running, execute `npm --prefix frontend run smoke`. Playwrigh
 
 Remaining V1 includes verified shared cloud persistence, engineering overlays, full Guided Demo, production deployment, and final UX/accessibility/performance hardening. Four failures, Random Failure and local maintenance records are implemented in M2. V2 is excluded. Public hosting and shared durability have **not** been verified; no service has been provisioned. Account entitlement/cost must be verified separately from dependency license cost.
 
+## Optional public-demo safeguards (not a deployment)
+
+Set `MAINTAINAI_PUBLIC_DEMO=1` before backend startup to enable per-process write budgets: 20/peer/minute, 120/process/minute; reads remain available. Rate limits reset on restart and do not cover distributed replicas or guarantee provider quotas. Set `MAINTAINAI_ALLOWED_ORIGINS` to explicit comma-separated frontend origins for a separately hosted API; wildcard CORS is refused. `VITE_API_BASE` is an optional **public API root** at frontend build time (default `/api`), never a database URL/key.
+
+Offline local maintenance, from repository root (Windows: use `.\.venv\Scripts\python.exe`):
+
+```sh
+.venv/bin/python -m backend.manage backup --database data/maintainai.sqlite3 --output data/backups/manual.sqlite3
+.venv/bin/python -m backend.manage prune --database data/maintainai.sqlite3 --days 30
+# Dry-run above. Applying requires explicit authorization and a new backup path:
+# .venv/bin/python -m backend.manage prune --database data/maintainai.sqlite3 --days 30 --apply --backup data/backups/before-prune.sqlite3
+```
+
+Backups refuse to overwrite files. Retention preserves seed and active tickets; it is not scheduled automatically. No command was applied to production. Public deployment requires [hosting review](docs/HOSTING_DECISION.md) and the [release checklist](docs/RELEASE_CHECKLIST.md). Local SQLite restart success does not establish public durability.
+
 ## M2 verification and review
 
 See [Milestone 2 scope/results](docs/MILESTONE_2.md) and [completion report](docs/M2_COMPLETION_REPORT.md). New backend tests use temporary databases only (including new-app/reopen and competing-update checks); they do not modify development records. Shared scenario contract: `fixtures/scenarios.json`. Chromium tests exercise all faults, deterministic replay, linked-ticket repair/history, stale-edit recovery and isolated browser simulations. Screenshots are review artifacts, not a Windows FPS benchmark.
+
+## M3 review and limitations
+
+See [M3 scope/results](docs/MILESTONE_3.md), [completion report](docs/M3_COMPLETION_REPORT.md), [hosting decision with current official references](docs/HOSTING_DECISION.md), and [release checklist](docs/RELEASE_CHECKLIST.md). No public URL is deployed or verified. Official Cloudflare docs support FastAPI on Python Workers, but a D1 adapter, Free CPU-budget validation and account/billing/access checks are still required. Current Hugging Face docs require a paid plan for new compute Spaces; that route is rejected. No service, upgrade or paid fallback was activated.
+
+For repeatable browser checks, serve the built frontend without hot reload in terminal 2: `cd frontend` then `node_modules/.bin/vite preview --host 127.0.0.1 --port 5173 --strictPort` (Windows: `npx vite preview --host 127.0.0.1 --port 5173 --strictPort`). Keep FastAPI running in terminal 1, then run the smoke command from terminal 3. Do not edit/rebuild during a run.
