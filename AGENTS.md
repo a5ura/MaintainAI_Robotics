@@ -26,3 +26,13 @@ Read `docs/PRD.md` (full approved October 31, 2026 handoff), `docs/DEVELOPMENT_S
 - Engineering positions, transforms and path derive from the existing joint model. Keep overlays off by default, keyboard equivalents for 3D picking, on-demand rendering and independent FK tests.
 - `MAINTAINAI_PUBLIC_DEMO=1` enables only a per-process write budget, not production security. Tests must use temporary DBs; retention is dry-run unless explicitly applied with a fresh backup.
 - Public hosting is gated by `docs/HOSTING_DECISION.md` and `docs/RELEASE_CHECKLIST.md`. No provider was provisioned. Do not equate local SQLite restart tests with hosted redeploy durability or assume a free-tier label proves no billing risk.
+
+
+## Deployment Phase A boundaries
+
+- Phase A authorizes local/offline Cloudflare feasibility only, from merged M3 PR #4 at `a33811f`. Keep approved PRD, frontend product behavior, Project 1 and V2 unchanged. Never provision, deploy, activate billing, migrate real records, publish the environment or merge without a new instruction.
+- Read `docs/DEPLOYMENT_PHASE_A.md` and its report before extending the prototype. Root tooling is isolated from frontend/native dependency manifests. Keep all Wrangler commands local and identifiers placeholders.
+- Shared domain/HTTP code serves SQLite and async D1. No native sqlite3/filesystem/threadpool fallback in Workers. Preserve atomic history, snapshots, concurrency and Guided Demo IDs.
+- `cloudflare/d1_bridge.mjs`, local API, schema/recovery/measurement runners and tests are disposable loopback-only tools. Never deploy the SQL bridge; tests clear synthetic emulated tables, not `data/`.
+- Report CPython+real emulated D1 separately from actual Python Workers/Wasm and hosted D1. Package resolution is blocked, so JS interop/CPU/memory/startup remain unverified. Single-row D1 snapshots cannot cover all accepted inputs; never truncate evidence or silently reduce V1 requirements.
+- Run native/backend/frontend/build/browser regressions and the documented local D1 contracts sequentially against disposable state. Account costs, abuse resilience, pre-ASGI upload bounds and hosted redeploy durability remain release gates.

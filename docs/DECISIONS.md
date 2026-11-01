@@ -37,3 +37,12 @@
 - Split optional views and render the workcell on demand. Report measured bundle components and limits; do not claim total payload savings or Windows FPS from cloud tests.
 - Add opt-in local write budgets and offline backup/dry-run retention. No public reset route, login, external API or new dependency.
 - Recommend only a conditional Cloudflare FastAPI/D1 feasibility route after current official-source research; no provider selection/provisioning, paid plan, record migration or deployment. Account/card terms, 10 ms runtime compatibility, managed-store adapter and redeploy durability remain release gates. See HOSTING_DECISION.
+
+
+## November 1, 2026 UTC — Deployment Phase A evidence
+
+- M3 PR #4 is verified merged at `a33811f`; use `feature/v1-deployment-feasibility` for the authorized local spike. No public deployment, billing, provider resource, actual migration, environment publication or merge.
+- Reuse a shared async HTTP/domain boundary with native SQLite plus an async D1 binding adapter. Use supported atomic SQL + history triggers and D1 batches; never emulate BEGIN IMMEDIATE over HTTP.
+- Genuine local D1/Static Assets, concurrency and synthetic recovery tests provide local SQL evidence only. An isolated official workers-py CLI attempt was blocked by the required Pyodide index; do not infer Wasm support or Free CPU from CPython.
+- A valid dense payload yields a >2 MB immutable snapshot, exceeding the documented D1 row cap. Preserve evidence and fail explicitly; chunked storage is a release prerequisite, not an approved input reduction. Pre-ASGI upload buffering and anonymous availability also need verification.
+- Verdict: **CONDITIONAL GO** to resolve technical/account gaps. Keep strict $0, no paid fallback, no-login approved requirements and V2 deferral. A read-only/local-interaction fallback, if necessary, needs a Planning decision.

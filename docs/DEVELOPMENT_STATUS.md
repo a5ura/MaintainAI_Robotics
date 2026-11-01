@@ -1,6 +1,18 @@
-# Development status — October 31, 2026
+# Development status — November 1, 2026 UTC
 
-## Current M3 baseline and local release candidate
+
+## Current verified baseline and Deployment Phase A
+
+- M1/M2/M3 are complete and merged. Fetched `origin/main` includes M3 PR #4 merge `a33811f060d165ac5758966eda9be06e215d9171`, including manual takeover fix `a9491d5`. Older PR-access statements below describe their original checkpoints, not current merge status.
+- Phase A branch: `feature/v1-deployment-feasibility`, created from that clean main. Existing managed Linux workspace; Windows/Desktop execution and account costs remain unverified.
+- One shared async HTTP/domain boundary; native SQLite retained; local D1 schema/adapter, atomic history triggers, shared quotas/read-only/seed protection and synthetic recovery tooling added. No frontend feature changes.
+- Verification: 97 native backend tests, 39 frontend tests, TypeScript/production build, 44 new adapter/integrity/policy/static-asset/recovery tests, actual emulator restart and 15 Chromium tests against CPython + genuine local D1 pass. Baseline also passed 15 Chromium tests against SQLite.
+- **Actual Python Workers startup is blocked** by the required Pyodide package index being denied by the proxy; no Wasm endpoint or billed CPU/memory result is claimed. Dense valid evidence exceeds D1's row cap and is explicitly rejected without truncation; the adapter is incomplete for that input class. SDK pre-ASGI upload buffering, large-data read accounting and anonymous availability remain release gates.
+- **CONDITIONAL GO** for further technical investigation, not deployment approval. No public URL, provider resource, billing activation, real record migration, environment publication or automatic merge. PRD/Project 1/V2 unchanged.
+- Source pushed on the Phase A branch; `gh pr create` returned `Post "https://api.github.com/graphql": Forbidden`, so no Phase A PR is confirmed. Prepared body and compare link are in the report.
+- Current Git handoff, exact evidence, limitations and next action: [Deployment Phase A report](DEPLOYMENT_PHASE_A_REPORT.md). Public V1 release remains incomplete.
+
+## Historical M3 implementation checkpoint
 
 - Verified `origin/main` includes M2 PR #3: https://github.com/a5ura/MaintainAI_Robotics/pull/3, merged at `76e00f2c6396f7a5614baeb1434449b88e543ca0` (parents: PR #2 merge `44f8d44bf171ad82f2250938298861e97b267836` and M2 tip `7f2fcb53f32319eba78a22a489cdd7bbb2a352ef`). This is fetched Git merge-history evidence, not API merged-at metadata.
 - M3 branch: `feature/m3-experience-release`; clean baseline; no reset of user work, additional worktree or automatic merge.

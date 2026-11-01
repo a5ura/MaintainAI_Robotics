@@ -1,0 +1,15 @@
+{
+  "environment": "Local JS workerd D1 emulator, CPython adapter; NOT Python Workers or hosted D1",
+  "restart_count": 1,
+  "startup_wall_ms": [
+    1379.919,
+    1160.546
+  ],
+  "persisted_ticket_version": 2,
+  "history_events": 3,
+  "diagnosis_id": "D-b72ecee0befca3b36c6c9ad9",
+  "snapshot_equal": true,
+  "repair_note_equal": true,
+  "budget_survived": true,
+  "seed_repeat_preserved_records": true
+}

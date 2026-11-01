@@ -1,4 +1,12 @@
-# Public hosting decision — October 31, 2026
+# Public hosting decision
+
+## Current Phase A update — November 1, 2026 UTC
+
+M3 PR #4 is merged. Local D1/Static Assets and integrity/recovery work is implemented and tested; actual Python Workers startup is blocked by Pyodide index access. Billed CPU/memory, account plan/cost and hosted redeploy durability remain unverified. Dense valid evidence exceeds the prototype's single-row D1 cap; pre-ASGI body buffering and anonymous-read accounting also need resolution. **CONDITIONAL GO for further investigation; no deployment approval.** See [current Phase A evidence](DEPLOYMENT_PHASE_A_REPORT.md). No provider resources or billing were activated.
+
+The comparison below is the historical October 31 research checkpoint; current runtime versions, quotas and technical gaps are in [Cloudflare compatibility](CLOUDFLARE_COMPATIBILITY.md) and [Free-tier feasibility](FREE_TIER_FEASIBILITY.md).
+
+## Historical October 31 research
 
 **Decision: do not deploy in this task.** The local M3 candidate is functional; no complete hosted architecture has passed account/cost, runtime, and durable-redeployment verification. No provider account, database, billing method, or service was created. The assignment's section 5 approval/access gate remains in force.
 

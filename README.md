@@ -108,3 +108,10 @@ See [Milestone 2 scope/results](docs/MILESTONE_2.md) and [completion report](doc
 See [M3 scope/results](docs/MILESTONE_3.md), [completion report](docs/M3_COMPLETION_REPORT.md), [hosting decision with current official references](docs/HOSTING_DECISION.md), and [release checklist](docs/RELEASE_CHECKLIST.md). No public URL is deployed or verified. Official Cloudflare docs support FastAPI on Python Workers, but a D1 adapter, Free CPU-budget validation and account/billing/access checks are still required. Current Hugging Face docs require a paid plan for new compute Spaces; that route is rejected. No service, upgrade or paid fallback was activated.
 
 For repeatable browser checks, serve the built frontend without hot reload in terminal 2: `cd frontend` then `node_modules/.bin/vite preview --host 127.0.0.1 --port 5173 --strictPort` (Windows: `npx vite preview --host 127.0.0.1 --port 5173 --strictPort`). Keep FastAPI running in terminal 1, then run the smoke command from terminal 3. Do not edit/rebuild during a run.
+
+
+## Deployment Phase A: local Cloudflare feasibility
+
+M3 PR #4 is merged at `a33811f`; V1 is **not publicly deployed**. The local Workers/D1 investigation is on `feature/v1-deployment-feasibility`. Start with [Phase A commands and boundaries](docs/DEPLOYMENT_PHASE_A.md) and [completion report](docs/DEPLOYMENT_PHASE_A_REPORT.md).
+
+The existing native commands above still use SQLite. Root `package.json`/`pyproject.toml` are separate, pinned local Cloudflare tooling; frontend dependencies are unchanged. Local D1/Static Assets and integrity/recovery tests work, but actual Python Workers startup is blocked by Pyodide index access, Free CPU is unverified, and oversized evidence needs chunked storage. The SQL transport is a loopback-only disposable test harness and must never be published. Account eligibility, hosted durability and public-release safeguards remain unverified. No deploy/billing/resource provisioning is authorized by these setup commands.
