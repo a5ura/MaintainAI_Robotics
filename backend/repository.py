@@ -76,17 +76,28 @@ class Repository:
                 db.execute('INSERT INTO ticket_history(ticket_id,at,kind,body) VALUES(?,?,?,?)',(ticket_id,stamp,'created','Open — '+data['title']))
         return self.ticket(ticket_id)
 
-    def list_tickets(self, equipment_id=None):
+    def list_tickets(self,equipment_id=None,after_created=None,after_id=None):
+        conditions=[];params=[]
+        if equipment_id:conditions.append('equipment_id=?');params.append(equipment_id)
+        if after_created is not None:
+            conditions.append('(created_at<? OR (created_at=? AND id>?))');params.extend((after_created,after_created,after_id or ''))
         with self.connection() as db:
-            return [dict(row) for row in db.execute('SELECT * FROM tickets WHERE (? IS NULL OR equipment_id=?) ORDER BY created_at DESC,id LIMIT 200',(equipment_id,equipment_id))]
+            return [dict(row) for row in db.execute('SELECT * FROM tickets '+('WHERE '+' AND '.join(conditions)+' ' if conditions else '')+'ORDER BY created_at DESC,id LIMIT 200',params)]
+
+    def history_page(self,ticket_id,after_seq=0):
+        with self.connection() as db:
+            rows=[dict(row) for row in db.execute('SELECT * FROM ticket_history WHERE ticket_id=? AND seq>? ORDER BY seq LIMIT 201',(ticket_id,after_seq))]
+            return {'history':rows[:200],'next_seq':rows[199]['seq'] if len(rows)>200 else None}
 
     def ticket(self,ticket_id):
         with self.connection() as db:
             row=db.execute('SELECT * FROM tickets WHERE id=?',(ticket_id,)).fetchone()
             if row is None: raise RepositoryError('Ticket not found',404)
             diagnosis=db.execute('SELECT snapshot FROM diagnoses WHERE id=?',(row['diagnosis_id'],)).fetchone() if row['diagnosis_id'] else None
-            history=[dict(h) for h in db.execute('SELECT * FROM ticket_history WHERE ticket_id=? ORDER BY seq',(ticket_id,))]
-            return {'ticket':dict(row),'diagnosis':json.loads(diagnosis['snapshot']) if diagnosis else None,'history':history}
+            history=[dict(h) for h in db.execute('SELECT * FROM ticket_history WHERE ticket_id=? ORDER BY seq LIMIT 201',(ticket_id,))]
+            detail={'ticket':dict(row),'diagnosis':json.loads(diagnosis['snapshot']) if diagnosis else None,'history':history[:200]}
+            if len(history)>200:detail['history_next_seq']=history[199]['seq']
+            return detail
 
     def update_ticket(self,ticket_id,data):
         with self.connection(write=True) as db:

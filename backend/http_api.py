@@ -38,14 +38,17 @@ def build_app(get_repository,origins=('http://localhost:5173','http://127.0.0.1:
     @app.get('/api/equipment')
     async def equipment(repository=Depends(get_repository)):return await call_repository(repository,'equipment')
     @app.get('/api/tickets')
-    async def tickets(equipment_id:str|None=Query(default=None,max_length=80),repository=Depends(get_repository)):
-        return await call_repository(repository,'list_tickets',equipment_id)
+    async def tickets(equipment_id:str|None=Query(default=None,max_length=80),after_created:str|None=Query(default=None,max_length=64),after_id:str|None=Query(default=None,max_length=80),repository=Depends(get_repository)):
+        return await call_repository(repository,'list_tickets',equipment_id,after_created,after_id)
     @app.post('/api/tickets',status_code=201)
     async def create_ticket(data:TicketCreate,repository=Depends(get_repository)):
         return await call_repository(repository,'create_ticket',data.model_dump())
     @app.get('/api/tickets/{ticket_id}')
     async def ticket(ticket_id:str,repository=Depends(get_repository)):
         return await call_repository(repository,'ticket',ticket_id)
+    @app.get('/api/tickets/{ticket_id}/history')
+    async def history(ticket_id:str,after_seq:int=Query(default=0,ge=0),repository=Depends(get_repository)):
+        return await call_repository(repository,'history_page',ticket_id,after_seq)
     @app.patch('/api/tickets/{ticket_id}')
     async def update_ticket(ticket_id:str,data:TicketUpdate,repository=Depends(get_repository)):
         return await call_repository(repository,'update_ticket',ticket_id,data.model_dump())

@@ -37,10 +37,10 @@ def test_direct_snapshot_updates_are_rejected(repo):
 def test_schema_version_failure_and_migration_batch_rollback(repo):
     with pytest.raises(RepositoryError):call(repo,'batch',[('CREATE TABLE rollback_migration(id TEXT)',()),('INSERT INTO missing_table VALUES(1)',())])
     assert not call(repo,'query',"SELECT name FROM sqlite_master WHERE name='rollback_migration'")
-    call(repo,'query','INSERT INTO phase_a_schema VALUES(2)')
+    call(repo,'query','INSERT INTO phase_a_schema VALUES(3)')
     try:
         with pytest.raises(RepositoryError):call(repo,'initialize')
-    finally:call(repo,'query','DELETE FROM phase_a_schema WHERE version=2')
+    finally:call(repo,'query','DELETE FROM phase_a_schema WHERE version=3')
 
 def test_distributed_daily_budget_and_byte_cap(repo):
     bucket='contract-'+uuid4().hex
@@ -76,8 +76,7 @@ def test_schema_loader_and_seed_can_be_repeated(repo):
     for _ in range(2):asyncio.run(apply_schema(repo.binding));call(repo,'initialize')
     assert call(repo,'ticket','T-SEED-001')==before
 
-def test_oversize_complete_snapshot_is_explicitly_unsupported_not_truncated(repo):
+def test_oversize_complete_snapshot_round_trip(repo):
     result={'id':'oversize-'+uuid4().hex,'evidence':'x'*2_000_000}
-    with pytest.raises(RepositoryError) as exc:call(repo,'save_diagnosis',result)
-    assert exc.value.status==503 and 'chunked snapshot' in str(exc.value)
-    assert not call(repo,'query','SELECT id FROM diagnoses WHERE id=?',(result['id'],))
+    call(repo,'save_diagnosis',result)
+    assert call(repo,'load_diagnosis',result['id'])==result

@@ -19,7 +19,7 @@ class WorkerPolicy:
             if env is None or getattr(env,'DB',None) is None:raise RepositoryError('D1 binding unavailable; no local fallback',503)
             write=scope['method'] in ('POST','PATCH','PUT','DELETE')
             if write and str(setting(env,'DEMO_READONLY','0'))=='1':raise RepositoryError('Demo is temporarily read-only',503)
-            repo=D1Repository(env.DB,daily_snapshot_bytes=int(setting(env,'DEMO_DAILY_SNAPSHOT_BYTES',2097152)))
+            repo=D1Repository(env.DB,daily_snapshot_bytes=int(setting(env,'DEMO_DAILY_SNAPSHOT_BYTES',67108864)))
             await repo.check_schema()
             await repo.reserve('requests',int(setting(env,'DEMO_DAILY_REQUESTS',2000)))
             if write:await repo.reserve('writes',int(setting(env,'DEMO_DAILY_WRITES',250)))

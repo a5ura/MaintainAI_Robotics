@@ -24,6 +24,7 @@ export type Ticket = {
 export type Detail = {
   ticket: Ticket;
   diagnosis: Diagnosis | null;
+  history_next_seq?: number;
   history: { seq: number; at: string; kind: string; body: string }[];
 };
 export default function Maintenance({
@@ -42,6 +43,7 @@ export default function Maintenance({
   const [equipment, setEquipment] = useState<Equipment[]>([]),
     [tickets, setTickets] = useState<Ticket[]>([]),
     [detail, setDetail] = useState<Detail | null>(null);
+  const [moreTickets, setMoreTickets] = useState(false);
   const [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
     [loading, setLoading] = useState(true);
@@ -63,6 +65,7 @@ export default function Maintenance({
     ]);
     setEquipment(e);
     setTickets(t);
+    setMoreTickets(t.length === 200);
   }
   useEffect(() => {
     let active = true;
@@ -77,6 +80,7 @@ export default function Maintenance({
         if (active) {
           setEquipment(e);
           setTickets(t);
+          setMoreTickets(t.length === 200);
           if (d) select(d);
         }
       })
@@ -169,7 +173,8 @@ export default function Maintenance({
             <section className="maintenance-panel">
               <h2>Incident history</h2>
               <p className="muted">
-                Latest 200 records, including seeded incidents.
+                Records are loaded in pages of up to 200, including seeded
+                incidents.
               </p>
               {tickets.length === 0 && <p>No incidents yet.</p>}
               <ul className="ticket-list">
@@ -184,6 +189,28 @@ export default function Maintenance({
                   </li>
                 ))}
               </ul>
+              {moreTickets && (
+                <button
+                  disabled={busy}
+                  onClick={() =>
+                    void perform(async () => {
+                      const last = tickets[tickets.length - 1];
+                      const page = await api<Ticket[]>(
+                        `/tickets?after_created=${encodeURIComponent(last.created_at)}&after_id=${encodeURIComponent(last.id)}`,
+                      );
+                      setTickets((current) => [
+                        ...current,
+                        ...page.filter(
+                          (t) => !current.some((old) => old.id === t.id),
+                        ),
+                      ]);
+                      setMoreTickets(page.length === 200);
+                    })
+                  }
+                >
+                  Load more incidents
+                </button>
+              )}
               <h2>New maintenance ticket</h2>
               <div className="form-actions">
                 <button disabled={busy} onClick={() => prepare(false)}>
@@ -368,6 +395,41 @@ export default function Maintenance({
                       </li>
                     ))}
                   </ol>
+                  {detail.history_next_seq !== undefined && (
+                    <button
+                      disabled={busy}
+                      onClick={async () => {
+                        const id = detail.ticket.id;
+                        setBusy(true);
+                        try {
+                          const page = await api<{
+                            history: Detail["history"];
+                            next_seq: number | null;
+                          }>(
+                            `/tickets/${id}/history?after_seq=${detail.history_next_seq}`,
+                          );
+                          setDetail((current) =>
+                            current?.ticket.id === id
+                              ? {
+                                  ...current,
+                                  history: [
+                                    ...current.history,
+                                    ...page.history,
+                                  ],
+                                  history_next_seq: page.next_seq ?? undefined,
+                                }
+                              : current,
+                          );
+                        } catch (e) {
+                          setError((e as Error).message);
+                        } finally {
+                          setBusy(false);
+                        }
+                      }}
+                    >
+                      Load more history
+                    </button>
+                  )}
                   <details className="snapshot">
                     <summary>
                       Originating diagnosis and evidence snapshot
