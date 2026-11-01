@@ -1,0 +1,92 @@
+{
+  "date_utc": "2026-11-01",
+  "baseline": "a33811f060d165ac5758966eda9be06e215d9171",
+  "environment": "Existing managed Linux x86_64; not verified Windows/Desktop",
+  "commands": [
+    {
+      "name": "baseline-native-backend",
+      "command": ".venv/bin/python -m pytest backend/tests -q",
+      "result": "97 passed"
+    },
+    {
+      "name": "baseline-frontend",
+      "command": "npm --prefix frontend test",
+      "result": "39 passed"
+    },
+    {
+      "name": "baseline-build",
+      "command": "npm --prefix frontend run build",
+      "result": "TypeScript + production build passed"
+    },
+    {
+      "name": "baseline-sqlite-chromium",
+      "command": "CHROMIUM_PATH=/usr/bin/chromium npm --prefix frontend run smoke",
+      "result": "15 passed"
+    },
+    {
+      "name": "final-native-backend",
+      "command": ".venv/bin/python -m pytest backend/tests -q",
+      "result": "97 passed; one upstream Starlette/AnyIO deprecation warning"
+    },
+    {
+      "name": "final-frontend",
+      "command": "npm --prefix frontend test",
+      "result": "39 passed"
+    },
+    {
+      "name": "final-build",
+      "command": "npm --prefix frontend run build",
+      "result": "TypeScript + production build passed; existing >500 KB chunk warning"
+    },
+    {
+      "name": "final-local-d1-contracts",
+      "command": ".venv/bin/python -m pytest cloudflare/tests -q",
+      "result": "44 passed; one upstream deprecation warning"
+    },
+    {
+      "name": "final-d1-chromium",
+      "command": "CHROMIUM_PATH=/usr/bin/chromium npm --prefix frontend run smoke",
+      "result": "15 passed in 2.6m; CPython ASGI + genuine local D1"
+    },
+    {
+      "name": "restart",
+      "command": ".venv/bin/python -m cloudflare.restart_probe",
+      "result": "Passed; actual local emulator stop/start with same disposable persistence directory"
+    },
+    {
+      "name": "measure",
+      "command": ".venv/bin/python -m cloudflare.measure",
+      "result": "10 payloads x 15 repeats; 16 HTTP operation types; five conflict pairs. Dense evidence expected 503; other measured HTTP requests succeed"
+    },
+    {
+      "name": "actual-python-worker",
+      "command": "npm run worker:local",
+      "result": "BLOCKED, dependency compile exit 2: required index.pyodide.org proxy CONNECT denied/403 before app startup"
+    }
+  ],
+  "skips": 0,
+  "unverified": [
+    "Actual Python Worker app startup and all Wasm endpoint results",
+    "Python/JS binding interop",
+    "Authoritative 10 ms Worker CPU, 128 MB Wasm memory, cold starts",
+    "Pre-ASGI streamed body bound",
+    "Provider account eligibility/billing/quotas",
+    "Hosted persistence/redeployment/Time Travel"
+  ],
+  "known_limitations": [
+    "Complete dense snapshots exceed D1 single-row limit; explicit 503, no truncation; adapter incomplete for this payload class",
+    "Anonymous shared budgets limit availability; retained-data scans and rejected calls still consume platform resources"
+  ],
+  "earlier_failures": [
+    "First CLI attempt: isolated uv version too old; resolved by isolated uv 0.13.6",
+    "Initial new tests: helper indentation and JSON tuple/list expectations corrected; final full adapter run passes",
+    "Sandboxed final native TestClient run stalled without output; stopped and rerun outside socket restrictions, 97 pass"
+  ],
+  "unchanged": [
+    "Approved docs/PRD.md",
+    "frontend source and dependency manifests",
+    "backend requirements and diagnostic algorithms",
+    "Project 1",
+    "V2 scope"
+  ]
+}

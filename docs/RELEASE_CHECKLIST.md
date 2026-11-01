@@ -10,7 +10,7 @@ This separates the locally verified M3 experience from a public V1 release. **Do
 - [x] Input limits, immutable snapshots, optimistic writes and retry-safe guided ticket IDs.
 - [x] Optional single-process anonymous write limiter and explicit-origin CORS configuration.
 - [x] Offline consistent SQLite backup and dry-run retention/recovery helpers tested on temporary data.
-- [x] Final full regression/browser results recorded in M3 report: 97 backend, 36 frontend, build and 13 browser tests passed.
+- [x] Final full regression/browser results recorded in M3 report: 97 backend, 39 frontend, build and 15 browser tests passed after the M3 acceptance fix; Phase A reruns those and adds 44 local D1/adapter tests.
 - [ ] Windows laptop performance and browser/GPU fallback verified (not established by cloud software WebGL).
 - [ ] Keyboard/contrast/screen-reader/accessibility review beyond the documented smoke checks.
 
@@ -43,6 +43,22 @@ Before public use:
 
 ## Git review
 
-- [ ] Review M3 feature PR or pushed branch if API creation is blocked; do not auto-merge.
+- [x] M3 PR #4 merged; baseline verified at `a33811f`.
+- [ ] Review the Phase A feature branch/PR and completion report; do not auto-merge.
 - [ ] Confirm PRD/Project 1 unchanged and no billable resources introduced.
 - [ ] Return `M3_COMPLETION_REPORT.md` to Planning for signoff. Local M3 completion does not complete public V1 release.
+
+
+## Deployment Phase A evidence and remaining gates
+
+- [x] Preserve SQLite and shared HTTP/domain behavior; genuine local D1 atomicity, concurrency, idempotency, full small snapshots and synthetic migration/backup restore tested.
+- [x] Shared D1 request/write/byte reservations, read-only mode and seed protection locally tested; real emulator restart preserves records and counters.
+- [x] Real workerd Static Assets/SPA serving and all 15 Chromium regressions against CPython + local D1 pass.
+- [ ] Launch actual Python Worker, resolve exact Wasm dependency pins, verify ASGI and Python/JS binding conversion at every endpoint.
+- [ ] Demonstrate authoritative Free 10 ms CPU / 128 MB memory, including all maximum accepted inputs and cold initialization.
+- [ ] Replace single-row evidence storage with tested immutable chunked storage for the complete approved input range; no truncation or silent requirement change.
+- [ ] Bound streamed uploads before the SDK's ASGI receive-queue buffering, including missing/spoofed Content-Length.
+- [ ] Verify large-data row accounting, retention, backup access/recovery, anonymous availability and any truly free platform controls.
+- [ ] Independently confirm Free-only account eligibility/no billing exposure; obtain explicit Phase B provisioning/publication authorization and prove hosted durability/redeployment.
+
+Current verdict/details: [Deployment Phase A report](DEPLOYMENT_PHASE_A_REPORT.md). Local controls do not complete the unchecked public-release gates above.

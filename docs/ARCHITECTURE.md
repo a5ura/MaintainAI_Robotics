@@ -130,3 +130,12 @@ Existing body/field limits, parameterized SQL, foreign keys, immutable snapshots
 `python -m backend.manage backup` uses SQLite's consistent backup API without overwriting an existing destination. `prune` defaults to dry-run; explicit `--apply --backup NEW_FILE` removes only old resolved non-seed tickets and old unreferenced diagnoses in a transaction. History is removed atomically; Open/In Progress and seed records remain. Applied pruning takes a write reservation before a separate consistent backup. Commands were tested on temporary databases only; no real/production records were migrated or pruned. A hosted D1/PostgreSQL adapter needs its own backup/retention implementation and deployment validation.
 
 See `HOSTING_DECISION.md` and `RELEASE_CHECKLIST.md` for the public-write threat model, Free-plan/access gate, runtime/adapter gaps and unverified cloud durability. No public endpoint or database was provisioned.
+
+
+## Deployment Phase A extension (local prototype, November 1, 2026 UTC)
+
+Native `backend.app` still uses SQLite. `backend.http_api.build_app` provides a shared async HTTP boundary; `backend.domain` and `ticket_models` provide shared maintenance rules/validation. Native repository calls use the threadpool; async D1 calls await the binding directly. The diagnostic algorithms, frontend model and browser session state are unchanged.
+
+Proposed `cloudflare.entry` uses the official Workers ASGI entrypoint, with D1-only dependencies and no local-file fallback. SQL triggers couple ticket mutation/history atomically; conditional versions and existing UUID-derived IDs preserve concurrent/retry semantics. Static Assets route `/api/*` to the Worker and other paths to the unchanged SPA. D1 budgets are shared, unlike the optional native process limiter.
+
+Actually exercised: CPython ASGI + async D1 adapter, with SQL evaluated by genuine local workerd D1, and separate real Static Assets tests. The actual Python VM failed package resolution before app startup; this is not Worker compatibility proof. Large complete snapshots exceed the D1 single-row cap; this adapter is explicitly incomplete for that case. [Phase A](DEPLOYMENT_PHASE_A.md), [storage contract](D1_STORAGE_ADAPTER.md) and [security gaps](PUBLIC_DEMO_SECURITY.md) define the remaining boundaries. No hosted deployment or new approved product requirement follows from this prototype.
