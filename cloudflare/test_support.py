@@ -15,12 +15,13 @@ class Statement:
 class BridgeBinding:
     def __init__(self,url=None):
         self.url=url or os.environ.get('D1_LOCAL_BRIDGE','http://127.0.0.1:8788/__contract/query')
-        self.metadata=[]
+        self.metadata=[];self.calls=0
         parsed=urlsplit(self.url)
         if parsed.scheme!='http' or parsed.hostname not in ('127.0.0.1','localhost') or parsed.username:
             raise ValueError('The contract bridge accepts loopback-only HTTP URLs')
     def prepare(self,sql):return Statement(self,sql)
     async def batch(self,statements):
+        self.calls+=1
         async with httpx.AsyncClient(timeout=15) as client:
             r=await client.post(self.url,headers={'X-Local-Contract':'phase-a'},json={'statements':[dict(sql=s.sql,params=s.params) for s in statements]})
         if r.status_code!=200:raise RuntimeError('Local D1 batch failed: '+r.text[:400])

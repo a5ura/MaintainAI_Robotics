@@ -134,3 +134,99 @@ it("API helper preserves conflict message for safe reload instead of silent over
     api("/tickets/T1", "PATCH", { expected_version: 1, note: "repair" }),
   ).rejects.toThrow("Reload before updating");
 });
+it("loads bounded history without clearing an unsaved repair draft", async () => {
+  const ticket = {
+    id: "T1",
+    title: "Paged incident",
+    status: "Open",
+    version: 1,
+    equipment_id: "R-01",
+  };
+  vi.stubGlobal(
+    "fetch",
+    vi.fn().mockImplementation(async (url) => ({
+      ok: true,
+      json: async () => {
+        const path = String(url);
+        if (path.endsWith("/equipment")) return equipment;
+        if (path.includes("/history?"))
+          return {
+            history: [
+              {
+                seq: 201,
+                at: "now",
+                kind: "note",
+                body: "Older page continuation",
+              },
+            ],
+            next_seq: null,
+          };
+        if (path.endsWith("/tickets/T1"))
+          return {
+            ticket,
+            diagnosis: null,
+            history: [{ seq: 1, at: "then", kind: "created", body: "Created" }],
+            history_next_seq: 200,
+          };
+        return [ticket];
+      },
+    })),
+  );
+  render(
+    <Maintenance
+      initialTicketId="T1"
+      diagnosis={null}
+      fromDiagnosis={false}
+      runContext="test"
+      onReturn={() => {}}
+    />,
+  );
+  await screen.findByRole("button", { name: "Load more history" });
+  const note = screen.getByLabelText("Repair note / operator observation");
+  fireEvent.change(note, { target: { value: "Keep this draft" } });
+  fireEvent.click(screen.getByRole("button", { name: "Load more history" }));
+  await screen.findByText("Older page continuation");
+  expect(note).toHaveValue("Keep this draft");
+  expect(
+    screen.queryByRole("button", { name: "Load more history" }),
+  ).not.toBeInTheDocument();
+});
+it("loads another incident page using the last record cursor", async () => {
+  const tickets = Array.from({ length: 200 }, (_, i) => ({
+    id: `T${i}`,
+    equipment_id: "R-01",
+    title: `Incident ${i}`,
+    status: "Open",
+    created_at: "2026-11-01",
+  }));
+  const fetchMock = vi
+    .fn()
+    .mockImplementation(async (url) => ({
+      ok: true,
+      json: async () =>
+        String(url).includes("after_created=")
+          ? [{ ...tickets[0], id: "T-next", title: "Next page incident" }]
+          : String(url).endsWith("/equipment")
+            ? equipment
+            : tickets,
+    }));
+  vi.stubGlobal("fetch", fetchMock);
+  render(
+    <Maintenance
+      diagnosis={null}
+      fromDiagnosis={false}
+      runContext="test"
+      onReturn={() => {}}
+    />,
+  );
+  fireEvent.click(
+    await screen.findByRole("button", { name: "Load more incidents" }),
+  );
+  await screen.findByText("Next page incident");
+  expect(
+    fetchMock.mock.calls.some(([url]) => String(url).includes("after_id=T199")),
+  ).toBe(true);
+  expect(
+    screen.queryByRole("button", { name: "Load more incidents" }),
+  ).not.toBeInTheDocument();
+});

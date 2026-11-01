@@ -36,21 +36,31 @@ async def main():
                         else:raise RuntimeError('Local emulator readiness timed out')
                     startup.append(round((time.perf_counter()-start)*1000,3))
                     if run==0:
-                        await apply_schema(binding);await repo.initialize()
+                        # Prove additive migration from real schema v1 with a legacy snapshot.
+                        await apply_schema(binding,Path('cloudflare/migrations/0001_domain.sql'))
+                        await repo.query('INSERT INTO equipment VALUES(?,?,?,?)',('LEGACY','Legacy fixture','Synthetic','Operational'))
+                        await repo.query('INSERT INTO diagnoses VALUES(?,?,?)',('D-legacy','{"id":"D-legacy","evidence":"retained"}','2026-11-01'))
+                        await apply_schema(binding);await apply_schema(binding);await repo.initialize()
+                        assert await repo.load_diagnosis('D-legacy')=={'id':'D-legacy','evidence':'retained'}
+                        large={'id':'D-restart-chunked','evidence':'unicode λ'*300000}
+                        await repo.save_diagnosis(large)
+                        assert await repo.load_diagnosis(large['id'])==large
                         diagnosis=(await repo.ticket('T-SEED-001'))['diagnosis']
                         created=await repo.create_ticket(dict(equipment_id='R-01',diagnosis_id=diagnosis['id'],title='Synthetic restart proof',description='No user records',request_id=uuid4()))
                         expected=await repo.update_ticket(created['ticket']['id'],dict(expected_version=1,status='In Progress',note='Persist this repair note',resolution_notes=None))
                         await repo.reserve('restart-proof',3,day='2099-01-01')
                     else:
+                        assert await repo.load_diagnosis(large['id'])==large
                         assert await repo.ticket(expected['ticket']['id'])==expected
                         assert await repo.reserve('restart-proof',3,day='2099-01-01')==2
                         await repo.initialize()
+                        assert await repo.load_diagnosis(large['id'])==large
                         assert await repo.ticket(expected['ticket']['id'])==expected
                 finally:
                     os.killpg(process.pid,signal.SIGTERM)
                     try:process.wait(timeout=10)
                     except subprocess.TimeoutExpired:os.killpg(process.pid,signal.SIGKILL);process.wait()
-    report=dict(environment='Local JS workerd D1 emulator, CPython adapter; NOT Python Workers or hosted D1',restart_count=1,startup_wall_ms=startup,persisted_ticket_version=expected['ticket']['version'],history_events=len(expected['history']),diagnosis_id=expected['diagnosis']['id'],snapshot_equal=True,repair_note_equal=True,budget_survived=True,seed_repeat_preserved_records=True)
-    Path('docs/PHASE_A_RECOVERY.json').write_text(json.dumps(report,indent=2)+'\n')
+    report=dict(environment='Local JS workerd D1 emulator, CPython adapter; NOT Python Workers or hosted D1',restart_count=1,startup_wall_ms=startup,persisted_ticket_version=expected['ticket']['version'],history_events=len(expected['history']),diagnosis_id=expected['diagnosis']['id'],snapshot_equal=True,repair_note_equal=True,budget_survived=True,seed_repeat_preserved_records=True,legacy_v1_migration=True,large_chunked_evidence_survived=True)
+    Path('docs/PHASE_A2_RECOVERY.json').write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps(report,indent=2))
 if __name__=='__main__':asyncio.run(main())

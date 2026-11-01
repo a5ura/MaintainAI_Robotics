@@ -71,5 +71,27 @@ def test_concurrent_optimistic_updates(adapter):
 
 def test_snapshot_is_immutable_on_repeated_insert(adapter):
     result=analyze(Cycle(**fixture(True)));call(adapter,'save_diagnosis',result)
-    altered=json.loads(json.dumps(result));altered['summary']='must not replace evidence';call(adapter,'save_diagnosis',altered)
+    altered=json.loads(json.dumps(result));altered['summary']='must not replace evidence'
+    if hasattr(adapter,'binding'):
+        with pytest.raises(RepositoryError) as exc:call(adapter,'save_diagnosis',altered)
+        assert exc.value.status==409
+    else:call(adapter,'save_diagnosis',altered)
     payload=data();payload['diagnosis_id']=result['id'];assert call(adapter,'create_ticket',payload)['diagnosis']==json.loads(json.dumps(result))
+
+def test_keyset_pages_preserve_all_records_and_filter(adapter):
+    cloud=hasattr(adapter,'binding')
+    sql="INSERT INTO tickets(id,equipment_id,title,description,status,created_at,updated_at"+(",creation_note" if cloud else "")+") VALUES(?,'R-01','Paged','synthetic','Open',?,?"+(",'Created'" if cloud else "")+")"
+    values=[(f'T-paged-{i:04d}',f'2026-11-{1+i%3:02d}',f'2026-11-{1+i%3:02d}') for i in range(450)]
+    if cloud:
+        for start in range(0,len(values),100):call(adapter,'batch',[(sql,row) for row in values[start:start+100]])
+    else:
+        with adapter.connection(write=True) as db:db.executemany(sql,values)
+    rows=[];page=call(adapter,'list_tickets')
+    while page:
+        rows+=page;last=page[-1];page=call(adapter,'list_tickets',None,last['created_at'],last['id'])
+    assert len(rows)==451 and len({row['id'] for row in rows})==451
+    assert all(rows[i]['created_at']>=rows[i+1]['created_at'] for i in range(len(rows)-1))
+    for i in range(len(rows)-1):
+        if rows[i]['created_at']==rows[i+1]['created_at']:assert rows[i]['id']<rows[i+1]['id']
+    assert len(call(adapter,'list_tickets','R-01'))==200
+    assert call(adapter,'list_tickets','CELL-01')==[]

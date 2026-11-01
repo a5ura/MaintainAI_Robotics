@@ -1,5 +1,12 @@
 # V1 release checklist
 
+## Current Phase A.2 checkpoint — November 1, 2026 UTC
+
+Phase A.1 PR #6 is verified merged at `966c809`. Phase A.2 explicitly authorizes local storage hardening despite the unchanged index CONNECT 403, superseding A.1's deferred-expansion gate for this assignment. New D1 schema v2 provides atomic immutable manifest/chunks, verified reconstruction and quota charging; the large-evidence row-size defect is resolved locally. Default snapshot allowance is now 64 MiB/day including conservative logical overhead. Cached counts, indexed 200-record ticket/history pages and UI continuation preserve drafts and the native SQLite workflow. Legacy inline evidence and synthetic migration/backup/restart remain supported.
+
+Actual Python Workers/JS binding execution, billed CPU/memory, pre-ASGI streamed body enforcement, account Free-only terms and hosted durability remain unverified. The total 500 MB Free storage/retention and anonymous availability gates are not solved by a daily budget. No deployment, resource provisioning, billing, real-record migration, environment publication or merge. Current evidence: [A.2 report](PHASE_A2_COMPLETION_REPORT.md) and [details](PHASE_A2_STORAGE_REPORT.md). Earlier checkpoint statements below are historical, including the previous single-row restriction and 2 MiB/day default.
+
+
 This separates the locally verified M3 experience from a public V1 release. **Do not mark V1 deployed based on local tests.**
 
 ## Local release candidate
@@ -56,7 +63,7 @@ Before public use:
 - [x] Real workerd Static Assets/SPA serving and all 15 Chromium regressions against CPython + local D1 pass.
 - [ ] Launch actual Python Worker, resolve exact Wasm dependency pins, verify ASGI and Python/JS binding conversion at every endpoint.
 - [ ] Demonstrate authoritative Free 10 ms CPU / 128 MB memory, including all maximum accepted inputs and cold initialization.
-- [ ] Replace single-row evidence storage with tested immutable chunked storage for the complete approved input range; no truncation or silent requirement change.
+- [x] Phase A.2 replaces single-row new evidence with tested immutable chunked storage, preserving maximum accepted fixtures and complete evidence; actual Python Worker interop remains separately unverified.
 - [ ] Bound streamed uploads before the SDK's ASGI receive-queue buffering, including missing/spoofed Content-Length.
 - [ ] Verify large-data row accounting, retention, backup access/recovery, anonymous availability and any truly free platform controls.
 - [ ] Independently confirm Free-only account eligibility/no billing exposure; obtain explicit Phase B provisioning/publication authorization and prove hosted durability/redeployment.
@@ -67,3 +74,13 @@ Current verdict/details: [Deployment Phase A report](DEPLOYMENT_PHASE_A_REPORT.m
 ## Phase A.1 runtime-first checkpoint
 
 Phase A PR #5 is verified merged at `e940a83`. A dependency-free official-pattern Worker reproduces the package-index CONNECT 403 before app initialization; supported offline CLI resolution also lacks the required SDK cache. Runtime and billed resources remain unverified. Under the assignment's blocked-index gate, storage chunking, pre-ASGI enforcement and retained-data changes are deferred. No environment configuration, hosted resource, billing, production data or deployment was changed. Current evidence and exact next experiment: [Phase A.1 report](PHASE_A1_COMPLETION_REPORT.md).
+
+
+## Phase A.2 independent-review gate
+
+- [x] Atomic chunked evidence/byte charging; identical retry, conflict, rollback, checksum/corruption and complete large-fixture recovery verified on real local D1.
+- [x] Bounded indexed ticket/history pages, transactional counts and UI continuation/draft preservation; native SQLite retained.
+- [x] Real v1 migration/emulator restart and fixture backup/restore; no actual records migrated.
+- [x] Current primary-source hosting alternatives ranked; no architecture switched or resource activated.
+- [ ] Independent review of A.2 branch; automated PR creation blocked by GraphQL Forbidden, prepared body/compare link in report.
+- [ ] Actual Python/Wasm/JS binding, billed CPU/memory, pre-ASGI streamed limits, Free-only account eligibility, total-capacity/retention, hosted backup/redeploy proof and explicit publication authorization still required.

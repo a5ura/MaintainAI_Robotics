@@ -1,6 +1,11 @@
 # Development status — November 1, 2026 UTC
 
-## Current Phase A.1 checkpoint
+## Current Phase A.2 checkpoint
+
+Baseline: merged PR #6 `966c809d6f716949c3183f84bb39ce970071a266`. Branch `feature/v1-deployment-phase-a2`, existing managed Linux. Lossless immutable chunked snapshots, atomic corrected storage charging, bounded maintenance queries/UI pagination, migration and synthetic recovery are implemented locally. The single authorized index check still returns CONNECT 403; no retry loop or runtime proof is claimed. [A.2 completion report](PHASE_A2_COMPLETION_REPORT.md) records current tests, measurements, hosting ranking and GitHub outcome. PRD/Project 1/V2 unchanged; public V1 remains unreleased.
+
+
+## Historical Phase A.1 checkpoint
 
 Main includes merged PR #5 `e940a834857580d28791d3af50ea53d84d5d115c`. Branch: `feature/v1-deployment-phase-a1`, existing managed Linux. Minimal actual-CLI online/offline probes remain blocked before Worker initialization by enforced index access and unavailable SDK cache. Conditional expansions deferred under the explicit runtime-first gate; app/PRD unchanged. See [A.1 completion report](PHASE_A1_COMPLETION_REPORT.md) for current regression and GitHub results. Older Phase A PR-access statements below are historical; PR #5 is now merged.
 

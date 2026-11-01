@@ -1,5 +1,12 @@
 # Implemented architecture
 
+## Current Phase A.2 checkpoint — November 1, 2026 UTC
+
+Phase A.1 PR #6 is verified merged at `966c809`. Phase A.2 explicitly authorizes local storage hardening despite the unchanged index CONNECT 403, superseding A.1's deferred-expansion gate for this assignment. New D1 schema v2 provides atomic immutable manifest/chunks, verified reconstruction and quota charging; the large-evidence row-size defect is resolved locally. Default snapshot allowance is now 64 MiB/day including conservative logical overhead. Cached counts, indexed 200-record ticket/history pages and UI continuation preserve drafts and the native SQLite workflow. Legacy inline evidence and synthetic migration/backup/restart remain supported.
+
+Actual Python Workers/JS binding execution, billed CPU/memory, pre-ASGI streamed body enforcement, account Free-only terms and hosted durability remain unverified. The total 500 MB Free storage/retention and anonymous availability gates are not solved by a daily budget. No deployment, resource provisioning, billing, real-record migration, environment publication or merge. Current evidence: [A.2 report](PHASE_A2_COMPLETION_REPORT.md) and [details](DEPLOYMENT_PHASE_A2.md). Earlier checkpoint statements below are historical, including the previous single-row restriction and 2 MiB/day default.
+
+
 React/TypeScript + Tailwind/Vite → React Three Fiber/Three.js visualization; Vite proxies `/api` → Python FastAPI/Pydantic → pure deterministic correlation rules → JSON → diagnostic UI. M2 adds local SQLite maintenance records, with no shared mutable run state. Browser clocks and run generations isolate visitors and prevent stale responses after Reset.
 
 ## Robot and cycle

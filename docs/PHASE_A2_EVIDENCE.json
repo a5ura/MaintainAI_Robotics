@@ -1,0 +1,86 @@
+{
+  "date_utc": "2026-11-01",
+  "base": "966c809d6f716949c3183f84bb39ce970071a266",
+  "branch": "feature/v1-deployment-phase-a2",
+  "implementation_commit": "c5c78380cd297a4bc81e8ee0774038e275e28c19",
+  "execution": "Existing managed cloud Linux x86_64, not verified Windows/Desktop",
+  "baseline": {
+    "native_backend_passed": 97,
+    "frontend_passed": 39,
+    "adapter_passed": 44,
+    "typescript_build": "passed",
+    "chromium": "run after integrated changes, not a pre-edit baseline claim"
+  },
+  "final": {
+    "python_command": ".venv/bin/python -m pytest backend/tests cloudflare/tests -q",
+    "python_passed": 163,
+    "native_backend_count": 97,
+    "adapter_policy_contract_count": 66,
+    "frontend_command": "npm --prefix frontend test",
+    "frontend_passed": 41,
+    "build_command": "npm --prefix frontend run build",
+    "build": "passed",
+    "chromium_command": "CHROMIUM_PATH=/usr/bin/chromium npm --prefix frontend run smoke",
+    "chromium_local_d1": 16,
+    "chromium_native_sqlite": {
+      "original_suite": 15,
+      "new_pagination_test": 1
+    },
+    "skips": 0,
+    "failures": 0,
+    "migration_restart": "passed",
+    "measurement": "completed 100/1000/7500 tickets, 2501 history rows"
+  },
+  "runtime": {
+    "index_checks": 1,
+    "url": "https://index.pyodide.org/314.0.7/workers-runtime-sdk/",
+    "curl_exit_code": 56,
+    "result": "CONNECT 403 before destination TLS",
+    "actual_python_worker": "UNVERIFIED",
+    "billed_cpu": "UNVERIFIED",
+    "wasm_memory": "UNVERIFIED",
+    "pre_asgi_streaming_bound": "UNVERIFIED"
+  },
+  "security": {
+    "snapshot_default_daily_bytes": 67108864,
+    "logical_overhead_bytes_per_chunk_and_manifest": 16384,
+    "public_deployment": false,
+    "new_hosted_resources": 0,
+    "new_dependencies": 0,
+    "billing_activated": false,
+    "account_plan_and_cost_verified": false,
+    "real_records_migrated": false,
+    "environment_published": false
+  },
+  "evidence_categories": [
+    "Native CPython tests",
+    "Genuine local D1 SQL through CPython transport",
+    "Real local Chromium",
+    "Official documented limits",
+    "Blocked/unverified Python Workers and hosted/account evidence"
+  ],
+  "verdict": "APPROVE FOR INDEPENDENT REVIEW",
+  "logs": {
+    "baseline-backend": "evidence/a2/baseline-backend.txt",
+    "baseline-frontend": "evidence/a2/baseline-frontend.txt",
+    "baseline-build": "evidence/a2/baseline-build.txt",
+    "baseline-adapter": "evidence/a2/baseline-adapter.txt",
+    "python-tests": "evidence/a2/python-tests.txt",
+    "frontend-tests": "evidence/a2/frontend-tests.txt",
+    "build": "evidence/a2/build.txt",
+    "chromium-d1": "evidence/a2/chromium-d1.txt",
+    "chromium-sqlite-original": "evidence/a2/chromium-sqlite-original.txt",
+    "chromium-sqlite-pagination": "evidence/a2/chromium-sqlite-pagination.txt",
+    "restart": "evidence/a2/restart.txt",
+    "measure": "evidence/a2/measure.txt",
+    "index-connect": "evidence/a2/index-connect.txt",
+    "migration": "evidence/a2/migration.txt"
+  },
+  "github": {
+    "pr_created": false,
+    "creation_attempts": 1,
+    "command_exit_code": 1,
+    "error": "Post \"https://api.github.com/graphql\": Forbidden",
+    "compare_url": "https://github.com/a5ura/MaintainAI_Robotics/compare/main...feature/v1-deployment-phase-a2?expand=1"
+  }
+}

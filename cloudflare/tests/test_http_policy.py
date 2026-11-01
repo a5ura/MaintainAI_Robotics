@@ -84,3 +84,12 @@ def test_multi_anomaly_evidence_is_computed_and_preserved(client):
     response=client.post('/api/diagnose',json=payload)
     assert response.status_code==200
     assert {item['kind'] for item in response.json()['anomalies']}=={'Positioning error','Vision failure'}
+
+
+def test_default_budget_accepts_dense_valid_diagnosis_and_ticket(client):
+    from cloudflare.measure import payloads
+    response=client.post('/api/diagnose',json=payloads()['max-evidence'])
+    assert response.status_code==200,response.text
+    diagnosis=response.json()
+    created=client.post('/api/tickets',json=dict(equipment_id='R-01',diagnosis_id=diagnosis['id'],title='Dense accepted evidence'))
+    assert created.status_code==201 and created.json()['diagnosis']==diagnosis
