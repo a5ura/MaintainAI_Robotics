@@ -1,0 +1,12 @@
+{
+  "name": "maintainai-cloudflare-local-feasibility",
+  "private": true,
+  "version": "0.1.0",
+  "devDependencies": {
+    "wrangler": "4.156.0"
+  },
+  "scripts": {
+    "worker:local": "pywrangler dev --local --config wrangler.jsonc --ip 127.0.0.1 --port 8787 --persist-to .wrangler/state",
+    "d1:local": "wrangler dev --local --config wrangler.d1-local.jsonc --ip 127.0.0.1 --port 8788 --persist-to .wrangler/d1-contract"
+  }
+}
