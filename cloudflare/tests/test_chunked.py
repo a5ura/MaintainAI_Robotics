@@ -133,3 +133,83 @@ def test_racing_legacy_insert_never_replaces_evidence(repo,same):
         assert exc.value.status==409
     assert call(repo,'load_diagnosis',value['id'])==legacy
     assert not call(repo,'query','SELECT * FROM snapshot_manifests')
+
+@pytest.mark.parametrize('fault',[
+    'missing_table','missing_manifest','missing_manifest_and_chunks','orphan_manifest','orphan_chunk',
+    'missing_middle','corrupt_chunk','checksum','unsupported_version','boolean_version','malformed_table',
+    'malformed_row','missing_column','extra_column','duplicate_diagnosis','duplicate_chunk','duplicate_ticket',
+    'bad_ticket_reference','bad_history_reference','inline_identity','unknown_table','wrong_count','wrong_length',
+    'duplicate_inline_identity','invalid_inline_json',
+])
+def test_rejected_restore_preflight_leaves_complete_destination_unchanged(repo,fault):
+    from copy import deepcopy
+    value=payload(100000);call(repo,'save_diagnosis',value)
+    ticket=data();ticket['diagnosis_id']=value['id'];call(repo,'create_ticket',ticket)
+    before=asyncio.run(export_fixture(repo.binding));broken=deepcopy(before);tables=broken['tables']
+    if fault=='missing_table':del tables['tickets']
+    elif fault=='missing_manifest':tables['snapshot_manifests']=[]
+    elif fault=='missing_manifest_and_chunks':tables['snapshot_manifests']=[];tables['snapshot_chunks']=[]
+    elif fault=='orphan_manifest':tables['snapshot_manifests'][0]['diagnosis_id']='missing'
+    elif fault=='orphan_chunk':tables['snapshot_chunks'][0]['diagnosis_id']='missing'
+    elif fault=='missing_middle':del tables['snapshot_chunks'][1]
+    elif fault=='corrupt_chunk':tables['snapshot_chunks'][0]['content']='bad'
+    elif fault=='checksum':tables['snapshot_manifests'][0]['sha256']='0'*64
+    elif fault=='unsupported_version':broken['schema_version']=3
+    elif fault=='boolean_version':broken['schema_version']=True
+    elif fault=='malformed_table':tables['tickets']={}
+    elif fault=='malformed_row':tables['tickets']=[None]
+    elif fault=='missing_column':del tables['equipment'][0]['name']
+    elif fault=='extra_column':tables['equipment'][0]['unknown']='bad'
+    elif fault=='duplicate_diagnosis':tables['diagnoses'].append(deepcopy(tables['diagnoses'][0]))
+    elif fault=='duplicate_chunk':tables['snapshot_chunks'].append(deepcopy(tables['snapshot_chunks'][0]))
+    elif fault=='duplicate_ticket':tables['tickets'].append(deepcopy(tables['tickets'][0]))
+    elif fault=='bad_ticket_reference':tables['tickets'][0]['equipment_id']='missing'
+    elif fault=='bad_history_reference':tables['ticket_history'][0]['ticket_id']='missing'
+    elif fault=='inline_identity':tables['diagnoses'][0]['snapshot']='{"id":"different"}'
+    elif fault=='duplicate_inline_identity':tables['diagnoses'][0]['snapshot']='{"id":"one","id":"two"}'
+    elif fault=='invalid_inline_json':tables['diagnoses'][0]['snapshot']='{"id":NaN}'
+    elif fault=='unknown_table':tables['extra']=[]
+    elif fault=='wrong_count':tables['snapshot_manifests'][0]['chunk_count']+=1
+    elif fault=='wrong_length':tables['snapshot_manifests'][0]['byte_length']+=1
+    calls=repo.binding.calls
+    with pytest.raises(RepositoryError):asyncio.run(restore_fixture(repo.binding,broken,confirm_disposable=True))
+    assert repo.binding.calls==calls  # No destination read or destructive batch.
+    assert asyncio.run(export_fixture(repo.binding))==before
+
+@pytest.mark.parametrize('version',[1,2])
+def test_valid_legacy_and_v2_restore_is_repeatable(repo,version):
+    value=payload(100000)
+    if version==2:call(repo,'save_diagnosis',value)
+    before=asyncio.run(export_fixture(repo.binding))
+    from copy import deepcopy
+    backup=deepcopy(before);backup['schema_version']=version
+    if version==1:
+        del backup['tables']['snapshot_manifests'];del backup['tables']['snapshot_chunks']
+    for _ in range(2):
+        asyncio.run(restore_fixture(repo.binding,backup,confirm_disposable=True))
+        assert asyncio.run(export_fixture(repo.binding))==before
+
+def test_valid_restore_batch_failure_rolls_back_destination_and_trigger(repo):
+    value=payload(100);call(repo,'save_diagnosis',value);call(repo,'create_ticket',data())
+    before=asyncio.run(export_fixture(repo.binding))
+    call(repo,'query',"CREATE TRIGGER reject_fixture_restore BEFORE INSERT ON tickets BEGIN SELECT RAISE(ABORT,'injected restore fault'); END")
+    try:
+        with pytest.raises(RepositoryError):asyncio.run(restore_fixture(repo.binding,before,confirm_disposable=True))
+        assert asyncio.run(export_fixture(repo.binding))==before
+        assert call(repo,'query',"SELECT name FROM sqlite_master WHERE name='manifest_budget'")
+    finally:call(repo,'query','DROP TRIGGER reject_fixture_restore')
+
+def test_restore_uses_validated_copy_if_caller_mutates_backup(repo):
+    value=payload(100);call(repo,'save_diagnosis',value)
+    before=asyncio.run(export_fixture(repo.binding))
+    from copy import deepcopy
+    backup=deepcopy(before);original=repo.binding.batch
+    async def mutate_during_destination_read(statements):
+        if any('sqlite_master' in statement.sql for statement in statements):
+            backup['tables']['snapshot_manifests'].clear()
+            backup['tables']['snapshot_chunks'].clear()
+        return await original(statements)
+    repo.binding.batch=mutate_during_destination_read
+    try:asyncio.run(restore_fixture(repo.binding,backup,confirm_disposable=True))
+    finally:repo.binding.batch=original
+    assert asyncio.run(export_fixture(repo.binding))==before
