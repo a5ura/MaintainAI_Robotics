@@ -3,15 +3,26 @@ export async function api<T>(
   method = "GET",
   body?: unknown,
 ): Promise<T> {
-  const response = await fetch(
-    (import.meta.env.VITE_API_BASE ?? "/api").replace(/\/$/, "") + path,
-    {
-      method,
-      headers: { "Content-Type": "application/json" },
-      ...(body === undefined ? {} : { body: JSON.stringify(body) }),
-      signal: AbortSignal.timeout(10000),
-    },
-  );
+  const configured = Number(import.meta.env.VITE_API_TIMEOUT_MS ?? 10000);
+  const timeout = Number.isFinite(configured)
+    ? Math.max(1000, Math.min(120000, configured))
+    : 10000;
+  let response: Response;
+  try {
+    response = await fetch(
+      (import.meta.env.VITE_API_BASE ?? "/api").replace(/\/$/, "") + path,
+      {
+        method,
+        headers: { "Content-Type": "application/json" },
+        ...(body === undefined ? {} : { body: JSON.stringify(body) }),
+        signal: AbortSignal.timeout(timeout),
+      },
+    );
+  } catch {
+    throw new Error(
+      "Network failure. The service is unavailable or still waking up. Please retry shortly.",
+    );
+  }
   if (!response.ok) {
     let detail = `Request failed (${response.status})`;
     try {
