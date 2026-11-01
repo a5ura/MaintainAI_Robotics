@@ -36,3 +36,8 @@ Read `docs/PRD.md` (full approved October 31, 2026 handoff), `docs/DEVELOPMENT_S
 - `cloudflare/d1_bridge.mjs`, local API, schema/recovery/measurement runners and tests are disposable loopback-only tools. Never deploy the SQL bridge; tests clear synthetic emulated tables, not `data/`.
 - Report CPython+real emulated D1 separately from actual Python Workers/Wasm and hosted D1. Package resolution is blocked, so JS interop/CPU/memory/startup remain unverified. Single-row D1 snapshots cannot cover all accepted inputs; never truncate evidence or silently reduce V1 requirements.
 - Run native/backend/frontend/build/browser regressions and the documented local D1 contracts sequentially against disposable state. Account costs, abuse resilience, pre-ASGI upload bounds and hosted redeploy durability remain release gates.
+
+
+## Phase A.1 runtime-first checkpoint
+
+Phase A PR #5 is verified merged at `e940a83`. A dependency-free official-pattern Worker reproduces the package-index CONNECT 403 before app initialization; supported offline CLI resolution also lacks the required SDK cache. Runtime and billed resources remain unverified. Under the assignment's blocked-index gate, storage chunking, pre-ASGI enforcement and retained-data changes are deferred. No environment configuration, hosted resource, billing, production data or deployment was changed. Current evidence and exact next experiment: [Phase A.1 report](docs/PHASE_A1_COMPLETION_REPORT.md).

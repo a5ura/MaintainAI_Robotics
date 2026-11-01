@@ -115,3 +115,8 @@ For repeatable browser checks, serve the built frontend without hot reload in te
 M3 PR #4 is merged at `a33811f`; V1 is **not publicly deployed**. The local Workers/D1 investigation is on `feature/v1-deployment-feasibility`. Start with [Phase A commands and boundaries](docs/DEPLOYMENT_PHASE_A.md) and [completion report](docs/DEPLOYMENT_PHASE_A_REPORT.md).
 
 The existing native commands above still use SQLite. Root `package.json`/`pyproject.toml` are separate, pinned local Cloudflare tooling; frontend dependencies are unchanged. Local D1/Static Assets and integrity/recovery tests work, but actual Python Workers startup is blocked by Pyodide index access, Free CPU is unverified, and oversized evidence needs chunked storage. The SQL transport is a loopback-only disposable test harness and must never be published. Account eligibility, hosted durability and public-release safeguards remain unverified. No deploy/billing/resource provisioning is authorized by these setup commands.
+
+
+## Phase A.1 runtime-first checkpoint
+
+Phase A PR #5 is verified merged at `e940a83`. A dependency-free official-pattern Worker reproduces the package-index CONNECT 403 before app initialization; supported offline CLI resolution also lacks the required SDK cache. Runtime and billed resources remain unverified. Under the assignment's blocked-index gate, storage chunking, pre-ASGI enforcement and retained-data changes are deferred. No environment configuration, hosted resource, billing, production data or deployment was changed. Current evidence and exact next experiment: [Phase A.1 report](docs/PHASE_A1_COMPLETION_REPORT.md).

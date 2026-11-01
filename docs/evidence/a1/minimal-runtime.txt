@@ -1,0 +1,37 @@
+DEBUG    pywrangler version: 1.17.9                                             
+DEBUG    Python: 3.13.5                                                         
+DEBUG    Platform: linux                                                        
+DEBUG    Working directory: /tmp/a1-minimal                                     
+DEBUG    Reading /tmp/a1-minimal/pyproject.toml...                              
+DEBUG    Sync needed - proceeding with installation                             
+DEBUG    Using python version from wrangler config: 3.14                        
+DEBUG    Creating virtual environment at /tmp/a1-minimal/.venv-workers...       
+RUNNING  uv venv /tmp/a1-minimal/.venv-workers --python python3.14              
+Using CPython 3.14.8
+Creating virtual environment at: .venv-workers
+Activate with: source .venv-workers/bin/activate
+RUNNING  uv --version                                                           
+DEBUG    Creating Pyodide virtual environment at                                
+         /tmp/a1-minimal/.venv-workers/pyodide-venv...                          
+RUNNING  uv venv /tmp/a1-minimal/.venv-workers/pyodide-venv --python            
+         cpython-3.14.2-emscripten-wasm32-musl                                  
+Using CPython 3.14.2
+Creating virtual environment at: .venv-workers/pyodide-venv
+Activate with: source .venv-workers/pyodide-venv/bin/activate
+RUNNING  uv pip compile /tmp/a1-minimal/pyproject.toml /tmp/tmp8rm0mm91.txt     
+         --python cpython-3.14.2-emscripten-wasm32-musl --extra-index-url       
+         https://index.pyodide.org/314.0.7 --index-strategy unsafe-best-match   
+         --no-header -o /tmp/a1-minimal/pylock.toml --no-build                  
+ERROR    Error running command: uv pip compile /tmp/a1-minimal/pyproject.toml   
+         /tmp/tmp8rm0mm91.txt --python cpython-3.14.2-emscripten-wasm32-musl    
+         --extra-index-url https://index.pyodide.org/314.0.7 --index-strategy   
+         unsafe-best-match --no-header -o /tmp/a1-minimal/pylock.toml --no-build
+         Exit code: 2                                                           
+         Output:                                                                
+         error: Request failed after 3 retries in 6.9s                          
+           cause: Failed to fetch:                                              
+         https://index.pyodide.org/314.0.7/workers-runtime-sdk/                 
+           cause: error sending request for url                                 
+         (https://index.pyodide.org/314.0.7/workers-runtime-sdk/)               
+           cause: client error (Connect)                                        
+           cause: tunnel error: unsuccessful                                    

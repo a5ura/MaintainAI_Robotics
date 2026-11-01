@@ -62,3 +62,8 @@ Before public use:
 - [ ] Independently confirm Free-only account eligibility/no billing exposure; obtain explicit Phase B provisioning/publication authorization and prove hosted durability/redeployment.
 
 Current verdict/details: [Deployment Phase A report](DEPLOYMENT_PHASE_A_REPORT.md). Local controls do not complete the unchecked public-release gates above.
+
+
+## Phase A.1 runtime-first checkpoint
+
+Phase A PR #5 is verified merged at `e940a83`. A dependency-free official-pattern Worker reproduces the package-index CONNECT 403 before app initialization; supported offline CLI resolution also lacks the required SDK cache. Runtime and billed resources remain unverified. Under the assignment's blocked-index gate, storage chunking, pre-ASGI enforcement and retained-data changes are deferred. No environment configuration, hosted resource, billing, production data or deployment was changed. Current evidence and exact next experiment: [Phase A.1 report](PHASE_A1_COMPLETION_REPORT.md).

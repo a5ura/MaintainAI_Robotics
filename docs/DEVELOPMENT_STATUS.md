@@ -1,7 +1,12 @@
 # Development status — November 1, 2026 UTC
 
+## Current Phase A.1 checkpoint
 
-## Current verified baseline and Deployment Phase A
+Main includes merged PR #5 `e940a834857580d28791d3af50ea53d84d5d115c`. Branch: `feature/v1-deployment-phase-a1`, existing managed Linux. Minimal actual-CLI online/offline probes remain blocked before Worker initialization by enforced index access and unavailable SDK cache. Conditional expansions deferred under the explicit runtime-first gate; app/PRD unchanged. See [A.1 completion report](PHASE_A1_COMPLETION_REPORT.md) for current regression and GitHub results. Older Phase A PR-access statements below are historical; PR #5 is now merged.
+
+
+
+## Historical Deployment Phase A checkpoint
 
 - M1/M2/M3 are complete and merged. Fetched `origin/main` includes M3 PR #4 merge `a33811f060d165ac5758966eda9be06e215d9171`, including manual takeover fix `a9491d5`. Older PR-access statements below describe their original checkpoints, not current merge status.
 - Phase A branch: `feature/v1-deployment-feasibility`, created from that clean main. Existing managed Linux workspace; Windows/Desktop execution and account costs remain unverified.
