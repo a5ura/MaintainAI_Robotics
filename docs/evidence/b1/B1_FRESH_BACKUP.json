@@ -1,0 +1,45 @@
+{
+  "environment": "Real local PostgreSQL pg_dump/pg_restore, NOT hosted backups",
+  "full_table_fingerprints": {
+    "equipment": {
+      "count": 2,
+      "hash": "c991bdaad6ba3235c6fd3588688bbbf6899fb245f157cdc29856b2a20ce6be0a"
+    },
+    "diagnoses": {
+      "count": 11,
+      "hash": "d4bb4453327dc56f8703b5edc8c4019914767dc69cd45b11aa87f7e1757ff01e"
+    },
+    "snapshot_manifests": {
+      "count": 10,
+      "hash": "1894cd9a734166474d96990ccc8ec378ac24f2cfd75762fe7b5193b517ffc3be"
+    },
+    "snapshot_chunks": {
+      "count": 35,
+      "hash": "91fb331973547ba6a17e1a100598ad5dc0163c13d629f96a5a1ee87c1b67e794"
+    },
+    "tickets": {
+      "count": 10,
+      "hash": "663367c11edfc8eab9167fad23f35c6a18fdd88014aa1a1cdb96aabc12168c44"
+    },
+    "ticket_history": {
+      "count": 219,
+      "hash": "01feff0f59d75369dfce4b04c4d918572b051966386f3328ef88f1bae591623a"
+    },
+    "request_budgets": {
+      "count": 3,
+      "hash": "5fdbd9c5543ee5ebbbd4c438e5a34c549f49282be4249b566c38d0b2629ef166"
+    },
+    "equipment_ticket_counts": {
+      "count": 2,
+      "hash": "fff66debd36feebf255c9256fa6ee20e6fa94389fd060aefb8ec8f98c1b9f0d5"
+    },
+    "postgres_schema": {
+      "count": 1,
+      "hash": "2430f1a2ad2982d0067885488a4c89e21ad1d7c83b115ba8f1b20acc88dfaea8"
+    }
+  },
+  "restored_equal": true,
+  "malformed_archive_rejected": true,
+  "destination_unchanged": true,
+  "archive_bytes": 198481
+}
