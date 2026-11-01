@@ -1,0 +1,11 @@
+# Phase B.0 local durability and recovery
+
+Environment: actual PostgreSQL 17.11 in a disposable loopback Docker container, native Python 3.12.14/Uvicorn, managed Linux. Not SQLite mocks, hosted Neon, Windows or hosted redeploy proof.
+
+`PHASE_B0_DURABILITY.json` records two independent Uvicorn processes sharing diagnosis, complete evidence, ticket, status, repair notes and history. Exactly one simultaneous expected-version update succeeds (200/409). Stable Guided Demo retry returns one ticket; changed payload returns 409. After stopping/restarting an API process and restarting the PostgreSQL container, the entire record remains equal. Local startup wall times were 326–356 ms; these are not hosted cold-start predictions. A streamed oversized upload returned 413. Separate real Chromium suites cover independent browser contexts and workflows.
+
+`postgres/tests/` exercises all scenarios and accepted full-size/Unicode evidence; immutable conflicts, missing/corrupt chunks, constraint/SQL errors, quota atomicity, history rollback, repeat migration/seed and missing/unknown schema failures. Fixture restore validation rejects damaged inputs before destructive work, with whole-export equality before/after. Valid restore preserves evidence, status, notes, history and guided idempotency; repeated restore and injected SQL failure are covered. Existing A.2 validator and legacy compatibility are retained, not reimplemented.
+
+`PHASE_B0_BACKUP.json` records a real native archive of 7,502 tickets and 8,508 history rows, complete evidence and all nine tables. A fresh isolated target restored identical SHA-256 fingerprints and counts; a malformed archive failed with populated destination unchanged. The archive was 283,255 bytes, temporary/protected and not committed. See POSTGRESQL_ADAPTER.md for the important trusted-archive/fresh-destination boundary.
+
+The container was restarted with its writable data layer intact. The actual run did not delete/recreate it or mount a persistent volume; Compose provides a named-volume reproduction path, not independently claimed deletion proof. External hosted storage persistence, host restart/redeploy, TLS/network recovery against Neon, provider backups and free account limits require separately authorized hosted verification. No real records were accessed or migrated.
