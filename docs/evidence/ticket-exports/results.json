@@ -1,0 +1,68 @@
+{
+  "date_client": "2026-11-01",
+  "timezone": "America/New_York",
+  "baseline": "67f2a3fc2d238c6d7e8e4ecd0ce9fec11894c40f",
+  "branch": "feature/v1-hosting-phase-b1",
+  "existing_pr": 9,
+  "environment": "existing managed Linux; actual local PostgreSQL 17.11, local D1, native SQLite and Chromium; no hosted tests",
+  "tests": [
+    {
+      "command": ".venv/bin/python -m pytest backend/tests cloudflare/tests postgres/tests -q",
+      "passed": 230,
+      "failed": 0,
+      "skipped": 0,
+      "native": 98,
+      "d1_shared": 95,
+      "real_postgres": 37
+    },
+    {
+      "command": "npm --prefix frontend test",
+      "passed": 63,
+      "failed": 0,
+      "skipped": 0,
+      "new_export_tests": 20
+    },
+    {
+      "command": "npm --prefix frontend run build",
+      "status": "passed TypeScript and production build"
+    },
+    {
+      "command": ".venv/bin/python -m postgres.release_rehearsal",
+      "status": "passed",
+      "chromium_passed": 19,
+      "failed": 0,
+      "skipped": 0,
+      "new_export_workflows": 3
+    },
+    {
+      "command": "CHROMIUM_PATH=/usr/bin/chromium npm --prefix frontend run smoke",
+      "adapter": "SQLite",
+      "passed": 19,
+      "failed": 0,
+      "skipped": 0
+    }
+  ],
+  "exports": {
+    "formats": [
+      "JSON",
+      "Markdown"
+    ],
+    "saved_records_only": true,
+    "complete_paginated_history": true,
+    "concurrent_changes_detected": true,
+    "no_partial_files": true,
+    "drafts_preserved": true,
+    "get_only": true,
+    "maintenance_records_unchanged": true,
+    "existing_operational_request_budget_accounting_retained": true,
+    "max_history_events": 10000,
+    "max_file_bytes": 33554432,
+    "over_limit_behavior": "Explicit failure, no truncation"
+  },
+  "new_infrastructure": 0,
+  "new_dependencies": 0,
+  "hosted_verified": false,
+  "account_billing_verified": false,
+  "deployments": 0,
+  "merged": false
+}

@@ -1,5 +1,7 @@
 # B.1 completion report
 
+**Follow-up status:** the independently reviewed missing export workflow is now implemented in the authorized PR #9 correction. See [current export acceptance](TICKET_EXPORTS_ACCEPTANCE.md). The original report and verdict below describe the historical `67f2a3fc` checkpoint; they do not describe the correction's current export status. Hosted verification remains unperformed.
+
 November 1, 2026 (America/New_York). This separates local evidence, simulated hosting, official documentation and unexecuted hosted/account checks.
 
 ## A. Git baseline

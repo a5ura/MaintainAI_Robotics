@@ -1,6 +1,6 @@
 # B.2 future-only hosted deployment runbook
 
-**Do not execute in B.1.** Resolve the pre-existing missing user-facing data/report exports before release acceptance; do not count API JSON/backup tooling as that UI workflow. Requires independent review, Planning risk acceptance, strict $0 account checks and separate resource/publication authorization. `<...>` values are future placeholders; no public endpoint exists. Stop on any card/hold/trial/paid activation, missing hard cap or incompatible Free build. Never record secrets in Git/chat/history/logs.
+**Do not execute in B.1.** Per-ticket JSON/Markdown exports are implemented and locally checked in the authorized review correction; repeat their browser acceptance on the eventual hosted deployment. Requires independent review, Planning risk acceptance, strict $0 account checks and separate resource/publication authorization. `<...>` values are future placeholders; no public endpoint exists. Stop on any card/hold/trial/paid activation, missing hard cap or incompatible Free build. Never record secrets in Git/chat/history/logs.
 
 ## Account and Neon preparation (after separate authorization)
 

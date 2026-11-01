@@ -92,3 +92,15 @@ def test_newer_schema_not_silently_downgraded(tmp_path):
     path=tmp_path/'future.db'
     with sqlite3.connect(path) as db: db.execute('PRAGMA user_version=2')
     with pytest.raises(RepositoryError): Repository(path)
+
+def test_export_history_bounds_are_complete_and_read_only(isolated_database):
+    repo=isolated_database
+    ticket=repo.create_ticket(dict(equipment_id='R-01',title='Export pagination',description='Synthetic',diagnosis_id=None))['ticket']['id']
+    with repo.connection(write=True) as db:
+        db.executemany("INSERT INTO ticket_history(ticket_id,at,kind,body) VALUES(?,'2026-11-01','note',?)",[(ticket,str(i)) for i in range(250)])
+    with repo.connection() as db:before=list(db.iterdump())
+    detail=repo.ticket(ticket)
+    page=repo.history_page(ticket,detail['history_next_seq'])
+    assert detail['history_total']==251 and len(detail['history'])==200 and len(page['history'])==51
+    assert detail['history_last_seq']==page['history'][-1]['seq']
+    with repo.connection() as db:assert list(db.iterdump())==before

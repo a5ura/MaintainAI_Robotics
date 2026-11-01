@@ -92,6 +92,7 @@ def test_bounded_ticket_history_and_lists(repo):
     detail=call(repo,'ticket',ticket);assert len(detail['history'])==200
     page=call(repo,'history_page',ticket,detail['history_next_seq']);assert len(page['history'])==51 and page['next_seq'] is None
     all_rows=detail['history']+page['history'];assert [r['seq'] for r in all_rows]==sorted(r['seq'] for r in all_rows)
+    assert detail['history_total']==251 and detail['history_last_seq']==all_rows[-1]['seq']
 
 
 def test_concurrent_conflicting_insert_rejects_one(repo):

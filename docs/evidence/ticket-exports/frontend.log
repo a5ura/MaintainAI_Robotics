@@ -1,0 +1,24 @@
+
+> maintainai-robotics@0.1.0 test
+> vitest run
+
+
+ RUN  v3.1.3 /workspace/MaintainAI_Robotics/frontend
+
+ ✓ src/GuidedFlow.test.tsx (6 tests) 514ms
+ ✓ src/Maintenance.test.tsx (5 tests) 688ms
+   ✓ loads another incident page using the last record cursor  481ms
+ ✓ src/App.test.tsx (3 tests) 184ms
+ ✓ src/EvidenceReferences.test.tsx (3 tests) 74ms
+ ✓ src/scenarios.test.ts (9 tests) 19ms
+ ✓ src/ticketReports.test.tsx (20 tests) 1589ms
+   ✓ downloads complete saved diagnosis/evidence and all 450 history events, with public fields only  1036ms
+ ✓ src/guided.test.ts (4 tests) 3ms
+ ✓ src/model.test.tsx (8 tests) 194ms
+ ✓ src/engineering.test.ts (3 tests) 66ms
+ ✓ src/api.test.ts (2 tests) 4ms
+
+ Test Files  10 passed (10)
+      Tests  63 passed (63)
+   Start at  18:27:43
+   Duration  2.60s (transform 366ms, setup 0ms, collect 1.22s, tests 3.33s, environment 1.35s, prepare 516ms)

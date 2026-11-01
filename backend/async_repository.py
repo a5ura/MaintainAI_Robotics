@@ -101,10 +101,11 @@ class AsyncMaintenanceRepository:
           (f'SELECT {TICKET_COLUMNS} FROM tickets WHERE id=?',(ticket_id,)),
           ('SELECT d.id FROM diagnoses d JOIN tickets t ON t.diagnosis_id=d.id WHERE t.id=?',(ticket_id,)),
           ('SELECT seq,ticket_id,at,kind,body FROM ticket_history WHERE ticket_id=? ORDER BY seq LIMIT 201',(ticket_id,)),
+          ('SELECT COUNT(*) AS total,MAX(seq) AS last_seq FROM ticket_history WHERE ticket_id=?',(ticket_id,)),
         ])
         rows=[item.get('results',[]) for item in results]
         if not rows[0]:raise RepositoryError('Ticket not found',404)
-        detail={'ticket':rows[0][0],'diagnosis':await self.load_diagnosis(rows[0][0]['diagnosis_id']) if rows[0][0]['diagnosis_id'] else None,'history':rows[2][:200]}
+        detail={'ticket':rows[0][0],'diagnosis':await self.load_diagnosis(rows[0][0]['diagnosis_id']) if rows[0][0]['diagnosis_id'] else None,'history':rows[2][:200],'history_total':rows[3][0]['total'],'history_last_seq':rows[3][0]['last_seq']}
         if len(rows[2])>200:detail['history_next_seq']=rows[2][199]['seq']
         return detail
 

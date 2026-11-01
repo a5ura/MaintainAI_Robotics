@@ -10,6 +10,7 @@ import json
 import os
 from pathlib import Path
 import resource
+import re
 import secrets
 import signal
 import subprocess
@@ -112,11 +113,14 @@ async def main():
                     assert response.status_code == 200 and response.headers['cache-control'] == 'no-store'
                 for path in ('/docs', '/openapi.json', '/.env', '/assets/missing.js'):
                     assert (await client.get(base+path)).status_code == 404
-                # All 16 existing real-browser tests, including all scenarios,
+                # All existing real-browser tests, including all scenarios,
                 # guided/manual takeover, drafts and independent browser contexts.
                 with open('/tmp/b1-browser-pg.log', 'wb') as output:
                     browser = await asyncio.create_subprocess_exec('npm', '--prefix', 'frontend', 'run', 'smoke', cwd=ROOT, env={**os.environ, 'CHROMIUM_PATH': os.environ.get('CHROMIUM_PATH', '/usr/bin/chromium')}, stdout=output, stderr=output)
                     assert await browser.wait() == 0, 'Chromium failed; see /tmp/b1-browser-pg.log'
+                browser_result = re.search(r'(\d+) passed', Path('/tmp/b1-browser-pg.log').read_text())
+                assert browser_result, 'Chromium did not report its pass count'
+                browser_passed = int(browser_result.group(1))
                 cases = payloads(); unicode = deepcopy(cases['max-evidence'])
                 for row in unicode['samples']:row['events'][0]['message'] = 'λ'*100
                 cases['unicode'] = unicode
@@ -172,9 +176,9 @@ async def main():
                 for path in logs:
                     content = path.read_text()
                     assert password not in content and wrong not in content, 'Credential leaked in API log'
-                report = {'environment': 'Existing managed Linux; local native production startup, actual PostgreSQL 17.11; NOT Render/Neon hosted tests', 'profile': {'api_virtual_address_limit_bytes': max_address, 'api_cpu_affinity_cores': 1, 'postgres_container_memory_bytes': 536870912, 'postgres_container_cpu_limit': 1, 'note': 'Virtual-address limit and one-core affinity are local approximations, not provider RAM/CPU guarantees'}, 'runtime_role': 'restricted non-owner, SCRAM password authenticated; no DELETE/CREATE/ALTER', 'browser': {'passed': 16, 'failed': 0, 'skipped': 0}, 'startup_liveness_wall_ms': starts, 'api_memory_before_restart': readings, 'payloads_single_pass': cases_report, 'api_restart_record_equal': True, 'database_stop_unavailable_safe_503': True, 'same_api_recovers_after_database_restart': True, 'unknown_schema_migration_refused_without_record_change': True, 'wrong_password_safe_503_without_secret_in_logs': True, 'readonly_preserves_reads_and_records': True, 'request_budget_statuses': [200, 200, 429], 'oversized_body_status': 413, 'test_only_browser_budgets': {'daily_writes': 2000, 'daily_requests': 10000}}
+                report = {'environment': 'Existing managed Linux; local native production startup, actual PostgreSQL 17.11; NOT Render/Neon hosted tests', 'profile': {'api_virtual_address_limit_bytes': max_address, 'api_cpu_affinity_cores': 1, 'postgres_container_memory_bytes': 536870912, 'postgres_container_cpu_limit': 1, 'note': 'Virtual-address limit and one-core affinity are local approximations, not provider RAM/CPU guarantees'}, 'runtime_role': 'restricted non-owner, SCRAM password authenticated; no DELETE/CREATE/ALTER', 'browser': {'passed': browser_passed, 'failed': 0, 'skipped': 0}, 'startup_liveness_wall_ms': starts, 'api_memory_before_restart': readings, 'payloads_single_pass': cases_report, 'api_restart_record_equal': True, 'database_stop_unavailable_safe_503': True, 'same_api_recovers_after_database_restart': True, 'unknown_schema_migration_refused_without_record_change': True, 'wrong_password_safe_503_without_secret_in_logs': True, 'readonly_preserves_reads_and_records': True, 'request_budget_statuses': [200, 200, 429], 'oversized_body_status': 413, 'test_only_browser_budgets': {'daily_writes': 2000, 'daily_requests': 10000}}
                 (ROOT/'docs/PHASE_B1_REHEARSAL.json').write_text(json.dumps(report, indent=2)+'\n')
-                print('B1 rehearsal passed: 16 Chromium tests, 11 full-size payloads, restricted SCRAM role, bounded API, API/DB restart, unavailable/wrong credentials, readonly, quota and migration failure.')
+                print(f'B1 rehearsal passed: {browser_passed} Chromium tests, 11 full-size payloads, restricted SCRAM role, bounded API, API/DB restart, unavailable/wrong credentials, readonly, quota and migration failure.')
     finally:
         await stop()
         # Ensure an interrupted outage test never leaves this owned DB stopped.
