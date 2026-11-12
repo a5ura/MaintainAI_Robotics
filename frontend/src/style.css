@@ -874,3 +874,123 @@ input:focus-visible {
 .diagnosis-body {
   max-height: none;
 }
+
+/* UI-01: controlled workstation presentation; scene and simulation stay unchanged. */
+.app-header {
+  min-height: 68px;
+  height: auto;
+  padding: 10px 20px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 24px;
+}
+.app-header .brand { font-size: 19px; }
+.app-header .brand b { display: inline; font-size: 10px; margin-left: 5px; }
+.app-header .brand small { display: block; font: 12px/1.5 Arial, sans-serif; color: #abc0cc; margin-top: 2px; }
+.app-header .workspace-nav { padding: 0; justify-content: center; gap: 6px; }
+.app-header .workspace-nav button { padding: 9px 13px; font-size: 14px; }
+.app-header .environment { display: block; color: #b5c7d1; font-size: 11px; letter-spacing: 1px; text-align: right; }
+.app-header .environment span { display: block; font-size: 12px; letter-spacing: 0; margin-top: 3px; }
+.operations-main { max-width: 1800px; padding: 12px 20px 24px; }
+.workspace-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
+.workspace-heading h1 { font-size: 24px; letter-spacing: -.5px; line-height: 1.2; }
+.workspace-heading h1 span { margin-left: 10px; font-size: 14px; letter-spacing: 0; color: #b3c6d0; }
+.workspace-heading p { font-size: 13px; line-height: 1.4; margin: 4px 0 0; }
+.workspace-disclosure { font-size: 12px; color: #a7bfca; }
+.operations-workspace { display: grid; grid-template-columns: minmax(0, 1.85fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.operations-workspace > *, .investigation-column, .summary-body { min-width: 0; }
+.operations-main .panel-top { padding: 10px 14px; min-height: 38px; font-size: 11px; letter-spacing: 1px; }
+.operations-main .panel-top h2 { margin: 0; font-size: 15px; font-weight: 600; line-height: 1.25; letter-spacing: 0; }
+.operations-main .panel-top span:last-child { font-size: 10px; }
+.operations-main .viewport { height: clamp(260px, calc(100dvh - 420px), 400px); }
+.operations-main .viewport-label { font-size: 11px; left: 14px; top: 12px; }
+.operations-main .tcp { font-size: 11px; bottom: 12px; left: 14px; }
+.operations-main .sensor-strip { padding: 8px 14px; gap: 8px; font-size: 11px; flex-wrap: wrap; }
+.operations-main .transport { padding: 8px 14px; }
+.operations-main .transport .eyebrow { font-size: 10px; }
+.operations-main .transport strong { margin-top: 0; font-size: 16px; }
+.operations-main progress { margin: 0 14px; width: calc(100% - 28px); }
+.operations-main .controls { padding: 10px 14px; gap: 8px; flex-wrap: wrap; align-items: center; }
+.operations-main .controls button { padding: 9px 12px; min-height: 40px; font-size: 14px; }
+.operations-main .scenario { margin-left: auto; font-size: 10px; letter-spacing: .6px; }
+.operations-main .scenario select { margin-top: 3px; padding: 8px; font-size: 13px; min-height: 36px; }
+.operations-main .guide-entry { border-color: #80c6b7; color: #b0eddf; }
+.operations-main .run-context { padding: 0 14px 10px; gap: 8px; font-size: 12px; }
+.operations-main .run-context input { padding: 7px 9px; width: 100px; min-height: 34px; }
+.operations-main .checkpoints { padding: 0 14px 10px; gap: 8px; font-size: 11px; }
+.operations-main .checkpoints small { font-size: 10px; margin-top: 3px; }
+.investigation-summary { border: 1px solid #344b5a; border-radius: 8px; background: #111d27; }
+.summary-body { padding: 14px; }
+.summary-status { display: grid; gap: 10px; }
+.status-pill { justify-self: start; border: 1px solid currentColor; border-radius: 4px; padding: 5px 8px; font-size: 12px; font-weight: 600; }
+.summary-body .summary-outcome { font-size: 23px; line-height: 1.2; color: #eef5f8; margin: 0; overflow-wrap: anywhere; }
+.summary-body p, .summary-observations { font-size: 13px; line-height: 1.5; margin: 8px 0; overflow-wrap: anywhere; }
+.summary-body h3 { font-size: 12px; letter-spacing: .5px; color: #d2e1e9; margin: 14px 0 5px; }
+.summary-observations { padding-left: 18px; color: #d5e3ea; }
+.summary-observations li + li { margin-top: 6px; }
+.summary-body .summary-caution, .summary-body .summary-counts { font-size: 12px; color: #b5c6ce; }
+.summary-body .summary-warning { padding-left: 9px; border-left: 3px solid #efc17c; color: #f4d4a3; }
+.summary-hint { padding: 12px; border-left: 2px solid #8dd9c6; background: #162e35; }
+.run-summary { display: flex; gap: 28px; margin: 18px 0; font-size: 13px; }
+.run-summary dt { color: #9eb7c5; }.run-summary dd { margin: 4px 0 0; color: #d9e8ef; }
+.details-entry { margin-top: 8px; font-size: 13px; }
+.state-normal { color: #94e3c6; }.state-detected { color: #ffb1a1; }
+.state-inconclusive { color: #f1ce8c; }.state-pending { color: #a8d4ff; }
+.state-error { color: #ffc0ae; }.state-idle { color: #b8ccd7; }
+.investigation-column .guided-banner { margin: 12px 0 0; padding: 14px; }
+.investigation-column .guided-banner h2 { font-size: 18px; margin: 10px 0; }
+.investigation-column .guided-banner p { font-size: 13px; line-height: 1.5; }
+.investigation-column .guide-controls { gap: 6px; margin-top: 12px; }
+.investigation-column .guide-controls button { font-size: 13px; padding: 9px; }
+.operations-main > .engineering-panel { margin-top: 16px; border: 1px solid #314451; border-radius: 8px; background: #111d27; padding: 14px; }
+.diagnostic-details { margin-top: 16px; border: 1px solid #2b3b48; border-radius: 8px; background: #111d27; scroll-margin-top: 12px; }
+.diagnostic-details:focus { outline: 2px solid #a5e8d6; outline-offset: 3px; }
+.diagnostic-details .diagnosis-body { padding: 18px; }
+.diagnostic-details .diagnosis-body > h2 { font-size: 23px; }
+.diagnostic-details .result-badge { font-size: 12px; }
+.diagnostic-details .observation { font-size: 14px; }
+.diagnostic-details h3 { font-size: 12px; letter-spacing: .7px; }
+.diagnostic-details summary { font-size: 14px; }
+.diagnostic-details details p { font-size: 13px; }
+.diagnostic-details details b { font-size: 12px; }
+.operations-main .evidence-panel { margin-top: 16px; }
+.operations-main .evidence-references { font-size: 12px; }
+.operations-main .table-wrap { max-width: 100%; }
+.operations-main .outcome-banner { font-size: 11px; max-width: 48%; }
+.operations-main .engineering-panel, .diagnostic-details, .evidence-panel { min-width: 0; }
+@media (max-width: 1000px) {
+  .app-header { gap: 12px; }
+  .app-header .brand { font-size: 17px; }
+  .operations-workspace { grid-template-columns: minmax(0, 1fr); }
+  .operations-main .viewport { height: 320px; }
+  .workspace-disclosure { display: none; }
+}
+@media (max-width: 600px) {
+  .app-header { grid-template-columns: minmax(0, 1fr) auto; padding: 10px 12px; gap: 8px; }
+  .app-header .workspace-nav { grid-row: 2; grid-column: 1 / -1; justify-content: stretch; }
+  .app-header .workspace-nav button { flex: 1; padding: 9px 8px; font-size: 13px; min-height: 40px; }
+  .app-header .brand { font-size: 17px; }
+  .app-header .brand b { font-size: 9px; letter-spacing: .5px; }
+  .app-header .environment { font-size: 10px; letter-spacing: .5px; }
+  .app-header .environment span { font-size: 11px; }
+  .operations-main { padding: 12px; }
+  .workspace-heading { margin-bottom: 12px; }
+  .workspace-heading h1 { font-size: 22px; }
+  .workspace-heading h1 span { display: block; margin: 4px 0 0; font-size: 13px; }
+  .workspace-heading p { max-width: 290px; font-size: 13px; }
+  .operations-main .viewport { height: 280px; }
+  .operations-main .controls { gap: 8px; padding: 12px; }
+  .operations-main .controls button { min-height: 44px; }
+  .operations-main .scenario { flex-basis: 100%; margin: 0; }
+  .operations-main .scenario select { width: 100%; min-height: 44px; }
+  .operations-main .guide-entry { width: 100%; }
+  .operations-main .run-context { flex-direction: column; align-items: flex-start; padding: 0 12px 12px; }
+  .operations-main .checkpoints { gap: 6px; padding: 0 12px 12px; }
+  .operations-main .checkpoints small { overflow-wrap: anywhere; }
+  .operations-main .sensor-strip { font-size: 11px; }
+  .operations-main .viewport-label { font-size: 10px; }
+  .operations-main .outcome-banner { max-width: 46%; font-size: 10px; }
+  .operations-main .panel-top { gap: 8px; }
+  .operations-main .panel-top span:last-child { font-size: 9px; }
+  .summary-body .summary-outcome { font-size: 22px; }
+}

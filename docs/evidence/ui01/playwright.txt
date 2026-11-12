@@ -1,0 +1,31 @@
+
+Running 24 tests using 1 worker
+
+(node:24682) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 e2e/a2.spec.ts:3:1 › paged maintenance history preserves all events and an unsaved repair draft (4.7s)
+  ✓   2 e2e/b01.spec.ts:3:1 › conflict reload preserves repair/resolution drafts, uses refreshed version and clears drafts on ticket switch (3.2s)
+  ✓   3 e2e/cycle.spec.ts:2:1 › real normal and dropped-object cycles use FastAPI and display evidence (28.1s)
+  ✓   4 e2e/exports.spec.ts:11:1 › saved JSON and Markdown downloads include complete diagnosis/history and preserve every draft without maintenance writes (4.5s)
+  ✓   5 e2e/exports.spec.ts:113:1 › failed or concurrently changed exports create no partial file; manual Unicode Markdown/JSON work after retry (2.1s)
+  ✓   6 e2e/exports.spec.ts:198:1 › large Unicode saved evidence downloads intact as JSON and Markdown (4.9s)
+  ✓   7 e2e/m2.spec.ts:3:1 › positioning error, diagnosis ticket, concurrent edit recovery and durable history (17.7s)
+  ✓   8 e2e/m2.spec.ts:109:1 › vision failure is unreliable verification and not physical loss (14.0s)
+  ✓   9 e2e/m2.spec.ts:134:1 › unexpected stop freezes displayed robot TCP and clock at interruption (8.7s)
+  ✓  10 e2e/m2.spec.ts:158:1 › random failure replays same evidence for explicit seed (25.9s)
+  ✓  11 e2e/m2.spec.ts:184:1 › separate browser simulations remain independent across reset and scenario changes (15.5s)
+  ✓  12 e2e/m2.spec.ts:221:1 › manual ticket UI and initial API error recovery (2.1s)
+  ✓  13 e2e/m3.spec.ts:6:1 › guided live failure, evidence, checks and real idempotent maintenance ticket (23.5s)
+  ✓  14 e2e/m3.spec.ts:91:1 › guided reset, skip and manual takeover preserve real results without auto-writing (6.4s)
+  ✓  15 e2e/m3.spec.ts:129:1 › engineering model values, real 3D component picking and keyboard navigation (3.6s)
+  ✓  16 e2e/m3.spec.ts:226:1 › guided backend error recovers through real API retry (1.9s)
+  ✓  17 e2e/m3.spec.ts:264:1 › 3D lazy-load error is contained and application reload recovers (1.4s)
+  ✓  18 e2e/m3.spec.ts:306:1 › guided pause/reset stays isolated from another browser simulation (9.3s)
+  ✓  19 e2e/m3.spec.ts:352:1 › manual diagnosis ticket takeover cancels the remaining guided save (7.6s)
+  ✓  20 e2e/m3.spec.ts:411:1 › committed but pending guided response cannot replace manual ticket selection or drafts (7.5s)
+  ✓  21 e2e/ui01.spec.ts:40:3 › UI01 viewport and six real presentation states 1366 (19.3s)
+  ✓  22 e2e/ui01.spec.ts:40:3 › UI01 viewport and six real presentation states 1280 (18.6s)
+  ✓  23 e2e/ui01.spec.ts:40:3 › UI01 viewport and six real presentation states 390 (17.2s)
+  ✓  24 e2e/ui01.spec.ts:182:1 › UI01 resize preserves running and paused simulation state (2.6s)
+
+  24 passed (4.2m)
