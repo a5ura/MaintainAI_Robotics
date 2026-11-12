@@ -57,6 +57,7 @@ export default function Maintenance({
   const [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
     [loading, setLoading] = useState(true);
+  const [recoveryNotice, setRecoveryNotice] = useState("");
   const [linked, setLinked] = useState(fromDiagnosis && !!diagnosis?.id),
     [equipmentId, setEquipmentId] = useState("R-01");
   const [title, setTitle] = useState(
@@ -105,14 +106,23 @@ export default function Maintenance({
       exportEpoch.current++;
     };
   }, [initialTicketId]);
-  function select(d: Detail) {
+  function select(d: Detail, preserveDrafts = false) {
     exportEpoch.current++;
     setExporting(false);
     setExportError("");
     setDetail(d);
-    setStatus(d.ticket.status);
-    setNote("");
-    setResolution("");
+    if (preserveDrafts && detail?.ticket.id === d.ticket.id) {
+      // Follow saved status changes unless the operator changed the selection.
+      if (status === detail.ticket.status) setStatus(d.ticket.status);
+      setRecoveryNotice(
+        `Loaded saved version ${d.ticket.version}. Your unsaved notes are preserved. Review the latest changes before saving.`,
+      );
+    } else {
+      setStatus(d.ticket.status);
+      setNote("");
+      setResolution("");
+      setRecoveryNotice("");
+    }
   }
   async function exportSaved(format: ReportFormat) {
     if (!detail || exporting) return;
@@ -134,6 +144,7 @@ export default function Maintenance({
   async function perform(operation: () => Promise<void>) {
     setBusy(true);
     setError("");
+    setRecoveryNotice("");
     try {
       await operation();
     } catch (e) {
@@ -176,7 +187,10 @@ export default function Maintenance({
               void perform(async () => {
                 await refresh();
                 if (detail)
-                  select(await api<Detail>(`/tickets/${detail.ticket.id}`));
+                  select(
+                    await api<Detail>(`/tickets/${detail.ticket.id}`),
+                    true,
+                  );
               })
             }
           >
@@ -184,6 +198,7 @@ export default function Maintenance({
           </button>
         </div>
       )}
+      {recoveryNotice && <p role="status">{recoveryNotice}</p>}
       {loading ? (
         <p role="status">Loading maintenance records…</p>
       ) : (
@@ -420,7 +435,7 @@ export default function Maintenance({
                       />
                     </label>
                     {status === "Resolved" &&
-                      detail.ticket.status !== "Resolved" && (
+                      (detail.ticket.status !== "Resolved" || !!resolution) && (
                         <label>
                           Resolution notes
                           <textarea
