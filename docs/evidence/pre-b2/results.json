@@ -1,0 +1,79 @@
+{
+  "date_client": "2026-11-11",
+  "timezone": "America/New_York",
+  "baseline": "a915cae8cae3b6fd4deb46f2b9c7729f41ebafa4",
+  "branch": "feature/v1-pre-b2-release-readiness",
+  "execution": "existing managed cloud Linux x86_64; Python 3.12.14, Node 24.19.0, npm 11.9.0; existing Chromium software WebGL",
+  "tests": [
+    {
+      "command": ".venv/bin/python -m pytest backend/tests -q",
+      "passed": 98,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "npm --prefix frontend test",
+      "passed": 63,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "VITE_API_BASE=/api VITE_API_TIMEOUT_MS=90000 npm --prefix frontend run build",
+      "status": "passed"
+    },
+    {
+      "command": ".venv/bin/python -m pytest postgres/tests/test_runtime.py::test_explicit_configuration_and_no_fallback postgres/tests/test_runtime.py::test_hosted_cors_is_explicit_https postgres/tests/test_runtime.py::test_hosted_flag_cannot_silently_start_sqlite postgres/tests/test_release.py::test_hosted_origins_are_origins_not_urls -q",
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "configuration only; no PostgreSQL connection"
+    },
+    {
+      "command": "CHROMIUM_PATH=/usr/bin/chromium npm run smoke -- --reporter=line",
+      "cwd": "/tmp/maintainai-pre-b2/frontend",
+      "adapter": "temporary native SQLite",
+      "passed": 19,
+      "failed": 0,
+      "skipped": 0,
+      "minutes": 3.2
+    },
+    {
+      "check": "initial manifest read-only and standalone middleware probe",
+      "status": "passed; health 200; POST diagnosis/ticket and PATCH ticket 503 without DB-pool access"
+    },
+    {
+      "command": "sh -n scripts/build-native.sh scripts/start-native.sh; git diff --check",
+      "status": "passed"
+    }
+  ],
+  "browser_isolation": "disposable frontend copy; only test/proxy URLs adapted to preview :5184 / API :8014; unchanged assertions and production assets; screenshots/timings only in /tmp; fresh SQLite database",
+  "not_executed": [
+    "full live PostgreSQL suite: Psycopg absent",
+    "full D1 suite: root Wrangler tooling absent",
+    "install-performing native build script",
+    "Render manifest provider schema validation",
+    "actual hosted checks",
+    "signed-in Render/Neon account checks"
+  ],
+  "provider_sources": [
+    "https://render.com/docs/free",
+    "https://render.com/docs/native-runtimes",
+    "https://render.com/docs/python-version",
+    "https://render.com/docs/node-version",
+    "https://neon.com/docs/introduction/plans",
+    "https://neon.com/docs/introduction/monitor-usage"
+  ],
+  "source_limits": {
+    "https://render.com/docs/billing": "inaccessible through web lookup",
+    "https://render.com/pricing": "reachable but extracted numeric tables absent"
+  },
+  "source_method": "official public pages through web lookup; no authenticated provider account evidence",
+  "b2_decision": "NO-GO for provisioning/deployment pending account/cost/backup/review gates and separate authorization; hosted acceptance remains unverified",
+  "new_dependencies": 0,
+  "hosting_resources_created": 0,
+  "billing_changes": 0,
+  "deployments": 0,
+  "data_migrations": 0,
+  "merged": false,
+  "preserved": "PRD, robot/diagnostic algorithms, data models, SQLite/D1/PostgreSQL implementations, quota enforcement, exports, existing test files/assertions"
+}
