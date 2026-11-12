@@ -1,0 +1,64 @@
+{
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "boxes": [
+    {
+      "element": "CANVAS",
+      "x": 21,
+      "y": 183.484375,
+      "width": 792.515625,
+      "height": 300
+    },
+    {
+      "element": "Start",
+      "x": 35,
+      "y": 596.984375,
+      "width": 57.90625,
+      "height": 41
+    },
+    {
+      "element": "Pause",
+      "x": 100.90625,
+      "y": 596.984375,
+      "width": 65.703125,
+      "height": 41
+    },
+    {
+      "element": "Reset",
+      "x": 174.609375,
+      "y": 596.984375,
+      "width": 62.578125,
+      "height": 41
+    },
+    {
+      "element": "Start Guided Demo",
+      "x": 653.671875,
+      "y": 596.984375,
+      "width": 145.84375,
+      "height": 41
+    },
+    {
+      "element": "Scenario",
+      "x": 463.671875,
+      "y": 608.484375,
+      "width": 182,
+      "height": 36
+    },
+    {
+      "element": "Reproducible seed",
+      "x": 146.421875,
+      "y": 654.484375,
+      "width": 100,
+      "height": 34
+    },
+    {
+      "element": "Pick, place, investigate.",
+      "x": 845.515625,
+      "y": 239.234375,
+      "width": 399.484375,
+      "height": 27.59375
+    }
+  ]
+}

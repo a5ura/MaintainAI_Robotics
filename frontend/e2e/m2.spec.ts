@@ -119,10 +119,12 @@ test("vision failure is unreliable verification and not physical loss", async ({
     page.getByText("CAMERA TIMEOUT · VERIFICATION UNAVAILABLE"),
   ).toBeVisible();
   await expect(
-    page.getByText(
-      "Visual verification is unreliable; this does not establish a physically missing object.",
-      { exact: true },
-    ),
+    page
+      .getByRole("region", { name: "Diagnostics Workspace", exact: true })
+      .getByText(
+        "Visual verification is unreliable; this does not establish a physically missing object.",
+        { exact: true },
+      ),
   ).toBeVisible();
   await page.screenshot({
     path: "../docs/m3-regression-vision.png",

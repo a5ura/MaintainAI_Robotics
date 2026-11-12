@@ -28,7 +28,9 @@ test("real normal and dropped-object cycles use FastAPI and display evidence", a
     page.getByRole("heading", { name: "Dropped object" }),
   ).toBeVisible();
   await expect(
-    page.getByText("Insufficient vacuum / seal loss", { exact: false }),
+    page
+      .getByRole("region", { name: "Diagnostics Workspace", exact: true })
+      .getByText("Insufficient vacuum / seal loss", { exact: false }),
   ).toBeVisible();
   await expect(page.getByRole("cell", { name: "E6 / 6.0s" })).toBeVisible();
   const seal = page
