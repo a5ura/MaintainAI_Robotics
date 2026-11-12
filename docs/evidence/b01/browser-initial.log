@@ -1,0 +1,102 @@
+
+> maintainai-robotics@0.1.0 smoke
+> playwright test --reporter=line
+
+
+Running 20 tests using 1 worker
+
+(node:10919) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/20] e2e/a2.spec.ts:3:1 › paged maintenance history preserves all events and an unsaved repair draft
+[2/20] e2e/b01.spec.ts:3:1 › conflict reload preserves repair/resolution drafts, uses refreshed version and clears drafts on ticket switch
+  1) e2e/b01.spec.ts:3:1 › conflict reload preserves repair/resolution drafts, uses refreshed version and clears drafts on ticket switch
+
+    Error: expect(locator).toHaveValue(expected) failed
+
+    Locator: getByLabel('Resolution notes', { exact: true })
+    Expected: "Unsaved resolution 漢字"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveValue" getByLabel('Resolution notes', { exact: true }) with timeout 5000ms
+      - waiting for getByLabel('Resolution notes', { exact: true })
+
+
+      51 |   await expect(page.getByRole("alert")).toHaveCount(0);
+      52 |   await expect(note).toHaveValue("Unsaved repair λ");
+    > 53 |   await expect(resolution).toHaveValue("Unsaved resolution 漢字");
+         |                            ^
+      54 |   await expect(status).toHaveValue("Resolved");
+      55 |   // Reload performs reads only; it has not saved the preserved drafts.
+      56 |   const reloaded = (await (await request.get(`/api/tickets/${a}`)).json())
+        at /tmp/maintainai-b01/frontend/e2e/b01.spec.ts:53:28
+
+    Error Context: test-results/b01-conflict-reload-preser-6c86b-ars-drafts-on-ticket-switch/error-context.md
+
+
+(node:11079) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[3/20] e2e/cycle.spec.ts:2:1 › real normal and dropped-object cycles use FastAPI and display evidence
+[4/20] e2e/exports.spec.ts:11:1 › saved JSON and Markdown downloads include complete diagnosis/history and preserve every draft without maintenance writes
+[5/20] e2e/exports.spec.ts:113:1 › failed or concurrently changed exports create no partial file; manual Unicode Markdown/JSON work after retry
+[6/20] e2e/exports.spec.ts:198:1 › large Unicode saved evidence downloads intact as JSON and Markdown
+[7/20] e2e/m2.spec.ts:3:1 › positioning error, diagnosis ticket, concurrent edit recovery and durable history
+[8/20] e2e/m2.spec.ts:109:1 › vision failure is unreliable verification and not physical loss
+[9/20] e2e/m2.spec.ts:132:1 › unexpected stop freezes displayed robot TCP and clock at interruption
+[10/20] e2e/m2.spec.ts:156:1 › random failure replays same evidence for explicit seed
+[11/20] e2e/m2.spec.ts:182:1 › separate browser simulations remain independent across reset and scenario changes
+[12/20] e2e/m2.spec.ts:219:1 › manual ticket UI and initial API error recovery
+[13/20] e2e/m3.spec.ts:6:1 › guided live failure, evidence, checks and real idempotent maintenance ticket
+[14/20] e2e/m3.spec.ts:91:1 › guided reset, skip and manual takeover preserve real results without auto-writing
+[15/20] e2e/m3.spec.ts:129:1 › engineering model values, real 3D component picking and keyboard navigation
+  2) e2e/m3.spec.ts:129:1 › engineering model values, real 3D component picking and keyboard navigation
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByRole('link', { name: 'Skip to main content' })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByRole('link', { name: 'Skip to main content' }) with timeout 5000ms
+      - waiting for getByRole('link', { name: 'Skip to main content' })
+        13 × locator resolved to <a class="skip-link" href="#main-content">Skip to main content</a>
+           - unexpected value "inactive"
+
+
+      136 |   await expect(
+      137 |     page.getByRole("link", { name: "Skip to main content" }),
+    > 138 |   ).toBeFocused();
+          |     ^
+      139 |   await page.keyboard.press("Enter");
+      140 |   await expect(page.locator("#main-content")).toBeFocused();
+      141 |   await page
+        at /tmp/maintainai-b01/frontend/e2e/m3.spec.ts:138:5
+
+    Error Context: test-results/m3-engineering-model-value-898d0-ing-and-keyboard-navigation/error-context.md
+
+
+(node:11999) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[16/20] e2e/m3.spec.ts:226:1 › guided backend error recovers through real API retry
+[17/20] e2e/m3.spec.ts:264:1 › 3D lazy-load error is contained and application reload recovers
+[18/20] e2e/m3.spec.ts:306:1 › guided pause/reset stays isolated from another browser simulation
+[19/20] e2e/m3.spec.ts:352:1 › manual diagnosis ticket takeover cancels the remaining guided save
+[20/20] e2e/m3.spec.ts:411:1 › committed but pending guided response cannot replace manual ticket selection or drafts
+  2 failed
+    e2e/b01.spec.ts:3:1 › conflict reload preserves repair/resolution drafts, uses refreshed version and clears drafts on ticket switch
+    e2e/m3.spec.ts:129:1 › engineering model values, real 3D component picking and keyboard navigation
+  18 passed (3.5m)
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

@@ -1,0 +1,88 @@
+{
+  "date_client": "2026-11-11",
+  "timezone": "America/New_York",
+  "baseline": "7a789c45fc7e5405723fea569644bfb2be6f351e",
+  "branch": "fix/b01-conflict-draft-preservation",
+  "environment": "Existing managed cloud Linux x86_64, Chromium software WebGL; NOT owner Windows",
+  "disposable_api": "http://127.0.0.1:8034",
+  "disposable_preview": "http://127.0.0.1:5204",
+  "database": "/tmp/maintainai-b01/synthetic.sqlite3",
+  "reproduction": {
+    "before": "UNSAVED audit technician work",
+    "after_completed_version_2_reload": "",
+    "confirmed_before_fix": true
+  },
+  "checks": [
+    {
+      "command": ".venv/bin/python -m pytest backend/tests -q",
+      "passed": 98,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "npm --prefix frontend test",
+      "passed": 68,
+      "failed": 0,
+      "skipped": 0,
+      "new_focused_cases": 5
+    },
+    {
+      "command": "VITE_API_BASE=/api VITE_API_TIMEOUT_MS=90000 npm --prefix frontend run build",
+      "result": "passed TypeScript and production build"
+    },
+    {
+      "command": "CHROMIUM_PATH=/usr/bin/chromium npm run smoke -- --reporter=line",
+      "cwd": "/tmp/maintainai-b01/frontend",
+      "passed": 20,
+      "failed": 0,
+      "skipped": 0,
+      "minutes": 3.3,
+      "new_workflows": 1
+    },
+    {
+      "command": "git diff --check; protected-path diff inspection",
+      "result": "passed; existing component-test prefix unchanged verbatim"
+    }
+  ],
+  "initial_browser_run": {
+    "passed": 18,
+    "failed": 2,
+    "notes": "New resolution-label locator failed despite preserved value in page snapshot; corrected to textbox role. Unchanged engineering skip-link focus assertion failed once and passed final full run. No existing assertion weakened/disabled."
+  },
+  "coverage": [
+    "both notes after same-ticket reload",
+    "failed reload retains drafts and shows actual error",
+    "refreshed saved version/history/status",
+    "preserve intentional status change",
+    "notes-only adopts latest saved status",
+    "concurrently resolved ticket keeps resolution draft visible",
+    "no write on reload",
+    "explicit retry uses refreshed version",
+    "successful save clears drafts/notice",
+    "intentional ticket switch resets drafts/status/notice"
+  ],
+  "protected_paths_unchanged": [
+    "backend",
+    "postgres",
+    "cloudflare",
+    "fixtures",
+    "render.yaml",
+    "scripts",
+    "docs/PRD.md"
+  ],
+  "browser_artifacts": "Disposable frontend copy; only loopback URLs adapted; production assets stable during each run; historical tracked screenshots untouched",
+  "not_claimed": [
+    "Windows runtime tests",
+    "hosted validation",
+    "live PostgreSQL/D1 suite"
+  ],
+  "new_dependencies": 0,
+  "deployed": false,
+  "merged": false,
+  "owner_existing_records_touched": false,
+  "residual_risks": [
+    "Drafts are memory-only; refresh/navigation/intentional selection still clears them",
+    "Operator must review intentionally preserved status/resolution edits before saving",
+    "Further concurrent updates retain existing version-conflict behavior"
+  ]
+}

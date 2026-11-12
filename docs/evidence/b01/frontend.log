@@ -1,0 +1,38 @@
+
+> maintainai-robotics@0.1.0 test
+> vitest run
+
+
+ RUN  v3.1.3 /workspace/MaintainAI_Robotics/frontend
+
+ ✓ src/Maintenance.test.tsx (10 tests) 3170ms
+   ✓ loads another incident page using the last record cursor  1304ms
+   ✓ clears recovered drafts and recovery notice when intentionally selecting another ticket  430ms
+   ✓ adopts a concurrently changed saved status when the operator edited notes only  381ms
+ ✓ src/ticketReports.test.tsx (20 tests) 3236ms
+   ✓ downloads complete saved diagnosis/evidence and all 450 history events, with public fields only  1181ms
+   ✓ preserves every unsaved form draft and status while exporting saved records  1013ms
+   ✓ keeps repair drafts and offers safe retry after a failed continuation  537ms
+ ✓ src/GuidedFlow.test.tsx (6 tests) 2015ms
+   ✓ live guide pauses, skips through real payload request, then saves a linked ticket  728ms
+   ✓ an already-pending guide save cannot select its ticket or erase manual repair-note drafts  465ms
+   ✓ manual ticket creation clears the selection from a previously completed guide  302ms
+ ✓ src/App.test.tsx (3 tests) 680ms
+   ✓ Start, Pause, Reset preserve simulation lifecycle  457ms
+ ✓ src/EvidenceReferences.test.tsx (3 tests) 244ms
+ ✓ src/model.test.tsx (8 tests) 527ms
+ ✓ src/scenarios.test.ts (9 tests) 88ms
+ ✓ src/guided.test.ts (4 tests) 12ms
+ ✓ src/engineering.test.ts (3 tests) 134ms
+ ✓ src/api.test.ts (2 tests) 6ms
+
+ Test Files  10 passed (10)
+      Tests  68 passed (68)
+   Start at  01:27:16
+   Duration  22.11s (transform 957ms, setup 0ms, collect 3.19s, tests 10.11s, environment 4.30s, prepare 1.28s)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
