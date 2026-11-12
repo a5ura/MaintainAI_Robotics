@@ -24,4 +24,6 @@ services:
       - key: NODE_VERSION
         value: 24.19.0
       - key: DEMO_READONLY
-        value: "0"
+        # Initial hosted verification is read-only; enable writes explicitly
+        # only after the approved runbook's read/role checks.
+        value: "1"

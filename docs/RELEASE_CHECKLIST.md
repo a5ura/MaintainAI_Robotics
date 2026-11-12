@@ -1,6 +1,14 @@
 # V1 release checklist
 
-## Current Phase B.1 checkpoint — November 1, 2026 (America/New_York)
+## Current pre-B.2 checkpoint — November 11, 2026 (America/New_York)
+
+PRs #1–9 are merged. Verified `origin/main` baseline: `a915cae8cae3b6fd4deb46f2b9c7729f41ebafa4` (PR #9), including saved per-ticket JSON/Markdown exports in `1f972b0`. Complete evidence/history, captured-version checks and draft preservation are implemented; see [export acceptance](TICKET_EXPORTS_ACCEPTANCE.md). Earlier statements that exports are missing or PR #9 is unmerged describe historical checkpoints.
+
+The authorized pre-B.2 correction uses environment-neutral demo/shared-record copy, preserving simulated-input/computed-result disclosure, and sets the initial Render manifest to `DEMO_READONLY=1`. It does not claim that a build proves hosting or durability. Runtime algorithms, schemas, SQLite/D1/PostgreSQL and existing workflows are unchanged. See [correction evidence](PRE_B2_RELEASE_READINESS.md).
+
+Official Render/Neon documentation is now readable through web lookup; the dated [hosting checklist](PHASE_B1_HOSTING_VERIFICATION.md) supersedes the earlier public-document access blocker. Actual account eligibility, card/hold/billing/overage controls, protected backup storage and hosted build/wake/TLS/redeploy durability remain unverified. **B.2 provisioning/deployment: NO-GO pending those gates, independent review and separate authorization.** No hosting resources, billing, deployment, data migration or merge is authorized in this correction. Strict $0 and V2 deferral remain unchanged.
+
+## Historical Phase B.1 checkpoint — November 1, 2026 (America/New_York)
 
 B.0 PR #8 is merged at `8d39f2af9dee9a1d21d658950ddb15a228651848`. B.1 branch `feature/v1-hosting-phase-b1` prepares one same-origin Render Free Python service plus external Neon Free: production frontend build, hosted route/static/CORS hardening, restricted runtime SQL and constrained real PostgreSQL rehearsal. SQLite/D1, PRD, robot and diagnostic algorithms remain intact. See [B.1 setup](DEPLOYMENT_PHASE_B1.md), [completion](PHASE_B1_COMPLETION_REPORT.md) and future-only [B.2 runbook](PHASE_B1_HOSTED_RUNBOOK.md).
 

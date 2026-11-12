@@ -1,0 +1,36 @@
+
+> maintainai-robotics@0.1.0 smoke
+> playwright test --reporter=line
+
+
+Running 19 tests using 1 worker
+
+(node:4409) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/19] e2e/a2.spec.ts:3:1 › paged maintenance history preserves all events and an unsaved repair draft
+[2/19] e2e/cycle.spec.ts:2:1 › real normal and dropped-object cycles use FastAPI and display evidence
+[3/19] e2e/exports.spec.ts:11:1 › saved JSON and Markdown downloads include complete diagnosis/history and preserve every draft without maintenance writes
+[4/19] e2e/exports.spec.ts:113:1 › failed or concurrently changed exports create no partial file; manual Unicode Markdown/JSON work after retry
+[5/19] e2e/exports.spec.ts:198:1 › large Unicode saved evidence downloads intact as JSON and Markdown
+[6/19] e2e/m2.spec.ts:3:1 › positioning error, diagnosis ticket, concurrent edit recovery and durable history
+[7/19] e2e/m2.spec.ts:109:1 › vision failure is unreliable verification and not physical loss
+[8/19] e2e/m2.spec.ts:132:1 › unexpected stop freezes displayed robot TCP and clock at interruption
+[9/19] e2e/m2.spec.ts:156:1 › random failure replays same evidence for explicit seed
+[10/19] e2e/m2.spec.ts:182:1 › separate browser simulations remain independent across reset and scenario changes
+[11/19] e2e/m2.spec.ts:219:1 › manual ticket UI and initial API error recovery
+[12/19] e2e/m3.spec.ts:6:1 › guided live failure, evidence, checks and real idempotent maintenance ticket
+[13/19] e2e/m3.spec.ts:91:1 › guided reset, skip and manual takeover preserve real results without auto-writing
+[14/19] e2e/m3.spec.ts:129:1 › engineering model values, real 3D component picking and keyboard navigation
+[15/19] e2e/m3.spec.ts:226:1 › guided backend error recovers through real API retry
+[16/19] e2e/m3.spec.ts:264:1 › 3D lazy-load error is contained and application reload recovers
+[17/19] e2e/m3.spec.ts:306:1 › guided pause/reset stays isolated from another browser simulation
+[18/19] e2e/m3.spec.ts:352:1 › manual diagnosis ticket takeover cancels the remaining guided save
+[19/19] e2e/m3.spec.ts:411:1 › committed but pending guided response cannot replace manual ticket selection or drafts
+  19 passed (3.2m)
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

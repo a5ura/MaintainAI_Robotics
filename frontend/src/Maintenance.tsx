@@ -152,7 +152,7 @@ export default function Maintenance({
   }
   return (
     <main className="maintenance" id="main-content" tabIndex={-1}>
-      <div className="eyebrow">MAINTENANCE / LOCAL DURABLE RECORDS</div>
+      <div className="eyebrow">MAINTENANCE / SHARED DEMO RECORDS</div>
       <div className="title-row">
         <div>
           <h1>From evidence to action.</h1>
@@ -164,8 +164,8 @@ export default function Maintenance({
         <button onClick={onReturn}>Return to operations</button>
       </div>
       <p className="storage-notice">
-        Development SQLite persists on this machine. Shared cloud storage and
-        public deployment are not configured.
+        Saved records are shared by visitors using this backend. Use synthetic
+        information only; do not enter private or sensitive data.
       </p>
       {error && (
         <div role="alert" className="error-box">

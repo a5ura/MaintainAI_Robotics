@@ -132,7 +132,7 @@ export function App() {
         <span className="environment">
           SIMULATED WORKCELL · COMPUTED DIAGNOSTICS
         </span>
-        <span className="live-dot">LOCAL DEMO</span>
+        <span className="live-dot">INTERACTIVE DEMO</span>
       </header>
       <nav className="workspace-nav" aria-label="Workspace">
         <button
