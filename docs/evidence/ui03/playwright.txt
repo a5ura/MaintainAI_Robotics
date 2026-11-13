@@ -1,0 +1,77 @@
+
+Running 42 tests using 1 worker
+
+(node:29962) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 e2e/a2.spec.ts:3:1 › paged maintenance history preserves all events and an unsaved repair draft (4.7s)
+  ✓   2 e2e/b01.spec.ts:3:1 › conflict reload preserves repair/resolution drafts, uses refreshed version and clears drafts on ticket switch (2.6s)
+  ✓   3 e2e/cycle.spec.ts:2:1 › real normal and dropped-object cycles use FastAPI and display evidence (27.8s)
+  ✓   4 e2e/exports.spec.ts:11:1 › saved JSON and Markdown downloads include complete diagnosis/history and preserve every draft without maintenance writes (4.1s)
+  ✓   5 e2e/exports.spec.ts:113:1 › failed or concurrently changed exports create no partial file; manual Unicode Markdown/JSON work after retry (2.0s)
+  ✓   6 e2e/exports.spec.ts:198:1 › large Unicode saved evidence downloads intact as JSON and Markdown (4.7s)
+  ✓   7 e2e/gd01.spec.ts:10:3 › GD01 controls remain independent and responsive 1366 (4.0s)
+  ✓   8 e2e/gd01.spec.ts:10:3 › GD01 controls remain independent and responsive 1280 (3.7s)
+  ✓   9 e2e/gd01.spec.ts:10:3 › GD01 controls remain independent and responsive 390 (3.0s)
+  ✓  10 e2e/gd01.spec.ts:121:1 › GD01 real cycle and automatic save survive completion handoff (22.1s)
+  ✓  11 e2e/gd01.spec.ts:194:3 › GD01 missing voices fall back and recover after discovery (1.7s)
+  ✓  12 e2e/gd01.spec.ts:194:3 › GD01 remote-only voices fall back and recover after discovery (1.7s)
+  ✓  13 e2e/gd01.spec.ts:220:1 › GD01 denied speech, hidden tab and manual navigation never restart stale narration (2.0s)
+  ✓  14 e2e/m2.spec.ts:3:1 › positioning error, diagnosis ticket, concurrent edit recovery and durable history (16.7s)
+  ✓  15 e2e/m2.spec.ts:109:1 › vision failure is unreliable verification and not physical loss (14.1s)
+  ✓  16 e2e/m2.spec.ts:134:1 › unexpected stop freezes displayed robot TCP and clock at interruption (8.6s)
+  ✓  17 e2e/m2.spec.ts:158:1 › random failure replays same evidence for explicit seed (25.8s)
+  ✓  18 e2e/m2.spec.ts:184:1 › separate browser simulations remain independent across reset and scenario changes (15.6s)
+  ✓  19 e2e/m2.spec.ts:221:1 › manual ticket UI and initial API error recovery (2.4s)
+  ✓  20 e2e/m3.spec.ts:11:1 › guided live failure, evidence, checks and real idempotent maintenance ticket (23.5s)
+  ✓  21 e2e/m3.spec.ts:96:1 › guided reset, skip and manual takeover preserve real results without auto-writing (6.8s)
+  ✓  22 e2e/m3.spec.ts:134:1 › engineering model values, real 3D component picking and keyboard navigation (4.4s)
+  ✓  23 e2e/m3.spec.ts:228:1 › guided backend error recovers through real API retry (2.0s)
+  ✓  24 e2e/m3.spec.ts:266:1 › 3D lazy-load error is contained and application reload recovers (1.4s)
+  ✓  25 e2e/m3.spec.ts:308:1 › guided pause/reset stays isolated from another browser simulation (10.6s)
+  ✓  26 e2e/m3.spec.ts:355:1 › manual diagnosis ticket takeover cancels the remaining guided save (7.7s)
+  ✓  27 e2e/m3.spec.ts:414:1 › committed but pending guided response cannot replace manual ticket selection or drafts (7.4s)
+  ✓  28 e2e/ui01.spec.ts:44:3 › UI01 viewport and six real presentation states 1366 (20.0s)
+  ✓  29 e2e/ui01.spec.ts:44:3 › UI01 viewport and six real presentation states 1280 (19.6s)
+  ✓  30 e2e/ui01.spec.ts:44:3 › UI01 viewport and six real presentation states 390 (18.1s)
+  ✓  31 e2e/ui01.spec.ts:186:1 › UI01 resize preserves running and paused simulation state (3.4s)
+  ✓  32 e2e/ui02.spec.ts:19:3 › UI02 scenario visuals and camera layout 1366 (34.1s)
+  ✓  33 e2e/ui02.spec.ts:19:3 › UI02 scenario visuals and camera layout 1280 (35.7s)
+  ✓  34 e2e/ui02.spec.ts:19:3 › UI02 scenario visuals and camera layout 390 (32.8s)
+  ✓  35 e2e/ui02.spec.ts:155:1 › UI02 camera and context recovery preserve narration/time and release WebGL resources (3.1s)
+  ✓  36 e2e/ui02.spec.ts:296:1 › UI02 unavailable WebGL preserves controls and real backend diagnosis (3.5s)
+  ✓  37 e2e/ui03.spec.ts:13:3 › UI03 investigation across six scenarios at 1366 (40.7s)
+  ✓  38 e2e/ui03.spec.ts:13:3 › UI03 investigation across six scenarios at 1280 (33.7s)
+  ✓  39 e2e/ui03.spec.ts:13:3 › UI03 investigation across six scenarios at 390 (31.1s)
+  ✘  40 e2e/ui03.spec.ts:156:1 › UI03 paused guide selection draws and releases a historical marker without domain side effects (2.2s)
+(node:32521) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  41 e2e/ui03.spec.ts:305:1 › UI03 invalid backend FK suppresses spatial highlighting but keeps complete evidence (7.3s)
+  ✓  42 e2e/ui03.spec.ts:332:1 › UI03 WebGL unavailable retains selectable evidence and text inspector (3.9s)
+
+
+  1) e2e/ui03.spec.ts:156:1 › UI03 paused guide selection draws and releases a historical marker without domain side effects
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 118
+    Received:   118
+
+      209 |     .toBeGreaterThan(before.renderer!.drawCalls);
+      210 |   const selected = await page.evaluate(() => window.__ui02GPU.read());
+    > 211 |   expect(selected.liveBuffers).toBeGreaterThan(before.liveBuffers);
+          |                                ^
+      212 |   await page
+      213 |     .getByRole("group", { name: "Recorded readings" })
+      214 |     .getByRole("button", { name: /^E5 ·/ })
+        at /tmp/maintainai-ui03-ca7kg78z/frontend/e2e/ui03.spec.ts:211:32
+
+    Error Context: test-results/ui03-UI03-paused-guide-sel-b8d18-without-domain-side-effects/error-context.md
+
+  1 failed
+    e2e/ui03.spec.ts:156:1 › UI03 paused guide selection draws and releases a historical marker without domain side effects
+  41 passed (8.7m)
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

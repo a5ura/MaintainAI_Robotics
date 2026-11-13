@@ -1,4 +1,5 @@
 import type { Clock, Diagnosis } from "./model";
+import { EvidenceReferences } from "./EvidenceReferences";
 
 export default function InvestigationSummary({
   clock,
@@ -44,6 +45,7 @@ export default function InvestigationSummary({
       <div className="summary-body">
         <div className="summary-status" aria-live="polite">
           <span className={`status-pill state-${state}`}>{label}</span>
+          <span className="summary-caption">Observed outcome</span>
           <p className="summary-outcome" data-testid="investigation-outcome">
             {error
               ? "Diagnosis unavailable"
@@ -68,29 +70,62 @@ export default function InvestigationSummary({
           <>
             <p className="summary-description">{result.summary}</p>
             {result.warnings.length > 0 && (
-              <p className="summary-warning">
-                {result.warnings[0]}
-                {result.warnings.length > 1
-                  ? ` (${result.warnings.length} warnings in full diagnostics)`
-                  : ""}
-              </p>
+              <p className="summary-warning">{result.warnings[0]}</p>
             )}
-            <h3>Confirmed observations</h3>
-            {result.observations.length ? (
-              <ul className="summary-observations">
-                {result.observations.slice(0, 2).map((o, i) => (
-                  <li key={i}>{o.text}</li>
+            {result.warnings.length > 1 && (
+              <details className="summary-warning">
+                <summary>
+                  More analysis warnings ({result.warnings.length - 1})
+                </summary>
+                {result.warnings.slice(1).map((warning, i) => (
+                  <p key={i}>{warning}</p>
                 ))}
-              </ul>
+              </details>
+            )}
+            <h3>Supporting evidence</h3>
+            {result.observations.length ? (
+              <>
+                <ul className="summary-observations">
+                  {result.observations.slice(0, 2).map((o, i) => (
+                    <li key={i}>
+                      {o.text}
+                      <EvidenceReferences
+                        ids={o.evidence}
+                        timeline={result.timeline}
+                        label="Observation"
+                      />
+                    </li>
+                  ))}
+                </ul>
+                {result.observations.length > 2 && (
+                  <details className="more-observations">
+                    <summary>
+                      More observations ({result.observations.length - 2})
+                    </summary>
+                    <ul>
+                      {result.observations.slice(2).map((o, i) => (
+                        <li key={i}>
+                          {o.text}
+                          <EvidenceReferences
+                            ids={o.evidence}
+                            timeline={result.timeline}
+                            label="Observation"
+                          />
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                )}
+              </>
             ) : (
               <p>No confirmed observations returned.</p>
             )}
-            <h3>Leading hypothesis</h3>
+            <h3>Possible cause</h3>
             <p>{leading?.cause ?? "No ranked hypothesis returned."}</p>
             {leading && (
               <p className="summary-caution">Hypothesis, not a proven cause</p>
             )}
-            <h3>Operator check</h3>
+            <h3>Next check</h3>
             <p>
               {leading?.check ??
                 "No operator check returned. Review the full evidence."}
@@ -120,8 +155,8 @@ export default function InvestigationSummary({
               </div>
             </dl>
             <p className="summary-hint">
-              Try Dropped object, or start the Guided Demo for a complete
-              investigation.
+              Run → Inspect evidence → Compare causes → Identify next check. Try
+              Dropped object or Start Guided Demo.
             </p>
           </>
         )}

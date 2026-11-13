@@ -1,0 +1,55 @@
+{
+  "environment": "Cloud Chromium/software WebGL, not Windows GPU/FPS",
+  "before": {
+    "contexts": 2,
+    "renderer": {
+      "id": 2,
+      "liveBuffers": 118,
+      "createdBuffers": 118,
+      "drawCalls": 174,
+      "triangles": 9372
+    },
+    "liveBuffers": 118,
+    "createdBuffers": 118,
+    "deletedBuffers": 0,
+    "lastFrame": {
+      "calls": 30,
+      "triangles": 1824
+    }
+  },
+  "selected": {
+    "contexts": 2,
+    "renderer": {
+      "id": 2,
+      "liveBuffers": 126,
+      "createdBuffers": 126,
+      "drawCalls": 236,
+      "triangles": 13308
+    },
+    "liveBuffers": 126,
+    "createdBuffers": 126,
+    "deletedBuffers": 0,
+    "lastFrame": {
+      "calls": 32,
+      "triangles": 2112
+    }
+  },
+  "released": {
+    "contexts": 3,
+    "renderer": {
+      "id": 3,
+      "liveBuffers": 0,
+      "createdBuffers": 126,
+      "drawCalls": 124,
+      "triangles": 7872
+    },
+    "liveBuffers": 0,
+    "createdBuffers": 252,
+    "deletedBuffers": 126,
+    "lastFrame": {
+      "calls": 30,
+      "triangles": 1824
+    }
+  },
+  "errors": []
+}
