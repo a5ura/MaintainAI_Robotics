@@ -32,7 +32,9 @@ it("exposes measured support and contradiction links to matching timeline rows",
       "title",
       expect.stringContaining("vacuum 12 kPa"),
     );
-    expect(link).toHaveAccessibleName(expect.stringContaining("object ABSENT"));
+    expect(link).toHaveAccessibleName(
+      expect.stringContaining("Object at gripper ABSENT"),
+    );
     expect(link).toHaveAccessibleName(expect.stringContaining("transport"));
   }
 });
@@ -54,6 +56,6 @@ it("shows no support and unknown sensor values honestly", () => {
     />,
   );
   expect(screen.getByRole("link")).toHaveAccessibleName(
-    expect.stringContaining("object UNKNOWN · vacuum unknown kPa"),
+    expect.stringContaining("Object at gripper UNKNOWN · vacuum unknown kPa"),
   );
 });

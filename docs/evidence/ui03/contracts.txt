@@ -1,0 +1,19 @@
+
+> maintainai-robotics@0.1.0 test
+> vitest run src/evidenceSelection.test.tsx
+
+
+ RUN  v3.1.3 /workspace/MaintainAI_Robotics/frontend
+
+ ✓ src/evidenceSelection.test.tsx (7 tests) 39ms
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  04:39:37
+   Duration  4.50s (transform 618ms, setup 0ms, collect 1.27s, tests 39ms, environment 1.57s, prepare 1.36s)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

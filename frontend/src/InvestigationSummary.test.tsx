@@ -57,19 +57,16 @@ it.each([
 });
 it("preserves backend order and separates observations, hypothesis and check", () => {
   show({ result });
-  expect(screen.getAllByRole("listitem").map((x) => x.textContent)).toEqual([
-    "First observation",
-    "Second observation",
-  ]);
-  expect(screen.queryByText("Third observation")).not.toBeInTheDocument();
+  expect(screen.getByText("First observation")).toBeInTheDocument();
+  expect(screen.getByText("Second observation")).toBeInTheDocument();
+  const more = screen.getByText("More observations (1)").closest("details")!;
+  expect(more.open).toBe(false);
+  fireEvent.click(screen.getByText("More observations (1)"));
+  expect(screen.getByText("Third observation")).toBeVisible();
   expect(screen.getByText("Backend first")).toBeInTheDocument();
   expect(screen.queryByText("Backend second")).not.toBeInTheDocument();
   expect(screen.getByText("Check Backend first")).toBeInTheDocument();
-  for (const name of [
-    "Confirmed observations",
-    "Leading hypothesis",
-    "Operator check",
-  ])
+  for (const name of ["Supporting evidence", "Possible cause", "Next check"])
     expect(screen.getByRole("heading", { name })).toBeInTheDocument();
   expect(screen.getByText(/3 observations · 2 hypotheses/)).toBeInTheDocument();
 });
@@ -87,4 +84,18 @@ it("prioritizes an actionable error over stale results and opens full details", 
   );
   expect(onRetry).toHaveBeenCalledOnce();
   expect(onDetails).toHaveBeenCalledOnce();
+});
+
+it("keeps the first warning visible and makes every further warning discoverable", () => {
+  show({
+    result: {
+      ...result,
+      warnings: ["First warning", "Second warning", "Third warning"],
+    },
+  });
+  expect(screen.getByText("First warning")).toBeVisible();
+  const more = screen.getByText("More analysis warnings (2)");
+  fireEvent.click(more);
+  expect(screen.getByText("Second warning")).toBeVisible();
+  expect(screen.getByText("Third warning")).toBeVisible();
 });

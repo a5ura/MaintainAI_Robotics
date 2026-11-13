@@ -1,0 +1,84 @@
+
+Running 42 tests using 1 worker
+
+(node:26405) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 e2e/a2.spec.ts:3:1 › paged maintenance history preserves all events and an unsaved repair draft (4.5s)
+  ✓   2 e2e/b01.spec.ts:3:1 › conflict reload preserves repair/resolution drafts, uses refreshed version and clears drafts on ticket switch (3.0s)
+  ✓   3 e2e/cycle.spec.ts:2:1 › real normal and dropped-object cycles use FastAPI and display evidence (27.8s)
+  ✓   4 e2e/exports.spec.ts:11:1 › saved JSON and Markdown downloads include complete diagnosis/history and preserve every draft without maintenance writes (4.2s)
+  ✓   5 e2e/exports.spec.ts:113:1 › failed or concurrently changed exports create no partial file; manual Unicode Markdown/JSON work after retry (2.0s)
+  ✓   6 e2e/exports.spec.ts:198:1 › large Unicode saved evidence downloads intact as JSON and Markdown (4.7s)
+  ✓   7 e2e/gd01.spec.ts:10:3 › GD01 controls remain independent and responsive 1366 (4.0s)
+  ✓   8 e2e/gd01.spec.ts:10:3 › GD01 controls remain independent and responsive 1280 (3.9s)
+  ✓   9 e2e/gd01.spec.ts:10:3 › GD01 controls remain independent and responsive 390 (2.8s)
+  ✓  10 e2e/gd01.spec.ts:121:1 › GD01 real cycle and automatic save survive completion handoff (21.6s)
+  ✓  11 e2e/gd01.spec.ts:194:3 › GD01 missing voices fall back and recover after discovery (2.2s)
+  ✓  12 e2e/gd01.spec.ts:194:3 › GD01 remote-only voices fall back and recover after discovery (1.5s)
+  ✓  13 e2e/gd01.spec.ts:220:1 › GD01 denied speech, hidden tab and manual navigation never restart stale narration (1.8s)
+  ✓  14 e2e/m2.spec.ts:3:1 › positioning error, diagnosis ticket, concurrent edit recovery and durable history (16.8s)
+  ✓  15 e2e/m2.spec.ts:109:1 › vision failure is unreliable verification and not physical loss (14.0s)
+  ✓  16 e2e/m2.spec.ts:134:1 › unexpected stop freezes displayed robot TCP and clock at interruption (8.8s)
+  ✓  17 e2e/m2.spec.ts:158:1 › random failure replays same evidence for explicit seed (25.9s)
+  ✓  18 e2e/m2.spec.ts:184:1 › separate browser simulations remain independent across reset and scenario changes (15.1s)
+  ✓  19 e2e/m2.spec.ts:221:1 › manual ticket UI and initial API error recovery (1.9s)
+  ✓  20 e2e/m3.spec.ts:11:1 › guided live failure, evidence, checks and real idempotent maintenance ticket (23.5s)
+  ✓  21 e2e/m3.spec.ts:96:1 › guided reset, skip and manual takeover preserve real results without auto-writing (7.4s)
+  ✓  22 e2e/m3.spec.ts:134:1 › engineering model values, real 3D component picking and keyboard navigation (5.0s)
+  ✓  23 e2e/m3.spec.ts:228:1 › guided backend error recovers through real API retry (3.2s)
+  ✓  24 e2e/m3.spec.ts:266:1 › 3D lazy-load error is contained and application reload recovers (1.7s)
+  ✓  25 e2e/m3.spec.ts:308:1 › guided pause/reset stays isolated from another browser simulation (12.3s)
+  ✓  26 e2e/m3.spec.ts:355:1 › manual diagnosis ticket takeover cancels the remaining guided save (10.4s)
+  ✓  27 e2e/m3.spec.ts:414:1 › committed but pending guided response cannot replace manual ticket selection or drafts (14.0s)
+  ✘  28 e2e/ui01.spec.ts:44:3 › UI01 viewport and six real presentation states 1366 (46.8s)
+(node:28143) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  29 e2e/ui01.spec.ts:44:3 › UI01 viewport and six real presentation states 1280 (20.9s)
+  ✓  30 e2e/ui01.spec.ts:44:3 › UI01 viewport and six real presentation states 390 (17.8s)
+  ✓  31 e2e/ui01.spec.ts:186:1 › UI01 resize preserves running and paused simulation state (2.8s)
+  ✓  32 e2e/ui02.spec.ts:19:3 › UI02 scenario visuals and camera layout 1366 (35.3s)
+  ✓  33 e2e/ui02.spec.ts:19:3 › UI02 scenario visuals and camera layout 1280 (33.9s)
+  ✓  34 e2e/ui02.spec.ts:19:3 › UI02 scenario visuals and camera layout 390 (32.6s)
+  ✓  35 e2e/ui02.spec.ts:155:1 › UI02 camera and context recovery preserve narration/time and release WebGL resources (3.5s)
+  ✓  36 e2e/ui02.spec.ts:296:1 › UI02 unavailable WebGL preserves controls and real backend diagnosis (3.7s)
+  ✓  37 e2e/ui03.spec.ts:13:3 › UI03 investigation across six scenarios at 1366 (36.1s)
+  ✓  38 e2e/ui03.spec.ts:13:3 › UI03 investigation across six scenarios at 1280 (34.7s)
+  ✓  39 e2e/ui03.spec.ts:13:3 › UI03 investigation across six scenarios at 390 (31.6s)
+  ✓  40 e2e/ui03.spec.ts:152:1 › UI03 paused guide selection draws and releases a historical marker without domain side effects (2.8s)
+  ✓  41 e2e/ui03.spec.ts:301:1 › UI03 invalid backend FK suppresses spatial highlighting but keeps complete evidence (7.0s)
+  ✓  42 e2e/ui03.spec.ts:328:1 › UI03 WebGL unavailable retains selectable evidence and text inspector (3.5s)
+
+
+  1) e2e/ui01.spec.ts:44:3 › UI01 viewport and six real presentation states 1366 ───────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('canvas')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('canvas') with timeout 5000ms
+      - waiting for locator('canvas')
+
+
+      48 |     await page.setViewportSize(size);
+      49 |     await page.goto("/");
+    > 50 |     await expect(page.locator("canvas")).toBeVisible();
+         |                                          ^
+      51 |     // Allow the unchanged lazy-loaded, demand-rendered Three scene to paint.
+      52 |     await page.waitForTimeout(1500);
+      53 |     const directory = "../docs/evidence/ui01/screenshots";
+        at /tmp/maintainai-ui03-ca7kg78z/frontend/e2e/ui01.spec.ts:50:42
+
+    Error Context: test-results/ui01-UI01-viewport-and-six-real-presentation-states-1366/error-context.md
+
+  1 failed
+    e2e/ui01.spec.ts:44:3 › UI01 viewport and six real presentation states 1366 ────────────────────
+  41 passed (9.4m)
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

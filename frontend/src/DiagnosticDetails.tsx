@@ -1,5 +1,6 @@
 import type { Diagnosis } from "./model";
 import { EvidenceReferences } from "./EvidenceReferences";
+import CandidateComparison from "./CandidateComparison";
 export default function DiagnosticDetails({
   result,
   busy,
@@ -74,48 +75,7 @@ export default function DiagnosticDetails({
                 />
               </div>
             ))}
-            {result.hypotheses.length > 0 && (
-              <>
-                <h3>PLAUSIBLE CAUSES</h3>
-                <p className="muted">
-                  Ordinal evidence ranking · not probabilities. Select a
-                  reference to inspect its measured timeline row.
-                </p>
-                {result.hypotheses.map((h, i) => (
-                  <details key={`${h.anomaly ?? ""}-${h.cause}`} open={i === 0}>
-                    <summary>
-                      <span>0{i + 1}</span> {h.cause}
-                    </summary>
-                    {h.support.length === 0 && (
-                      <p className="limited-support">
-                        Limited support: no supporting readings.
-                      </p>
-                    )}
-                    {h.contradiction.length > 0 && (
-                      <p className="limited-support">
-                        Contradictory evidence exists. This is not a confirmed
-                        cause.
-                      </p>
-                    )}
-                    <EvidenceReferences
-                      ids={h.support}
-                      timeline={result.timeline}
-                      label="Supports"
-                    />
-                    <EvidenceReferences
-                      ids={h.contradiction}
-                      timeline={result.timeline}
-                      label="Contradicts"
-                    />
-                    {h.anomaly && (
-                      <p className="muted">Related anomaly: {h.anomaly}</p>
-                    )}
-                    <b>OPERATOR CHECK</b>
-                    <p>{h.check}</p>
-                  </details>
-                ))}
-              </>
-            )}
+            <CandidateComparison result={result} />
           </>
         )}
       </div>

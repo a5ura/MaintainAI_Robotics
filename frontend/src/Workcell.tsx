@@ -18,7 +18,9 @@ import {
   type Overlays,
   type ComponentId,
 } from "./engineering";
-import { type Vec } from "./model";
+import { type Vec, type Evidence } from "./model";
+import EvidenceHighlight from "./EvidenceHighlight";
+import { historicalPosition } from "./evidenceSelection";
 import { Robot, BaseHousing } from "./RobotVisual";
 import { Workpiece, WorkcellEnvironment, FaultMarkers } from "./WorkcellScene";
 import {
@@ -126,7 +128,9 @@ export default function Workcell({
   overlays = NO_OVERLAYS,
   selected = null,
   onSelect,
+  historicalEvidence = null,
 }: {
+  historicalEvidence?: Evidence | null;
   t: number;
   drop?: boolean;
   scenario?: Scenario;
@@ -186,6 +190,7 @@ export default function Workcell({
       className="workcell-stage"
       data-testid="workcell-stage"
       data-view={view}
+      tabIndex={-1}
     >
       <div className="scene-render" ref={stage}>
         <div
@@ -243,6 +248,7 @@ export default function Workcell({
               />
               <Workpiece t={t} scenario={outcome} />
               <FaultMarkers t={t} scenario={outcome} />
+              <EvidenceHighlight row={historicalEvidence} />
               {engineering &&
                 overlays.frames &&
                 engineeringState(t).frames.map((f) => (
@@ -280,6 +286,25 @@ export default function Workcell({
           </>
         )}
       </div>
+      {historicalEvidence && (
+        <div
+          className="historical-badge"
+          data-testid="historical-marker"
+          data-position={
+            historicalPosition(historicalEvidence)?.join(",") ?? "unavailable"
+          }
+        >
+          Historical {historicalEvidence.id} ·{" "}
+          {Number.isFinite(historicalEvidence.t)
+            ? `${historicalEvidence.t.toFixed(1)}s`
+            : "time unavailable"}
+          <small>
+            {historicalPosition(historicalEvidence) && available && !lost
+              ? "Recorded TCP · live robot unchanged"
+              : "Spatial highlighting unavailable · inspect recorded text"}
+          </small>
+        </div>
+      )}
       <div
         className={`scene-status tone-${state.tone}`}
         data-testid="scene-status"
