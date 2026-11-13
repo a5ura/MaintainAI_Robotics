@@ -1,4 +1,8 @@
-# Development status — November 11, 2026 (America/New_York)
+# Development status — November 13, 2026 (UTC)
+
+## UI-02 implementation awaiting independent review — November 13, 2026 (UTC)
+
+Verified main baseline `53f6b83bfeb5bacbb93771e6a85b73383ab25845` includes merged UI-01 PR #12 and GD-01 PR #13. Branch `feature/ui02-workcell-visualization` implements the authorized procedural workcell refinement, evidence-grounded fault indicators and fixed camera presets. The 3R mathematics, scenarios, guide/narration, maintenance, backend, schemas and hosting configuration remain unchanged. See [UI-02 completion and verification](UI02_COMPLETION_REPORT.md). No merge or deployment; hosting gates remain in force.
 
 ## Current pre-B.2 checkpoint — November 11, 2026 (America/New_York)
 

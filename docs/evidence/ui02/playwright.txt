@@ -1,0 +1,48 @@
+
+Running 36 tests using 1 worker
+
+(node:14466) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 e2e/a2.spec.ts:3:1 › paged maintenance history preserves all events and an unsaved repair draft (4.9s)
+  ✓   2 e2e/b01.spec.ts:3:1 › conflict reload preserves repair/resolution drafts, uses refreshed version and clears drafts on ticket switch (3.7s)
+  ✓   3 e2e/cycle.spec.ts:2:1 › real normal and dropped-object cycles use FastAPI and display evidence (37.8s)
+  ✓   4 e2e/exports.spec.ts:11:1 › saved JSON and Markdown downloads include complete diagnosis/history and preserve every draft without maintenance writes (4.8s)
+  ✓   5 e2e/exports.spec.ts:113:1 › failed or concurrently changed exports create no partial file; manual Unicode Markdown/JSON work after retry (2.9s)
+  ✓   6 e2e/exports.spec.ts:198:1 › large Unicode saved evidence downloads intact as JSON and Markdown (5.5s)
+  ✓   7 e2e/gd01.spec.ts:10:3 › GD01 controls remain independent and responsive 1366 (4.3s)
+  ✓   8 e2e/gd01.spec.ts:10:3 › GD01 controls remain independent and responsive 1280 (4.0s)
+  ✓   9 e2e/gd01.spec.ts:10:3 › GD01 controls remain independent and responsive 390 (3.2s)
+  ✓  10 e2e/gd01.spec.ts:121:1 › GD01 real cycle and automatic save survive completion handoff (22.3s)
+  ✓  11 e2e/gd01.spec.ts:194:3 › GD01 missing voices fall back and recover after discovery (1.8s)
+  ✓  12 e2e/gd01.spec.ts:194:3 › GD01 remote-only voices fall back and recover after discovery (1.7s)
+  ✓  13 e2e/gd01.spec.ts:220:1 › GD01 denied speech, hidden tab and manual navigation never restart stale narration (2.2s)
+  ✓  14 e2e/m2.spec.ts:3:1 › positioning error, diagnosis ticket, concurrent edit recovery and durable history (18.1s)
+  ✓  15 e2e/m2.spec.ts:109:1 › vision failure is unreliable verification and not physical loss (14.4s)
+  ✓  16 e2e/m2.spec.ts:134:1 › unexpected stop freezes displayed robot TCP and clock at interruption (8.8s)
+  ✓  17 e2e/m2.spec.ts:158:1 › random failure replays same evidence for explicit seed (26.4s)
+  ✓  18 e2e/m2.spec.ts:184:1 › separate browser simulations remain independent across reset and scenario changes (16.1s)
+  ✓  19 e2e/m2.spec.ts:221:1 › manual ticket UI and initial API error recovery (2.2s)
+  ✓  20 e2e/m3.spec.ts:11:1 › guided live failure, evidence, checks and real idempotent maintenance ticket (24.2s)
+  ✓  21 e2e/m3.spec.ts:96:1 › guided reset, skip and manual takeover preserve real results without auto-writing (6.9s)
+  ✓  22 e2e/m3.spec.ts:134:1 › engineering model values, real 3D component picking and keyboard navigation (4.0s)
+  ✓  23 e2e/m3.spec.ts:228:1 › guided backend error recovers through real API retry (2.1s)
+  ✓  24 e2e/m3.spec.ts:266:1 › 3D lazy-load error is contained and application reload recovers (1.7s)
+  ✓  25 e2e/m3.spec.ts:308:1 › guided pause/reset stays isolated from another browser simulation (10.8s)
+  ✓  26 e2e/m3.spec.ts:355:1 › manual diagnosis ticket takeover cancels the remaining guided save (8.0s)
+  ✓  27 e2e/m3.spec.ts:414:1 › committed but pending guided response cannot replace manual ticket selection or drafts (7.3s)
+  ✓  28 e2e/ui01.spec.ts:44:3 › UI01 viewport and six real presentation states 1366 (20.7s)
+  ✓  29 e2e/ui01.spec.ts:44:3 › UI01 viewport and six real presentation states 1280 (20.6s)
+  ✓  30 e2e/ui01.spec.ts:44:3 › UI01 viewport and six real presentation states 390 (18.1s)
+  ✓  31 e2e/ui01.spec.ts:186:1 › UI01 resize preserves running and paused simulation state (3.6s)
+  ✓  32 e2e/ui02.spec.ts:19:3 › UI02 scenario visuals and camera layout 1366 (1.6m)
+  ✓  33 e2e/ui02.spec.ts:19:3 › UI02 scenario visuals and camera layout 1280 (34.6s)
+  ✓  34 e2e/ui02.spec.ts:19:3 › UI02 scenario visuals and camera layout 390 (32.6s)
+  ✓  35 e2e/ui02.spec.ts:155:1 › UI02 camera and context recovery preserve narration/time and release WebGL resources (4.6s)
+  ✓  36 e2e/ui02.spec.ts:239:1 › UI02 unavailable WebGL preserves controls and real backend diagnosis (3.8s)
+
+  36 passed (8.1m)
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

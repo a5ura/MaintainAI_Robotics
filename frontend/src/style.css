@@ -1002,3 +1002,29 @@ input:focus-visible {
 .guided-banner .narration-status { color: #c4d6df; font-size: 12px; overflow-wrap: anywhere; }
 .guided-banner .narration-text { color: #d9e6ec; font-size: 13px; overflow-wrap: anywhere; }
 @media (max-width: 600px) { .narration-actions button { min-height: 44px; flex: 1 1 auto; } }
+
+/* UI-02: camera and scene annotations are local presentation controls. */
+.workcell-stage { position: relative; height: 100%; width: 100%; }
+.scene-render { position: absolute; inset: 0; }
+.camera-toolbar { position: absolute; right: 12px; top: 10px; z-index: 2; display: flex; gap: 5px; }
+.camera-toolbar button { min-height: 32px; padding: 6px 9px; font-size: 12px; background: #142b36ed; }
+.camera-toolbar button[aria-pressed="true"] { border-color: #99d7c8; color: #d5fff0; }
+.fixture-label { position: absolute; transform: translate(-50%, -100%); pointer-events: none; font: 10px/1.2 Arial,sans-serif; letter-spacing: .8px; color: #d5e4ec; padding: 4px 6px; border: 1px solid #57717f; background: #142532db; border-radius: 3px; }
+.destination-label { border-color: #6faaa0; color: #b7e8d8; }
+.scene-status { position: absolute; right: 12px; bottom: 12px; max-width: 44%; padding: 8px 10px; background: #11212de8; border-left: 2px solid #7598a7; pointer-events: none; }
+.scene-status > span { display: block; font-size: 8px; letter-spacing: .8px; color: #a6c0cc; }
+.scene-status strong { display: block; font-size: 11px; line-height: 1.4; font-weight: 600; }
+.scene-status p, .scene-status small { display: block; font-size: 10px; line-height: 1.4; margin: 3px 0 0; color: #c6d7df; }
+.scene-status.tone-normal { border-color: #8ad7b9; }.scene-status.tone-warning { border-color: #e6bc71; }.scene-status.tone-fault { border-color: #ff9f86; }
+.context-fallback { position: absolute; inset: 65px 12px 65px; background: #14232ff5; padding: 14px; border: 1px solid #8eaaa9; z-index: 3; font-size: 13px; }
+@media (max-width: 600px) {
+  .camera-toolbar { left: 10px; right: 10px; gap: 6px; }
+  .camera-toolbar button { flex: 1; min-height: 44px; font-size: 12px; padding: 7px; }
+  .operations-main .viewport-label { top: auto; bottom: 12px; left: auto; right: 12px; max-width: 110px; font-size: 8px; text-align: right; }
+  .operations-main .viewport { height: 390px; }
+  .scene-render { bottom: 110px; }
+  .operations-main .tcp, .operations-main .viewport-label { bottom: 122px; }
+  .scene-status { left: 0; right: 0; bottom: 0; height: 110px; box-sizing: border-box; max-width: none; padding: 12px; border-top: 1px solid #36535b; }
+  .scene-status > span { font-size: 8px; }.scene-status strong { font-size: 12px; }.scene-status p, .scene-status small { font-size: 11px; }
+  .fixture-label { font-size: 8px; padding: 3px 4px; }
+}

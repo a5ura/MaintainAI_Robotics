@@ -1,0 +1,24 @@
+
+> maintainai-robotics@0.1.0 test
+> vitest run src/Workcell.test.tsx src/workcellVisual.test.tsx
+
+
+ RUN  v3.1.3 /workspace/MaintainAI_Robotics/frontend
+
+ ✓ src/workcellVisual.test.tsx (21 tests) 1161ms
+   ✓ both camera presets frame the full existing sweep at desktop and mobile aspects  1043ms
+stderr | src/Workcell.test.tsx
+WARNING: Multiple instances of Three.js being imported.
+
+ ✓ src/Workcell.test.tsx (3 tests) 88ms
+
+ Test Files  2 passed (2)
+      Tests  24 passed (24)
+   Start at  03:06:54
+   Duration  3.00s (transform 289ms, setup 0ms, collect 768ms, tests 1.25s, environment 416ms, prepare 147ms)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

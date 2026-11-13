@@ -1,0 +1,27 @@
+Reviewed head: 0670f9d120c49d0d887ab268e7d8d3bc2b1745fc
+Protected diff: EMPTY
+backend
+postgres
+cloudflare
+fixtures
+scripts
+render.yaml
+frontend/package.json
+frontend/package-lock.json
+frontend/src/model.ts
+frontend/src/scenarios.ts
+frontend/src/engineering.ts
+frontend/src/App.tsx
+frontend/src/OperationsWorkspace.tsx
+frontend/src/useGuidedDemo.ts
+frontend/src/guided.ts
+frontend/src/useGuideNarration.ts
+frontend/src/guideNarration.ts
+frontend/src/Maintenance.tsx
+frontend/src/ticketReports.ts
+
+Final assets: disk = before browser suite = served bytes
+ca7f4ae079f5c512348c7e07c3d0c9c0f1da8779365e0b9ef7ca2cbcf38f0da3  frontend/dist/assets/Maintenance-Dj8zJKzF.js
+765f59afbe0b8ae13181c0d44283ce942d01a84513f8f71b4e8d1bdab2d33a0a  frontend/dist/assets/Workcell-Bvi6opWT.js
+b35088243a57944b5c85e6cd275b33a9fa39bce18dc6e3dd3e326e302349ad57  frontend/dist/assets/index-DpDfnCC6.js
+67c0659eadca83337ff5288de3f17ad4c56631f48a7bdb2a5f43e24dac75b566  frontend/dist/assets/index-y5jg_Vqc.css

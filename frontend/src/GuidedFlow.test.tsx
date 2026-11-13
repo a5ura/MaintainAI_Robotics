@@ -95,6 +95,14 @@ it("live guide pauses, skips through real payload request, then saves a linked t
     "T-guide",
   );
   expect(speech.spoken.at(-1)?.text).toContain("technician review");
+  // Wait for the lazy Maintenance handoff and its initial reads before measuring
+  // whether narration controls cause any additional requests.
+  await act(async () => {
+    await import("./Maintenance");
+  });
+  expect(
+    screen.getByRole("region", { name: "Ticket details" }),
+  ).toHaveTextContent("T-guide");
   const count = speech.spoken.length;
   const apiCount = fetchMock.mock.calls.length;
   fireEvent.click(screen.getByRole("button", { name: "Replay narration" }));

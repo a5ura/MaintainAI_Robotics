@@ -1,0 +1,70 @@
+
+Running 36 tests using 1 worker
+
+(node:20409) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 e2e/a2.spec.ts:3:1 › paged maintenance history preserves all events and an unsaved repair draft (4.5s)
+  ✓   2 e2e/b01.spec.ts:3:1 › conflict reload preserves repair/resolution drafts, uses refreshed version and clears drafts on ticket switch (3.1s)
+  ✘   3 e2e/cycle.spec.ts:2:1 › real normal and dropped-object cycles use FastAPI and display evidence (1.1m)
+(node:20708) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   4 e2e/exports.spec.ts:11:1 › saved JSON and Markdown downloads include complete diagnosis/history and preserve every draft without maintenance writes (48.0s)
+  ✓   5 e2e/exports.spec.ts:113:1 › failed or concurrently changed exports create no partial file; manual Unicode Markdown/JSON work after retry (3.6s)
+  ✓   6 e2e/exports.spec.ts:198:1 › large Unicode saved evidence downloads intact as JSON and Markdown (5.8s)
+  ✓   7 e2e/gd01.spec.ts:10:3 › GD01 controls remain independent and responsive 1366 (4.1s)
+  ✓   8 e2e/gd01.spec.ts:10:3 › GD01 controls remain independent and responsive 1280 (4.0s)
+  ✓   9 e2e/gd01.spec.ts:10:3 › GD01 controls remain independent and responsive 390 (3.0s)
+  ✓  10 e2e/gd01.spec.ts:121:1 › GD01 real cycle and automatic save survive completion handoff (21.9s)
+  ✓  11 e2e/gd01.spec.ts:194:3 › GD01 missing voices fall back and recover after discovery (1.5s)
+  ✓  12 e2e/gd01.spec.ts:194:3 › GD01 remote-only voices fall back and recover after discovery (1.7s)
+  ✓  13 e2e/gd01.spec.ts:220:1 › GD01 denied speech, hidden tab and manual navigation never restart stale narration (1.9s)
+  ✓  14 e2e/m2.spec.ts:3:1 › positioning error, diagnosis ticket, concurrent edit recovery and durable history (16.9s)
+  ✓  15 e2e/m2.spec.ts:109:1 › vision failure is unreliable verification and not physical loss (14.0s)
+  ✓  16 e2e/m2.spec.ts:134:1 › unexpected stop freezes displayed robot TCP and clock at interruption (8.6s)
+  ✓  17 e2e/m2.spec.ts:158:1 › random failure replays same evidence for explicit seed (25.7s)
+  ✓  18 e2e/m2.spec.ts:184:1 › separate browser simulations remain independent across reset and scenario changes (15.4s)
+  ✓  19 e2e/m2.spec.ts:221:1 › manual ticket UI and initial API error recovery (2.4s)
+  ✓  20 e2e/m3.spec.ts:11:1 › guided live failure, evidence, checks and real idempotent maintenance ticket (49.2s)
+  ✓  21 e2e/m3.spec.ts:96:1 › guided reset, skip and manual takeover preserve real results without auto-writing (8.5s)
+  ✓  22 e2e/m3.spec.ts:134:1 › engineering model values, real 3D component picking and keyboard navigation (13.7s)
+  ✓  23 e2e/m3.spec.ts:228:1 › guided backend error recovers through real API retry (10.5s)
+  ✓  24 e2e/m3.spec.ts:266:1 › 3D lazy-load error is contained and application reload recovers (5.2s)
+  ✓  25 e2e/m3.spec.ts:308:1 › guided pause/reset stays isolated from another browser simulation (21.5s)
+  ✓  26 e2e/m3.spec.ts:355:1 › manual diagnosis ticket takeover cancels the remaining guided save (7.8s)
+  ✓  27 e2e/m3.spec.ts:414:1 › committed but pending guided response cannot replace manual ticket selection or drafts (6.8s)
+  ✓  28 e2e/ui01.spec.ts:44:3 › UI01 viewport and six real presentation states 1366 (19.3s)
+  ✓  29 e2e/ui01.spec.ts:44:3 › UI01 viewport and six real presentation states 1280 (18.8s)
+  ✓  30 e2e/ui01.spec.ts:44:3 › UI01 viewport and six real presentation states 390 (17.4s)
+  ✓  31 e2e/ui01.spec.ts:186:1 › UI01 resize preserves running and paused simulation state (2.6s)
+  ✓  32 e2e/ui02.spec.ts:19:3 › UI02 scenario visuals and camera layout 1366 (34.0s)
+  ✓  33 e2e/ui02.spec.ts:19:3 › UI02 scenario visuals and camera layout 1280 (33.5s)
+  ✓  34 e2e/ui02.spec.ts:19:3 › UI02 scenario visuals and camera layout 390 (29.9s)
+  ✓  35 e2e/ui02.spec.ts:155:1 › UI02 camera and context recovery preserve narration/time and release WebGL resources (3.1s)
+  ✓  36 e2e/ui02.spec.ts:296:1 › UI02 unavailable WebGL preserves controls and real backend diagnosis (3.7s)
+
+
+  1) e2e/cycle.spec.ts:2:1 › real normal and dropped-object cycles use FastAPI and display evidence
+
+    Test timeout of 60000ms exceeded.
+
+    Error: page.setViewportSize: Test timeout of 60000ms exceeded.
+
+      58 |     fullPage: true,
+      59 |   });
+    > 60 |   await page.setViewportSize({ width: 390, height: 844 });
+         |              ^
+      61 |   await page.screenshot({
+      62 |     path: "../docs/m3-regression-drop-mobile.png",
+      63 |     fullPage: true,
+        at /tmp/maintainai-ui02-review-w1qjmmls/frontend/e2e/cycle.spec.ts:60:14
+
+    Error Context: test-results/cycle-real-normal-and-drop-47875-astAPI-and-display-evidence/error-context.md
+
+  1 failed
+    e2e/cycle.spec.ts:2:1 › real normal and dropped-object cycles use FastAPI and display evidence ─
+  35 passed (9.5m)
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice
