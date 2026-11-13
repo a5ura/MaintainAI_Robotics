@@ -101,26 +101,6 @@ export default function OperationsWorkspace({
               ))}
             </div>
           )}
-          {drop && clock.t >= 6 && clock.t < 12 && (
-            <div className="outcome-banner" role="status">
-              OBJECT PRESENCE LOST · GRIP STILL COMMANDED
-            </div>
-          )}
-          {scenario === "stop" && clock.t >= 6 && (
-            <div className="outcome-banner" role="status">
-              PROTECTIVE STOP · CYCLE INTERRUPTED
-            </div>
-          )}
-          {scenario === "vision" && clock.t >= 12 && (
-            <div className="outcome-banner" role="status">
-              CAMERA TIMEOUT · VERIFICATION UNAVAILABLE
-            </div>
-          )}
-          {scenario === "position" && clock.t >= 12 && (
-            <div className="outcome-banner" role="status">
-              PLACEMENT OFFSET · INDEPENDENT OBSERVATION
-            </div>
-          )}
           <div className="viewport-label">SIMULATION • NOT LIVE HARDWARE</div>
           <div className="tcp">
             TCP / WORLD [m]
@@ -133,7 +113,7 @@ export default function OperationsWorkspace({
           <span
             className={drop && clock.t >= 6 && clock.t < 10 ? "fault" : "good"}
           >
-            OBJECT / {sensor.object_present ? "PRESENT" : "ABSENT"}
+            Object at gripper / {sensor.object_present ? "PRESENT" : "ABSENT"}
           </span>
           <span>VACUUM / {sensor.pressure_kpa} kPa</span>
         </div>

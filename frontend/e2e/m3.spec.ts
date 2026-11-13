@@ -3,7 +3,8 @@ import { test, expect } from "@playwright/test";
 test.beforeEach(async ({ page }) => {
   await speechMock(page);
 });
-import { PerspectiveCamera, Vector3 } from "three";
+import { Vector3 } from "three";
+import { viewCamera } from "../src/workcellView";
 import { writeFile } from "node:fs/promises";
 import { engineeringState } from "../src/engineering";
 
@@ -170,10 +171,7 @@ test("engineering model values, real 3D component picking and keyboard navigatio
   await expect(canvas).toBeVisible();
   await canvas.scrollIntoViewIfNeeded();
   const box = (await canvas.boundingBox())!;
-  const camera = new PerspectiveCamera(43, box.width / box.height, 0.1, 1000);
-  camera.position.set(5, 4.2, 6);
-  camera.lookAt(0.9, 0.5, 0);
-  camera.updateMatrixWorld();
+  const camera = viewCamera("overview", box.width / box.height);
   const point = new Vector3(0, 0.24, 0).project(camera);
   await page.mouse.click(
     box.x + ((point.x + 1) * box.width) / 2,

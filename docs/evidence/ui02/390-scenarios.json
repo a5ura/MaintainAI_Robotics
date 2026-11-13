@@ -1,0 +1,44 @@
+[
+  {
+    "selection": "normal",
+    "resolved": "normal",
+    "status": "normal",
+    "failure": null,
+    "id": "D-3e8ca7df29b6a5ef40649218"
+  },
+  {
+    "selection": "drop",
+    "resolved": "drop",
+    "status": "detected",
+    "failure": "Dropped object",
+    "id": "D-973774d225afd7785d537ddd"
+  },
+  {
+    "selection": "position",
+    "resolved": "position",
+    "status": "detected",
+    "failure": "Positioning error",
+    "id": "D-73b0b9f1722cb0a22de48abb"
+  },
+  {
+    "selection": "vision",
+    "resolved": "vision",
+    "status": "detected",
+    "failure": "Vision failure",
+    "id": "D-81af57ba8019819b440c7acf"
+  },
+  {
+    "selection": "stop",
+    "resolved": "stop",
+    "status": "detected",
+    "failure": "Unexpected robot stop",
+    "id": "D-fe7368cec52b1ca66510cefb"
+  },
+  {
+    "selection": "random",
+    "resolved": "vision",
+    "status": "detected",
+    "failure": "Vision failure",
+    "id": "D-81af57ba8019819b440c7acf"
+  }
+]
