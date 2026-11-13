@@ -1,0 +1,5 @@
+frontend/dist/index.html: OK
+frontend/dist/assets/Maintenance-BZKGVaio.js: OK
+frontend/dist/assets/Workcell-CjrOuD8e.js: OK
+frontend/dist/assets/index-BXaMw2YM.css: OK
+frontend/dist/assets/index-D-KJLEgm.js: OK

@@ -4,6 +4,7 @@ import GuidedBanner from "./GuidedBanner";
 import ViewBoundary from "./ViewBoundary";
 import { api } from "./api";
 import { useGuidedDemo } from "./useGuidedDemo";
+import { useGuideNarration } from "./useGuideNarration";
 import { NO_OVERLAYS, type ComponentId, type Overlays } from "./engineering";
 const Workcell = lazy(() => import("./Workcell"));
 const Maintenance = lazy(() => import("./Maintenance"));
@@ -99,11 +100,39 @@ export function App() {
       setView("maintenance");
     },
   });
+  const narration = useGuideNarration({
+    state: guide.state,
+    t: clock.t,
+    result,
+    backendError: error,
+  });
+  function startGuide() {
+    guide.start();
+    narration.start();
+  }
+  function pauseGuide() {
+    narration.pause();
+    guide.pause();
+  }
+  function resumeGuide() {
+    guide.resume();
+    narration.resume();
+  }
+  function skipGuide() {
+    narration.skip();
+    guide.skip();
+  }
+  function manualGuide() {
+    narration.stop();
+    guide.takeover();
+  }
   function reset() {
+    narration.stop();
     guide.stop();
     resetSimulation();
   }
   function openDiagnostics() {
+    narration.stop();
     setView("operations");
     setTimeout(() => {
       const section = document.getElementById("diagnostics");
@@ -116,18 +145,20 @@ export function App() {
   const guideBanner = (
     <GuidedBanner
       state={guide.state}
+      narration={narration}
       t={clock.t}
       result={result}
       backendError={error}
-      onPause={guide.pause}
-      onResume={guide.resume}
-      onReset={guide.start}
-      onSkip={guide.skip}
-      onManual={guide.takeover}
+      onPause={pauseGuide}
+      onResume={resumeGuide}
+      onReset={startGuide}
+      onSkip={skipGuide}
+      onManual={manualGuide}
       onRetry={guide.retry}
     />
   );
   function createTicket() {
+    narration.stop();
     guide.takeover();
     setInitialTicketId(undefined);
     setFromDiagnosis(true);
@@ -137,10 +168,12 @@ export function App() {
     <AppShell
       view={view}
       onOperations={() => {
+        narration.stop();
         if (guide.state) guide.takeover();
         setView("operations");
       }}
       onMaintenance={() => {
+        narration.stop();
         if (guide.state) guide.takeover();
         setInitialTicketId(undefined);
         setFromDiagnosis(false);
@@ -165,6 +198,7 @@ export function App() {
                 fromDiagnosis={fromDiagnosis}
                 runContext={`${SCENARIOS[scenario]} · seed ${seed}`}
                 onReturn={() => {
+                  narration.stop();
                   if (guide.state) guide.takeover();
                   setView("operations");
                 }}
@@ -203,15 +237,15 @@ export function App() {
             setSelection={setSelection}
             setSeed={setSeed}
             onStart={() => {
-              if (guide.state) guide.resume();
+              if (guide.state) resumeGuide();
               else setClock((c) => ({ ...c, running: true }));
             }}
             onPause={() => {
-              if (guide.state) guide.pause();
+              if (guide.state) pauseGuide();
               else setClock((c) => ({ ...c, running: false }));
             }}
             onReset={reset}
-            onGuide={guide.start}
+            onGuide={startGuide}
             canvas={
               <Workcell
                 t={clock.t}

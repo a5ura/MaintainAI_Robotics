@@ -1,4 +1,8 @@
+import { speechMock } from "./speechMock";
 import { test, expect } from "@playwright/test";
+test.beforeEach(async ({ page }) => {
+  await speechMock(page);
+});
 import { PerspectiveCamera, Vector3 } from "three";
 import { writeFile } from "node:fs/promises";
 import { engineeringState } from "../src/engineering";
@@ -311,6 +315,7 @@ test("guided pause/reset stays isolated from another browser simulation", async 
   const guided = await a.newPage(),
     manual = await b.newPage();
   try {
+    await speechMock(guided);
     await guided.goto("http://127.0.0.1:5173");
     await manual.goto("http://127.0.0.1:5173");
     await guided

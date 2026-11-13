@@ -994,3 +994,11 @@ input:focus-visible {
   .operations-main .panel-top span:last-child { font-size: 9px; }
   .summary-body .summary-outcome { font-size: 22px; }
 }
+
+/* GD-01: captions and controls remain available independently of speech. */
+.narration-panel { margin-top: 14px; padding: 12px 0; border-top: 1px solid #36535b; border-bottom: 1px solid #36535b; min-width: 0; }
+.narration-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.narration-actions button { min-height: 40px; padding: 8px 10px; font-size: 13px; }
+.guided-banner .narration-status { color: #c4d6df; font-size: 12px; overflow-wrap: anywhere; }
+.guided-banner .narration-text { color: #d9e6ec; font-size: 13px; overflow-wrap: anywhere; }
+@media (max-width: 600px) { .narration-actions button { min-height: 44px; flex: 1 1 auto; } }
