@@ -9,6 +9,7 @@ import {
   within,
 } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
+import { installSpeech } from "./testSpeech";
 import computed from "../../fixtures/guide-diagnosis.json";
 vi.mock("./Workcell", () => ({ default: () => <div>3D workcell</div> }));
 const { App } = await import("./App");
@@ -36,6 +37,7 @@ const detail = {
   history: [],
 };
 it("live guide pauses, skips through real payload request, then saves a linked ticket", async () => {
+  const speech = installSpeech();
   vi.useFakeTimers();
   const fetchMock = vi.fn().mockImplementation(async (url, options) => {
     if (String(url).endsWith("/diagnose")) return response(computed);
@@ -59,6 +61,11 @@ it("live guide pauses, skips through real payload request, then saves a linked t
     screen.queryByRole("region", { name: "Guided Demo" }),
   ).not.toBeInTheDocument();
   fireEvent.click(screen.getByRole("button", { name: "Start Guided Demo" }));
+  expect(speech.spoken).toHaveLength(1);
+  fireEvent.click(screen.getByRole("button", { name: "Replay narration" }));
+  fireEvent.click(screen.getByRole("button", { name: "Mute narration" }));
+  fireEvent.click(screen.getByRole("button", { name: "Unmute narration" }));
+  expect(fetchMock).not.toHaveBeenCalled();
   act(() => vi.advanceTimersByTime(1000));
   fireEvent.click(screen.getByRole("button", { name: "Pause demo" }));
   const value = screen.getByRole("progressbar").getAttribute("value");
@@ -84,6 +91,23 @@ it("live guide pauses, skips through real payload request, then saves a linked t
   const ticket = JSON.parse(posts[0][1].body);
   expect(ticket.diagnosis_id).toBe(computed.id);
   expect(ticket.request_id).toMatch(/^[0-9a-f-]{36}$/);
+  expect(screen.getByRole("region", { name: "Guided Demo" })).toHaveTextContent(
+    "T-guide",
+  );
+  expect(speech.spoken.at(-1)?.text).toContain("technician review");
+  const count = speech.spoken.length;
+  const apiCount = fetchMock.mock.calls.length;
+  fireEvent.click(screen.getByRole("button", { name: "Replay narration" }));
+  fireEvent.click(screen.getByRole("button", { name: "Mute narration" }));
+  fireEvent.click(screen.getByRole("button", { name: "Unmute narration" }));
+  await act(async () => {});
+  expect(speech.spoken).toHaveLength(count + 2);
+  expect(fetchMock).toHaveBeenCalledTimes(apiCount);
+  expect(
+    fetchMock.mock.calls.filter(
+      (c) => String(c[0]).endsWith("/tickets") && c[1].method === "POST",
+    ),
+  ).toHaveLength(1);
   expect(screen.getByRole("region", { name: "Guided Demo" })).toHaveTextContent(
     "T-guide",
   );

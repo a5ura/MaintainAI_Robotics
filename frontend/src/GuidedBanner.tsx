@@ -1,8 +1,10 @@
 import type { GuideState } from "./guided";
+import type { NarrationControls } from "./useGuideNarration";
 import type { Diagnosis } from "./model";
 import { EvidenceReferences } from "./EvidenceReferences";
 export default function GuidedBanner({
   state,
+  narration,
   t,
   result,
   backendError,
@@ -14,6 +16,7 @@ export default function GuidedBanner({
   onRetry,
 }: {
   state: GuideState;
+  narration: NarrationControls;
   t: number;
   result: Diagnosis | null;
   backendError: string;
@@ -99,6 +102,45 @@ export default function GuidedBanner({
           <button onClick={onRetry}>Retry demo ticket save</button>
         </div>
       )}
+      <div
+        className="narration-panel"
+        role="group"
+        aria-label="Voice narration"
+      >
+        <div className="narration-actions">
+          <button onClick={narration.toggleMute} aria-pressed={narration.muted}>
+            {narration.muted ? "Unmute narration" : "Mute narration"}
+          </button>
+          <button
+            onClick={narration.replay}
+            disabled={narration.muted || !narration.supported}
+          >
+            Replay narration
+          </button>
+        </div>
+        <p className="narration-status" aria-live="polite">
+          {narration.status === "unavailable"
+            ? "Text-only · no local English voice available."
+            : narration.status === "error"
+              ? "Voice unavailable · text remains available. Use Replay to retry."
+              : narration.status === "muted"
+                ? "Narration muted · text remains available."
+                : narration.status === "paused"
+                  ? "Narration paused · Replay reads this cue without resuming the demo."
+                  : narration.status === "stopped"
+                    ? "Narration stopped · use Replay to continue."
+                    : narration.status === "speaking"
+                      ? "Narration speaking"
+                      : "Narration ready"}
+          {narration.voiceName &&
+          !["unavailable", "error"].includes(narration.status)
+            ? ` · ${narration.voiceName}`
+            : ""}
+        </p>
+        <p className="narration-text">
+          <b>Narration text:</b> {narration.text}
+        </p>
+      </div>
       <div className="guide-controls">
         {state.paused ? (
           <button onClick={onResume}>Resume demo</button>

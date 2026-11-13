@@ -1,4 +1,8 @@
+import { speechMock } from "./speechMock";
 import { test, expect, type Page } from "@playwright/test";
+test.beforeEach(async ({ page }) => {
+  await speechMock(page);
+});
 import { mkdir, writeFile } from "node:fs/promises";
 
 const sizes = [
