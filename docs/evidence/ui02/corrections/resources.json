@@ -1,0 +1,72 @@
+{
+  "environment": "Cloud Chromium / software WebGL; not Windows GPU/FPS",
+  "before": {
+    "contexts": 2,
+    "renderer": {
+      "id": 2,
+      "liveBuffers": 110,
+      "createdBuffers": 110,
+      "drawCalls": 224,
+      "triangles": 10400
+    },
+    "liveBuffers": 110,
+    "createdBuffers": 110,
+    "deletedBuffers": 0,
+    "lastFrame": {
+      "calls": 28,
+      "triangles": 1300
+    }
+  },
+  "after": {
+    "contexts": 2,
+    "renderer": {
+      "id": 2,
+      "liveBuffers": 110,
+      "createdBuffers": 110,
+      "drawCalls": 812,
+      "triangles": 37700
+    },
+    "liveBuffers": 110,
+    "createdBuffers": 110,
+    "deletedBuffers": 0,
+    "lastFrame": {
+      "calls": 28,
+      "triangles": 1300
+    }
+  },
+  "recovered": {
+    "contexts": 3,
+    "renderer": {
+      "id": 3,
+      "liveBuffers": 110,
+      "createdBuffers": 110,
+      "drawCalls": 28,
+      "triangles": 1300
+    },
+    "liveBuffers": 110,
+    "createdBuffers": 220,
+    "deletedBuffers": 0,
+    "lastFrame": {
+      "calls": 28,
+      "triangles": 1300
+    }
+  },
+  "renderingErrors": [],
+  "released": {
+    "contexts": 3,
+    "renderer": {
+      "id": 3,
+      "liveBuffers": 0,
+      "createdBuffers": 110,
+      "drawCalls": 28,
+      "triangles": 1300
+    },
+    "liveBuffers": 0,
+    "createdBuffers": 220,
+    "deletedBuffers": 110,
+    "lastFrame": {
+      "calls": 28,
+      "triangles": 1300
+    }
+  }
+}

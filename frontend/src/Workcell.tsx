@@ -173,15 +173,14 @@ export default function Workcell({
     };
   }
   const legacy =
-    state.marker === "loss"
-      ? "OBJECT PRESENCE LOST · GRIP STILL COMMANDED"
-      : state.marker === "stop"
-        ? "PROTECTIVE STOP · CYCLE INTERRUPTED"
-        : state.marker === "vision"
-          ? "CAMERA TIMEOUT · VERIFICATION UNAVAILABLE"
-          : state.marker === "offset"
-            ? "PLACEMENT OFFSET · INDEPENDENT OBSERVATION"
-            : null;
+    state.headline ??
+    (state.marker === "stop"
+      ? "PROTECTIVE STOP · CYCLE INTERRUPTED"
+      : state.marker === "vision"
+        ? "CAMERA TIMEOUT · VERIFICATION UNAVAILABLE"
+        : state.marker === "offset"
+          ? "PLACEMENT OFFSET · INDEPENDENT OBSERVATION"
+          : null);
   return (
     <div
       className="workcell-stage"

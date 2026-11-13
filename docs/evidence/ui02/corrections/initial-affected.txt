@@ -1,0 +1,63 @@
+
+> maintainai-robotics@0.1.0 test
+> vitest run src/Workcell.test.tsx src/workcellVisual.test.tsx
+
+
+ RUN  v3.1.3 /workspace/MaintainAI_Robotics/frontend
+
+ ❯ src/workcellVisual.test.tsx (21 tests | 1 failed) 59324ms
+   ✓ actual 3R joint frames and TCP retain the published independent fixture transforms  5573ms
+   ✓ rendered part stays at source, follows held TCP, and releases at the published destination 12ms
+   ✓ rendered loss/landing and positioning discrepancy retain their existing world positions 1ms
+   ✓ protective stop keeps the rendered part at the recorded interruption position 1ms
+   ✓ markers reflect normal at 0 without a root-cause claim 1ms
+   ✓ markers reflect normal at 3 without a root-cause claim 0ms
+   ✓ markers reflect normal at 10 without a root-cause claim 0ms
+   ✓ markers reflect normal at 12 without a root-cause claim 0ms
+   ✓ markers reflect drop at 5 without a root-cause claim 0ms
+   ✓ markers reflect drop at 6 without a root-cause claim 0ms
+   ✓ markers reflect drop at 12 without a root-cause claim 0ms
+   ✓ markers reflect position at 10 without a root-cause claim 0ms
+   ✓ markers reflect position at 12 without a root-cause claim 0ms
+   ✓ markers reflect vision at 11 without a root-cause claim 0ms
+   ✓ markers reflect vision at 12 without a root-cause claim 0ms
+   ✓ markers reflect stop at 6 without a root-cause claim 0ms
+   ✓ vision timeout preserves the physical part and labels camera uncertainty 0ms
+   × both camera presets frame the full existing sweep at desktop and mobile aspects 52507ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   ✓ procedural default and fault scenes stay within a modest mesh budget 14ms
+   ✓ seeded visualization consumes the resolved scenario without another random draw 8ms
+   ✓ pre-pick annotations do not claim a release or verification 0ms
+stderr | src/Workcell.test.tsx
+WARNING: Multiple instances of Three.js being imported.
+
+ ✓ src/Workcell.test.tsx (3 tests) 749ms
+   ✓ displays the historical loss headline at 6 seconds  659ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/workcellVisual.test.tsx > both camera presets frame the full existing sweep at desktop and mobile aspects
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/workcellVisual.test.tsx:154:1
+    152|   );
+    153| });
+    154| it("both camera presets frame the full existing sweep at desktop and m…
+       | ^
+    155|   for (const aspect of [848 / 348, 792 / 300, 364 / 280])
+    156|     for (const view of ["overview", "inspection"] as const) {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 23 passed (24)
+   Start at  03:05:08
+   Duration  77.08s (transform 3.71s, setup 0ms, collect 7.31s, tests 60.07s, environment 7.52s, prepare 915ms)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

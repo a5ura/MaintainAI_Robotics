@@ -1,0 +1,44 @@
+
+> maintainai-robotics@0.1.0 test
+> vitest run
+
+
+ RUN  v3.1.3 /workspace/MaintainAI_Robotics/frontend
+
+ ✓ src/Maintenance.test.tsx (10 tests) 1640ms
+   ✓ loads another incident page using the last record cursor  867ms
+ ✓ src/ticketReports.test.tsx (20 tests) 2077ms
+   ✓ downloads complete saved diagnosis/evidence and all 450 history events, with public fields only  1051ms
+   ✓ preserves every unsaved form draft and status while exporting saved records  547ms
+ ✓ src/GuidedFlow.test.tsx (6 tests) 846ms
+   ✓ live guide pauses, skips through real payload request, then saves a linked ticket  426ms
+ ✓ src/useGuideNarration.test.tsx (18 tests) 78ms
+ ✓ src/InvestigationSummary.test.tsx (9 tests) 259ms
+ ✓ src/App.test.tsx (3 tests) 532ms
+   ✓ Start, Pause, Reset preserve simulation lifecycle  324ms
+ ✓ src/GuidedBanner.test.tsx (2 tests) 132ms
+ ✓ src/EvidenceReferences.test.tsx (3 tests) 87ms
+ ✓ src/DiagnosticDetails.test.tsx (1 test) 137ms
+stderr | src/Workcell.test.tsx
+WARNING: Multiple instances of Three.js being imported.
+
+ ✓ src/Workcell.test.tsx (3 tests) 64ms
+ ✓ src/workcellVisual.test.tsx (21 tests) 1152ms
+   ✓ both camera presets frame the full existing sweep at desktop and mobile aspects  1093ms
+ ✓ src/model.test.tsx (8 tests) 261ms
+ ✓ src/guideNarration.test.ts (12 tests) 4ms
+ ✓ src/scenarios.test.ts (9 tests) 36ms
+ ✓ src/guided.test.ts (4 tests) 4ms
+ ✓ src/engineering.test.ts (3 tests) 125ms
+ ✓ src/api.test.ts (2 tests) 5ms
+
+ Test Files  17 passed (17)
+      Tests  134 passed (134)
+   Start at  03:07:03
+   Duration  17.81s (transform 617ms, setup 0ms, collect 2.74s, tests 7.44s, environment 3.84s, prepare 1.13s)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

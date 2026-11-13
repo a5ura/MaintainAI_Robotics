@@ -1,7 +1,14 @@
-import { scenarioSample, type Scenario } from "./scenarios";
+import { cyclePayload, scenarioSample, type Scenario } from "./scenarios";
 import type { Vec } from "./model";
 import { LOSS, SOURCE, TARGET } from "./workcellView";
+// Reuse the first recorded present-to-absent transition; no second event clock.
+const lossEvent = cyclePayload("drop").samples.find(
+  (row, index, rows) =>
+    index > 0 && rows[index - 1].object_present && !row.object_present,
+)!;
+const lossCommand = lossEvent.grip_command ? "HOLD" : "RELEASE";
 export type SceneIndicator = {
+  headline?: string;
   tone: "neutral" | "normal" | "warning" | "fault";
   text: string;
   note: string;
@@ -34,12 +41,13 @@ export function workcellState(t: number, scenario: Scenario): SceneIndicator {
       marker: "stop",
       point: LOSS,
     };
-  if (scenario === "drop" && t >= 6)
+  if (scenario === "drop" && t >= lossEvent.t)
     return {
       ...base,
       tone: "fault",
-      text: "Presence lost · 6.0 s",
-      note: "HOLD remains commanded at loss · cause requires verification",
+      headline: `PRESENCE LOST AT ${lossEvent.t.toFixed(1)}s · ${lossCommand} COMMANDED AT LOSS`,
+      text: `Presence lost · ${lossEvent.t.toFixed(1)} s`,
+      note: `${lossCommand} was commanded at loss · cause requires verification`,
       marker: "loss",
       point: LOSS,
     };

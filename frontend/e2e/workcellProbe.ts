@@ -4,6 +4,13 @@ declare global {
     __ui02GPU: {
       read: () => {
         contexts: number;
+        renderer: {
+          id: number;
+          liveBuffers: number;
+          createdBuffers: number;
+          drawCalls: number;
+          triangles: number;
+        } | null;
         liveBuffers: number;
         createdBuffers: number;
         deletedBuffers: number;
@@ -21,6 +28,8 @@ export async function workcellProbe(page: Page) {
         buffers: Set<WebGLBuffer>;
         created: number;
         deleted: number;
+        drawCalls: number;
+        triangles: number;
       }[] = [];
     const frames = new Map<number, { calls: number; triangles: number }>();
     let stamp = 0;
@@ -44,6 +53,8 @@ export async function workcellProbe(page: Page) {
           buffers: new Set<WebGLBuffer>(),
           created: 0,
           deleted: 0,
+          drawCalls: 0,
+          triangles: 0,
         };
         records.push(record);
         const create = gl.createBuffer.bind(gl),
@@ -62,6 +73,8 @@ export async function workcellProbe(page: Page) {
         };
         this.addEventListener("webglcontextlost", () => record.buffers.clear());
         function count(mode: number, n: number) {
+          record.drawCalls++;
+          if (mode === 4) record.triangles += n / 3;
           const key = stamp || performance.now();
           let frame = frames.get(key);
           if (!frame) {
@@ -88,6 +101,15 @@ export async function workcellProbe(page: Page) {
     window.__ui02GPU = {
       read: () => ({
         contexts: records.length,
+        renderer: records.length
+          ? {
+              id: records.length,
+              liveBuffers: records.at(-1)!.buffers.size,
+              createdBuffers: records.at(-1)!.created,
+              drawCalls: records.at(-1)!.drawCalls,
+              triangles: records.at(-1)!.triangles,
+            }
+          : null,
         liveBuffers: records.reduce((sum, r) => sum + r.buffers.size, 0),
         createdBuffers: records.reduce((sum, r) => sum + r.created, 0),
         deletedBuffers: records.reduce((sum, r) => sum + r.deleted, 0),

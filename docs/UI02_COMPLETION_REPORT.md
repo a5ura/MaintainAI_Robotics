@@ -2,6 +2,58 @@
 
 Implementation for independent Code Review. No merge or deployment performed.
 
+## PR #14 targeted review corrections — November 13, 2026 (UTC)
+
+Before editing, verified a clean workspace on `feature/ui02-workcell-visualization` and fetched PR #14 metadata: open, base `main`, head exactly `0670f9d120c49d0d887ab268e7d8d3bc2b1745fc`. Corrections remain on that existing branch; no unrelated work was present or removed.
+
+### Historical loss headline
+
+`workcellState.ts` derives the loss timestamp and command from the first recorded present-to-absent transition in the existing `cyclePayload("drop").samples`. The selection is computed once; it does not introduce a second simulation clock, RNG draw, request or scenario model. Workcell displays that presentation headline. Secondary copy also derives the event timestamp/command and uses past tense.
+
+| Simulation time | Existing current grip command (unchanged) | Before headline | After headline |
+| --- | --- | --- | --- |
+| 6 s | HOLD | OBJECT PRESENCE LOST · GRIP STILL COMMANDED | PRESENCE LOST AT 6.0s · HOLD COMMANDED AT LOSS |
+| 10 s | RELEASE | OBJECT PRESENCE LOST · GRIP STILL COMMANDED | PRESENCE LOST AT 6.0s · HOLD COMMANDED AT LOSS |
+| 12 s | RELEASE | OBJECT PRESENCE LOST · GRIP STILL COMMANDED | PRESENCE LOST AT 6.0s · HOLD COMMANDED AT LOSS |
+
+Corrected 12 s captures: [1366×768](evidence/ui02/corrections/1366-drop.png), [1280×720](evidence/ui02/corrections/1280-drop.png), [390×844](evidence/ui02/corrections/390-drop.png).
+
+Three new DOM regression cases render the real Workcell at these timestamps and assert the exact `<strong>` headline, not secondary text. They isolate the DOM through the existing no-WebGL path and also check that the underlying current grip command still changes at 10 s. All three failed with the reviewed implementation and pass after the correction. The existing M3 browser expectation now uses the corrected headline. `OperationsWorkspace.tsx` and its sensor strip are unchanged by this correction.
+
+### WebGL recovery proof
+
+The test-only WebGL probe now reports a renderer/context ID, live/created buffers, draw calls and triangles for the latest context, separately from aggregate counters. Recovery asserts:
+
+- The old canvas is detached; exactly one replacement canvas exists and is visible.
+- The replacement renderer has a new context ID, live and created buffer counts matching the initialized prior renderer, and its own positive draw/triangle counts. An old renderer's recorded frame cannot satisfy this wait.
+- There are no uncaught page/rendering errors through recovery and subsequent unmount.
+- Paused simulation time, narration call count and zero API POSTs remain unchanged; unmount returns tracked live buffers to zero.
+
+Initial readiness, each camera preset change and replacement-renderer readiness use bounded condition polling (8 s), replacing the recovery test's fixed startup/camera/reload sleeps. The fallback disappearing remains an assertion, but is no longer the evidence that rendering recovered. No production instrumentation, endpoint or dependency was added.
+
+### Final correction verification
+
+- Affected frontend: **24 passed / 2 files** (including all three exact-headline cases).
+- Full frontend: **134 passed / 17 files**.
+- Backend: **98 passed**.
+- Production TypeScript/Vite build: **PASS**; no dependency changes.
+- Focused strengthened recovery: **1 passed**.
+- Complete Playwright invocation: **35 passed, 1 timed out** during the legacy cycle test's final `setViewportSize` after its diagnosis/evidence assertions. The isolated `--last-failed` rerun passed **1/1** in 28.7 s with the original 60 s timeout and unchanged assertions. **All 36 unique workflows have passing results; unresolved failures: 0.** [Rerun log](evidence/ui02/corrections/playwright-rerun.txt).
+- Final recovery counters: context **2 → 3**, replacement renderer **110 live / 110 created buffers**, **28 draw calls / 1,300 triangles**, **no uncaught errors**; unmount **0 tracked live buffers**. Paused time, narration count and API POST isolation assertions pass.
+- All protected source/configuration diffs are empty relative to the reviewed head; served production assets match the hashes recorded before the browser suite.
+
+Commands: affected `npm --prefix frontend test -- src/Workcell.test.tsx src/workcellVisual.test.tsx`; full `npm --prefix frontend test`; `.venv/bin/python -m pytest backend/tests -q`; `VITE_API_BASE=/api VITE_API_TIMEOUT_MS=90000 npm --prefix frontend run build`; focused recovery and full browser suite with `CHROMIUM_PATH=/usr/bin/chromium npx playwright test [e2e/ui02.spec.ts --grep 'camera and context recovery'] --workers=1` in the temporary frontend copy. The isolated browser retry uses `CHROMIUM_PATH=/usr/bin/chromium npx playwright test --last-failed --workers=1`.
+
+Logs: [affected](evidence/ui02/corrections/affected.txt), [frontend](evidence/ui02/corrections/frontend.txt), [backend](evidence/ui02/corrections/backend.txt), [build](evidence/ui02/corrections/production-build.txt), [focused recovery](evidence/ui02/corrections/recovery.txt), [full Playwright](evidence/ui02/corrections/playwright.txt), [recovery counters](evidence/ui02/corrections/resources.json), [protected-boundary/served-asset checks](evidence/ui02/corrections/boundary-verification.txt).
+
+Earlier verification attempts: the three new headline tests intentionally failed before the fix ([red evidence](evidence/ui02/corrections/headline-before.txt)). During concurrent verification, the existing frustum test and an existing Maintenance test each exceeded their default 5 s timeout ([affected attempt](evidence/ui02/corrections/initial-affected.txt), [full attempt](evidence/ui02/corrections/initial-frontend.txt)). Sequential reruns passed with the same assertions and default timeouts; no timing limit or protected behavior was changed to obtain a pass.
+
+Exact correction source/test files: `frontend/src/Workcell.tsx`, `frontend/src/workcellState.ts`, new `frontend/src/Workcell.test.tsx`, `frontend/e2e/ui02.spec.ts`, `frontend/e2e/workcellProbe.ts`, and the expected-headline line in `frontend/e2e/m3.spec.ts`. Documentation/evidence: this report and `docs/evidence/ui02/corrections/`; [complete correction file manifest](evidence/ui02/corrections/changed-files.txt).
+
+Execution remains managed Linux Chromium/software WebGL, using existing dependencies, a fresh disposable `/tmp/maintainai-ui02-review-w1qjmmls/synthetic.sqlite3` on loopback 8183 and frontend preview 5383. No Windows application or existing SQLite records were accessed. Old evidence below is retained at its reviewed-head versions rather than replacing historical screenshots. The current correction results supersede the earlier 131-test frontend count. Browser voice testing is mocked; Windows GPU/FPS, audible speech and other browser/driver behavior remain unverified. Vite's existing large Three/R3F chunk warning and the existing Starlette/AnyIO deprecation warning remain. The new jsdom test harness emits a Three.js multiple-import warning; production recovery separately checks uncaught rendering errors. No merge, deployment, paid usage, backend/database or simulation-contract change.
+
+---
+
 ## Baseline and execution
 
 Started with a clean existing checkout, fetched and verified main at `53f6b83bfeb5bacbb93771e6a85b73383ab25845` (merged GD-01 PR #13, with UI-01). Created `feature/ui02-workcell-visualization` from that baseline. No unrelated changes or untracked files were removed.
@@ -40,7 +92,7 @@ Scene annotations describe synthetic observations, not proven mechanical causes.
 
 Complete path-by-path manifest: [changed files](evidence/ui02/changed-files.txt), including every screenshot and evidence artifact.
 
-## Verification results
+## Original implementation verification (reviewed head `0670f9d`)
 
 Final results: **98 backend tests passed**, **131 frontend tests passed across 16 files**, **production TypeScript/Vite build passed**, and **36 Playwright workflows passed**. Final failures: **0**. The original 110 frontend tests and 31 browser workflows remain included; UI-02 adds 21 unit tests and five browser workflows.
 

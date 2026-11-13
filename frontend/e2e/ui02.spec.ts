@@ -155,6 +155,8 @@ for (const size of sizes) {
 test("UI02 camera and context recovery preserve narration/time and release WebGL resources", async ({
   page,
 }) => {
+  const renderingErrors: string[] = [];
+  page.on("pageerror", (error) => renderingErrors.push(error.message));
   await speechMock(page);
   await workcellProbe(page);
   const posts: string[] = [];
@@ -163,7 +165,19 @@ test("UI02 camera and context recovery preserve narration/time and release WebGL
   });
   await page.goto("/");
   await expect(page.locator("canvas")).toBeVisible();
-  await page.waitForTimeout(1000);
+  await expect
+    .poll(
+      () =>
+        page.evaluate(() => {
+          const renderer = window.__ui02GPU.read().renderer;
+          return (
+            !!renderer && renderer.liveBuffers > 0 && renderer.drawCalls > 0
+          );
+        }),
+      { timeout: 8000 },
+    )
+    .toBe(true);
+  const originalCanvas = await page.locator("canvas").elementHandle();
   await page
     .getByRole("button", { name: "Start Guided Demo", exact: true })
     .click();
@@ -175,10 +189,26 @@ test("UI02 camera and context recovery preserve narration/time and release WebGL
     spoken = await page.evaluate(() => window.__gdSpeech.spoken.length);
   const before = await page.evaluate(() => window.__ui02GPU.read());
   for (let i = 0; i < 5; i++) {
+    let draws = await page.evaluate(
+      () => window.__ui02GPU.read().renderer!.drawCalls,
+    );
     await page.getByRole("button", { name: "Inspection", exact: true }).click();
-    await page.waitForTimeout(60);
+    await expect
+      .poll(
+        () => page.evaluate(() => window.__ui02GPU.read().renderer!.drawCalls),
+        { timeout: 8000 },
+      )
+      .toBeGreaterThan(draws);
+    draws = await page.evaluate(
+      () => window.__ui02GPU.read().renderer!.drawCalls,
+    );
     await page.getByRole("button", { name: "Reset View", exact: true }).click();
-    await page.waitForTimeout(60);
+    await expect
+      .poll(
+        () => page.evaluate(() => window.__ui02GPU.read().renderer!.drawCalls),
+        { timeout: 8000 },
+      )
+      .toBeGreaterThan(draws);
   }
   expect(await page.locator("progress").getAttribute("value")).toBe(paused);
   expect(await page.evaluate(() => window.__gdSpeech.spoken.length)).toBe(
@@ -206,7 +236,31 @@ test("UI02 camera and context recovery preserve narration/time and release WebGL
       { exact: true },
     ),
   ).toHaveCount(0);
-  await page.waitForTimeout(800);
+  await expect(page.locator("canvas")).toHaveCount(1);
+  await expect(page.locator("canvas")).toBeVisible();
+  expect(await originalCanvas!.evaluate((element) => element.isConnected)).toBe(
+    false,
+  );
+  // Inspect the replacement context itself: previous renderer frames cannot pass.
+  await expect
+    .poll(
+      () =>
+        page.evaluate((previous) => {
+          const renderer = window.__ui02GPU.read().renderer;
+          return (
+            !!renderer &&
+            renderer.id > previous.id &&
+            renderer.liveBuffers === previous.liveBuffers &&
+            renderer.createdBuffers === previous.createdBuffers &&
+            renderer.drawCalls > 0 &&
+            renderer.triangles > 0
+          );
+        }, before.renderer!),
+      { timeout: 8000 },
+    )
+    .toBe(true);
+  const recovered = await page.evaluate(() => window.__ui02GPU.read());
+  expect(renderingErrors).toEqual([]);
   expect(await page.locator("progress").getAttribute("value")).toBe(paused);
   expect(await page.evaluate(() => window.__gdSpeech.spoken.length)).toBe(
     spoken,
@@ -220,6 +274,7 @@ test("UI02 camera and context recovery preserve narration/time and release WebGL
     })
     .toBe(0);
   const released = await page.evaluate(() => window.__ui02GPU.read());
+  expect(renderingErrors).toEqual([]);
   await mkdir("../docs/evidence/ui02", { recursive: true });
   await writeFile(
     "../docs/evidence/ui02/resources.json",
@@ -228,6 +283,8 @@ test("UI02 camera and context recovery preserve narration/time and release WebGL
         environment: "Cloud Chromium / software WebGL; not Windows GPU/FPS",
         before,
         after,
+        recovered,
+        renderingErrors,
         released,
       },
       null,

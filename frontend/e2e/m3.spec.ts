@@ -28,7 +28,7 @@ test("guided live failure, evidence, checks and real idempotent maintenance tick
     .getByRole("button", { name: "Start Guided Demo", exact: true })
     .click();
   await expect(
-    page.getByText("OBJECT PRESENCE LOST · GRIP STILL COMMANDED", {
+    page.getByText("PRESENCE LOST AT 6.0s · HOLD COMMANDED AT LOSS", {
       exact: true,
     }),
   ).toBeVisible({ timeout: 15000 });
