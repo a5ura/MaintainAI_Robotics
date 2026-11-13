@@ -43,7 +43,7 @@ Running 36 tests using 1 worker
   ✓  36 e2e/ui02.spec.ts:296:1 › UI02 unavailable WebGL preserves controls and real backend diagnosis (3.7s)
 
 
-  1) e2e/cycle.spec.ts:2:1 › real normal and dropped-object cycles use FastAPI and display evidence 
+  1) e2e/cycle.spec.ts:2:1 › real normal and dropped-object cycles use FastAPI and display evidence
 
     Test timeout of 60000ms exceeded.
 
