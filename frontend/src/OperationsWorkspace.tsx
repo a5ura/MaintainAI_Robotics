@@ -80,7 +80,13 @@ export default function OperationsWorkspace({
                     : "READY"}
           </span>
         </div>
-        <div className="viewport">
+        <div
+          className="viewport"
+          data-guide-target="workcell"
+          tabIndex={-1}
+          role="group"
+          aria-label="Simulated robotic workcell"
+        >
           <ViewBoundary label="3D workcell">
             {" "}
             <Suspense
@@ -110,7 +116,11 @@ export default function OperationsWorkspace({
             {tcp.map((n) => n.toFixed(3)).join(" / ")}
           </div>
         </div>
-        <div className="sensor-strip">
+        <div
+          className="sensor-strip"
+          data-guide-target="fault-sensors"
+          tabIndex={-1}
+        >
           <span>GRIP / {sensor.grip_command ? "HOLD" : "RELEASE"}</span>
           <span
             className={drop && clock.t >= 6 && clock.t < 10 ? "fault" : "good"}
@@ -131,7 +141,13 @@ export default function OperationsWorkspace({
           <span className="time">{clock.t.toFixed(1)} / 12.0 s</span>
         </div>
         <progress aria-label="Cycle progress" max={12} value={clock.t} />
-        <div className="controls">
+        <div
+          className="controls"
+          data-guide-target="simulation-controls"
+          tabIndex={-1}
+          role="group"
+          aria-label="Simulation controls"
+        >
           <button
             className="primary"
             onClick={onStart}
@@ -163,7 +179,7 @@ export default function OperationsWorkspace({
             </select>
           </label>
           {!guideActive && (
-            <button className="guide-entry" onClick={onGuide}>
+            <button data-guide-start className="guide-entry" onClick={onGuide}>
               Start Guided Demo
             </button>
           )}

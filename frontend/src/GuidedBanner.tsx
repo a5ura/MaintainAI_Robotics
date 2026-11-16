@@ -39,12 +39,18 @@ export default function GuidedBanner({
     "maintenance-handoff": "Maintenance Handoff",
   };
   return (
-    <section className="guided-banner" aria-label="Guided Demo">
+    <section
+      className="guided-banner"
+      aria-label="Guided Demo"
+      data-guide-panel
+    >
       <div className="eyebrow">
         LIVE GUIDED DEMO / {state.stage.toUpperCase()}{" "}
         {state.paused ? "· PAUSED" : ""}
       </div>
-      <h2>{titles[state.stage]}</h2>
+      <h2 data-guide-target="walkthrough-controls" tabIndex={-1}>
+        {titles[state.stage]}
+      </h2>
       <p>
         Stage {GUIDE_STAGES.indexOf(state.stage) + 1} of 6 ·{" "}
         {state.mode === "manual" ? "Manual" : "Automatic"}
@@ -133,7 +139,7 @@ export default function GuidedBanner({
           </p>
         )}
       {state.stage === "maintenance-handoff" && (
-        <p>
+        <p data-guide-target="maintenance-handoff" tabIndex={-1}>
           Ticket creation is not available in this walkthrough yet. Explicit
           confirmation is deferred to GD-02B-4. No maintenance ticket has been
           saved. Existing manual maintenance forms remain available outside the

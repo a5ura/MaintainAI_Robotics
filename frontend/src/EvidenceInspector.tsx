@@ -12,6 +12,7 @@ export default function EvidenceInspector() {
     <section
       className="evidence-inspector"
       id="evidence-inspector"
+      data-guide-target="evidence-inspector"
       tabIndex={-1}
       aria-label="Evidence inspector"
     >

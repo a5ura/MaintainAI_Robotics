@@ -1076,3 +1076,26 @@ input:focus-visible {
 .guided-banner select {
   max-width: 100%;
 }
+
+/* GD-02B-2: real anchored highlights; no mask or pointer-blocking overlay. */
+.guide-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.guide-navigation { position: sticky; top: 0; z-index: 8; margin: 0 20px; padding: 10px 14px; border: 1px solid #75d6e3; background: #14232f; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
+.guide-navigation-copy { flex: 1 1 360px; min-width: 0; }
+.guide-navigation-copy strong { color: #c2f4fa; font-size: 14px; }
+.guide-navigation p { margin: 4px 0 0; font-size: 13px; line-height: 1.4; }
+.guide-navigation-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.guide-navigation button { min-height: 44px; padding: 8px 10px; font-size: 13px; }
+.guide-target-unavailable { flex-basis: 100%; color: #f1ce8c; }
+[data-guide-highlight="primary"] { outline: 2px solid #75d6e3; outline-offset: 3px; }
+[data-guide-highlight="secondary"] { outline: 1px dashed #75d6e3; outline-offset: 3px; }
+[data-guide-target]:focus-visible { outline: 3px solid #fff0a6; outline-offset: 3px; }
+html[data-guide-active] [data-guide-target], html[data-guide-active] .guided-banner :is(button, select) { scroll-margin-top: calc(var(--guide-nav-height, 0px) + 16px); }
+html[data-guide-active] .selected-reading-navigation { top: calc(var(--guide-nav-height, 0px) + 8px); }
+html[data-guide-active] .evidence-panel tr[id] { scroll-margin-top: calc(var(--guide-nav-height, 0px) + 140px); }
+@media (max-width: 600px) {
+  .guide-navigation { margin: 0 12px; padding: 8px; gap: 6px; }
+  .guide-navigation-copy { flex-basis: 100%; }
+  .guide-navigation-actions { width: 100%; }
+  .guide-navigation-actions button { flex: 1 1 auto; }
+}
+@media (prefers-reduced-motion: reduce) { .guide-navigation, [data-guide-highlight] { animation: none; transition: none; } }

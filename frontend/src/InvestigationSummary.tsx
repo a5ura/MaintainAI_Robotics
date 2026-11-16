@@ -37,6 +37,8 @@ export default function InvestigationSummary({
     <section
       className={`investigation-summary state-${state}`}
       aria-label="Investigation summary"
+      data-guide-target="fault-status"
+      tabIndex={-1}
     >
       <div className="panel-top">
         <h2>Investigation</h2>

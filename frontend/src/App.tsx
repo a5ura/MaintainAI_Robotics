@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, lazy, Suspense } from "react";
 import EngineeringPanel from "./EngineeringPanel";
+import GuidedVisuals from "./GuidedVisuals";
 import GuidedBanner from "./GuidedBanner";
 import ViewBoundary from "./ViewBoundary";
 import { api } from "./api";
@@ -188,6 +189,7 @@ export function App() {
         }}
         onDiagnostics={openDiagnostics}
       >
+        <GuidedVisuals state={guide.state} />
         {view === "maintenance" ? (
           <>
             {guideBanner}
