@@ -7,6 +7,8 @@ export type SceneSnapshot = {
   local: number[] | null;
   meshWorld: number[][];
   ancestors: number;
+  liveMatrices: Record<string, number[]>;
+  cameraMatrix: number[] | null;
 };
 declare global {
   interface Window {
@@ -29,6 +31,7 @@ export async function sceneProbe(page: Page) {
     type Store = {
       getState: () => {
         scene: Node & { isScene?: boolean };
+        camera: Node;
         gl: { domElement: HTMLCanvasElement };
         internal: { active: boolean };
       };
@@ -62,10 +65,23 @@ export async function sceneProbe(page: Page) {
               state.internal.active &&
               state.gl.domElement.isConnected,
           );
+        const liveMatrices: Record<string, number[]> = {};
         const markers: Node[] = [];
         for (const state of active)
           state.scene.traverse((node) => {
             if (node.name === "historical-evidence") markers.push(node);
+            if (
+              [
+                "joint-yaw",
+                "joint-shoulder",
+                "joint-elbow",
+                "tcp",
+                "workpiece",
+              ].includes(node.name)
+            ) {
+              node.updateWorldMatrix(true, false);
+              liveMatrices[node.name] = [...node.matrixWorld.elements];
+            }
           });
         const marker = markers.length === 1 ? markers[0] : null;
         const meshes: number[][] = [];
@@ -76,7 +92,11 @@ export async function sceneProbe(page: Page) {
         let ancestors = 0;
         for (let parent = marker?.parent; parent; parent = parent.parent)
           ancestors++;
+        const camera = active[0]?.camera;
+        camera?.updateWorldMatrix(true, false);
         return {
+          liveMatrices,
+          cameraMatrix: camera ? [...camera.matrixWorld.elements] : null,
           canvases: active.length,
           markers: markers.length,
           world: marker ? world(marker) : null,

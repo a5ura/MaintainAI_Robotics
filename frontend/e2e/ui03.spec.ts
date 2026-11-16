@@ -92,6 +92,72 @@ for (const size of [
         reading.tcp.join(","),
       );
       const renderedScene = await expectMarkerWorld(page, reading.tcp);
+      const candidatesBefore = await page
+        .getByRole("region", { name: "Candidate comparison" })
+        .innerText();
+      const summaryBefore = await page
+        .getByRole("region", { name: "Investigation summary", exact: true })
+        .innerText();
+      const speechBeforeClear = await page.evaluate(() => ({
+        count: window.__gdSpeech.spoken.length,
+        cancellations: window.__gdSpeech.cancellations,
+      }));
+      const clear = page.getByRole("button", {
+        name: "Clear Selection",
+        exact: true,
+      });
+      await clear.focus();
+      await expect(clear).toBeFocused();
+      await page.keyboard.press(selection === "drop" ? "Space" : "Enter");
+      await expect(page.getByTestId("historical-marker")).toHaveCount(0);
+      await expect
+        .poll(() => page.evaluate(() => window.__ui03Scene.read().markers))
+        .toBe(0);
+      await expect(inspector).toContainText("Select a recorded reading");
+      await expect(
+        page
+          .getByRole("group", { name: "Recorded readings" })
+          .getByRole("button", { pressed: true }),
+      ).toHaveCount(0);
+      await expect(clear).toHaveCount(0);
+      const cleared = await page.evaluate(() => window.__ui03Scene.read());
+      expect(Object.keys(cleared.liveMatrices).sort()).toEqual([
+        "joint-elbow",
+        "joint-shoulder",
+        "joint-yaw",
+        "tcp",
+        "workpiece",
+      ]);
+      expect(cleared.liveMatrices).toEqual(renderedScene.liveMatrices);
+      expect(cleared.cameraMatrix).toEqual(renderedScene.cameraMatrix);
+      expect(
+        await page
+          .getByRole("region", { name: "Candidate comparison" })
+          .innerText(),
+      ).toBe(candidatesBefore);
+      expect(
+        await page
+          .getByRole("region", { name: "Investigation summary", exact: true })
+          .innerText(),
+      ).toBe(summaryBefore);
+      expect(
+        await page.evaluate(() => ({
+          count: window.__gdSpeech.spoken.length,
+          cancellations: window.__gdSpeech.cancellations,
+        })),
+      ).toEqual(speechBeforeClear);
+      await expect(
+        page.getByRole("button", { name: "Start", exact: true }),
+      ).toBeDisabled();
+      await expect(
+        page.getByRole("button", { name: "Pause", exact: true }),
+      ).toBeDisabled();
+      await page
+        .getByRole("group", { name: "Recorded readings" })
+        .getByRole("button", { name: /^E6 ·/ })
+        .click();
+      await expectMarkerWorld(page, reading.tcp);
+
       expect(await page.locator("progress").getAttribute("value")).toBe(
         progress,
       );
@@ -301,7 +367,52 @@ test("UI03 paused guide selection draws and releases a historical marker without
       cancellations: window.__gdSpeech.cancellations,
     })),
   ).toEqual(snapshot.speech);
-  await page.getByRole("button", { name: "Clear evidence selection" }).click();
+  const maintenanceBeforeClear = await (
+    await page.request.get("/api/tickets")
+  ).json();
+  const clearScene = await page.evaluate(() => window.__ui03Scene.read());
+  const candidatesBeforeClear = await page
+    .getByRole("region", { name: "Candidate comparison" })
+    .innerText();
+  await page
+    .getByRole("button", { name: "Clear Selection", exact: true })
+    .click();
+  await expect(
+    page.getByRole("region", { name: "Evidence inspector" }),
+  ).toContainText("Select a recorded reading");
+  await expect(
+    page
+      .getByRole("group", { name: "Recorded readings" })
+      .getByRole("button", { pressed: true }),
+  ).toHaveCount(0);
+  expect(await (await page.request.get("/api/tickets")).json()).toEqual(
+    maintenanceBeforeClear,
+  );
+  const stateAfterClear = await page.evaluate(() => window.__ui03Scene.read());
+  expect(stateAfterClear.liveMatrices).toEqual(clearScene.liveMatrices);
+  expect(stateAfterClear.cameraMatrix).toEqual(clearScene.cameraMatrix);
+  expect(await page.locator("progress").getAttribute("value")).toBe(
+    snapshot.time,
+  );
+  expect(await page.locator(".tcp").innerText()).toBe(snapshot.tcp);
+  expect(await page.locator(".guided-banner .eyebrow").innerText()).toBe(
+    snapshot.guide,
+  );
+  await expect(
+    page.getByRole("button", { name: "Resume demo", exact: true }),
+  ).toBeVisible();
+  expect(
+    await page
+      .getByRole("region", { name: "Candidate comparison" })
+      .innerText(),
+  ).toBe(candidatesBeforeClear);
+  expect(
+    await page.evaluate(() => ({
+      count: window.__gdSpeech.spoken.length,
+      cancellations: window.__gdSpeech.cancellations,
+    })),
+  ).toEqual(snapshot.speech);
+  expect(requests).toEqual(snapshot.requests);
   await expect
     .poll(() => page.evaluate(() => window.__ui02GPU.read().liveBuffers), {
       timeout: 8000,
@@ -421,4 +532,44 @@ test("UI03 WebGL unavailable retains selectable evidence and text inspector", as
     "Spatial highlighting unavailable",
   );
   await expect(page.locator("canvas")).toHaveCount(0);
+});
+
+test("GD02A clears an ambiguous reference without retaining a stale historical marker", async ({
+  page,
+}) => {
+  await sceneProbe(page);
+  await page.route("**/api/diagnose", async (route) => {
+    const response = await route.fetch();
+    const result: Diagnosis = await response.json();
+    result.timeline.push({
+      ...result.timeline.find((row) => row.id === "E6")!,
+    });
+    await route.fulfill({ response, json: result });
+  });
+  await page.goto("/");
+  await expect(page.locator("canvas")).toBeVisible();
+  await page.clock.install();
+  await page.getByRole("button", { name: "Start", exact: true }).click();
+  await page.clock.runFor(13000);
+  const rail = page.getByRole("group", { name: "Recorded readings" });
+  await rail.getByRole("button", { name: /^E5 ·/ }).click();
+  await expect
+    .poll(() => page.evaluate(() => window.__ui03Scene.read().markers))
+    .toBe(1);
+  await rail.getByRole("button", { name: /^E6 ·/ }).first().click();
+  const inspector = page.getByRole("region", { name: "Evidence inspector" });
+  await expect(inspector).toContainText("reference unavailable or ambiguous");
+  await expect(page.getByTestId("historical-marker")).toHaveCount(0);
+  await expect
+    .poll(() => page.evaluate(() => window.__ui03Scene.read().markers))
+    .toBe(0);
+  await page
+    .getByRole("button", { name: "Clear Selection", exact: true })
+    .click();
+  await expect(inspector).toContainText("Select a recorded reading");
+  await expect(rail.getByRole("button", { pressed: true })).toHaveCount(0);
+  await rail.getByRole("button", { name: /^E5 ·/ }).click();
+  await expect
+    .poll(() => page.evaluate(() => window.__ui03Scene.read().markers))
+    .toBe(1);
 });
