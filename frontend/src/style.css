@@ -1067,3 +1067,12 @@ input:focus-visible {
 .selected-reading-navigation button { min-height: 40px; font-size: 12px; }
 .evidence-panel tr[id] { scroll-margin-top: 90px; }
 @media (max-width: 600px) { .selected-reading-navigation span { flex-basis: 100%; }.selected-reading-navigation button { min-height: 44px; flex: 1; }.evidence-panel tr[id] { scroll-margin-top: 140px; } }
+
+/* GD-02B-1: native walkthrough controls retain usable keyboard/touch targets. */
+.guided-banner .guide-controls button,
+.guided-banner select {
+  min-height: 44px;
+}
+.guided-banner select {
+  max-width: 100%;
+}

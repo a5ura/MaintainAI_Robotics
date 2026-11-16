@@ -1,3 +1,4 @@
+import { guideToAnalysis } from "./guidedController";
 import { speechMock } from "./speechMock";
 import { test, expect } from "@playwright/test";
 test.beforeEach(async ({ page }) => {
@@ -8,7 +9,7 @@ import { viewCamera } from "../src/workcellView";
 import { writeFile } from "node:fs/promises";
 import { engineeringState } from "../src/engineering";
 
-test("guided live failure, evidence, checks and real idempotent maintenance ticket", async ({
+test("guided real evidence ends without persistence; manual tickets retain backend idempotency", async ({
   page,
   request,
 }) => {
@@ -27,6 +28,7 @@ test("guided live failure, evidence, checks and real idempotent maintenance tick
   await page
     .getByRole("button", { name: "Start Guided Demo", exact: true })
     .click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
   await expect(
     page.getByText("PRESENCE LOST AT 6.0s · HOLD COMMANDED AT LOSS", {
       exact: true,
@@ -41,35 +43,55 @@ test("guided live failure, evidence, checks and real idempotent maintenance tick
   await page.waitForTimeout(300);
   expect(await page.locator("progress").getAttribute("value")).toBe(paused);
   await page.getByRole("button", { name: "Resume demo", exact: true }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
   const diagnosis = await (await diagnosisResponse).json();
   expect(diagnosis.failure).toBe("Dropped object");
   await expect(
     page.getByRole("region", { name: "Guided Demo", exact: true }),
-  ).toContainText("Connect the observations");
+  ).toContainText("Fault Detection");
+  await page.getByRole("button", { name: "Next", exact: true }).click();
   await page.getByRole("button", { name: "Pause demo", exact: true }).click();
   await page
     .getByRole("region", { name: "Guided Demo", exact: true })
     .getByRole("link", { name: /Inspect E6 at 6.0 seconds/ })
     .click();
   await expect(page.locator("#evidence-E6")).toBeFocused();
+  await page.getByRole("button", { name: "Resume demo", exact: true }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+  await expect(
+    page.getByRole("region", { name: "Guided Demo", exact: true }),
+  ).toContainText("No ticket has been created");
+  await page
+    .getByRole("button", { name: "Create maintenance ticket", exact: true })
+    .click();
+  await page
+    .getByLabel("Title", { exact: true })
+    .fill("Explicit manual handoff");
   const saved = page.waitForResponse(
     (r) => r.url().endsWith("/api/tickets") && r.request().method() === "POST",
   );
-  await page.getByRole("button", { name: "Resume demo", exact: true }).click();
+  await page
+    .getByRole("button", { name: "Create ticket", exact: true })
+    .click();
   const response = await saved;
   const ticket = await response.json();
   const body = response.request().postDataJSON();
   expect(ticket.diagnosis.id).toBe(diagnosis.id);
-  expect(body.request_id).toMatch(/^[0-9a-f-]{36}$/);
+  expect(body).not.toHaveProperty("request_id");
   await expect(
     page.getByRole("region", { name: "Ticket details", exact: true }),
   ).toContainText(ticket.ticket.id);
   await expect(
     page.getByRole("region", { name: "Guided Demo", exact: true }),
-  ).toContainText(ticket.ticket.id);
-  const retry = await request.post("/api/tickets", { data: body });
+  ).toHaveCount(0);
+  const retryBody = { ...body, request_id: crypto.randomUUID() };
+  const original = await request.post("/api/tickets", { data: retryBody });
+  const retry = await request.post("/api/tickets", { data: retryBody });
   expect(retry.status()).toBe(201);
-  expect((await retry.json()).ticket.id).toBe(ticket.ticket.id);
+  expect((await retry.json()).ticket.id).toBe(
+    (await original.json()).ticket.id,
+  );
   await page
     .getByText("Originating diagnosis and evidence snapshot", { exact: true })
     .click();
@@ -93,7 +115,7 @@ test("guided live failure, evidence, checks and real idempotent maintenance tick
   expect(errors).toEqual([]);
 });
 
-test("guided reset, skip and manual takeover preserve real results without auto-writing", async ({
+test("guided reset, explicit navigation and exit preserve real results without auto-writing", async ({
   page,
 }) => {
   const writes: string[] = [];
@@ -110,14 +132,12 @@ test("guided reset, skip and manual takeover preserve real results without auto-
   expect(
     Number(await page.locator("progress").getAttribute("value")),
   ).toBeLessThan(1);
-  await page
-    .getByRole("button", { name: "Skip to Results", exact: true })
-    .click();
+  await guideToAnalysis(page);
   await expect(
     page.getByRole("heading", { name: "Dropped object", exact: true }),
   ).toBeVisible();
   await page
-    .getByRole("button", { name: "Take Manual Control", exact: true })
+    .getByRole("button", { name: "Exit walkthrough", exact: true })
     .click();
   await expect(
     page.getByRole("region", { name: "Guided Demo", exact: true }),
@@ -183,14 +203,12 @@ test("engineering model values, real 3D component picking and keyboard navigatio
   await page
     .getByRole("button", { name: "Start Guided Demo", exact: true })
     .click();
-  await page
-    .getByRole("button", { name: "Skip to Results", exact: true })
-    .click();
+  await guideToAnalysis(page);
   await expect(
     page.getByRole("heading", { name: "Dropped object", exact: true }),
   ).toBeVisible();
   await page
-    .getByRole("button", { name: "Take Manual Control", exact: true })
+    .getByRole("button", { name: "Exit walkthrough", exact: true })
     .click();
   const tool = page.getByRole("button", {
     name: "Tool / vacuum gripper",
@@ -243,9 +261,7 @@ test("guided backend error recovers through real API retry", async ({
   await page
     .getByRole("button", { name: "Start Guided Demo", exact: true })
     .click();
-  await page
-    .getByRole("button", { name: "Skip to Results", exact: true })
-    .click();
+  await guideToAnalysis(page);
   await expect(page.getByRole("alert")).toContainText(
     "Temporary diagnosis outage",
   );
@@ -259,7 +275,7 @@ test("guided backend error recovers through real API retry", async ({
     page.getByRole("heading", { name: "Dropped object", exact: true }),
   ).toBeVisible();
   await page
-    .getByRole("button", { name: "Take Manual Control", exact: true })
+    .getByRole("button", { name: "Exit walkthrough", exact: true })
     .click();
 });
 
@@ -344,7 +360,7 @@ test("guided pause/reset stays isolated from another browser simulation", async 
       }),
     ).toBeVisible();
     await guided
-      .getByRole("button", { name: "Take Manual Control", exact: true })
+      .getByRole("button", { name: "Exit walkthrough", exact: true })
       .click();
   } finally {
     await a.close();
@@ -352,7 +368,7 @@ test("guided pause/reset stays isolated from another browser simulation", async 
   }
 });
 
-test("manual diagnosis ticket takeover cancels the remaining guided save", async ({
+test("manual diagnosis ticket handoff exits the non-persisting guide", async ({
   page,
 }) => {
   const posts: Record<string, unknown>[] = [];
@@ -364,9 +380,7 @@ test("manual diagnosis ticket takeover cancels the remaining guided save", async
   await page
     .getByRole("button", { name: "Start Guided Demo", exact: true })
     .click();
-  await page
-    .getByRole("button", { name: "Skip to Results", exact: true })
-    .click();
+  await guideToAnalysis(page);
   await expect(
     page.getByRole("heading", { name: "Dropped object", exact: true }),
   ).toBeVisible();
@@ -411,115 +425,58 @@ test("manual diagnosis ticket takeover cancels the remaining guided save", async
   ).toContainText(saved.ticket.id);
 });
 
-test("committed but pending guided response cannot replace manual ticket selection or drafts", async ({
+test("pending diagnosis cannot restore an exited guide or erase manual ticket drafts", async ({
   page,
-  request,
 }) => {
   let release!: () => void;
-  const responseGate = new Promise<void>((resolve) => {
-    release = resolve;
+  const gate = new Promise<void>((r) => {
+    release = r;
   });
-  let notifySaved!: (detail: { ticket: { id: string } }) => void;
-  const serverSaved = new Promise<{ ticket: { id: string } }>((resolve) => {
-    notifySaved = resolve;
+  let received = false;
+  const posts: string[] = [];
+  page.on("request", (r) => {
+    if (r.method() === "POST" && r.url().endsWith("/api/tickets"))
+      posts.push(r.url());
   });
-  const posts: Record<string, unknown>[] = [],
-    detailReads: string[] = [];
-  page.on("request", (req) => {
-    if (req.url().endsWith("/api/tickets") && req.method() === "POST")
-      posts.push(req.postDataJSON());
-    if (req.url().includes("/api/tickets/") && req.method() === "GET")
-      detailReads.push(req.url());
-  });
-  await page.route("**/api/tickets", async (route) => {
-    if (
-      route.request().method() === "POST" &&
-      route.request().postDataJSON().request_id
-    ) {
-      const response = await route.fetch(); // Real backend transaction commits before takeover.
-      notifySaved(await response.json());
-      await responseGate;
-      await route.fulfill({ response });
-    } else await route.continue();
+  await page.route("**/api/diagnose", async (route) => {
+    const response = await route.fetch();
+    received = true;
+    await gate;
+    await route.fulfill({ response });
   });
   try {
     await page.goto("/");
     await page
       .getByRole("button", { name: "Start Guided Demo", exact: true })
       .click();
+    await page.clock.install();
+    await page.getByRole("button", { name: "Next", exact: true }).click();
+    await page.clock.runFor(6500);
+    await page.getByRole("button", { name: "Next", exact: true }).click();
+    await page.clock.runFor(6500);
+    await expect.poll(() => received, { timeout: 15000 }).toBe(true);
     await page
-      .getByRole("button", { name: "Skip to Results", exact: true })
+      .getByRole("button", { name: "Maintenance", exact: true })
       .click();
-    const automatic = await serverSaved;
     await page
-      .getByRole("button", { name: "Create maintenance ticket", exact: true })
-      .click();
+      .getByLabel("Title", { exact: true })
+      .fill("Manual draft during pending diagnosis");
+    await page
+      .getByRole("textbox", { name: "Description", exact: true })
+      .fill("Preserve operator details");
+    const late = page.waitForResponse((r) => r.url().endsWith("/api/diagnose"));
+    release();
+    await late;
     await expect(
       page.getByRole("region", { name: "Guided Demo", exact: true }),
     ).toHaveCount(0);
-    const title = "Manual selection during pending guide " + Date.now();
-    await page.getByLabel("Title", { exact: true }).fill(title);
-    await page
-      .getByRole("textbox", { name: "Description", exact: true })
-      .fill("Manual description must be stored intact.");
-    const creation = page.waitForResponse(
-      (r) =>
-        r.url().endsWith("/api/tickets") &&
-        r.request().method() === "POST" &&
-        !r.request().postDataJSON().request_id,
-    );
-    await page
-      .getByRole("button", { name: "Create ticket", exact: true })
-      .click();
-    const manual = await (await creation).json();
-    await expect(
-      page.getByRole("region", { name: "Ticket details", exact: true }),
-    ).toContainText(manual.ticket.id);
-    await page
-      .getByLabel("Repair note / operator observation")
-      .fill("Do not erase this unsaved repair note.");
-    await page
-      .getByLabel("Ticket status", { exact: true })
-      .selectOption("In Progress");
-    await page
-      .getByLabel("Title", { exact: true })
-      .fill("Next manual incident draft");
-    await page
-      .getByRole("textbox", { name: "Description", exact: true })
-      .fill("Preserve the next incident details too.");
-    const lateResponse = page.waitForResponse(
-      (r) =>
-        r.url().endsWith("/api/tickets") &&
-        r.request().method() === "POST" &&
-        !!r.request().postDataJSON().request_id,
-    );
-    release();
-    await lateResponse;
-    await page.waitForTimeout(500);
-    const selection = page.getByRole("region", {
-      name: "Ticket details",
-      exact: true,
-    });
-    await expect(selection).toContainText(manual.ticket.id);
-    await expect(selection).not.toContainText(automatic.ticket.id);
-    await expect(
-      page.getByLabel("Repair note / operator observation"),
-    ).toHaveValue("Do not erase this unsaved repair note.");
-    await expect(page.getByLabel("Ticket status", { exact: true })).toHaveValue(
-      "In Progress",
-    );
     await expect(page.getByLabel("Title", { exact: true })).toHaveValue(
-      "Next manual incident draft",
+      "Manual draft during pending diagnosis",
     );
     await expect(
       page.getByRole("textbox", { name: "Description", exact: true }),
-    ).toHaveValue("Preserve the next incident details too.");
-    expect(posts).toHaveLength(2); // The already-submitted guide write plus the deliberate manual write.
-    expect(
-      detailReads.some((url) => url.endsWith("/" + automatic.ticket.id)),
-    ).toBe(false);
-    const committed = await request.get("/api/tickets/" + automatic.ticket.id);
-    expect(committed.status()).toBe(200); // We did not pretend cancellation rolled back a server write.
+    ).toHaveValue("Preserve operator details");
+    expect(posts).toEqual([]);
   } finally {
     release();
   }

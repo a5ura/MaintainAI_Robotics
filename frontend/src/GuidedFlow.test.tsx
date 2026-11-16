@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+import { StrictMode } from "react";
 import { it, expect, vi, afterEach } from "vitest";
 import {
   render,
@@ -17,15 +18,14 @@ afterEach(() => {
   cleanup();
   vi.useRealTimers();
   vi.unstubAllGlobals();
+  vi.restoreAllMocks();
 });
-function response(data: unknown) {
-  return { ok: true, json: async () => data };
-}
+const response = (data: unknown) => ({ ok: true, json: async () => data });
 const detail = {
   ticket: {
-    id: "T-guide",
+    id: "T-manual",
     equipment_id: "R-01",
-    title: "Guided demo — Dropped object",
+    title: "Manual review",
     description: "synthetic",
     status: "Open",
     version: 1,
@@ -36,138 +36,16 @@ const detail = {
   diagnosis: computed,
   history: [],
 };
-it("live guide pauses, skips through real payload request, then saves a linked ticket", async () => {
-  const speech = installSpeech();
+function setup(
+  diagnose: () => Promise<unknown> = async () => response(computed),
+  strict = false,
+  voices = true,
+) {
+  const speech = installSpeech(voices ? undefined : []);
   vi.useFakeTimers();
-  const fetchMock = vi.fn().mockImplementation(async (url, options) => {
-    if (String(url).endsWith("/diagnose")) return response(computed);
-    if (String(url).endsWith("/equipment"))
-      return response([
-        {
-          id: "R-01",
-          name: "Robot",
-          description: "demo",
-          status: "Operational",
-          ticket_count: 1,
-        },
-      ]);
-    if (String(url).endsWith("/tickets") && options.method === "GET")
-      return response([detail.ticket]);
-    return response(detail);
-  });
-  vi.stubGlobal("fetch", fetchMock);
-  render(<App />);
-  expect(
-    screen.queryByRole("region", { name: "Guided Demo" }),
-  ).not.toBeInTheDocument();
-  fireEvent.click(screen.getByRole("button", { name: "Start Guided Demo" }));
-  expect(speech.spoken).toHaveLength(1);
-  fireEvent.click(screen.getByRole("button", { name: "Replay narration" }));
-  fireEvent.click(screen.getByRole("button", { name: "Mute narration" }));
-  fireEvent.click(screen.getByRole("button", { name: "Unmute narration" }));
-  expect(fetchMock).not.toHaveBeenCalled();
-  act(() => vi.advanceTimersByTime(1000));
-  fireEvent.click(screen.getByRole("button", { name: "Pause demo" }));
-  const value = screen.getByRole("progressbar").getAttribute("value");
-  act(() => vi.advanceTimersByTime(5000));
-  expect(screen.getByRole("progressbar")).toHaveAttribute("value", value);
-  fireEvent.click(screen.getByRole("button", { name: "Resume demo" }));
-  fireEvent.click(screen.getByRole("button", { name: "Skip to Results" }));
-  await act(async () => {});
-  expect(screen.getByRole("region", { name: "Guided Demo" })).toHaveTextContent(
-    "Insufficient vacuum / seal loss",
-  );
-  const diagnosisCall = fetchMock.mock.calls.find((c) =>
-    String(c[0]).endsWith("/diagnose"),
-  )!;
-  const payload = JSON.parse(diagnosisCall[1].body);
-  expect(payload.samples.length).toBe(11);
-  expect(payload).not.toHaveProperty("scenario");
-  await act(async () => vi.advanceTimersByTime(4100));
-  const posts = fetchMock.mock.calls.filter(
-    (c) => String(c[0]).endsWith("/tickets") && c[1].method === "POST",
-  );
-  expect(posts.length).toBe(1);
-  const ticket = JSON.parse(posts[0][1].body);
-  expect(ticket.diagnosis_id).toBe(computed.id);
-  expect(ticket.request_id).toMatch(/^[0-9a-f-]{36}$/);
-  expect(screen.getByRole("region", { name: "Guided Demo" })).toHaveTextContent(
-    "T-guide",
-  );
-  expect(speech.spoken.at(-1)?.text).toContain("technician review");
-  // Wait for the lazy Maintenance handoff and its initial reads before measuring
-  // whether narration controls cause any additional requests.
-  await act(async () => {
-    await import("./Maintenance");
-  });
-  expect(
-    screen.getByRole("region", { name: "Ticket details" }),
-  ).toHaveTextContent("T-guide");
-  const count = speech.spoken.length;
-  const apiCount = fetchMock.mock.calls.length;
-  fireEvent.click(screen.getByRole("button", { name: "Replay narration" }));
-  fireEvent.click(screen.getByRole("button", { name: "Mute narration" }));
-  fireEvent.click(screen.getByRole("button", { name: "Unmute narration" }));
-  await act(async () => {});
-  expect(speech.spoken).toHaveLength(count + 2);
-  expect(fetchMock).toHaveBeenCalledTimes(apiCount);
-  expect(
-    fetchMock.mock.calls.filter(
-      (c) => String(c[0]).endsWith("/tickets") && c[1].method === "POST",
-    ),
-  ).toHaveLength(1);
-  expect(screen.getByRole("region", { name: "Guided Demo" })).toHaveTextContent(
-    "T-guide",
-  );
-});
-it("manual takeover freezes simulation and prevents automatic ticket creation", async () => {
-  vi.useFakeTimers();
-  vi.stubGlobal("fetch", vi.fn());
-  render(<App />);
-  fireEvent.click(screen.getByRole("button", { name: "Start Guided Demo" }));
-  act(() => vi.advanceTimersByTime(1000));
-  fireEvent.click(screen.getByRole("button", { name: "Take Manual Control" }));
-  const progress = screen.getByRole("progressbar").getAttribute("value");
-  act(() => vi.advanceTimersByTime(30000));
-  expect(screen.getByRole("progressbar")).toHaveAttribute("value", progress);
-  expect(
-    screen.queryByRole("region", { name: "Guided Demo" }),
-  ).not.toBeInTheDocument();
-  expect(fetch).not.toHaveBeenCalled();
-});
-it("reset invalidates an in-flight diagnosis rather than surfacing old results", async () => {
-  vi.useFakeTimers();
-  let resolve!: (v: unknown) => void;
-  vi.stubGlobal(
-    "fetch",
-    vi.fn().mockImplementation(
-      () =>
-        new Promise((r) => {
-          resolve = r;
-        }),
-    ),
-  );
-  render(<App />);
-  fireEvent.click(screen.getByRole("button", { name: "Start Guided Demo" }));
-  fireEvent.click(screen.getByRole("button", { name: "Skip to Results" }));
-  await act(async () => {});
-  fireEvent.click(screen.getByRole("button", { name: /^Reset$/ }));
-  await act(async () => resolve(response(computed)));
-  expect(
-    screen.queryByRole("heading", { name: "Dropped object" }),
-  ).not.toBeInTheDocument();
-  expect(screen.getByRole("progressbar")).toHaveAttribute("value", "0");
-});
-
-function ticketWorkflow(deferAutomaticSave = false) {
-  let finishAutomatic!: () => void;
-  let manual = {
-    ...detail,
-    ticket: { ...detail.ticket, id: "T-manual", title: "Manual review" },
-  };
   const fetchMock = vi.fn().mockImplementation(async (url, options) => {
     const path = String(url);
-    if (path.endsWith("/diagnose")) return response(computed);
+    if (path.endsWith("/diagnose")) return diagnose();
     if (path.endsWith("/equipment"))
       return response([
         {
@@ -178,152 +56,225 @@ function ticketWorkflow(deferAutomaticSave = false) {
           ticket_count: 1,
         },
       ]);
-    if (path.endsWith("/tickets") && options.method === "POST") {
-      const body = JSON.parse(options.body);
-      if (body.request_id) {
-        if (!deferAutomaticSave) return response(detail);
-        return new Promise((resolve) => {
-          finishAutomatic = () => resolve(response(detail));
-        });
-      }
-      manual = {
-        ...manual,
-        ticket: {
-          ...manual.ticket,
-          title: body.title,
-          description: body.description,
-        },
-      };
-      return response(manual);
-    }
-    if (path.endsWith("/tickets")) return response([manual.ticket]);
-    return response(path.endsWith("/T-guide") ? detail : manual);
+    if (path.endsWith("/tickets") && options.method === "GET")
+      return response([detail.ticket]);
+    return response(detail);
   });
   vi.stubGlobal("fetch", fetchMock);
-  return {
-    fetchMock,
-    finishAutomatic: () => finishAutomatic(),
-    posts: () =>
-      fetchMock.mock.calls.filter(
-        (c) => String(c[0]).endsWith("/tickets") && c[1].method === "POST",
-      ),
-  };
+  render(
+    strict ? (
+      <StrictMode>
+        <App />
+      </StrictMode>
+    ) : (
+      <App />
+    ),
+  );
+  const posts = () =>
+    fetchMock.mock.calls.filter(
+      (c) => String(c[0]).endsWith("/tickets") && c[1].method === "POST",
+    );
+  return { speech, fetchMock, posts };
 }
-
-async function skipGuidedReplay() {
-  fireEvent.click(screen.getByRole("button", { name: "Start Guided Demo" }));
-  fireEvent.click(screen.getByRole("button", { name: "Skip to Results" }));
-  await act(async () => {});
+const click = (name: string) =>
+  fireEvent.click(screen.getByRole("button", { name }));
+const advance = async (ms: number) => {
+  await act(async () => vi.advanceTimersByTime(ms));
+};
+const stage = () => within(screen.getByRole("region", { name: "Guided Demo" }));
+async function runToDiagnosis() {
+  click("Start Guided Demo");
+  click("Next");
+  await advance(6500);
+  expect(stage().getByRole("button", { name: "Next" })).toBeEnabled();
+  click("Next");
+  await advance(6500);
 }
-
-it("manual ticket creation cancels the guide without replacing unsaved form details", async () => {
-  vi.useFakeTimers();
-  const workflow = ticketWorkflow();
-  render(<App />);
-  await skipGuidedReplay();
-  fireEvent.click(
-    screen.getByRole("button", { name: "Create maintenance ticket" }),
+it("complete Manual walkthrough and repeated visits never create tickets or replay run actions", async () => {
+  const h = setup(undefined, true);
+  click("Start Guided Demo");
+  expect(stage().getByLabelText("Playback mode")).toHaveValue("manual");
+  await advance(10000);
+  expect(screen.getByRole("progressbar")).toHaveAttribute("value", "0");
+  expect(h.fetchMock).not.toHaveBeenCalled();
+  click("Next");
+  expect(stage().getByRole("heading")).toHaveTextContent("Robot Operation");
+  expect(stage().getByRole("button", { name: "Next" })).toBeDisabled();
+  await advance(6500);
+  const lossTime = screen.getByRole("progressbar").getAttribute("value");
+  await advance(10000);
+  expect(screen.getByRole("progressbar")).toHaveAttribute("value", lossTime);
+  click("Next");
+  await advance(6500);
+  expect(stage().getByRole("heading")).toHaveTextContent("Fault Detection");
+  click("Next");
+  expect(stage().getByRole("heading")).toHaveTextContent(
+    "Evidence Investigation",
   );
-  await act(async () => {});
-  fireEvent.change(screen.getByLabelText("Title", { exact: true }), {
-    target: { value: "Manual investigation draft" },
+  click("Next");
+  expect(stage().getByRole("heading")).toHaveTextContent(
+    "Diagnosis and Next Checks",
+  );
+  click("Next");
+  expect(stage().getByRole("heading")).toHaveTextContent("Maintenance Handoff");
+  expect(stage().getByRole("button", { name: "Next" })).toBeDisabled();
+  expect(stage().queryByRole("button", { name: /Create.*ticket/ })).toBeNull();
+  const t = screen.getByRole("progressbar").getAttribute("value");
+  for (let i = 0; i < 3; i++) {
+    click("Previous");
+    click("Next");
+    click("Replay narration");
+  }
+  click("Pause demo");
+  await advance(10000);
+  click("Resume demo");
+  fireEvent.change(stage().getByLabelText("Playback mode"), {
+    target: { value: "automatic" },
   });
-  fireEvent.change(screen.getByLabelText("Description", { exact: true }), {
-    target: { value: "Keep these operator details" },
-  });
-  await act(async () => vi.advanceTimersByTime(10000));
-  expect(workflow.posts()).toHaveLength(0);
-  expect(
-    screen.queryByRole("region", { name: "Guided Demo" }),
-  ).not.toBeInTheDocument();
-  expect(screen.getByLabelText("Title", { exact: true })).toHaveValue(
-    "Manual investigation draft",
+  await advance(30000);
+  expect(stage().getByRole("heading")).toHaveTextContent("Maintenance Handoff");
+  expect(screen.getByRole("progressbar")).toHaveAttribute("value", t);
+  expect(h.posts()).toHaveLength(0);
+  const diagnosis = h.fetchMock.mock.calls.filter((c) =>
+    String(c[0]).endsWith("/diagnose"),
   );
-  expect(screen.getByLabelText("Description", { exact: true })).toHaveValue(
-    "Keep these operator details",
-  );
+  expect(diagnosis).toHaveLength(1);
+  const payload = JSON.parse(diagnosis[0][1].body);
+  expect(payload.samples).toHaveLength(11);
+  expect(payload).not.toHaveProperty("scenario");
+  click("Exit walkthrough");
+  click("Start Guided Demo");
+  await advance(10000);
+  expect(h.posts()).toHaveLength(0);
+  expect(screen.getByRole("progressbar")).toHaveAttribute("value", "0");
 });
-
-it("an already-pending guide save cannot select its ticket or erase manual repair-note drafts", async () => {
-  vi.useFakeTimers();
-  const workflow = ticketWorkflow(true);
-  render(<App />);
-  await skipGuidedReplay();
-  await act(async () => vi.advanceTimersByTime(4100));
-  expect(workflow.posts()).toHaveLength(1);
-  fireEvent.click(
-    screen.getByRole("button", { name: "Create maintenance ticket" }),
+it.each([true, false])(
+  "Automatic progresses with muted/unavailable speech (voice=%s), stops at Stage 6 and writes no tickets",
+  async (voices) => {
+    const h = setup(undefined, false, voices);
+    click("Start Guided Demo");
+    if (voices) click("Mute narration");
+    fireEvent.change(stage().getByLabelText("Playback mode"), {
+      target: { value: "automatic" },
+    });
+    await advance(4000);
+    await advance(6500);
+    await advance(4000);
+    await advance(6500);
+    for (let i = 0; i < 3; i++) await advance(4000);
+    expect(stage().getByRole("heading")).toHaveTextContent(
+      "Maintenance Handoff",
+    );
+    await advance(30000);
+    expect(h.posts()).toHaveLength(0);
+    expect(
+      h.fetchMock.mock.calls.filter((c) => String(c[0]).endsWith("/diagnose")),
+    ).toHaveLength(1);
+  },
+);
+it("pending/failed diagnosis blocks both modes; restart rejects a stale run result", async () => {
+  let resolve!: (value: unknown) => void;
+  const h = setup(
+    () =>
+      new Promise((r) => {
+        resolve = r;
+      }),
   );
-  await act(async () => {});
+  await runToDiagnosis();
+  expect(stage().getByRole("button", { name: "Next" })).toBeDisabled();
+  fireEvent.change(stage().getByLabelText("Playback mode"), {
+    target: { value: "automatic" },
+  });
+  await advance(10000);
+  expect(stage().getByRole("heading")).toHaveTextContent("Fault Detection");
+  click("Reset demo");
+  await act(async () => resolve(response(computed)));
+  expect(screen.queryByRole("heading", { name: "Dropped object" })).toBeNull();
+  expect(stage().getByRole("heading")).toHaveTextContent("Introduction");
+  expect(h.posts()).toHaveLength(0);
+});
+it("failed diagnosis is truthful and never retried automatically", async () => {
+  const h = setup(async () => {
+    throw new Error("offline");
+  });
+  await runToDiagnosis();
+  expect(stage().getByRole("status")).toHaveTextContent(
+    "Diagnosis unavailable",
+  );
+  fireEvent.change(stage().getByLabelText("Playback mode"), {
+    target: { value: "automatic" },
+  });
+  await advance(30000);
+  expect(stage().getByRole("button", { name: "Next" })).toBeDisabled();
+  expect(h.fetchMock).toHaveBeenCalledTimes(1);
+  expect(h.posts()).toHaveLength(0);
+});
+it("hidden tabs pause the whole run until explicit Resume; history navigation exits", async () => {
+  const h = setup();
+  click("Start Guided Demo");
+  click("Next");
+  await advance(1000);
+  vi.spyOn(document, "hidden", "get").mockReturnValue(true);
+  act(() => document.dispatchEvent(new Event("visibilitychange")));
+  const t = screen.getByRole("progressbar").getAttribute("value");
+  await advance(20000);
+  vi.spyOn(document, "hidden", "get").mockReturnValue(false);
+  act(() => document.dispatchEvent(new Event("visibilitychange")));
+  await advance(5000);
+  expect(screen.getByRole("progressbar")).toHaveAttribute("value", t);
+  expect(stage().getByRole("button", { name: "Resume demo" })).toBeEnabled();
+  click("Resume demo");
+  await advance(1000);
+  expect(screen.getByRole("progressbar").getAttribute("value")).not.toBe(t);
+  act(() => window.dispatchEvent(new PopStateEvent("popstate")));
+  expect(screen.queryByRole("region", { name: "Guided Demo" })).toBeNull();
+  expect(h.posts()).toHaveLength(0);
+});
+it("Diagnostics exits consistently, preserving available results and allowing the unchanged manual form", async () => {
+  const h = setup();
+  await runToDiagnosis();
+  click("Diagnostics");
+  expect(screen.queryByRole("region", { name: "Guided Demo" })).toBeNull();
+  click("Create maintenance ticket");
+  await act(async () => {
+    await import("./Maintenance");
+  });
   fireEvent.change(screen.getByLabelText("Title", { exact: true }), {
     target: { value: "Manual review" },
   });
-  fireEvent.click(screen.getByRole("button", { name: "Create ticket" }));
-  await act(async () => {});
-  fireEvent.change(
-    screen.getByLabelText("Repair note / operator observation"),
-    { target: { value: "Unsaved repair note must remain" } },
-  );
-  fireEvent.change(screen.getByLabelText("Ticket status", { exact: true }), {
-    target: { value: "In Progress" },
-  });
-  fireEvent.change(screen.getByLabelText("Title", { exact: true }), {
-    target: { value: "Next incident draft" },
-  });
   fireEvent.change(screen.getByLabelText("Description", { exact: true }), {
-    target: { value: "Do not replace this draft" },
+    target: { value: "Operator draft" },
   });
-  await act(async () => workflow.finishAutomatic());
-  await act(async () => vi.advanceTimersByTime(10000));
-  expect(workflow.posts()).toHaveLength(2); // One submitted guide save, one intentional manual save.
+  await advance(20000);
+  expect(h.posts()).toHaveLength(0);
+  click("Create ticket");
+  await act(async () => {});
+  expect(h.posts()).toHaveLength(1);
+  expect(JSON.parse(h.posts()[0][1].body)).not.toHaveProperty("request_id");
   expect(
     screen.getByRole("region", { name: "Ticket details" }),
   ).toHaveTextContent("T-manual");
-  expect(
-    screen.getByRole("region", { name: "Ticket details" }),
-  ).not.toHaveTextContent("T-guide");
+  fireEvent.change(
+    screen.getByLabelText("Repair note / operator observation"),
+    { target: { value: "Keep this repair draft" } },
+  );
+  await advance(30000);
   expect(
     screen.getByLabelText("Repair note / operator observation"),
-  ).toHaveValue("Unsaved repair note must remain");
-  expect(screen.getByLabelText("Ticket status", { exact: true })).toHaveValue(
-    "In Progress",
-  );
-  expect(screen.getByLabelText("Title", { exact: true })).toHaveValue(
-    "Next incident draft",
-  );
-  expect(screen.getByLabelText("Description", { exact: true })).toHaveValue(
-    "Do not replace this draft",
-  );
-  expect(
-    workflow.fetchMock.mock.calls.some((c) =>
-      String(c[0]).endsWith("/T-guide"),
-    ),
-  ).toBe(false);
+  ).toHaveValue("Keep this repair draft");
+  expect(h.posts()).toHaveLength(1);
 });
-
-it("manual ticket creation clears the selection from a previously completed guide", async () => {
-  vi.useFakeTimers();
-  const workflow = ticketWorkflow();
-  render(<App />);
-  await skipGuidedReplay();
-  await act(async () => vi.advanceTimersByTime(4100));
-  expect(
-    screen.getByRole("region", { name: "Ticket details" }),
-  ).toHaveTextContent("T-guide");
-  fireEvent.click(screen.getByRole("button", { name: "Return to operations" }));
-  const reads = workflow.fetchMock.mock.calls.filter((c) =>
-    String(c[0]).endsWith("/T-guide"),
-  ).length;
-  fireEvent.click(
-    screen.getByRole("button", { name: "Create maintenance ticket" }),
+it("unavailable evidence shows a truthful fallback without blocking diagnosis-based stages", async () => {
+  const h = setup(async () =>
+    response({ ...computed, observations: [], timeline: [] }),
   );
-  await act(async () => {});
+  await runToDiagnosis();
+  click("Next");
   expect(
-    screen.getByRole("region", { name: "Ticket details" }),
-  ).toHaveTextContent("Choose an incident.");
-  expect(
-    workflow.fetchMock.mock.calls.filter((c) =>
-      String(c[0]).endsWith("/T-guide"),
-    ),
-  ).toHaveLength(reads);
+    stage().getByText(/Expected evidence reference unavailable/),
+  ).toBeVisible();
+  click("Next");
+  click("Next");
+  expect(stage().getByRole("heading")).toHaveTextContent("Maintenance Handoff");
+  expect(h.posts()).toHaveLength(0);
 });

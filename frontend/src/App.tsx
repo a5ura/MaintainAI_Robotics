@@ -93,22 +93,21 @@ export function App() {
     setError("");
     setBusy(false);
   }
-  const guide = useGuidedDemo(clock, result, {
-    reset: resetSimulation,
-    selectDrop: () => {
-      setSelection("drop");
-      setSeed(42);
+  const guide = useGuidedDemo(
+    clock,
+    result,
+    {
+      reset: resetSimulation,
+      selectDrop: () => {
+        setSelection("drop");
+        setSeed(42);
+      },
+      play: () => setClock((c) => ({ ...c, running: true })),
+      pause: () => setClock((c) => ({ ...c, running: false })),
+      showOperations: () => setView("operations"),
     },
-    play: () => setClock((c) => ({ ...c, running: true })),
-    pause: () => setClock((c) => ({ ...c, running: false })),
-    skip: () => setClock({ t: 12, running: false }),
-    showOperations: () => setView("operations"),
-    openTicket: (id) => {
-      setInitialTicketId(id);
-      setFromDiagnosis(false);
-      setView("maintenance");
-    },
-  });
+    error,
+  );
   const narration = useGuideNarration({
     state: guide.state,
     t: clock.t,
@@ -127,21 +126,18 @@ export function App() {
     guide.resume();
     narration.resume();
   }
-  function skipGuide() {
-    narration.skip();
-    guide.skip();
-  }
   function manualGuide() {
     narration.stop();
     guide.takeover();
   }
   function reset() {
     narration.stop();
-    guide.stop();
+    guide.takeover();
     resetSimulation();
   }
   function openDiagnostics() {
     narration.stop();
+    guide.takeover();
     setView("operations");
     setTimeout(() => {
       const section = document.getElementById("diagnostics");
@@ -161,9 +157,10 @@ export function App() {
       onPause={pauseGuide}
       onResume={resumeGuide}
       onReset={startGuide}
-      onSkip={skipGuide}
-      onManual={manualGuide}
-      onRetry={guide.retry}
+      onExit={manualGuide}
+      onNext={guide.next}
+      onPrevious={guide.previous}
+      onMode={guide.mode}
     />
   );
   function createTicket() {
@@ -244,11 +241,17 @@ export function App() {
               tcp={tcp}
               sensor={sensor}
               guideActive={!!guide.state}
-              setSelection={setSelection}
-              setSeed={setSeed}
+              setSelection={(value) => {
+                if (guide.state) manualGuide();
+                setSelection(value);
+              }}
+              setSeed={(value) => {
+                if (guide.state) manualGuide();
+                setSeed(value);
+              }}
               onStart={() => {
-                if (guide.state) resumeGuide();
-                else setClock((c) => ({ ...c, running: true }));
+                if (guide.state) manualGuide();
+                setClock((c) => ({ ...c, running: true }));
               }}
               onPause={() => {
                 if (guide.state) pauseGuide();

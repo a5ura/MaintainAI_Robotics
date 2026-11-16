@@ -1,3 +1,4 @@
+import { guideToAnalysis } from "./guidedController";
 import { expect, test } from "@playwright/test";
 import { mkdir, writeFile } from "node:fs/promises";
 import { speechMock } from "./speechMock";
@@ -245,9 +246,7 @@ test("UI03 paused guide selection draws and releases a historical marker without
   await page
     .getByRole("button", { name: "Start Guided Demo", exact: true })
     .click();
-  await page
-    .getByRole("button", { name: "Skip to Results", exact: true })
-    .click();
+  await guideToAnalysis(page);
   await expect(
     page.getByRole("heading", { name: "Dropped object", exact: true }),
   ).toBeVisible();

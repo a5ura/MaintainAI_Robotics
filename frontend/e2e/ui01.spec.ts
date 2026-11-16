@@ -1,3 +1,4 @@
+import { guideToAnalysis } from "./guidedController";
 import { speechMock } from "./speechMock";
 import { test, expect, type Page } from "@playwright/test";
 test.beforeEach(async ({ page }) => {
@@ -82,14 +83,12 @@ for (const size of sizes) {
       .click();
     await page.getByRole("button", { name: "Pause demo", exact: true }).click();
     await capture("guided");
-    await page
-      .getByRole("button", { name: "Skip to Results", exact: true })
-      .click();
+    await guideToAnalysis(page);
     await expect(
       page.getByRole("heading", { name: "Dropped object", exact: true }),
     ).toBeVisible();
     await page
-      .getByRole("button", { name: "Take Manual Control", exact: true })
+      .getByRole("button", { name: "Exit walkthrough", exact: true })
       .click();
     await capture("fault");
     await page
@@ -122,16 +121,14 @@ for (const size of sizes) {
     await page
       .getByRole("button", { name: "Start Guided Demo", exact: true })
       .click();
-    await page
-      .getByRole("button", { name: "Skip to Results", exact: true })
-      .click();
+    await guideToAnalysis(page);
     await expect(
       page
         .getByRole("region", { name: "Investigation summary", exact: true })
         .getByText("Inconclusive", { exact: true }),
     ).toBeVisible();
     await page
-      .getByRole("button", { name: "Take Manual Control", exact: true })
+      .getByRole("button", { name: "Exit walkthrough", exact: true })
       .click();
     await capture("inconclusive");
     await page.unroute("**/api/diagnose");
@@ -148,14 +145,12 @@ for (const size of sizes) {
     await page
       .getByRole("button", { name: "Start Guided Demo", exact: true })
       .click();
-    await page
-      .getByRole("button", { name: "Skip to Results", exact: true })
-      .click();
+    await guideToAnalysis(page);
     await expect(
       page.getByRole("button", { name: "Retry diagnosis", exact: true }),
     ).toBeVisible();
     await page
-      .getByRole("button", { name: "Take Manual Control", exact: true })
+      .getByRole("button", { name: "Exit walkthrough", exact: true })
       .click();
     await capture("error");
     await page.unroute("**/api/diagnose");

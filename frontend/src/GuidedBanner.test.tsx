@@ -2,6 +2,7 @@
 import { afterEach, expect, it, vi } from "vitest";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
+import { initialGuide } from "./guided";
 import GuidedBanner from "./GuidedBanner";
 import type { NarrationControls } from "./useGuideNarration";
 afterEach(cleanup);
@@ -20,13 +21,14 @@ function show(narration: Partial<NarrationControls> = {}) {
     onPause: vi.fn(),
     onResume: vi.fn(),
     onReset: vi.fn(),
-    onSkip: vi.fn(),
-    onManual: vi.fn(),
-    onRetry: vi.fn(),
+    onExit: vi.fn(),
+    onNext: vi.fn(),
+    onPrevious: vi.fn(),
+    onMode: vi.fn(),
   };
   render(
     <GuidedBanner
-      state={{ stage: "simulation", paused: false, skipTour: false }}
+      state={initialGuide(1)}
       t={0}
       result={null}
       backendError=""
@@ -38,9 +40,7 @@ function show(narration: Partial<NarrationControls> = {}) {
 }
 it("keeps text visible and narration actions isolated from guide actions", () => {
   const { controls, actions } = show();
-  expect(
-    screen.getByText(/The arm follows its joint trajectory/),
-  ).toBeInTheDocument();
+  expect(screen.getByText(/This simulated robot picks/)).toBeInTheDocument();
   expect(screen.getByText(/A visible cue/)).toBeInTheDocument();
   fireEvent.click(screen.getByRole("button", { name: "Mute narration" }));
   fireEvent.click(screen.getByRole("button", { name: "Replay narration" }));
@@ -58,6 +58,6 @@ it("shows text-only fallback and leaves the existing guide controls usable", () 
   expect(
     screen.getByRole("button", { name: "Replay narration" }),
   ).toBeDisabled();
-  expect(screen.getByRole("button", { name: "Skip to Results" })).toBeEnabled();
+  expect(screen.getByRole("button", { name: "Next" })).toBeEnabled();
   expect(screen.getByRole("button", { name: "Pause demo" })).toBeEnabled();
 });
