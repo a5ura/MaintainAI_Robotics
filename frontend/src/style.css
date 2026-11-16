@@ -1099,3 +1099,17 @@ html[data-guide-active] .evidence-panel tr[id] { scroll-margin-top: calc(var(--g
   .guide-navigation-actions button { flex: 1 1 auto; }
 }
 @media (prefers-reduced-motion: reduce) { .guide-navigation, [data-guide-highlight] { animation: none; transition: none; } }
+
+/* GD-02B-4: native modal confirmation and retained request status. */
+.handoff-preview { border: 1px solid #7db5bc; padding: 12px; margin: 12px 0; border-radius: 6px; overflow-wrap: anywhere; }
+.handoff-fields { display: grid; gap: 4px; font-size: 13px; }
+.handoff-fields dt { font-weight: bold; color: #bcd7dc; }
+.handoff-fields dd { margin: 0 0 8px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.handoff-status { padding: 10px; border-left: 3px solid #cbb47c; overflow-wrap: anywhere; }
+.handoff-success { border-color: #86ddbe; }.handoff-uncertain { border-color: #ffb886; }.handoff-rejected { border-color: #f59b9b; }
+.handoff-notice { margin: 12px 20px; padding: 12px; border: 1px solid #647d85; border-radius: 6px; }
+.handoff-dialog { width: min(560px, calc(100vw - 48px)); max-height: 80dvh; box-sizing: border-box; padding: 18px; border: 2px solid #8bd8dc; border-radius: 8px; color: #dce9ee; background: #14242e; overflow: auto; overflow-wrap: anywhere; }
+.handoff-dialog::backdrop { background: #0009; }
+.handoff-dialog-actions { position: sticky; bottom: -18px; display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 0; background: #14242e; }
+.handoff-dialog button, .handoff-preview button, .handoff-notice button { min-height: 44px; }
+@media (max-width: 600px) { .handoff-notice { margin: 8px 12px; }.handoff-dialog-actions button { flex: 1; } }

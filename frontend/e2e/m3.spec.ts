@@ -61,8 +61,9 @@ test("guided real evidence ends without persistence; manual tickets retain backe
   await page.getByRole("button", { name: "Next", exact: true }).click();
   await expect(
     page.getByRole("region", { name: "Guided Demo", exact: true }),
-  ).toContainText("No ticket has been created");
+  ).toContainText("No maintenance ticket has been saved");
   await page
+    .getByRole("region", { name: "Diagnostics Workspace", exact: true })
     .getByRole("button", { name: "Create maintenance ticket", exact: true })
     .click();
   await page
@@ -385,6 +386,7 @@ test("manual diagnosis ticket handoff exits the non-persisting guide", async ({
     page.getByRole("heading", { name: "Dropped object", exact: true }),
   ).toBeVisible();
   await page
+    .getByRole("region", { name: "Diagnostics Workspace", exact: true })
     .getByRole("button", { name: "Create maintenance ticket", exact: true })
     .click();
   await expect(

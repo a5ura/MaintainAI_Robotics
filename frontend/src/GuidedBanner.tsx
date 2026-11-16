@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { GUIDE_STAGES, type GuideState, type PlaybackMode } from "./guided";
 import type { NarrationControls } from "./useGuideNarration";
 import type { Diagnosis } from "./model";
@@ -15,7 +16,9 @@ export default function GuidedBanner({
   onNext,
   onPrevious,
   onMode,
+  handoffPanel,
 }: {
+  handoffPanel?: ReactNode;
   state: GuideState;
   narration: NarrationControls;
   t: number;
@@ -74,7 +77,7 @@ export default function GuidedBanner({
               ? "Waiting for the simulation milestone."
               : "Diagnosis pending. Waiting for the backend result."
             : state.stage === "maintenance-handoff"
-              ? "Walkthrough ends here. No ticket has been created."
+              ? "Walkthrough ends here. Review the maintenance handoff below."
               : "Ready to advance."}
       </p>
       {state.stage === "introduction" && (
@@ -138,14 +141,13 @@ export default function GuidedBanner({
             recorded readings; no evidence is fabricated.
           </p>
         )}
-      {state.stage === "maintenance-handoff" && (
-        <p data-guide-target="maintenance-handoff" tabIndex={-1}>
-          Ticket creation is not available in this walkthrough yet. Explicit
-          confirmation is deferred to GD-02B-4. No maintenance ticket has been
-          saved. Existing manual maintenance forms remain available outside the
-          walkthrough.
-        </p>
-      )}
+      {state.stage === "maintenance-handoff" &&
+        (handoffPanel ?? (
+          <p data-guide-target="maintenance-handoff" tabIndex={-1}>
+            No maintenance ticket has been saved. Review and explicitly confirm
+            a valid handoff before any creation request.
+          </p>
+        ))}
       <div
         className="narration-panel"
         role="group"

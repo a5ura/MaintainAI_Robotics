@@ -1,3 +1,12 @@
+export class ApiError extends Error {
+  constructor(
+    message: string,
+    public readonly status: number,
+  ) {
+    super(message);
+    this.name = "ApiError";
+  }
+}
 export async function api<T>(
   path: string,
   method = "GET",
@@ -29,7 +38,7 @@ export async function api<T>(
       const data = await response.json();
       if (typeof data.detail === "string") detail = data.detail;
     } catch {}
-    throw new Error(detail);
+    throw new ApiError(detail, response.status);
   }
   return response.json();
 }

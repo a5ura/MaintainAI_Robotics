@@ -118,7 +118,9 @@ it("complete Manual walkthrough and repeated visits never create tickets or repl
   click("Next");
   expect(stage().getByRole("heading")).toHaveTextContent("Maintenance Handoff");
   expect(stage().getByRole("button", { name: "Next" })).toBeDisabled();
-  expect(stage().queryByRole("button", { name: /Create.*ticket/ })).toBeNull();
+  expect(
+    stage().getByRole("button", { name: "Create maintenance ticket" }),
+  ).toBeEnabled();
   const t = screen.getByRole("progressbar").getAttribute("value");
   for (let i = 0; i < 3; i++) {
     click("Previous");

@@ -1,5 +1,11 @@
 import React, { useEffect, useRef, useState, lazy, Suspense } from "react";
 import EngineeringPanel from "./EngineeringPanel";
+import { handoffPreview, useConfirmedHandoff } from "./useConfirmedHandoff";
+import {
+  HandoffPreview,
+  HandoffNotice,
+  HandoffConfirmation,
+} from "./ConfirmedHandoff";
 import GuidedVisuals from "./GuidedVisuals";
 import GuidedBanner from "./GuidedBanner";
 import ViewBoundary from "./ViewBoundary";
@@ -109,11 +115,33 @@ export function App() {
     },
     error,
   );
+  const runReference = guide.state
+    ? `${SCENARIOS[scenario]} · seed ${seed} · page-session run ${guide.state.epoch}`
+    : "";
+  const prepared = handoffPreview(
+    result,
+    runReference,
+    guide.state && result?.id ? `${guide.state.epoch}:${result.id}` : "",
+  );
+  const handoff = useConfirmedHandoff(
+    prepared.preview,
+    guide.state?.stage === "maintenance-handoff" && view === "operations",
+  );
+  function viewConfirmedTicket(id: string) {
+    narration.stop();
+    guide.takeover();
+    setInitialTicketId(id);
+    setFromDiagnosis(false);
+    setView("maintenance");
+  }
   const narration = useGuideNarration({
     state: guide.state,
     t: clock.t,
     result,
     backendError: error,
+    handoff: handoff.attempt
+      ? { phase: handoff.attempt.phase, ticketId: handoff.attempt.ticketId }
+      : undefined,
   });
   function startGuide() {
     guide.start();
@@ -162,6 +190,13 @@ export function App() {
       onNext={guide.next}
       onPrevious={guide.previous}
       onMode={guide.mode}
+      handoffPanel={
+        <HandoffPreview
+          handoff={handoff}
+          issue={prepared.issue}
+          onView={viewConfirmedTicket}
+        />
+      }
     />
   );
   function createTicket() {
@@ -190,6 +225,11 @@ export function App() {
         onDiagnostics={openDiagnostics}
       >
         <GuidedVisuals state={guide.state} />
+        {(guide.state?.stage !== "maintenance-handoff" ||
+          handoff.notice !== handoff.attempt) && (
+          <HandoffNotice handoff={handoff} onView={viewConfirmedTicket} />
+        )}
+        <HandoffConfirmation handoff={handoff} />
         {view === "maintenance" ? (
           <>
             {guideBanner}
