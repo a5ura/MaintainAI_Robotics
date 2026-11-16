@@ -1,4 +1,4 @@
-import type { GuideState } from "./guided";
+import { GUIDE_STAGES, type GuideState, type PlaybackMode } from "./guided";
 import type { NarrationControls } from "./useGuideNarration";
 import type { Diagnosis } from "./model";
 import { EvidenceReferences } from "./EvidenceReferences";
@@ -11,9 +11,10 @@ export default function GuidedBanner({
   onPause,
   onResume,
   onReset,
-  onSkip,
-  onManual,
-  onRetry,
+  onExit,
+  onNext,
+  onPrevious,
+  onMode,
 }: {
   state: GuideState;
   narration: NarrationControls;
@@ -23,20 +24,19 @@ export default function GuidedBanner({
   onPause: () => void;
   onResume: () => void;
   onReset: () => void;
-  onSkip: () => void;
-  onManual: () => void;
-  onRetry: () => void;
+  onExit: () => void;
+  onNext: () => void;
+  onPrevious: () => void;
+  onMode: (mode: PlaybackMode) => void;
 }) {
   if (!state) return null;
   const titles = {
-    simulation:
-      t < 6
-        ? "Watch a real simulated cycle"
-        : "Compare commanded grip with object presence",
-    evidence: "Connect the observations",
-    checks: "Review possible causes and operator checks",
-    saving: "Save the computed diagnosis as a ticket",
-    complete: "Evidence preserved. Ready for a technician.",
+    introduction: "Introduction",
+    "robot-operation": "Robot Operation",
+    "fault-detection": "Fault Detection",
+    "evidence-investigation": "Evidence Investigation",
+    diagnosis: "Diagnosis and Next Checks",
+    "maintenance-handoff": "Maintenance Handoff",
   };
   return (
     <section className="guided-banner" aria-label="Guided Demo">
@@ -45,18 +45,55 @@ export default function GuidedBanner({
         {state.paused ? "· PAUSED" : ""}
       </div>
       <h2>{titles[state.stage]}</h2>
-      {state.stage === "simulation" && (
+      <p>
+        Stage {GUIDE_STAGES.indexOf(state.stage) + 1} of 6 ·{" "}
+        {state.mode === "manual" ? "Manual" : "Automatic"}
+      </p>
+      <label>
+        Playback mode{" "}
+        <select
+          aria-label="Playback mode"
+          value={state.mode}
+          onChange={(e) => onMode(e.target.value as PlaybackMode)}
+        >
+          <option value="manual">Manual</option>
+          <option value="automatic">Automatic</option>
+        </select>
+      </label>
+      <p role="status">
+        {state.readiness === "unavailable"
+          ? "Diagnosis unavailable. Retry diagnosis explicitly in the workspace, or exit."
+          : state.readiness === "waiting"
+            ? t < 12
+              ? "Waiting for the simulation milestone."
+              : "Diagnosis pending. Waiting for the backend result."
+            : state.stage === "maintenance-handoff"
+              ? "Walkthrough ends here. No ticket has been created."
+              : "Ready to advance."}
+      </p>
+      {state.stage === "introduction" && (
+        <p>
+          This simulated robot picks, carries, and places a part. Follow the
+          Dropped Object demonstration, seed 42. Next opens Robot Operation;
+          Previous revisits explanations without rewinding.
+        </p>
+      )}
+
+      {(state.stage === "robot-operation" ||
+        state.stage === "fault-detection") && (
         <p>
           {t < 6
             ? "The arm follows its joint trajectory. At transfer, watch the object and vacuum signal."
             : t < 12
-              ? "The synthetic presence signal is lost while HOLD remains commanded. Post-place verification will complete the evidence."
-              : backendError
-                ? "Backend request failed. Retry diagnosis in the workspace below; results are never fabricated."
-                : "Computing the result through FastAPI…"}
+              ? "Object presence was lost while HOLD was commanded at the loss. Post-place verification will complete the evidence."
+              : result
+                ? result.summary
+                : backendError
+                  ? "Backend request failed. Retry diagnosis in the workspace below; results are never fabricated."
+                  : "Computing the result through FastAPI…"}
         </p>
       )}
-      {state.stage === "evidence" && result && (
+      {state.stage === "evidence-investigation" && result && (
         <div>
           {result.observations.slice(0, 3).map((o) => (
             <div key={o.text}>
@@ -70,7 +107,7 @@ export default function GuidedBanner({
           ))}
         </div>
       )}
-      {state.stage === "checks" && result && (
+      {state.stage === "diagnosis" && result && (
         <>
           <p>{result.hypotheses[0]?.cause ?? result.summary}</p>
           <p>
@@ -79,28 +116,29 @@ export default function GuidedBanner({
               "Inspect the evidence before drawing a conclusion."}
           </p>
           <p className="muted">
-            A plausible cause is not a proven root cause. Next, save this real
-            backend result into a labelled demo ticket.
+            A plausible cause is not a proven root cause. Operator checks
+            require real verification; this walkthrough does not record an
+            outcome.
           </p>
         </>
       )}
-      {state.stage === "saving" && (
+      {state.stage === "evidence-investigation" &&
+        result &&
+        !result.observations.some((o) =>
+          o.evidence.some((id) => result.timeline.some((row) => row.id === id)),
+        ) && (
+          <p>
+            Expected evidence reference unavailable. Review the available
+            recorded readings; no evidence is fabricated.
+          </p>
+        )}
+      {state.stage === "maintenance-handoff" && (
         <p>
-          Writing the diagnosis reference and immutable evidence snapshot
-          through the maintenance API.
+          Ticket creation is not available in this walkthrough yet. Explicit
+          confirmation is deferred to GD-02B-4. No maintenance ticket has been
+          saved. Existing manual maintenance forms remain available outside the
+          walkthrough.
         </p>
-      )}
-      {state.stage === "complete" && (
-        <p>
-          Ticket <strong>{state.ticketId}</strong> was returned by the backend.
-          Inspect its diagnosis, evidence and history in Maintenance.
-        </p>
-      )}
-      {state.error && (
-        <div role="alert">
-          <p>{state.error}</p>
-          <button onClick={onRetry}>Retry demo ticket save</button>
-        </div>
       )}
       <div
         className="narration-panel"
@@ -145,18 +183,26 @@ export default function GuidedBanner({
         {state.paused ? (
           <button onClick={onResume}>Resume demo</button>
         ) : (
-          <button onClick={onPause} disabled={state.stage === "complete"}>
-            Pause demo
-          </button>
+          <button onClick={onPause}>Pause demo</button>
         )}
         <button onClick={onReset}>Reset demo</button>
         <button
-          onClick={onSkip}
-          disabled={state.stage === "saving" || state.stage === "complete"}
+          onClick={onPrevious}
+          disabled={state.paused || state.stage === "introduction"}
         >
-          Skip to Results
+          Previous
         </button>
-        <button onClick={onManual}>Take Manual Control</button>
+        <button
+          onClick={onNext}
+          disabled={
+            state.paused ||
+            state.readiness !== "ready" ||
+            state.stage === "maintenance-handoff"
+          }
+        >
+          Next
+        </button>
+        <button onClick={onExit}>Exit walkthrough</button>
       </div>
     </section>
   );

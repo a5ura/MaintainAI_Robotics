@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+import { initialGuide } from "./guided";
 import { StrictMode } from "react";
 import { act, cleanup, renderHook } from "@testing-library/react";
 import { afterEach, expect, it, vi } from "vitest";
@@ -6,7 +7,7 @@ import { useGuideNarration } from "./useGuideNarration";
 import type { NarrationSnapshot } from "./guideNarration";
 import { fakeVoice, installSpeech } from "./testSpeech";
 const sim: NarrationSnapshot = {
-  state: { stage: "simulation", paused: false, skipTour: false },
+  state: initialGuide(1),
   t: 0,
   result: null,
   backendError: "",
@@ -29,7 +30,19 @@ function mount(strict = false) {
     act(() => hook.result.current.start());
     hook.rerender(sim);
   };
-  return { ...hook, begin };
+  return {
+    ...hook,
+    begin,
+    rerender: (snapshot: NarrationSnapshot) =>
+      hook.rerender(
+        snapshot.state?.stage === "introduction" && snapshot.t >= 6
+          ? {
+              ...snapshot,
+              state: { ...snapshot.state, stage: "fault-detection" },
+            }
+          : snapshot,
+      ),
+  };
 }
 it("is enabled but silent before interaction; Strict Mode and clock rerenders do not duplicate speech", () => {
   const { spoken } = installSpeech();
@@ -54,7 +67,7 @@ it("replaces rapid cues and ignores stale asynchronous speech events", () => {
   h.rerender({ ...sim, t: 12 });
   expect(spoken.map((s) => s.text)).toEqual([
     "This simulated robot picks, carries, and places a part.",
-    "Simulated presence is lost while hold remains commanded.",
+    "Simulated presence was lost while hold was commanded at the loss.",
     "MaintainAI is comparing the recorded evidence.",
   ]);
   act(() => {
@@ -125,7 +138,7 @@ it("delayed discovery speaks only the current cue and repeated voice events do n
   h.rerender({ ...sim, t: 6 });
   act(() => s.setVoices([fakeVoice()]));
   expect(s.spoken).toHaveLength(1);
-  expect(s.spoken[0].text).toContain("presence is lost");
+  expect(s.spoken[0].text).toContain("presence was lost");
   act(() => s.setVoices([fakeVoice()]));
   expect(s.spoken).toHaveLength(1);
   act(() => s.setVoices([fakeVoice("Remote", "en-US", false)]));
@@ -216,13 +229,15 @@ it("the completion cue survives a parent rerender and does not repeat", () => {
   h.begin();
   const complete = {
     ...sim,
-    state: { ...sim.state!, stage: "complete" as const, ticketId: "T1" },
+    state: { ...sim.state!, stage: "maintenance-handoff" as const },
   };
   h.rerender(complete);
   const count = s.spoken.length;
   h.rerender({ ...complete });
   expect(s.spoken).toHaveLength(count);
-  expect(s.spoken.at(-1)?.text).toContain("technician review");
+  expect(s.spoken.at(-1)?.text).toContain(
+    "No maintenance ticket has been saved",
+  );
 });
 it("page exit stops speech and requires a new explicit interaction", () => {
   const s = installSpeech();
@@ -266,4 +281,30 @@ it("evidence/hash and history navigation stop narration without changing guide s
   act(() => window.dispatchEvent(new Event("popstate")));
   expect(h.result.current.status).toBe("stopped");
   expect(s.spoken).toHaveLength(2);
+});
+
+it("replaces speech at a stage boundary even when the spoken sentence is unchanged", () => {
+  const s = installSpeech();
+  const h = mount();
+  h.begin();
+  h.rerender({
+    ...sim,
+    t: 6,
+    state: { ...sim.state!, stage: "robot-operation" },
+  });
+  const previous = s.spoken.at(-1)!;
+  const oldError = previous.onerror!;
+  h.rerender({
+    ...sim,
+    t: 6,
+    state: { ...sim.state!, stage: "fault-detection" },
+  });
+  expect(s.spoken.at(-1)).not.toBe(previous);
+  expect(s.spoken.at(-1)!.text).toBe(previous.text);
+  act(() =>
+    oldError.call(previous, {
+      error: "synthesis-failed",
+    } as SpeechSynthesisErrorEvent),
+  );
+  expect(h.result.current.status).toBe("speaking");
 });

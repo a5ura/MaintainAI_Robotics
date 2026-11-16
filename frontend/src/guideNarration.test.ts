@@ -4,6 +4,7 @@ import {
   selectNarrationVoice,
   type NarrationSnapshot,
 } from "./guideNarration";
+import { initialGuide } from "./guided";
 import { fakeVoice } from "./testSpeech";
 import type { Diagnosis } from "./model";
 const result: Diagnosis = {
@@ -25,7 +26,7 @@ const result: Diagnosis = {
   ranking_basis: "ordinal",
 };
 const base: NarrationSnapshot = {
-  state: { stage: "simulation", paused: false, skipTour: false },
+  state: initialGuide(1),
   t: 0,
   result: null,
   backendError: "",
@@ -52,25 +53,36 @@ it("selects David before a local default; never selects remote or non-English vo
 it.each([
   [{ state: null }, null],
   [{}, "simulation-intro"],
-  [{ t: 6 }, "simulation-loss"],
-  [{ t: 12 }, "analysis-pending"],
-  [{ t: 12, backendError: "offline" }, "analysis-error"],
-  [{ state: { ...base.state!, stage: "evidence" }, result }, "evidence-D1"],
-  [{ state: { ...base.state!, stage: "checks" }, result }, "checks-D1"],
-  [{ state: { ...base.state!, stage: "saving" }, result }, "saving-D1"],
   [
-    { state: { ...base.state!, stage: "complete", ticketId: "T1" }, result },
-    "complete-T1",
+    { state: { ...base.state!, stage: "fault-detection" }, t: 6 },
+    "fault-detection:simulation-loss",
   ],
   [
-    { state: { ...base.state!, stage: "saving", error: "failed" } },
-    "save-error",
+    { state: { ...base.state!, stage: "fault-detection" }, t: 12 },
+    "fault-detection:analysis-pending",
+  ],
+  [
+    {
+      state: { ...base.state!, stage: "fault-detection" },
+      t: 12,
+      backendError: "offline",
+    },
+    "fault-detection:analysis-error",
+  ],
+  [
+    { state: { ...base.state!, stage: "evidence-investigation" }, result },
+    "evidence-D1",
+  ],
+  [{ state: { ...base.state!, stage: "diagnosis" }, result }, "checks-D1"],
+  [
+    { state: { ...base.state!, stage: "maintenance-handoff" }, result },
+    "maintenance-handoff",
   ],
 ] as const)("maps actual state to a stable cue %s", (patch, id) => {
   expect(guideNarrationCue({ ...base, ...patch })?.id ?? null).toBe(id);
 });
 it("does not assert loss or a proven root cause for normal/inconclusive results", () => {
-  const state = { ...base.state!, stage: "evidence" as const };
+  const state = { ...base.state!, stage: "evidence-investigation" as const };
   expect(
     guideNarrationCue({
       ...base,
@@ -86,13 +98,16 @@ it("does not assert loss or a proven root cause for normal/inconclusive results"
     })?.text,
   ).toContain("normal cycle");
   expect(
-    guideNarrationCue({ ...base, state: { ...state, stage: "checks" }, result })
-      ?.text,
+    guideNarrationCue({
+      ...base,
+      state: { ...state, stage: "diagnosis" },
+      result,
+    })?.text,
   ).toContain("operator verification");
   expect(
     guideNarrationCue({
       ...base,
-      state: { ...state, stage: "checks" },
+      state: { ...state, stage: "diagnosis" },
       result: { ...result, hypotheses: [] },
     })?.text,
   ).toBe("Review the evidence before identifying a cause.");

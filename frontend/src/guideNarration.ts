@@ -21,31 +21,32 @@ export function guideNarrationCue({
   backendError,
 }: NarrationSnapshot): NarrationCue | null {
   if (!state) return null;
-  if (state.error)
-    return {
-      id: "save-error",
-      text: "Ticket saving failed. Use the save retry control.",
-    };
-  if (state.stage === "simulation") {
+  if (state.stage === "introduction") return INTRO_CUE;
+  if (state.stage === "robot-operation" || state.stage === "fault-detection") {
+    if (t >= 12 && result)
+      return {
+        id: `${state.stage}:analysis-ready-${result.id ?? result.status}`,
+        text: "Review the backend observations and their evidence references.",
+      };
     if (t >= 12)
       return backendError
         ? {
-            id: "analysis-error",
+            id: `${state.stage}:analysis-error`,
             text: "Analysis is unavailable. Retry when the service is ready.",
           }
         : {
-            id: "analysis-pending",
+            id: `${state.stage}:analysis-pending`,
             text: "MaintainAI is comparing the recorded evidence.",
           };
     return t >= 6
       ? {
-          id: "simulation-loss",
-          text: "Simulated presence is lost while hold remains commanded.",
+          id: `${state.stage}:simulation-loss`,
+          text: "Simulated presence was lost while hold was commanded at the loss.",
         }
-      : INTRO_CUE;
+      : { ...INTRO_CUE, id: "robot-operation" };
   }
   const resultKey = result?.id ?? result?.status ?? "pending";
-  if (state.stage === "evidence")
+  if (state.stage === "evidence-investigation")
     return {
       id: `evidence-${resultKey}`,
       text:
@@ -55,21 +56,16 @@ export function guideNarrationCue({
             ? "The backend reports a normal cycle."
             : "Review the backend observations and their evidence references.",
     };
-  if (state.stage === "checks")
+  if (state.stage === "diagnosis")
     return {
       id: `checks-${resultKey}`,
       text: result?.hypotheses.length
         ? "Possible causes need operator verification before repair."
         : "Review the evidence before identifying a cause.",
     };
-  if (state.stage === "saving")
-    return {
-      id: `saving-${resultKey}`,
-      text: "Saving this demonstration's evidence as a maintenance ticket.",
-    };
   return {
-    id: `complete-${state.ticketId ?? ""}`,
-    text: "The ticket preserves evidence for technician review.",
+    id: "maintenance-handoff",
+    text: "Ticket confirmation is not available in this walkthrough yet. No maintenance ticket has been saved.",
   };
 }
 
