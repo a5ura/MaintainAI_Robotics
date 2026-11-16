@@ -1,0 +1,18 @@
+
+Running 6 tests using 1 worker
+
+(node:25071) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 e2e/ui03.spec.ts:13:3 › UI03 investigation across six scenarios at 1366 (35.7s)
+  ✓  2 e2e/ui03.spec.ts:13:3 › UI03 investigation across six scenarios at 1280 (33.5s)
+  ✓  3 e2e/ui03.spec.ts:13:3 › UI03 investigation across six scenarios at 390 (42.0s)
+  ✓  4 e2e/ui03.spec.ts:152:1 › UI03 paused guide selection draws and releases a historical marker without domain side effects (2.9s)
+  ✓  5 e2e/ui03.spec.ts:301:1 › UI03 invalid backend FK suppresses spatial highlighting but keeps complete evidence (7.2s)
+  ✓  6 e2e/ui03.spec.ts:328:1 › UI03 WebGL unavailable retains selectable evidence and text inspector (3.9s)
+
+  6 passed (2.1m)
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

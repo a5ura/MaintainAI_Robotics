@@ -1,0 +1,23 @@
+Reviewed head: 794798d3071a5f30e1707dcdd724b7d144106ed1
+Current test run: 42/42 passed, sequential, fresh disposable full-suite.sqlite3
+18 matrix selections: actual group and both mesh world positions match recorded TCP
+Maximum per-coordinate world error (m): 0.0
+E6 -> E5 updated world position; clearing/invalid FK: active canvas, zero historical markers
+Final application assets unchanged since before full suite; disk = served bytes:
+38ba5e13ddadeb6ffd57c26b777fe483615b9be3c3479d49c3dcf23737079471 Maintenance-85OhqLvS.js
+4930908acfda444fa41979761e6ab74dc92baa0fb1d8e4e0d53423853ad763c2 Workcell-BM9wfO25.js
+7d69e38e9ea03b8ec07330884e21da6fc5ce399071cb34c351524323b84b00cc index-BDho34mv.js
+358175f584b4ad7343554d8235c1469b1d888a9f7b2297ea78e587304fa65aef index-CgnqDe3z.css
+
+Tracked changes conform to targeted whitelist:
+frontend/e2e/ui03.spec.ts
+frontend/src/evidenceSelection.test.tsx
+frontend/src/evidenceSelection.tsx
+New test-only sceneProbe.ts is not imported by production src.
+No changes to EvidenceHighlight.tsx, Workcell/geometry/style/App/backend/API/schema/GD-01/maintenance/export/hosting implementation.
+
+Tested source/test file hashes:
+11dbd29569d1366e7d2a0cba102cefe17644d725ede53c4d2250c20de9e6fd32 frontend/src/evidenceSelection.tsx
+855fbf504f913e9bdbb23135031f7817b31afdb747ff4b92e3c718ddd9358af4 frontend/src/evidenceSelection.test.tsx
+8c689d673ce108b98204f3af4c6d16300dd74e302de54cd2463fbbf6350d0a3c frontend/e2e/ui03.spec.ts
+1176228df24485eab15df3e0609c6e1d3c1df27bebe21cc885775e541964930b frontend/e2e/sceneProbe.ts

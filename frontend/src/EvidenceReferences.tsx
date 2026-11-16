@@ -1,4 +1,12 @@
 import type { Evidence } from "./model";
+import { useInvestigation } from "./evidenceSelection";
+export const presenceText = (value: boolean | null | undefined) =>
+  value === true ? "PRESENT" : value === false ? "ABSENT" : "UNKNOWN";
+export const placementText = (placement: Evidence["placement"]) =>
+  placement?.observed?.map((v) => v.toFixed(3)).join(", ") ??
+  (placement?.object_present === false
+    ? "explicitly absent"
+    : "unknown / position unavailable");
 
 export function evidenceDescription(e: Evidence) {
   const extra = [
@@ -6,7 +14,7 @@ export function evidenceDescription(e: Evidence) {
       ? `camera ${e.vision.status}, acquired ${e.vision.acquired_t}s, confidence ${e.vision.confidence ?? "unknown"}`
       : "",
     e.placement
-      ? `observed placement ${e.placement.observed?.map((v) => v.toFixed(3)).join(", ") ?? "absent"} (${e.placement.source})`
+      ? `observed placement ${placementText(e.placement)} (${e.placement.source})`
       : "",
     e.controller ? `controller ${e.controller.state}` : "",
     ...(e.events ?? []).map(
@@ -15,7 +23,7 @@ export function evidenceDescription(e: Evidence) {
   ]
     .filter(Boolean)
     .join(" · ");
-  return `${e.phase} · grip ${e.grip_command ? "HOLD" : "RELEASE"} · object ${e.object_present === null ? "UNKNOWN" : e.object_present ? "PRESENT" : "ABSENT"} · vacuum ${e.pressure_kpa ?? "unknown"} kPa · verification ${e.verification ?? "not sampled"}${extra ? " · " + extra : ""}`;
+  return `${e.phase} · grip ${e.grip_command ? "HOLD" : "RELEASE"} · Object at gripper ${presenceText(e.object_present)} · vacuum ${e.pressure_kpa ?? "unknown"} kPa · verification ${e.verification ?? "not sampled"}${extra ? " · " + extra : ""}`;
 }
 
 export function EvidenceReferences({
@@ -27,6 +35,8 @@ export function EvidenceReferences({
   timeline: Evidence[];
   label: string;
 }) {
+  const investigation = useInvestigation();
+  const active = investigation?.result?.timeline === timeline;
   return (
     <div className="evidence-references">
       <span className="evidence-label">{label}</span>
@@ -34,7 +44,8 @@ export function EvidenceReferences({
         <span className="muted">None observed</span>
       ) : (
         ids.map((id) => {
-          const row = timeline.find((e) => e.id === id);
+          const matches = timeline.filter((e) => e.id === id);
+          const row = matches.length === 1 ? matches[0] : null;
           if (!row)
             return (
               <span key={id} className="fault">
@@ -47,6 +58,12 @@ export function EvidenceReferences({
               key={id}
               href={`#evidence-${id}`}
               title={description}
+              aria-current={
+                active && investigation?.selectedId === id ? "true" : undefined
+              }
+              onClick={() => {
+                if (active) investigation?.select(id);
+              }}
               aria-label={`${label} ${id} at ${row.t.toFixed(1)} seconds: ${description}`}
             >
               {id}

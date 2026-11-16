@@ -40,13 +40,11 @@ test("real normal and dropped-object cycles use FastAPI and display evidence", a
   await expect(page).toHaveURL(/#evidence-E6$/);
   await expect(page.locator("#evidence-E6")).toBeFocused();
   await expect(page.locator("#evidence-E6")).toContainText("12 kPa");
-  await page
-    .locator("summary")
-    .filter({ hasText: "Premature release command" })
-    .click();
   const release = page
     .locator("details")
     .filter({ hasText: "Premature release command" });
+  if (!(await release.evaluate((el) => (el as HTMLDetailsElement).open)))
+    await release.locator("summary").click();
   await expect(release).toContainText("Limited support");
   await release
     .getByRole("link", { name: /Contradicts E6 at 6.0 seconds/ })

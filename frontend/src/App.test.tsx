@@ -51,7 +51,7 @@ it("renders computed backend results and evidence references", async () => {
   expect(
     screen.getByRole("heading", { name: "Dropped object" }),
   ).toBeInTheDocument();
-  expect(screen.getByText("E3 · reference unavailable")).toBeInTheDocument();
+  expect(screen.getAllByText("E3 · reference unavailable")).toHaveLength(2);
   const payload = JSON.parse(vi.mocked(fetch).mock.calls[0][1]!.body as string);
   expect(payload.samples.length).toBe(11);
 });

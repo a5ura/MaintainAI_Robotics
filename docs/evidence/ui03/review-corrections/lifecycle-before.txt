@@ -1,0 +1,53 @@
+
+> maintainai-robotics@0.1.0 test
+> vitest run src/evidenceSelection.test.tsx
+
+
+ RUN  v3.1.3 /workspace/MaintainAI_Robotics/frontend
+
+ ❯ src/evidenceSelection.test.tsx (9 tests | 2 failed) 46ms
+   ✓ scopes selection to the result object, not E6 or a repeatable diagnosis ID alone 20ms
+   ✓ clears and rejects stale callbacks on reset context change 3ms
+   ✓ clears and rejects stale callbacks on scenario context change 2ms
+   ✓ clears and rejects stale callbacks on seed context change 3ms
+   ✓ clears and rejects stale callbacks on ticket context change 1ms
+   ✓ retains an unavailable-reference explanation without fabricating a row 1ms
+   ✓ permits only finite recorded positions with backend-valid kinematics 0ms
+   × permanently rejects a retained Operations callback after Maintenance and back (Strict Mode: false) 11ms
+     → expected 'E6' to be null
+   × permanently rejects a retained Operations callback after Maintenance and back (Strict Mode: true) 3ms
+     → expected 'E6' to be null
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/evidenceSelection.test.tsx > permanently rejects a retained Operations callback after Maintenance and back (Strict Mode: false)
+ FAIL  src/evidenceSelection.test.tsx > permanently rejects a retained Operations callback after Maintenance and back (Strict Mode: true)
+AssertionError: expected 'E6' to be null
+
+- Expected:
+null
+
++ Received:
+"E6"
+
+ ❯ src/evidenceSelection.test.tsx:92:37
+     90|   expect(result.current.selectedId).toBeNull();
+     91|   act(() => retained("E6"));
+     92|   expect(result.current.selectedId).toBeNull();
+       |                                     ^
+     93|   act(() => result.current.select("E6"));
+     94|   expect(result.current.row).toBe(row);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 7 passed (9)
+   Start at  16:56:35
+   Duration  1.17s (transform 145ms, setup 0ms, collect 294ms, tests 46ms, environment 552ms, prepare 95ms)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

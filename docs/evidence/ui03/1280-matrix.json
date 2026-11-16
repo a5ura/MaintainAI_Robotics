@@ -1,0 +1,74 @@
+[
+  {
+    "selection": "normal",
+    "resolved": "normal",
+    "diagnosis": "D-3e8ca7df29b6a5ef40649218",
+    "selected": "E6",
+    "recordedTCP": [
+      1.8609061375225322,
+      0.9139926074979805,
+      -0.800354536037047
+    ],
+    "status": "normal"
+  },
+  {
+    "selection": "drop",
+    "resolved": "drop",
+    "diagnosis": "D-973774d225afd7785d537ddd",
+    "selected": "E6",
+    "recordedTCP": [
+      1.8609061375225322,
+      0.9139926074979805,
+      -0.800354536037047
+    ],
+    "status": "detected"
+  },
+  {
+    "selection": "position",
+    "resolved": "position",
+    "diagnosis": "D-73b0b9f1722cb0a22de48abb",
+    "selected": "E6",
+    "recordedTCP": [
+      1.8609061375225322,
+      0.9139926074979805,
+      -0.800354536037047
+    ],
+    "status": "detected"
+  },
+  {
+    "selection": "vision",
+    "resolved": "vision",
+    "diagnosis": "D-81af57ba8019819b440c7acf",
+    "selected": "E6",
+    "recordedTCP": [
+      1.8609061375225322,
+      0.9139926074979805,
+      -0.800354536037047
+    ],
+    "status": "detected"
+  },
+  {
+    "selection": "stop",
+    "resolved": "stop",
+    "diagnosis": "D-fe7368cec52b1ca66510cefb",
+    "selected": "E6",
+    "recordedTCP": [
+      1.8609061375225322,
+      0.9139926074979805,
+      -0.800354536037047
+    ],
+    "status": "detected"
+  },
+  {
+    "selection": "random",
+    "resolved": "vision",
+    "diagnosis": "D-81af57ba8019819b440c7acf",
+    "selected": "E6",
+    "recordedTCP": [
+      1.8609061375225322,
+      0.9139926074979805,
+      -0.800354536037047
+    ],
+    "status": "detected"
+  }
+]

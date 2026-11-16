@@ -22,6 +22,11 @@ import OperationsWorkspace from "./OperationsWorkspace";
 import InvestigationSummary from "./InvestigationSummary";
 import DiagnosticDetails from "./DiagnosticDetails";
 import EvidenceTimeline from "./EvidenceTimeline";
+import EvidenceInspector from "./EvidenceInspector";
+import {
+  EvidenceSelectionContext,
+  useEvidenceSelection,
+} from "./evidenceSelection";
 import { fk, trajectory, type Clock, type Diagnosis } from "./model";
 import "./style.css";
 export function App() {
@@ -76,6 +81,10 @@ export function App() {
       void diagnose();
     }
   }, [clock.t]);
+  const investigation = useEvidenceSelection(
+    view === "operations" ? result : null,
+    `${generation.current}:${selection}:${seed}:${view}:${initialTicketId ?? ""}`,
+  );
   function resetSimulation() {
     generation.current++;
     requested.current = false;
@@ -165,131 +174,135 @@ export function App() {
     setView("maintenance");
   }
   return (
-    <AppShell
-      view={view}
-      onOperations={() => {
-        narration.stop();
-        if (guide.state) guide.takeover();
-        setView("operations");
-      }}
-      onMaintenance={() => {
-        narration.stop();
-        if (guide.state) guide.takeover();
-        setInitialTicketId(undefined);
-        setFromDiagnosis(false);
-        setView("maintenance");
-      }}
-      onDiagnostics={openDiagnostics}
-    >
-      {view === "maintenance" ? (
-        <>
-          {guideBanner}
-          <ViewBoundary label="Maintenance">
-            <Suspense
-              fallback={
-                <main id="main-content" role="status">
-                  Loading maintenance…
-                </main>
-              }
-            >
-              <Maintenance
-                initialTicketId={initialTicketId}
-                diagnosis={result}
-                fromDiagnosis={fromDiagnosis}
-                runContext={`${SCENARIOS[scenario]} · seed ${seed}`}
-                onReturn={() => {
-                  narration.stop();
-                  if (guide.state) guide.takeover();
-                  setView("operations");
-                }}
-              />
-            </Suspense>
-          </ViewBoundary>
-        </>
-      ) : (
-        <main id="main-content" className="operations-main" tabIndex={-1}>
-          <div className="workspace-heading">
-            <div>
-              <h1>
-                Operations <span>Cell 01 / R-01</span>
-              </h1>
-              <p>
-                Simulate a cycle. Investigate evidence. Document the repair.
-              </p>
+    <EvidenceSelectionContext.Provider value={investigation}>
+      <AppShell
+        view={view}
+        onOperations={() => {
+          narration.stop();
+          if (guide.state) guide.takeover();
+          setView("operations");
+        }}
+        onMaintenance={() => {
+          narration.stop();
+          if (guide.state) guide.takeover();
+          setInitialTicketId(undefined);
+          setFromDiagnosis(false);
+          setView("maintenance");
+        }}
+        onDiagnostics={openDiagnostics}
+      >
+        {view === "maintenance" ? (
+          <>
+            {guideBanner}
+            <ViewBoundary label="Maintenance">
+              <Suspense
+                fallback={
+                  <main id="main-content" role="status">
+                    Loading maintenance…
+                  </main>
+                }
+              >
+                <Maintenance
+                  initialTicketId={initialTicketId}
+                  diagnosis={result}
+                  fromDiagnosis={fromDiagnosis}
+                  runContext={`${SCENARIOS[scenario]} · seed ${seed}`}
+                  onReturn={() => {
+                    narration.stop();
+                    if (guide.state) guide.takeover();
+                    setView("operations");
+                  }}
+                />
+              </Suspense>
+            </ViewBoundary>
+          </>
+        ) : (
+          <main id="main-content" className="operations-main" tabIndex={-1}>
+            <div className="workspace-heading">
+              <div>
+                <h1>
+                  Operations <span>Cell 01 / R-01</span>
+                </h1>
+                <p>
+                  Simulate a cycle. Investigate evidence. Document the repair.
+                </p>
+              </div>
+              <span className="workspace-disclosure">
+                Simulated workcell · computed diagnostics
+              </span>
             </div>
-            <span className="workspace-disclosure">
-              Simulated workcell · computed diagnostics
-            </span>
-          </div>
-          <OperationsWorkspace
-            clock={clock}
-            selection={selection}
-            seed={seed}
-            scenario={scenario}
-            result={result}
-            busy={busy}
-            error={error}
-            engineeringEnabled={engineeringEnabled}
-            overlays={overlays}
-            tcp={tcp}
-            sensor={sensor}
-            guideActive={!!guide.state}
-            setSelection={setSelection}
-            setSeed={setSeed}
-            onStart={() => {
-              if (guide.state) resumeGuide();
-              else setClock((c) => ({ ...c, running: true }));
-            }}
-            onPause={() => {
-              if (guide.state) pauseGuide();
-              else setClock((c) => ({ ...c, running: false }));
-            }}
-            onReset={reset}
-            onGuide={startGuide}
-            canvas={
-              <Workcell
-                t={clock.t}
-                scenario={scenario}
-                engineering={engineeringEnabled}
-                overlays={overlays}
-                selected={selectedComponent}
-                onSelect={setSelectedComponent}
-              />
-            }
-          >
-            <InvestigationSummary
+            <OperationsWorkspace
               clock={clock}
+              selection={selection}
+              seed={seed}
+              scenario={scenario}
               result={result}
               busy={busy}
               error={error}
-              onRetry={() => void diagnose()}
-              onDetails={openDiagnostics}
+              engineeringEnabled={engineeringEnabled}
+              overlays={overlays}
+              tcp={tcp}
+              sensor={sensor}
+              guideActive={!!guide.state}
+              setSelection={setSelection}
+              setSeed={setSeed}
+              onStart={() => {
+                if (guide.state) resumeGuide();
+                else setClock((c) => ({ ...c, running: true }));
+              }}
+              onPause={() => {
+                if (guide.state) pauseGuide();
+                else setClock((c) => ({ ...c, running: false }));
+              }}
+              onReset={reset}
+              onGuide={startGuide}
+              canvas={
+                <Workcell
+                  t={clock.t}
+                  scenario={scenario}
+                  engineering={engineeringEnabled}
+                  overlays={overlays}
+                  selected={selectedComponent}
+                  historicalEvidence={investigation.row}
+                  onSelect={setSelectedComponent}
+                />
+              }
+            >
+              <InvestigationSummary
+                clock={clock}
+                result={result}
+                busy={busy}
+                error={error}
+                onRetry={() => void diagnose()}
+                onDetails={openDiagnostics}
+              />
+              <EvidenceInspector />
+              {guideBanner}
+            </OperationsWorkspace>
+            <EngineeringPanel
+              t={clock.t}
+              enabled={engineeringEnabled}
+              setEnabled={setEngineeringEnabled}
+              overlays={overlays}
+              setOverlays={setOverlays}
+              selected={selectedComponent}
+              setSelected={setSelectedComponent}
+              result={result}
             />
-            {guideBanner}
-          </OperationsWorkspace>
-          <EngineeringPanel
-            t={clock.t}
-            enabled={engineeringEnabled}
-            setEnabled={setEngineeringEnabled}
-            overlays={overlays}
-            setOverlays={setOverlays}
-            selected={selectedComponent}
-            setSelected={setSelectedComponent}
-            result={result}
-          />
-          <DiagnosticDetails
-            result={result}
-            busy={busy}
-            error={error}
-            onCreateTicket={createTicket}
-          />
-          <EvidenceTimeline result={result} />
-          <footer>
-            <span>MAINTAINAI / ENGINEERING DEMONSTRATOR</span>
-            <span>DETERMINISTIC · EXPLAINABLE · REPRODUCIBLE</span>
-          </footer>
-        </main>
-      )}
-    </AppShell>
+            <DiagnosticDetails
+              result={result}
+              busy={busy}
+              error={error}
+              onCreateTicket={createTicket}
+            />
+            <EvidenceTimeline result={result} />
+            <footer>
+              <span>MAINTAINAI / ENGINEERING DEMONSTRATOR</span>
+              <span>DETERMINISTIC · EXPLAINABLE · REPRODUCIBLE</span>
+            </footer>
+          </main>
+        )}
+      </AppShell>
+    </EvidenceSelectionContext.Provider>
   );
 }

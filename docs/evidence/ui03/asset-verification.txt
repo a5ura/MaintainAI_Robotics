@@ -1,0 +1,34 @@
+Final browser assets: unchanged from pre-suite hashes; served bytes match disk.
+9c1964962ad2068b4fc7c967b8428641ce4a9777e01e9937d14cf19fd0c371c2 Maintenance-DUXQ4b3r.js before=disk=served
+28853dc623b452a01fb0d80ec81fbd5050b872939c3450b6b1f5690250e5d943 Workcell-BlgCcumZ.js before=disk=served
+358175f584b4ad7343554d8235c1469b1d888a9f7b2297ea78e587304fa65aef index-CgnqDe3z.css before=disk=served
+a5cb85d86e635a1247b873f0d5e98e55024657b2a861972f36e9ba4c7913e2e6 index-F3eoimen.js before=disk=served
+
+Protected diff: EMPTY
+backend
+postgres
+cloudflare
+fixtures
+scripts
+render.yaml
+frontend/package.json
+frontend/package-lock.json
+frontend/src/model.ts
+frontend/src/scenarios.ts
+frontend/src/engineering.ts
+frontend/src/RobotVisual.tsx
+frontend/src/WorkcellScene.tsx
+frontend/src/workcellState.ts
+frontend/src/workcellView.ts
+frontend/src/useGuidedDemo.ts
+frontend/src/guided.ts
+frontend/src/GuidedBanner.tsx
+frontend/src/guideNarration.ts
+frontend/src/useGuideNarration.ts
+frontend/src/Maintenance.tsx
+frontend/src/ticketReports.ts
+frontend/src/model.test.tsx
+frontend/src/workcellVisual.test.tsx
+frontend/src/Workcell.test.tsx
+
+App callback bodies separately checked against baseline: app-callbacks.txt
