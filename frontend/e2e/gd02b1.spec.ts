@@ -75,8 +75,11 @@ for (const size of [
       guide.getByRole("button", { name: "Next", exact: true }),
     ).toBeDisabled();
     await expect(
-      guide.getByRole("button", { name: /Create.*ticket/ }),
-    ).toHaveCount(0);
+      guide.getByRole("button", {
+        name: "Create maintenance ticket",
+        exact: true,
+      }),
+    ).toBeEnabled();
     for (let i = 0; i < 2; i++) {
       await guide
         .getByRole("button", { name: "Previous", exact: true })

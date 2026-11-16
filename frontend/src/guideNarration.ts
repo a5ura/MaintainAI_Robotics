@@ -8,6 +8,10 @@ export type NarrationSnapshot = {
   t: number;
   result: Diagnosis | null;
   backendError: string;
+  handoff?: {
+    phase: "submitting" | "success" | "rejected" | "uncertain";
+    ticketId?: string;
+  };
 };
 export const INTRO_CUE: NarrationCue = {
   id: "simulation-intro",
@@ -20,6 +24,7 @@ export function guideNarrationCue({
   t,
   result,
   backendError,
+  handoff,
 }: NarrationSnapshot): NarrationCue | null {
   if (!state) return null;
   if (state.stage === "introduction") return INTRO_CUE;
@@ -58,11 +63,32 @@ export function guideNarrationCue({
       text: "Watch the simulated robot pick up, transport, and place the part. Its joints follow the existing deterministic trajectory. The object-at-gripper signal describes presence, while the grip command describes what was requested. Comparing commands with observations matters: a commanded hold alone does not prove that the object remains attached.",
     };
   }
-  if (state.stage === "maintenance-handoff")
+  if (state.stage === "maintenance-handoff") {
+    if (handoff?.phase === "success")
+      return {
+        id: `maintenance-handoff:saved-${handoff.ticketId}`,
+        text: `The backend confirmed maintenance ticket ${handoff.ticketId}. It preserves the confirmed diagnosis reference for technician review. No repair or operator verification has been recorded by this walkthrough.`,
+      };
+    if (handoff?.phase === "submitting")
+      return {
+        id: "maintenance-handoff:submitting",
+        text: "The confirmed request is awaiting a server response. Persistence has not yet been confirmed. Do not submit another ticket.",
+      };
+    if (handoff?.phase === "uncertain")
+      return {
+        id: "maintenance-handoff:uncertain",
+        text: "The confirmed request has an uncertain outcome. A ticket may already have been saved. Review the retained request to reconcile the same attempt identifier; do not create another identity.",
+      };
+    if (handoff?.phase === "rejected")
+      return {
+        id: "maintenance-handoff:rejected",
+        text: "The server rejected the confirmed request. Review the displayed rejection before an explicit retry of that same attempt. No repair outcome has been recorded.",
+      };
     return {
       id: "maintenance-handoff",
-      text: "Findings would be handed to maintenance with their diagnosis reference, recorded evidence, and recommended checks. No maintenance ticket has been saved. Ticket confirmation is not available in this walkthrough yet. Existing maintenance records are separate from this unsaved handoff, and any future repair outcome still needs an operator's verification.",
+      text: "Review the real diagnosis, evidence, proposed ticket and verification checks. No maintenance ticket has been saved. Create maintenance ticket opens a separate confirmation step; only explicit confirmation authorizes a persistent shared record. Existing records are separate, and no repair or operator check is claimed.",
     };
+  }
   if (!result)
     return {
       id: `${state.stage}:analysis-${backendError ? "error" : "pending"}`,
