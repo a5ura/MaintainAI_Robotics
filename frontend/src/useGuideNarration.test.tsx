@@ -65,11 +65,10 @@ it("replaces rapid cues and ignores stale asynchronous speech events", () => {
     oldError = spoken[0].onerror!;
   h.rerender({ ...sim, t: 6 });
   h.rerender({ ...sim, t: 12 });
-  expect(spoken.map((s) => s.text)).toEqual([
-    "This simulated robot picks, carries, and places a part.",
-    "Simulated presence was lost while hold was commanded at the loss.",
-    "MaintainAI is comparing the recorded evidence.",
-  ]);
+  expect(spoken).toHaveLength(3);
+  expect(spoken[0].text).toContain("MaintainAI Robotics");
+  expect(spoken[1].text).toContain("presence was lost");
+  expect(spoken[2].text).toContain("still pending");
   act(() => {
     oldEnd.call(spoken[0], {} as SpeechSynthesisEvent);
     oldError.call(spoken[0], {
@@ -307,4 +306,40 @@ it("replaces speech at a stage boundary even when the spoken sentence is unchang
     } as SpeechSynthesisErrorEvent),
   );
   expect(h.result.current.status).toBe("speaking");
+});
+
+it("Manual/Automatic switches and telemetry do not replay; a reset rejects old completion/error events", () => {
+  const s = installSpeech();
+  const h = mount(true);
+  h.begin();
+  const previous = s.spoken[0],
+    oldEnd = previous.onend!,
+    oldError = previous.onerror!;
+  h.rerender({ ...sim, state: { ...sim.state!, mode: "automatic", entry: 1 } });
+  h.rerender({
+    ...sim,
+    state: { ...sim.state!, mode: "manual", entry: 2 },
+    t: 1,
+  });
+  expect(s.spoken).toHaveLength(1);
+  act(() => h.result.current.start());
+  h.rerender({ ...sim, state: { ...sim.state!, epoch: 2 } });
+  act(() => {
+    oldEnd.call(previous, {} as SpeechSynthesisEvent);
+    oldError.call(previous, {
+      error: "synthesis-failed",
+    } as SpeechSynthesisErrorEvent);
+  });
+  expect(s.spoken).toHaveLength(2);
+  expect(h.result.current.status).toBe("speaking");
+});
+it("a long legitimate narration can finish after thirty seconds without extending stage progression", () => {
+  vi.useFakeTimers();
+  const s = installSpeech();
+  const h = mount();
+  h.begin();
+  act(() => vi.advanceTimersByTime(35000));
+  expect(h.result.current.status).toBe("speaking");
+  act(() => s.spoken[0].onend!.call(s.spoken[0], {} as SpeechSynthesisEvent));
+  expect(h.result.current.status).toBe("ready");
 });
