@@ -1,0 +1,160 @@
+{
+  "environment": "Cloud Chromium/software WebGL, not Windows GPU/FPS",
+  "transforms": {
+    "E6": {
+      "expected": [
+        1.8609061375225322,
+        0.9139926074979805,
+        -0.800354536037047
+      ],
+      "scene": {
+        "canvases": 1,
+        "markers": 1,
+        "world": [
+          1.8609061375225322,
+          0.9139926074979805,
+          -0.800354536037047
+        ],
+        "local": [
+          1.8609061375225322,
+          0.9139926074979805,
+          -0.800354536037047
+        ],
+        "meshWorld": [
+          [
+            1.8609061375225322,
+            0.9139926074979805,
+            -0.800354536037047
+          ],
+          [
+            1.8609061375225322,
+            0.9139926074979805,
+            -0.800354536037047
+          ]
+        ],
+        "ancestors": 1
+      }
+    },
+    "E5": {
+      "expected": [
+        1.8609061375225324,
+        0.9139926074979805,
+        0.8003545360370465
+      ],
+      "scene": {
+        "canvases": 1,
+        "markers": 1,
+        "world": [
+          1.8609061375225324,
+          0.9139926074979805,
+          0.8003545360370465
+        ],
+        "local": [
+          1.8609061375225324,
+          0.9139926074979805,
+          0.8003545360370465
+        ],
+        "meshWorld": [
+          [
+            1.8609061375225324,
+            0.9139926074979805,
+            0.8003545360370465
+          ],
+          [
+            1.8609061375225324,
+            0.9139926074979805,
+            0.8003545360370465
+          ]
+        ],
+        "ancestors": 1
+      }
+    },
+    "recovered": {
+      "canvases": 1,
+      "markers": 1,
+      "world": [
+        1.8609061375225324,
+        0.9139926074979805,
+        0.8003545360370465
+      ],
+      "local": [
+        1.8609061375225324,
+        0.9139926074979805,
+        0.8003545360370465
+      ],
+      "meshWorld": [
+        [
+          1.8609061375225324,
+          0.9139926074979805,
+          0.8003545360370465
+        ],
+        [
+          1.8609061375225324,
+          0.9139926074979805,
+          0.8003545360370465
+        ]
+      ],
+      "ancestors": 1
+    },
+    "cleared": {
+      "canvases": 1,
+      "markers": 0,
+      "world": null,
+      "local": null,
+      "meshWorld": [],
+      "ancestors": 0
+    }
+  },
+  "before": {
+    "contexts": 2,
+    "renderer": {
+      "id": 2,
+      "liveBuffers": 118,
+      "createdBuffers": 118,
+      "drawCalls": 380,
+      "triangles": 21092
+    },
+    "liveBuffers": 118,
+    "createdBuffers": 118,
+    "deletedBuffers": 0,
+    "lastFrame": {
+      "calls": 30,
+      "triangles": 1824
+    }
+  },
+  "selected": {
+    "contexts": 2,
+    "renderer": {
+      "id": 2,
+      "liveBuffers": 126,
+      "createdBuffers": 126,
+      "drawCalls": 474,
+      "triangles": 27140
+    },
+    "liveBuffers": 126,
+    "createdBuffers": 126,
+    "deletedBuffers": 0,
+    "lastFrame": {
+      "calls": 32,
+      "triangles": 2112
+    }
+  },
+  "released": {
+    "contexts": 3,
+    "renderer": {
+      "id": 3,
+      "liveBuffers": 0,
+      "createdBuffers": 126,
+      "drawCalls": 124,
+      "triangles": 7872
+    },
+    "liveBuffers": 0,
+    "createdBuffers": 252,
+    "deletedBuffers": 126,
+    "lastFrame": {
+      "calls": 30,
+      "triangles": 1824
+    }
+  },
+  "errors": []
+}

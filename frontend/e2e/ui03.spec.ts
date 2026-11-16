@@ -2,6 +2,7 @@ import { expect, test } from "@playwright/test";
 import { mkdir, writeFile } from "node:fs/promises";
 import { speechMock } from "./speechMock";
 import { workcellProbe } from "./workcellProbe";
+import { sceneProbe, expectMarkerWorld } from "./sceneProbe";
 import { resolveScenario } from "../src/scenarios";
 import type { Diagnosis } from "../src/model";
 const directory = "../docs/evidence/ui03";
@@ -15,6 +16,7 @@ for (const size of [
   }) => {
     test.setTimeout(180000);
     await speechMock(page);
+    await sceneProbe(page);
     await page.setViewportSize(size);
     await page.goto("/");
     await expect(page.locator("canvas")).toBeVisible();
@@ -89,6 +91,7 @@ for (const size of [
         "data-position",
         reading.tcp.join(","),
       );
+      const renderedScene = await expectMarkerWorld(page, reading.tcp);
       expect(await page.locator("progress").getAttribute("value")).toBe(
         progress,
       );
@@ -138,6 +141,8 @@ for (const size of [
         diagnosis: data.id,
         selected: reading.id,
         recordedTCP: reading.tcp,
+        renderedWorld: renderedScene.world,
+        meshWorld: renderedScene.meshWorld,
         status: data.status,
       });
     }
@@ -158,6 +163,7 @@ test("UI03 paused guide selection draws and releases a historical marker without
 }) => {
   await speechMock(page);
   await workcellProbe(page);
+  await sceneProbe(page);
   const requests: string[] = [],
     errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
@@ -165,6 +171,11 @@ test("UI03 paused guide selection draws and releases a historical marker without
     if (r.url().includes("/api/")) requests.push(r.method() + r.url());
   });
   await page.goto("/");
+  const diagnosisResponse = page.waitForResponse(
+    (response) =>
+      response.url().endsWith("/api/diagnose") &&
+      response.request().method() === "POST",
+  );
   await page
     .getByRole("button", { name: "Start Guided Demo", exact: true })
     .click();
@@ -175,6 +186,9 @@ test("UI03 paused guide selection draws and releases a historical marker without
     page.getByRole("heading", { name: "Dropped object", exact: true }),
   ).toBeVisible();
   await page.getByRole("button", { name: "Pause demo", exact: true }).click();
+  const diagnosis: Diagnosis = await (await diagnosisResponse).json();
+  const reading6 = diagnosis.timeline.find((row) => row.id === "E6")!;
+  const reading5 = diagnosis.timeline.find((row) => row.id === "E5")!;
   await page
     .getByRole("button", { name: "Replay narration", exact: true })
     .click();
@@ -215,6 +229,7 @@ test("UI03 paused guide selection draws and releases a historical marker without
     )
     .toBe(true);
   const selected = await page.evaluate(() => window.__ui02GPU.read());
+  const world6 = await expectMarkerWorld(page, reading6.tcp);
   expect(selected.liveBuffers).toBeGreaterThan(before.liveBuffers);
   await page
     .getByRole("group", { name: "Recorded readings" })
@@ -227,6 +242,8 @@ test("UI03 paused guide selection draws and releases a historical marker without
       { timeout: 8000 },
     )
     .toBeGreaterThan(selected.renderer!.drawCalls);
+  const world5 = await expectMarkerWorld(page, reading5.tcp);
+  expect(world5.world).not.toEqual(world6.world);
   expect(
     (await page.evaluate(() => window.__ui02GPU.read())).createdBuffers,
   ).toBe(selected.createdBuffers);
@@ -270,6 +287,7 @@ test("UI03 paused guide selection draws and releases a historical marker without
       { timeout: 8000 },
     )
     .toBe(true);
+  const recoveredWorld = await expectMarkerWorld(page, reading5.tcp);
   await expect(page.getByTestId("historical-marker")).toContainText(
     "Historical E5",
   );
@@ -289,6 +307,13 @@ test("UI03 paused guide selection draws and releases a historical marker without
       timeout: 8000,
     })
     .toBe(before.liveBuffers);
+  await expect
+    .poll(() => page.evaluate(() => window.__ui03Scene.read().markers))
+    .toBe(0);
+  expect((await page.evaluate(() => window.__ui03Scene.read())).canvases).toBe(
+    1,
+  );
+  const clearedWorld = await page.evaluate(() => window.__ui03Scene.read());
   await page.getByRole("button", { name: "Maintenance", exact: true }).click();
   await expect(
     page.getByRole("region", { name: "Evidence inspector" }),
@@ -305,6 +330,12 @@ test("UI03 paused guide selection draws and releases a historical marker without
     JSON.stringify(
       {
         environment: "Cloud Chromium/software WebGL, not Windows GPU/FPS",
+        transforms: {
+          E6: { expected: reading6.tcp, scene: world6 },
+          E5: { expected: reading5.tcp, scene: world5 },
+          recovered: recoveredWorld,
+          cleared: clearedWorld,
+        },
         before,
         selected,
         released: await page.evaluate(() => window.__ui02GPU.read()),
@@ -319,6 +350,7 @@ test("UI03 paused guide selection draws and releases a historical marker without
 test("UI03 invalid backend FK suppresses spatial highlighting but keeps complete evidence", async ({
   page,
 }) => {
+  await sceneProbe(page);
   await page.route("**/api/diagnose", async (route) => {
     const payload = route.request().postDataJSON();
     payload.samples.find((s: { t: number }) => s.t === 6).tcp = [999, 999, 999];
@@ -326,6 +358,7 @@ test("UI03 invalid backend FK suppresses spatial highlighting but keeps complete
     await route.fulfill({ response });
   });
   await page.goto("/");
+  await expect(page.locator("canvas")).toBeVisible();
   await page.clock.install();
   await page.getByRole("button", { name: "Start", exact: true }).click();
   await page.clock.runFor(13000);
@@ -341,6 +374,21 @@ test("UI03 invalid backend FK suppresses spatial highlighting but keeps complete
     "unavailable",
   );
   await expect(inspector).toContainText("999.000 / 999.000 / 999.000");
+  await expect
+    .poll(() => page.evaluate(() => window.__ui03Scene.read().canvases))
+    .toBe(1);
+  expect((await page.evaluate(() => window.__ui03Scene.read())).markers).toBe(
+    0,
+  );
+  await mkdir(directory, { recursive: true });
+  await writeFile(
+    `${directory}/invalid-world.json`,
+    JSON.stringify(
+      await page.evaluate(() => window.__ui03Scene.read()),
+      null,
+      2,
+    ),
+  );
 });
 
 test("UI03 WebGL unavailable retains selectable evidence and text inspector", async ({

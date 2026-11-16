@@ -1,0 +1,13 @@
+
+Running 6 tests using 1 worker
+
+(node:1861) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 e2e/ui03.spec.ts:14:3 › UI03 investigation across six scenarios at 1366 (55.2s)
+  ✓  2 e2e/ui03.spec.ts:14:3 › UI03 investigation across six scenarios at 1280 (1.1m)
+  ✓  3 e2e/ui03.spec.ts:14:3 › UI03 investigation across six scenarios at 390 (47.3s)
+  ✓  4 e2e/ui03.spec.ts:159:1 › UI03 paused guide selection draws and releases a historical marker without domain side effects (4.8s)
+  ✓  5 e2e/ui03.spec.ts:348:1 › UI03 invalid backend FK suppresses spatial highlighting but keeps complete evidence (12.7s)
+  ✓  6 e2e/ui03.spec.ts:383:1 › UI03 WebGL unavailable retains selectable evidence and text inspector (5.1s)
+
+  6 passed (3.3m)

@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+import { StrictMode, type ReactNode } from "react";
 import { act, cleanup, renderHook } from "@testing-library/react";
 import { afterEach, expect, it } from "vitest";
 import {
@@ -73,3 +74,54 @@ it("permits only finite recorded positions with backend-valid kinematics", () =>
   ])
     expect(historicalPosition(invalid as Evidence | null)).toBeNull();
 });
+
+it.each([false, true])(
+  "permanently rejects a retained Operations callback after Maintenance and back (Strict Mode: %s)",
+  (strict) => {
+    const wrapper = ({ children }: { children: ReactNode }) =>
+      strict ? <StrictMode>{children}</StrictMode> : <>{children}</>;
+    const { result, rerender, unmount } = renderHook(
+      ({ data, scope }: { data: Diagnosis | null; scope: string }) =>
+        useEvidenceSelection(data, scope),
+      {
+        initialProps: {
+          data: diagnosis as Diagnosis | null,
+          scope: "Operations",
+        },
+        wrapper,
+      },
+    );
+    const retained = result.current.select;
+    const retainedClear = result.current.clear;
+    act(() => retained("E6"));
+    expect(result.current.row).toBe(row);
+    rerender({ data: null, scope: "Maintenance" });
+    expect(result.current.selectedId).toBeNull();
+    act(() => retained("E6"));
+    expect(result.current.selectedId).toBeNull();
+    rerender({ data: diagnosis, scope: "Operations" });
+    expect(result.current.selectedId).toBeNull();
+    act(() => retained("E6"));
+    expect(result.current.selectedId).toBeNull();
+    act(() => result.current.select("E6"));
+    expect(result.current.row).toBe(row);
+    act(() => retainedClear());
+    expect(result.current.row).toBe(row);
+    act(() => result.current.clear());
+    expect(result.current.selectedId).toBeNull();
+    act(() => result.current.select("E6"));
+    const current = result.current.select;
+    rerender({ data: diagnosis, scope: "reset" });
+    act(() => current("E6"));
+    expect(result.current.selectedId).toBeNull();
+    act(() => result.current.select("E6"));
+    const previousDiagnosis = result.current.select;
+    rerender({ data: { ...diagnosis }, scope: "reset" });
+    act(() => previousDiagnosis("E6"));
+    expect(result.current.selectedId).toBeNull();
+    act(() => result.current.select("E6"));
+    expect(result.current.row).toBe(row);
+    unmount();
+    act(() => previousDiagnosis("E6"));
+  },
+);

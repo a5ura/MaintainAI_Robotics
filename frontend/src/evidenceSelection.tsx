@@ -2,7 +2,7 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
+  useLayoutEffect,
   useRef,
   useState,
 } from "react";
@@ -54,30 +54,61 @@ export function historicalPosition(row: Evidence | null): Vec | null {
     : null;
 }
 export function useEvidenceSelection(result: Diagnosis | null, scope: string) {
-  const [selection, setSelection] = useState<{
-    result: Diagnosis;
+  const [context, setContext] = useState(() => ({
+    result,
+    scope,
+    epoch: 0,
+    selectedId: null as string | null,
+  }));
+  // React's guarded state adjustment rerenders before committing changed props.
+  // Unlike an identity-only ref guard, the epoch never returns to an old activation.
+  if (context.result !== result || context.scope !== scope)
+    setContext({ result, scope, epoch: context.epoch + 1, selectedId: null });
+  const epoch = context.epoch;
+  const latest = useRef<{
+    result: Diagnosis | null;
     scope: string;
-    id: string;
+    epoch: number;
   } | null>(null);
-  const latest = useRef({ result, scope });
-  latest.current = { result, scope };
-  useEffect(() => setSelection(null), [result, scope]);
+  useLayoutEffect(() => {
+    const active = { result, scope, epoch };
+    latest.current = active;
+    return () => {
+      if (latest.current === active) latest.current = null;
+    };
+  }, [result, scope, epoch]);
   const select = useCallback(
     (id: string) => {
+      const active = latest.current;
       if (
         !result ||
-        latest.current.result !== result ||
-        latest.current.scope !== scope
+        active?.epoch !== epoch ||
+        active.result !== result ||
+        active.scope !== scope
       )
         return;
-      setSelection({ result, scope, id });
+      setContext((current) =>
+        current.epoch === epoch &&
+        current.result === result &&
+        current.scope === scope &&
+        current.selectedId !== id
+          ? { ...current, selectedId: id }
+          : current,
+      );
     },
-    [result, scope],
+    [result, scope, epoch],
   );
-  const clear = useCallback(() => setSelection(null), []);
+  const clear = useCallback(() => {
+    if (latest.current?.epoch !== epoch) return;
+    setContext((current) =>
+      current.epoch === epoch && current.selectedId !== null
+        ? { ...current, selectedId: null }
+        : current,
+    );
+  }, [epoch]);
   const selectedId =
-    selection?.result === result && selection.scope === scope
-      ? selection.id
+    context.result === result && context.scope === scope
+      ? context.selectedId
       : null;
   return {
     result,
