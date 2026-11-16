@@ -9,7 +9,12 @@ export default function EvidenceTimeline({
   const investigation = useInvestigation();
   const active = investigation?.result === result;
   return (
-    <section className="evidence-panel" aria-label="Evidence timeline">
+    <section
+      className="evidence-panel"
+      aria-label="Evidence timeline"
+      data-guide-target="evidence-timeline"
+      tabIndex={-1}
+    >
       <div className="panel-top">
         <h2>Evidence timeline</h2>
         <span>SIMULATED INPUTS · CYCLE-RELATIVE TIME</span>

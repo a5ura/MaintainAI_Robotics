@@ -2,7 +2,12 @@ import type { Diagnosis } from "./model";
 import { EvidenceReferences } from "./EvidenceReferences";
 export default function CandidateComparison({ result }: { result: Diagnosis }) {
   return (
-    <section className="candidate-comparison" aria-label="Candidate comparison">
+    <section
+      className="candidate-comparison"
+      aria-label="Candidate comparison"
+      data-guide-target="candidate-comparison"
+      tabIndex={-1}
+    >
       <h3>Compare possible causes</h3>
       <p className="muted">
         Backend order within each anomaly · hypotheses, not confirmed causes or
