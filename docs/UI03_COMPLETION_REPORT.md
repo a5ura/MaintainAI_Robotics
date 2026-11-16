@@ -2,6 +2,72 @@
 
 UI-03-SPEC-v1.0 implementation for independent Code Review. No merge or deployment.
 
+## Independent Review — Targeted Corrections
+
+November 16, 2026 (America/New_York). Exactly the two authorized Low findings were addressed on the existing `feature/ui03-diagnostic-investigation` branch. Before edits, fetched Git metadata and verified a clean checkout and PR #15 open/unmerged at reviewed head `794798d3071a5f30e1707dcdd724b7d144106ed1`, base `24dc78674148d7981eedf6f2482ceed44b653e90`. No replacement PR or new feature branch.
+
+Verified correction implementation/evidence commit: `e6476e9a8b83c69cc521bbd7f852855d1cf9ace0`. The final report-only commit and exact review head are identified in PR #15 metadata and the completion response. Previous implementation and verification history below are preserved.
+
+### A — Permanent stale-callback invalidation (Low)
+
+Original finding: the result/scope equality guard rejected an old `select` while context differed, but allowed it again after Operations → Maintenance → Operations returned to the exact same result object and scope. There is no known existing consumer scheduling such a retained callback; this is a defensive lifecycle correction. The new regular and Strict Mode round-trip cases reproduced it: **2 failed / 7 passed** before the fix ([before evidence](evidence/ui03/review-corrections/lifecycle-before.txt)).
+
+`evidenceSelection.tsx` now holds context, selected ID and a monotonic activation epoch in one React state value. A guarded same-component state adjustment advances the epoch and clears selection before changed result/scope props commit. It replaces the old passive clearing update; it does not mutate refs during rendering. A layout effect records the committed activation and invalidates it on cleanup. `select` checks its captured epoch against the committed activation and again inside its queued state updater. `clear` is also activation-bound, so a retained clear cannot erase a new activation's selection. Identical result/scope values after re-entry receive a different epoch; old callbacks stay invalid. Current callbacks work, repeated same-ID selection/empty clearing bail out, and the public return API is unchanged.
+
+The added parameterized test uses both normal rendering and React Strict Mode, retains the old Operations callback, checks clearing on departure and return, invokes the stale callback after returning to the same object/scope, verifies current selection/clearing, rejects the old clear, and checks reset/diagnosis replacement. All original selection contracts remain included. Only the committed activation can accept callbacks; Strict Mode's effect replay does not advance the context epoch. Existing App stale-diagnosis guards are untouched.
+
+### B — Actual rendered historical world-transform verification (Low coverage limitation)
+
+Original finding: allocation/draw counters, JSX position props and DOM coordinates did not independently prove the marker's rendered world transform. No geometry defect was found; marker geometry, styling, coordinate interpretation, camera and all rendering implementation files remain unchanged.
+
+New test-only `frontend/e2e/sceneProbe.ts` observes the existing React DevTools commit hook in the **production browser build**. It recognizes the R3F root's store, obtains the actual Three.js scene used by the connected active renderer, and traverses it for `historical-evidence`. It reads the group's and both meshes' real `matrixWorld` translations after Three's `updateWorldMatrix(true, false)`, which accounts for every parent transformation. It neither reads coordinates from DOM/props nor builds a substitute scene or second FK model. Old detached/replaced canvas roots are excluded. The only exposed test data are primitive snapshots; no application module, telemetry endpoint, dependency or production debug global was added. The final production bundles contain no `__ui03Scene` test helper.
+
+`ui03.spec.ts` obtains expected TCPs from the real `/api/diagnose` response. The matrix checks actual group and mesh world positions for E6 across all fixed scenarios plus seeded random and all three viewports. The resource/recovery workflow also checks E6 → E5 moves the actual scene marker to the distinct new recorded TCP, rechecks E5 after renderer replacement, and verifies clearing removes the group while the canvas remains active. Invalid FK is obtained by submitting deliberately inconsistent synthetic TCP data to the real backend; the active scene must contain **zero historical markers**, while text inspection remains available. Existing allocation, draw, recovery, cleanup, API/time/TCP/narration and keyboard assertions remain included.
+
+Tolerance is **1e-8 metres per coordinate**, appropriate for CPU Three.js double-precision world matrices and substantially tighter than the backend's 1e-4 m FK tolerance. This is actual scene/world-transform verification, not a GPU-pixel measurement or physical-robot validation. [World/resource snapshots](evidence/ui03/review-corrections/world-resources.json) record expected versus actual group/mesh coordinates, selection changes, recovery and clearing. [Invalid scene](evidence/ui03/review-corrections/invalid-world.json) records an active canvas with no marker.
+
+### Final targeted verification
+
+| Check | Current correction result |
+| --- | --- |
+| Round-trip regression before fix | 7 passed, 2 failed as expected (normal and Strict Mode) |
+| First focused world/invalid checks | 2 passed |
+| Focused browser integration | 6 passed |
+| Final complete frontend | **149 passed / 19 files** |
+| Final backend regression | **98 passed** |
+| Final TypeScript/Vite production build | **PASS** (existing large-chunk warning) |
+| Fresh sequential complete Playwright suite | **42 passed / 0 failed**, 9.8 minutes; **no retries** |
+
+This correction run achieved a clean **42/42 complete browser pass**. Earlier 41/42 runs and retries below remain historical; they are not being relabelled as clean passes. Current maximum group/mesh world-coordinate error across 18 matrix selections was **0.0 m** at the recorded double precision; tolerance remains 1e-8 m. E6 → E5, recovery, clearing and invalid-FK scene assertions also passed. No unresolved failures and no geometry defect discovered.
+
+Exact commands, using existing installed tooling:
+
+```sh
+npm --prefix frontend test -- src/evidenceSelection.test.tsx
+npm --prefix frontend test
+VITE_API_BASE=/api VITE_API_TIMEOUT_MS=90000 npm --prefix frontend run build
+.venv/bin/python -m pytest backend/tests -q
+# Temporary frontend test copy with consistent API 8185 / preview 5385:
+CHROMIUM_PATH=/usr/bin/chromium npx playwright test e2e/ui03.spec.ts --grep 'paused guide|invalid backend FK' --workers=1 --timeout=120000
+CHROMIUM_PATH=/usr/bin/chromium npx playwright test e2e/ui03.spec.ts --workers=1 --timeout=120000
+CHROMIUM_PATH=/usr/bin/chromium npx playwright test --workers=1 --timeout=120000
+```
+
+Logs: [frontend](evidence/ui03/review-corrections/frontend.txt), [backend](evidence/ui03/review-corrections/backend.txt), [production build](evidence/ui03/review-corrections/production-build.txt), [first focused world checks](evidence/ui03/review-corrections/focused-world.txt), [focused browser](evidence/ui03/review-corrections/focused-browser.txt), [complete browser](evidence/ui03/review-corrections/playwright.txt). Focused browser runs preceded final fixture-log additions and the final stale-clear guard; the final full run uses the completed correction and production build. All outcomes below the new section remain historical rather than being rewritten.
+
+The complete browser suite runs sequentially on **fresh** `/tmp/maintainai-ui03-review-zoqty7kc/full-suite.sqlite3`; focused browser checks used a different disposable database in that same temporary directory. API and preview are loopback-only, ports 8185/5385. No tests or requests use user/Windows SQLite data. [Protected-boundary and asset checks](evidence/ui03/review-corrections/verification.txt) establish unchanged protected implementation files and served assets matching the pre-suite build hashes. [Complete targeted changed-file manifest](evidence/ui03/review-corrections/changed-files.txt).
+
+### Remaining limitations and boundaries
+
+- The test-only scene observer relies on React/R3F's existing commit-hook/store shape in the pinned stack. Dependency upgrades may require adapting it; inability to observe the active scene fails the assertion instead of falling back to DOM coordinates.
+- World positions are verified from actual CPU scene matrices and native drawing is independently asserted. No Windows GPU/FPS, total GPU-memory, audible narration or physical robot claim. No new screenshots are necessary because visual geometry/layout are unchanged.
+- Existing Vite large-chunk, Starlette/AnyIO deprecation and jsdom Three multiple-import warnings remain. Earlier UI-01 startup and UI-03 readiness failures are retained in the original report/evidence.
+- No backend diagnosis, API/schema, simulation, geometry/style, camera, Guided Demo/narration/timing/automatic ticket creation, maintenance/concurrency/history/export or hosting implementation changed. No operator-verification controls, ticket-note handoff, persistence expansion, historical replay, saved-ticket scenes or UI-04 work. No dependency installation, paid usage, merge, deployment or user-data modification.
+
+Targeted re-review: compare reviewed head `794798d…` with the updated PR head. Inspect epoch advancement, committed activation/queued-updater guards and Strict Mode round trips; then inspect the test-only active-scene lookup and group/mesh world assertions for E6/E5, clear, invalid FK and recovery. Reproduce checks only with disposable SQLite. Return findings to Planning; no self-approval or merge is performed.
+
+---
+
 ## Baseline and review identity
 
 - Verified baseline: `24dc78674148d7981eedf6f2482ceed44b653e90`, UI-02 PR #14 merged into main.
