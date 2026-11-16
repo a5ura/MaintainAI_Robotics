@@ -110,5 +110,101 @@ it("does not assert loss or a proven root cause for normal/inconclusive results"
       state: { ...state, stage: "diagnosis" },
       result: { ...result, hypotheses: [] },
     })?.text,
-  ).toBe("Review the evidence before identifying a cause.");
+  ).toContain("Review the evidence before identifying a cause.");
+});
+
+it("uses real observation references and backend candidate/check content without verification claims", () => {
+  const measured = {
+    ...result,
+    summary: "Measured loss at transfer",
+    observations: [{ text: "Presence disagrees with hold", evidence: ["E6"] }],
+    timeline: [{ id: "E6" }],
+  } as unknown as Diagnosis;
+  const evidence = guideNarrationCue({
+    ...base,
+    state: { ...base.state!, stage: "evidence-investigation" },
+    result: measured,
+  })!;
+  expect(evidence.text).toContain("Presence disagrees with hold");
+  expect(evidence.text).toContain("reference E6");
+  expect(evidence.text).toContain("not the current robot pose");
+  const diagnosis = guideNarrationCue({
+    ...base,
+    state: { ...base.state!, stage: "diagnosis" },
+    result: measured,
+  })!;
+  expect(diagnosis.text).toContain("Possible seal loss");
+  expect(diagnosis.text).toContain("Inspect");
+  expect(diagnosis.text).toContain("has not completed");
+  expect(
+    guideNarrationCue({
+      ...base,
+      state: { ...base.state!, stage: "evidence-investigation" },
+      result: { ...measured, timeline: [] },
+    })!.text,
+  ).toContain("reference is unavailable");
+});
+it("never announces a backend result or loss before the relevant real milestone", () => {
+  const before = guideNarrationCue({
+    ...base,
+    state: { ...base.state!, stage: "robot-operation" },
+    t: 2,
+    result,
+  })!;
+  expect(before.text).not.toContain("Measured");
+  expect(before.text).not.toContain("presence was lost");
+  const atLoss = guideNarrationCue({
+    ...base,
+    state: { ...base.state!, stage: "fault-detection" },
+    t: 6,
+    result,
+  })!;
+  expect(atLoss.text).toContain("observed symptom");
+  expect(atLoss.text).not.toContain("backend reports");
+  const available = guideNarrationCue({
+    ...base,
+    state: { ...base.state!, stage: "fault-detection" },
+    t: 12,
+    result,
+  })!;
+  expect(available.text).toContain("Measured");
+  expect(available.id).toContain("analysis-ready-D1");
+});
+it.each(["evidence-investigation", "diagnosis"] as const)(
+  "%s handles missing and failed results truthfully",
+  (stage) => {
+    expect(
+      guideNarrationCue({
+        ...base,
+        state: { ...base.state!, stage },
+        result: null,
+      })!.text,
+    ).toContain("pending");
+    expect(
+      guideNarrationCue({
+        ...base,
+        state: { ...base.state!, stage },
+        result: null,
+        backendError: "offline",
+      })!.text,
+    ).toContain("unavailable");
+  },
+);
+it("cue identities and content are stable across telemetry/mode changes and distinct across stages", () => {
+  const state = { ...base.state!, stage: "robot-operation" as const };
+  const cue = guideNarrationCue({ ...base, state, t: 1 });
+  expect(
+    guideNarrationCue({
+      ...base,
+      state: { ...state, mode: "automatic", entry: 4 },
+      t: 2,
+    }),
+  ).toEqual(cue);
+  expect(
+    guideNarrationCue({
+      ...base,
+      state: { ...state, stage: "fault-detection" },
+      t: 2,
+    })!.id,
+  ).not.toBe(cue!.id);
 });

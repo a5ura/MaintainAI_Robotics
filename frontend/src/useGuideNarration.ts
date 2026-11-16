@@ -133,7 +133,7 @@ export function useGuideNarration(snapshot: NarrationSnapshot) {
       speech.onstart = () => {
         if (isCurrent()) {
           clearTimeout(watchdog.current);
-          watchdog.current = setTimeout(fail, 30000);
+          watchdog.current = setTimeout(fail, 60000);
           setStatus("speaking");
         }
       };
