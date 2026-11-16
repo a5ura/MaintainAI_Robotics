@@ -1,5 +1,6 @@
 import { Suspense, type ReactNode } from "react";
 import ViewBoundary from "./ViewBoundary";
+import { useInvestigation } from "./evidenceSelection";
 import { trajectory, phase, type Clock, type Diagnosis } from "./model";
 import {
   SCENARIOS,
@@ -51,6 +52,7 @@ export default function OperationsWorkspace({
   setSelection: (s: Selection) => void;
   setSeed: (n: number) => void;
 }) {
+  const investigation = useInvestigation();
   const drop = scenario === "drop";
   return (
     <div className="operations-workspace">
@@ -141,6 +143,9 @@ export default function OperationsWorkspace({
             Pause
           </button>
           <button onClick={onReset}>Reset</button>
+          {investigation && investigation.selectedId !== null && (
+            <button onClick={investigation.clear}>Clear Selection</button>
+          )}
           <label className="scenario">
             SCENARIO
             <select

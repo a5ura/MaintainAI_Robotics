@@ -8,13 +8,15 @@ import {
   within,
 } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
-import { afterEach, expect, it } from "vitest";
-import type { Diagnosis, Evidence } from "./model";
+import { afterEach, expect, it, vi } from "vitest";
+import type { Clock, Diagnosis, Evidence } from "./model";
 import { scenarioSample } from "./scenarios";
 import {
   EvidenceSelectionContext,
   useEvidenceSelection,
 } from "./evidenceSelection";
+import OperationsWorkspace from "./OperationsWorkspace";
+import { NO_OVERLAYS } from "./engineering";
 import EvidenceInspector from "./EvidenceInspector";
 import EvidenceTimeline from "./EvidenceTimeline";
 import CandidateComparison from "./CandidateComparison";
@@ -57,16 +59,44 @@ const data: Diagnosis = {
     },
   ],
 };
+const workspaceActions = {
+  onStart: vi.fn(),
+  onPause: vi.fn(),
+  onReset: vi.fn(),
+  onGuide: vi.fn(),
+  setSelection: vi.fn(),
+  setSeed: vi.fn(),
+};
 function Harness({
   result = data,
   scope = "run",
+  clock = { t: 12, running: false },
 }: {
   result?: Diagnosis;
   scope?: string;
+  clock?: Clock;
 }) {
   const selection = useEvidenceSelection(result, scope);
   return (
     <EvidenceSelectionContext.Provider value={selection}>
+      <OperationsWorkspace
+        clock={clock}
+        selection="drop"
+        seed={42}
+        scenario="drop"
+        result={result}
+        busy={false}
+        error=""
+        engineeringEnabled={false}
+        overlays={NO_OVERLAYS}
+        tcp={row.tcp}
+        sensor={scenarioSample(12, "drop")}
+        canvas={<div>Live workcell</div>}
+        guideActive={false}
+        {...workspaceActions}
+      >
+        {null}
+      </OperationsWorkspace>
       <EvidenceReferences
         ids={["E6"]}
         timeline={result.timeline}
@@ -79,7 +109,10 @@ function Harness({
     </EvidenceSelectionContext.Provider>
   );
 }
-afterEach(cleanup);
+afterEach(() => {
+  cleanup();
+  vi.clearAllMocks();
+});
 it("connects actual reference links and keyboard-capable reading controls to one inspector", () => {
   render(<Harness />);
   const link = screen.getByRole("link", { name: /Observation E6 at/ });
@@ -163,3 +196,69 @@ it("clears the inspector on run, ticket-context and diagnosis replacement", () =
     screen.getByRole("region", { name: "Evidence inspector" }),
   ).not.toHaveTextContent("Historical E6");
 });
+
+it("exposes workcell clearing for resolved and unresolved references without changing diagnosis or candidates", () => {
+  const earlier = { ...row, id: "E5", t: 5 };
+  const result = { ...data, timeline: [earlier, row] };
+  const before = JSON.stringify(result);
+  render(<Harness result={result} />);
+  expect(screen.queryByRole("button", { name: "Clear Selection" })).toBeNull();
+  const inspector = screen.getByRole("region", { name: "Evidence inspector" });
+  const readings = screen.getByRole("group", { name: "Recorded readings" });
+  for (const id of ["E6", "E5"]) {
+    fireEvent.click(
+      within(readings).getByRole("button", { name: new RegExp(`^${id} ·`) }),
+    );
+    expect(inspector).toHaveTextContent(`Historical ${id}`);
+    expect(
+      within(readings).getAllByRole("button", { pressed: true }),
+    ).toHaveLength(1);
+  }
+  fireEvent.click(screen.getByRole("button", { name: "Clear Selection" }));
+  expect(inspector).toHaveTextContent("Select a recorded reading");
+  expect(
+    within(readings).queryAllByRole("button", { pressed: true }),
+  ).toHaveLength(0);
+  expect(screen.queryByRole("button", { name: "Clear Selection" })).toBeNull();
+  fireEvent.click(within(readings).getByRole("button", { name: /^E6 ·/ }));
+  expect(inspector).toHaveTextContent("Historical E6");
+  fireEvent.click(screen.getByRole("button", { name: "Missing" }));
+  expect(inspector).toHaveTextContent("reference unavailable or ambiguous");
+  expect(inspector).not.toHaveTextContent("Historical E6");
+  fireEvent.click(screen.getByRole("button", { name: "Clear Selection" }));
+  expect(inspector).toHaveTextContent("Select a recorded reading");
+  expect(JSON.stringify(result)).toBe(before);
+  expect(
+    [
+      ...screen
+        .getByRole("region", { name: "Candidate comparison" })
+        .querySelectorAll("summary"),
+    ].map((n) => n.textContent),
+  ).toEqual(["First", "Second"]);
+});
+
+it.each([false, true])(
+  "clearing preserves clock and transport state when running=%s",
+  (running) => {
+    const clock = { t: 6, running };
+    render(<Harness clock={clock} />);
+    fireEvent.click(
+      screen
+        .getByRole("group", { name: "Recorded readings" })
+        .querySelector("button")!,
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Clear Selection" }));
+    expect(screen.getByRole("progressbar")).toHaveAttribute("value", "6");
+    expect(screen.getByRole("button", { name: "Start" })).toHaveProperty(
+      "disabled",
+      running,
+    );
+    expect(screen.getByRole("button", { name: "Pause" })).toHaveProperty(
+      "disabled",
+      !running,
+    );
+    expect(clock).toEqual({ t: 6, running });
+    for (const action of Object.values(workspaceActions))
+      expect(action).not.toHaveBeenCalled();
+  },
+);
