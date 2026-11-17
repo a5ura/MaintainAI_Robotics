@@ -1,0 +1,15 @@
+{
+  "baseline": "6b603e2e515f64464355dc4b23c2b6b159ec13f6",
+  "source_tree_matches_prior_validated_commit": "6858ca435b478a8c99c54d6709f4f1baed79dc74",
+  "platform": "Linux",
+  "release": "6.18.57",
+  "architecture": "x86_64",
+  "windows_execution_available": false,
+  "assets": {
+    "Maintenance-CAbNej2n.js": "1c43178331aee2d9c0bf47fb2a4bbb1a8d9b88f0434c7d36754cb579aec7b6b5",
+    "Workcell-NTaqZVrn.js": "c3f51873f81ebc8eeead5ea9b6bc8981bc48ede4fb982a1517080f78d4738820",
+    "index-CpF6NBGP.css": "d552fa9c9878d569243f75be108647da02d3b3dea80be5fa1f88372866c0215b",
+    "index-OwC5JK1m.js": "200d2abf2dc518100617dd90e0e063f7cb793cdd597b96b82310e489290dad15"
+  },
+  "build_provenance": "Existing C1 production build: all asset names match committed docs/evidence/gd02c1/build.log; no rebuild or regression-suite rerun"
+}
