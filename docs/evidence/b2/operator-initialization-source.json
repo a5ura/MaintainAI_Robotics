@@ -1,0 +1,40 @@
+{
+  "baseline": "f4cbad8565cd4ca3c8da617783b53f62900f6ee4",
+  "output": "B2_INITIALIZE.sql",
+  "output_bytes": 20834,
+  "output_sha256": "70ce5df9880e1d827c5db1420c9aded515be5c856aa3e2137d7a922b8db61f94",
+  "migration_source": "postgres/migrations/0001_maintenance.sql",
+  "migration_verbatim": true,
+  "migration_sha256": "805df91e03a227cbb487d1cbdfcb9a05a1705858ac08e6954c791aaa8de101b2",
+  "seed_method": "Captured exact initialize() SQL/parameters with no-op check_schema and capture-only batch; no database accessed",
+  "seed_statement_count": 5,
+  "seed_diagnosis_id": "D-b72ecee0befca3b36c6c9ad9",
+  "seed_snapshot_utf8_bytes": 4468,
+  "seed_snapshot_sha256": "c37067b9c3f3a27e8aeda4af51901bf08591e24c3298c5ec3df32ecda857a03d",
+  "seed_sql_sha256": "173fd512b543182ea3455f2ca5a7f6f1fdf08913bf1b1d8c7f9b8ebdf9ddb91d",
+  "expected_table_counts": {
+    "postgres_schema": 1,
+    "equipment": 2,
+    "diagnoses": 1,
+    "tickets": 1,
+    "ticket_history": 2,
+    "request_budgets": 0,
+    "snapshot_manifests": 0,
+    "snapshot_chunks": 0,
+    "equipment_ticket_counts": 2
+  },
+  "source_sha256": {
+    "postgres/migrations/0001_maintenance.sql": "805df91e03a227cbb487d1cbdfcb9a05a1705858ac08e6954c791aaa8de101b2",
+    "postgres/local.py": "4c51e725cac2c9fa23a503b5769d19ee37658b1f7b5da91e9f748c1fd67d6267",
+    "backend/postgres_repository.py": "18007184db59179ac1286b7c6fcca2322dd86bebf3e1897e68ff475989808bbd",
+    "backend/async_repository.py": "1cd3f3b71a2995086373b02a75d460db0fcd018b84376f622fdfedfab5ec5401",
+    "backend/domain.py": "9890ec67646bb43d59ef18e2bc88c2c1a22e0e758f839c501332f2e16ba16c30",
+    "backend/diagnostics.py": "39d926b8c5bc1f0cd8180d3ef10bc158ffee21954fe069685c626cdd1cbc9b67",
+    "backend/rules.py": "84a2760bb0aac61e73ca6d5bfe94bffb7b00d71728d5ca7a27209044f0d5e08d",
+    "backend/models.py": "d50331143f71d3e65ffc0023c37fd0728baf670d93bcefd028fb031999bfd303",
+    "backend/kinematics.py": "4e996e26d092d9da2bc63e80f5bfbf275c39230e5c88157b0b08ed522b7cfe99"
+  },
+  "database_tested": true,
+  "verification_evidence": "operator-initialization-validation.json",
+  "operator_scope": "Initial verified-empty target and immediate pristine-seed repeat only; not a general migration or repair command"
+}

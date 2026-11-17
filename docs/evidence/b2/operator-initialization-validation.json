@@ -1,0 +1,66 @@
+{
+  "environment": "Cloud Linux, isolated disposable PostgreSQL container; no provider or Windows database execution",
+  "baseline": "f4cbad8565cd4ca3c8da617783b53f62900f6ee4",
+  "image": "postgres:17-bookworm@sha256:839fbb5a4942a7758dd93e18b42ea5649807491a0545b5eeeb8f0b8bb11857a5",
+  "network": "none; no published ports; tmpfs data only",
+  "artifact_sha256": "70ce5df9880e1d827c5db1420c9aded515be5c856aa3e2137d7a922b8db61f94",
+  "checks": [
+    {
+      "name": "Fresh schema and exact computed seed",
+      "status": "PASS",
+      "details": "Previously executed artifact committed; all nine counts and exact stored diagnosis JSON match baseline initializer."
+    },
+    {
+      "name": "Idempotent repeat preserves all nine table fingerprints",
+      "status": "PASS",
+      "details": "No duplicate records or changed evidence/history/counters. Identity sequence advancement from ON CONFLICT is excluded, matching native initializer behavior."
+    },
+    {
+      "name": "Unsupported schema fails closed",
+      "status": "PASS",
+      "details": "Version 99 preserved; all nine table fingerprints unchanged."
+    },
+    {
+      "name": "Wrong database refused",
+      "status": "PASS",
+      "details": "postgres database remains without public relations."
+    },
+    {
+      "name": "Unexpected relation/data preserved",
+      "status": "PASS",
+      "details": "Initialization refuses a fresh-name database containing a table; fixture content unchanged and app schema absent."
+    },
+    {
+      "name": "Unexpected public function preserved",
+      "status": "PASS",
+      "details": "Function still returns 7; no application schema created."
+    },
+    {
+      "name": "DDL and seed transaction rollback",
+      "status": "PASS",
+      "details": "Injected error after schema creation rolls back all application relations/functions; owner artifact unmodified."
+    },
+    {
+      "name": "Artifact identity retained throughout verification",
+      "status": "PASS",
+      "details": "Exact owner candidate bytes unchanged after tests."
+    }
+  ],
+  "postgres_version": "17.11 (Debian 17.11-1.pgdg12+2)",
+  "summary": {
+    "passed": 8,
+    "failed": 0
+  },
+  "record_fingerprints_after_fresh_init": {
+    "equipment": "2:c991bdaad6ba3235c6fd3588688bbbf6899fb245f157cdc29856b2a20ce6be0a",
+    "diagnoses": "1:fb646e39979bf01cd706086f370cd5fb4b539cbfff60c5a66754412a23146a14",
+    "snapshot_manifests": "0:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "snapshot_chunks": "0:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tickets": "1:f7432cc81731b307e3d1c6ef9a2203fa1d4c794a919655ddd70f182d3283d45c",
+    "ticket_history": "2:cd0049aeec353858f80283be78fddade6809bdc8d8bdbac1a86f92a59c1802d1",
+    "request_budgets": "0:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "equipment_ticket_counts": "2:8efa64cfc3e19597dcce6b85cfa0eff4093652738306157441a17475f90f327b",
+    "postgres_schema": "1:2430f1a2ad2982d0067885488a4c89e21ad1d7c83b115ba8f1b20acc88dfaea8"
+  },
+  "isolated_container_removed": true
+}
