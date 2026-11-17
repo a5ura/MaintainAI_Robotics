@@ -1,0 +1,12 @@
+Command: python -m pytest backend/tests -q --basetemp C:\Users\gowth\Documents\MaintainAI_Robotics_Project2_V2_Coding\.m0-output\pytest
+Exit code: 4
+Elapsed seconds: 0.741241
+
+ImportError while loading conftest 'C:\Users\gowth\Documents\MaintainAI_Robotics_Project2_V2_Coding\repository\backend\tests\conftest.py'.
+backend\tests\conftest.py:2: in <module>
+    from backend.app import app
+backend\app.py:3: in <module>
+    from backend.models import Sample,Cycle
+backend\models.py:3: in <module>
+    from pydantic import BaseModel, Field, model_validator
+E   ModuleNotFoundError: No module named 'pydantic'
