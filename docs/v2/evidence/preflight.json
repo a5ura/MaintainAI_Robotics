@@ -152,5 +152,48 @@
     "git worktree list --porcelain",
     "git ls-remote --heads origin feature/v2-m0*"
   ],
-  "ram_reproduction_python": "import ctypes\nclass MemoryStatus(ctypes.Structure):\n    _fields_ = [('dwLength', ctypes.c_ulong), ('dwMemoryLoad', ctypes.c_ulong), ('ullTotalPhys', ctypes.c_ulonglong), ('ullAvailPhys', ctypes.c_ulonglong), ('ullTotalPageFile', ctypes.c_ulonglong), ('ullAvailPageFile', ctypes.c_ulonglong), ('ullTotalVirtual', ctypes.c_ulonglong), ('ullAvailVirtual', ctypes.c_ulonglong), ('ullAvailExtendedVirtual', ctypes.c_ulonglong)]\nm = MemoryStatus()\nm.dwLength = ctypes.sizeof(m)\nassert ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(m))\nprint(m.ullTotalPhys, m.ullAvailPhys)\n"
+  "ram_reproduction_python": "import ctypes\nclass MemoryStatus(ctypes.Structure):\n    _fields_ = [('dwLength', ctypes.c_ulong), ('dwMemoryLoad', ctypes.c_ulong), ('ullTotalPhys', ctypes.c_ulonglong), ('ullAvailPhys', ctypes.c_ulonglong), ('ullTotalPageFile', ctypes.c_ulonglong), ('ullAvailPageFile', ctypes.c_ulonglong), ('ullTotalVirtual', ctypes.c_ulonglong), ('ullAvailVirtual', ctypes.c_ulonglong), ('ullAvailExtendedVirtual', ctypes.c_ulonglong)]\nm = MemoryStatus()\nm.dwLength = ctypes.sizeof(m)\nassert ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(m))\nprint(m.ullTotalPhys, m.ullAvailPhys)\n",
+  "resume_verification": {
+    "checked_at_utc": "2026-11-17T17:38:28.811820+00:00",
+    "requested_head": "fa7ceda87e4950013ddbb8ed823bf3f23fa66d2a",
+    "local_and_remote_initial_head_match": true,
+    "clean_start": true,
+    "fetched_main": "f4cbad8565cd4ca3c8da617783b53f62900f6ee4",
+    "merge_base": "f4cbad8565cd4ca3c8da617783b53f62900f6ee4",
+    "powershell_host": "Win32NT 10.0.26200.0",
+    "javascript_host_probe": {
+      "command": "var os = await import('node:os'); nodeRepl.write({platform:os.platform(),release:os.release(),arch:os.arch(),cwd:nodeRepl.cwd});",
+      "platform": "win32",
+      "release": "10.0.26200",
+      "arch": "x64",
+      "cwd": "C:\\Users\\gowth\\Documents\\MaintainAI_Robotics_Project2_V2_Coding"
+    },
+    "command_discovery": {
+      "command": "Get-Command bash,wsl,docker,podman,ros2,ssh -ErrorAction SilentlyContinue",
+      "found": [
+        "wsl.exe",
+        "ssh.exe"
+      ],
+      "not_found": [
+        "bash",
+        "docker",
+        "podman",
+        "ros2"
+      ]
+    },
+    "wsl_probe": {
+      "command": "wsl --list --verbose",
+      "message": "The Windows Subsystem for Linux is not installed."
+    },
+    "saved_cloud_configuration": "MaintainAI_Robotics still listed ready/runnable; not an attached execution host",
+    "active_linux_shell_tool_available": false,
+    "linux_commands_executed": false,
+    "supported_ros_runtime_established": false,
+    "new_cloud_chat_or_resource_created": false,
+    "installation_or_package_attempts": 0,
+    "implementation_expanded": false,
+    "application_checks_rerun": false,
+    "verdict": "PARTIAL-BLOCKED",
+    "required_next_input": "Execution access to an existing disposable Linux environment; no additional product authorization required."
+  }
 }

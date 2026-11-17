@@ -8,6 +8,16 @@ Date: November 17, 2026 (America/New_York). Reviewed scope: the full [M0 packet 
 
 ## 2. Execution
 
+### Resume verification from PR #25
+
+The owner requested resumption from `fa7ceda87e4950013ddbb8ed823bf3f23fa66d2a`, with Linux execution verified before expanding implementation. Fresh checks confirmed that both the clean local checkout and PR #25 started at that exact head. Fetched main and merge base remain `f4cbad8565cd4ca3c8da617783b53f62900f6ee4`; no rebase or branch replacement occurred.
+
+The required Linux gate **did not pass**. PowerShell commands execute on `Win32NT 10.0.26200.0`. An additional independent host probe through the available JavaScript runtime (`node:os` platform/release/arch) reports `win32`, `10.0.26200`, `x64`, with the same local workspace. `Get-Command bash,wsl,docker,podman,ros2,ssh` finds only WSL and SSH; `wsl --list --verbose` still reports that WSL is not installed. An SSH client alone supplies no authorized disposable Linux target. No target, credentials, or host configuration was guessed or inspected.
+
+Saved environment discovery still lists the existing runnable `MaintainAI_Robotics` configuration, but the available tools expose no active Linux shell or execution attachment. No command actually executed on Linux. No new cloud chat/resource, installation, package attempt, or adapter expansion was performed. The next required input is accessible execution in an existing disposable Linux environment; product requirements and M0 authorization are already settled. This resumed check does not establish a supported ROS/OS path. Acceptance statuses below remain unchanged. Fresh machine-readable results are under `resume_verification` in [preflight evidence](evidence/preflight.json).
+
+Application checks were not rerun during this resume: no application/dependency changes occurred, and the runtime prerequisite remains unsatisfied. The previous failed command outputs remain historical to the first M0 attempt. Fresh resume validation covers Git identity, host availability, evidence JSON, document links, unchanged protected content, and Git whitespace only.
+
 | Item | Fresh observation |
 | --- | --- |
 | Interface / actual host | Codex Desktop context; shell commands executed locally on Windows AMD64. No cloud execution was performed. |
