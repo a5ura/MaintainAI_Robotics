@@ -43,5 +43,20 @@
   ],
   "guard_database_created": false,
   "fresh_execution": true,
-  "package_installations": 0
+  "package_installations": 0,
+  "document_checks": {
+    "protected_git_content_matches": "580/580",
+    "historical_agents_text_preserved": true,
+    "evidence_json_parses": "3/3",
+    "missing_relative_markdown_targets": 0,
+    "normalized_assignment_copy_complete": true,
+    "git_diff_cached_check_exit_code": 0,
+    "git_diff_base_check_exit_code": 0,
+    "exact_changed_file_count": 11,
+    "pr_number": 25,
+    "pr_draft": true,
+    "pr_state": "open",
+    "pr_merged": false,
+    "application_regressions_passed": false
+  }
 }

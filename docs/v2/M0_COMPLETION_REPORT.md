@@ -25,7 +25,7 @@ Date: November 17, 2026 (America/New_York). Reviewed scope: the full [M0 packet 
 
 ## 3. Git and exact changed-file manifest
 
-Repository: `https://github.com/a5ura/MaintainAI_Robotics.git`. Approved base, freshly fetched `origin/main`, and branch merge base are all **`f4cbad8565cd4ca3c8da617783b53f62900f6ee4`**; base tree **`e82b722679751420975a9b599cb100c94d92f00c`**. No remote base movement was found. Branch search and `ls-remote` found no prior M0 branch before creation. Requested branch: **`feature/v2-m0-evidence-ingestion`**. The verified final head and PR link are returned in the final handoff and PR metadata; the report's containing commit identifies its exact revision without a self-referential hash.
+Repository: `https://github.com/a5ura/MaintainAI_Robotics.git`. Approved base, freshly fetched `origin/main`, and branch merge base are all **`f4cbad8565cd4ca3c8da617783b53f62900f6ee4`**; base tree **`e82b722679751420975a9b599cb100c94d92f00c`**. No remote base movement was found. Branch search and `ls-remote` found no prior M0 branch before creation. Requested branch: **`feature/v2-m0-evidence-ingestion`**. Reviewable draft PR: **[#25](https://github.com/a5ura/MaintainAI_Robotics/pull/25)**, open and unmerged. Initial evidence commit: `08010610316cadba8140c4cf435730db4ca0a593`; a follow-up records this verified handoff. The exact final head is returned in the final handoff and PR metadata; the report's containing commit identifies its own revision without a self-referential hash.
 
 The original V1 checkout at `C:\Users\gowth\Documents\MaintainAI_Robotics` stayed at **`7f3fe387142cd71973fbe33af2031b83a31d513a`**. Four untracked user exports were present: two Cell 01 PDFs and the matching `maintainai-T-df5375a9d3965b35990377f04da5c38f-v1` JSON/Markdown exports. They were not opened, moved, reset, stashed, deleted, or overwritten. Fetch updated only remote-tracking Git metadata. A managed worktree request did not complete/register; the waiting call was terminated, and separate clone isolation was used instead. No successful managed worktree is claimed.
 
@@ -74,7 +74,7 @@ No CLI invocation is documented as working. The limits (64 MiB raw, 16 MiB norma
 | M0-09 | NOT TESTED | Bounded atomic import/path/hash/symlink failure tests not implemented. |
 | M0-10 | BLOCKED | Protected tracked content preserved; three fresh required commands blocked by missing dependencies, [checks](evidence/checks.json). No regression pass claimed. |
 | M0-11 | BLOCKED | Host/tool versions observed; no selected ROS dependency/license inventory, capture/import elapsed time or peak memory. |
-| M0-12 | NOT TESTED | Local documentation handoff prepared; remote push/PR and final head verification pending at this report revision. Native implementation explicitly incomplete. |
+| M0-12 | PASS | Documentation committed and pushed; reviewable draft [PR #25](https://github.com/a5ura/MaintainAI_Robotics/pull/25) verified open/unmerged, with the exact 11-file manifest. Follow-up head verification returned in final handoff. Native implementation explicitly incomplete. |
 
 ## 7. Verification and measurements
 
@@ -87,7 +87,7 @@ All results below are fresh local attempts against the approved-base checkout; n
 | `npm --prefix frontend run build` | Exit 1 in 1.221843 s; `tsc` not recognized. [Log](evidence/frontend-build.txt). |
 | V2 pure/native tests | NOT TESTED / BLOCKED respectively; no V2 implementation or captured fixture exists. No skipped count masks this. |
 | Browser smoke | NOT RUN; this is documentation-only, with no integrated behavior changes. No native Windows/browser acceptance claimed. |
-| Protected-file comparison / document checks | PASS: 580/580 pre-existing tracked files outside AGENTS match approved Git content; historical AGENTS text retained exactly; all three evidence JSON files parse; all local Markdown targets resolve; complete packet matches normalized attachment. Whitespace and exact staged/final manifest checks are performed before publishing. |
+| Protected-file comparison / document checks | PASS: 580/580 pre-existing tracked files outside AGENTS match approved Git content; historical AGENTS text retained exactly; all three evidence JSON files parse; all local Markdown targets resolve; complete packet matches normalized attachment; staged and committed Git whitespace checks exit 0; exact 11-file manifest confirmed by Git and PR metadata. |
 
 Timing method: parent Python `time.perf_counter()` around each `subprocess.run`, including interpreter/process startup; one attempt per required command, no extrapolated percentile. These are failed check startup times, **not import/capture benchmarks**. Capture/import cold/warm sample count is zero; elapsed time, peak memory, source/normalized byte sizes and event count are unavailable, not successful zero-valued measurements. No new dependencies were selected or installed, so no new package/license inventory is claimed.
 
