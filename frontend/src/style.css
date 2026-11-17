@@ -1113,3 +1113,6 @@ html[data-guide-active] .evidence-panel tr[id] { scroll-margin-top: calc(var(--g
 .handoff-dialog-actions { position: sticky; bottom: -18px; display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 0; background: #14242e; }
 .handoff-dialog button, .handoff-preview button, .handoff-notice button { min-height: 44px; }
 @media (max-width: 600px) { .handoff-notice { margin: 8px 12px; }.handoff-dialog-actions button { flex: 1; } }
+
+/* GD-02C-1: emphasize existing walkthrough navigation over manual takeover. */
+.guide-navigation .guide-controls-hint { color: #d8ecec; font-size: 12px; }

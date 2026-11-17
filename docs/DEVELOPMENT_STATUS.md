@@ -1,10 +1,20 @@
-# Development status — November 13, 2026 (UTC)
+# Development status — November 16, 2026 (America/New_York)
 
-## UI-02 implementation awaiting independent review — November 13, 2026 (UTC)
+## Current GD-02 checkpoint and GD-02C-1 review
+
+Verified main `512b6ad216ec79253fcfdd00fd3c3e584a4e8a26` includes merged PRs #1–21: UI-01–03 and GD-02B-1–5. The [final acceptance report](GD02B5_FINAL_ACCEPTANCE_REPORT.md) assessed a controlled, synthetic-data Manual recruiter demonstration as conditionally ready. Native Windows voices/GPU, native screen readers and prolonged-session acceptance remain incomplete; public hosting/billing/backup gates remain in force.
+
+The implemented walkthrough has six stages: Introduction, Robot Operation, Fault Detection, Evidence Investigation, Diagnosis and Next Checks, Maintenance Handoff. Manual is the default. Optional Automatic playback retains the four-second dwell after readiness, independent of speech. There is no Skip control. Next/Previous and Pause/Resume remain in the existing Walkthrough controls; Previous does not rewind the simulation. Start manually exits guide ownership through the existing takeover path.
+
+Stage 6 previews real diagnosis information and requires Create maintenance ticket followed by Confirm ticket creation before any ticket POST. Playback, narration, Cancel/Escape and stage entry never create tickets. Confirmed attempts retain their UUID/payload across in-app navigation; uncertain outcomes require explicit same-identity reconciliation. Reload recovery and global cross-tab/UUID deduplication are deferred. Existing manual forms, ticket history, optimistic concurrency/B01 drafts and exports are preserved.
+
+Branch `feature/gd02c1-recruiter-polish` addresses F01–F03 through state-accurate Stage 6 guidance, current onboarding and clearer existing controls. It is a review change, not a merged release or deployment. See [GD-02C-1 completion report](GD02C1_COMPLETION_REPORT.md) for exact changes and fresh verification. Historical checkpoints below retain their original statements; they are not the current implementation status.
+
+## Historical UI-02 implementation awaiting independent review — November 13, 2026 (UTC)
 
 Verified main baseline `53f6b83bfeb5bacbb93771e6a85b73383ab25845` includes merged UI-01 PR #12 and GD-01 PR #13. Branch `feature/ui02-workcell-visualization` implements the authorized procedural workcell refinement, evidence-grounded fault indicators and fixed camera presets. The 3R mathematics, scenarios, guide/narration, maintenance, backend, schemas and hosting configuration remain unchanged. See [UI-02 completion and verification](UI02_COMPLETION_REPORT.md). No merge or deployment; hosting gates remain in force.
 
-## Current pre-B.2 checkpoint — November 11, 2026 (America/New_York)
+## Historical pre-B.2 checkpoint — November 11, 2026 (America/New_York)
 
 PRs #1–9 are merged. Verified `origin/main` baseline: `a915cae8cae3b6fd4deb46f2b9c7729f41ebafa4` (PR #9), including saved per-ticket JSON/Markdown exports in `1f972b0`. Complete evidence/history, captured-version checks and draft preservation are implemented; see [export acceptance](TICKET_EXPORTS_ACCEPTANCE.md). Earlier statements that exports are missing or PR #9 is unmerged describe historical checkpoints.
 
@@ -120,7 +130,7 @@ RESOLVED for M1: the original automated PR attempt was blocked by API access, bu
 
 UNVERIFIED: execution through Codex Desktop, Windows run/performance, account incremental cost/entitlement, public hosting, shared persistent storage, deployment. M1 is technically implemented and verified in this cloud instance, not a claim of full V1 completion.
 
-## Cost and remaining scope
+## Historical cost and remaining scope (M2 checkpoint)
 
 No purchases, paid APIs, billing activation, hosting/storage provisioning, or extra credits were performed. Dependencies are freely installable; no paid runtime service is required. Account entitlement and actual billed incremental cost are not exposed to this session, so **$0 account cost cannot be certified**. Do not activate a chargeable service or continue after an allowance is exhausted.
 

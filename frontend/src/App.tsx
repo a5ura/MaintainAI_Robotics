@@ -224,7 +224,10 @@ export function App() {
         }}
         onDiagnostics={openDiagnostics}
       >
-        <GuidedVisuals state={guide.state} />
+        <GuidedVisuals
+          state={guide.state}
+          handoffExplanation={narration.text}
+        />
         {(guide.state?.stage !== "maintenance-handoff" ||
           handoff.notice !== handoff.attempt) && (
           <HandoffNotice handoff={handoff} onView={viewConfirmedTicket} />

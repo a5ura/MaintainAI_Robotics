@@ -1,6 +1,12 @@
 # MaintainAI Robotics
 
-## Current pre-B.2 checkpoint — November 11, 2026 (America/New_York)
+## Current Guided Demo checkpoint — November 16, 2026 (America/New_York)
+
+Verified main `512b6ad216ec79253fcfdd00fd3c3e584a4e8a26` includes UI-01–03 and GD-02B-1–5 through merged PR #21. The six-stage Guided Demo uses the actual deterministic Dropped Object scenario, seed 42, and backend-computed evidence. **Manual is the default**; optional Automatic mode waits for readiness plus four seconds and never creates a ticket. Maintenance creation requires a separate explicit confirmation.
+
+GD-02B-5 assessed the application as conditionally ready for a controlled Manual recruiter demonstration; native Windows voice/GPU and screen-reader acceptance remain untested. GD-02C-1 addresses guidance/onboarding/control presentation for review; it does not authorize deployment or change persistence. See [acceptance report](docs/GD02B5_FINAL_ACCEPTANCE_REPORT.md), [polish report](docs/GD02C1_COMPLETION_REPORT.md), and [current development status](docs/DEVELOPMENT_STATUS.md). The dated checkpoints below are historical, including their original blockers and authorizations. Existing hosting/billing/backup gates remain in force.
+
+## Historical pre-B.2 checkpoint — November 11, 2026 (America/New_York)
 
 PRs #1–9 are merged. Verified `origin/main` baseline: `a915cae8cae3b6fd4deb46f2b9c7729f41ebafa4` (PR #9), including saved per-ticket JSON/Markdown exports in `1f972b0`. Complete evidence/history, captured-version checks and draft preservation are implemented; see [export acceptance](docs/TICKET_EXPORTS_ACCEPTANCE.md). Earlier statements that exports are missing or PR #9 is unmerged describe historical checkpoints.
 
@@ -27,7 +33,7 @@ Phase A.1 PR #6 is verified merged at `966c809`. Phase A.2 explicitly authorizes
 Actual Python Workers/JS binding execution, billed CPU/memory, pre-ASGI streamed body enforcement, account Free-only terms and hosted durability remain unverified. The total 500 MB Free storage/retention and anonymous availability gates are not solved by a daily budget. No deployment, resource provisioning, billing, real-record migration, environment publication or merge. Current evidence: [A.2 report](docs/PHASE_A2_COMPLETION_REPORT.md) and [details](docs/DEPLOYMENT_PHASE_A2.md). Earlier checkpoint statements below are historical, including the previous single-row restriction and 2 MiB/day default.
 
 
-Evidence-driven robotic failure investigation. **Milestone 3:** live guided investigation, optional model-derived engineering tools, four evidence-driven diagnoses, reproducible Random Failure and local SQLite maintenance records. No paid APIs, login, GPU, Docker, or external runtime service.
+Evidence-driven investigation of a simulated three-joint robot: four failure scenarios, reproducible Random Failure, six-stage Guided Demo, optional model-derived engineering tools, and diagnosis-linked maintenance records with JSON/Markdown exports. No paid API or dedicated GPU is required. Local operation does not establish hosted durability.
 
 ## Run locally
 
@@ -74,7 +80,13 @@ Use a local writable path. No external database account is needed. Equipment, ti
 
 ## Guided experience and engineering tools
 
-Interactive mode is the default. Choose **Start Guided Demo** to run a real dropped-object cycle, inspect FastAPI-computed evidence/checks, then automatically create one labelled synthetic Open maintenance ticket. This writes an actual local shared record. Pause/Resume, Reset demo, Skip to Results and Take Manual Control are supported. Skip skips visual replay and still calls FastAPI. A submitted ticket request may finish after takeover/reset; retry IDs prevent duplicates for that request, and saved tickets remain in Maintenance.
+Interactive simulation is the initial workspace. **Start Guided Demo** selects Dropped Object, seed 42, in **Manual** playback. Use the highlighted **Walkthrough controls** link to find Next, Previous, Pause/Resume, Reset demo and Exit walkthrough. Next respects readiness; Previous revisits explanations without rewinding the robot or repeating diagnosis. During the walkthrough, **Start manually (exit walkthrough)** leaves guide ownership and resumes the existing manual simulation; it is not the guide's Next action. The simulation Pause control pauses the active guide; simulation Reset exits and resets the run.
+
+The six stages are **Introduction → Robot Operation → Fault Detection → Evidence Investigation → Diagnosis and Next Checks → Maintenance Handoff**. Optional **Automatic** playback advances only after each stage is ready plus the existing four-second dwell, independently of speech completion. Long narration may be interrupted; Manual is recommended for a first-time recruiter presentation. Mute/Replay and readable captions remain available, with text-only fallback when local speech is unavailable. There is no Skip control.
+
+Stage 6 previews the actual diagnosis and proposed ticket. **Create maintenance ticket** opens confirmation; only **Confirm ticket creation** sends the persistent-record request. Cancel, Escape, reaching Stage 6, playback, narration and navigation never create a ticket. After confirmed success, **View saved ticket** opens the linked maintenance record; no repair or physical verification is claimed. The separate Diagnostics handoff still opens the existing manual maintenance form.
+
+A confirmed request can finish after navigation or exit. Pending/uncertain attempts retain their UUID and immutable payload across in-app navigation and new walkthroughs in the same page session. Review and explicitly reconcile an uncertain request using that same identity; do not assume a network error means no ticket was saved. Reload recovery is deferred, separate tabs/UUIDs are not globally deduplicated, and access/quota policy can block reconciliation. Use synthetic information only. Starting another tour is not a recovery for an unresolved attempt.
 
 **Advanced Engineering View** is off by default. Enable joint angles, frames, executed TCP path or transforms individually. Click a robot component or use the named component buttons with the keyboard to inspect axes/live values and linked evidence. No IK/physics engine or hardware is involved.
 
@@ -85,7 +97,7 @@ Interactive mode is the default. Choose **Start Guided Demo** to run a real drop
 3. At completion, review the computed diagnosis, observations, evidence references, and cause-specific operator checks. Expand other hypotheses. Inspect the timestamped timeline.
 4. Reset and select Positioning error: independent placement is offset while robot FK remains coherent. Vision failure instead marks verification unavailable while the object remains present. Unexpected robot stop physically freezes the arm at 6 seconds; later checkpoints are not reached.
 5. Select Random failure and set an explicit seed. Its resolved scenario is displayed; reset/replay retains the seed and reproduces evidence. Seed/context are copied into diagnosis-linked ticket descriptions.
-6. From a completed diagnosis, choose **Create maintenance ticket**, select equipment and submit. Inspect the saved evidence snapshot; add operator/repair notes, mark In Progress, then resolve with resolution notes. Maintenance navigation also supports manual tickets and seeded historical incidents. Stale edits require a reload rather than silently replacing another operator's changes.
+6. Outside Guided Demo, the completed Diagnostics **Create maintenance ticket** action opens the manual form; select equipment and submit explicitly. Within Guided Demo, use the Stage 6 preview and separate confirmation instead. Inspect the saved evidence snapshot; add operator/repair notes, mark In Progress, then resolve with resolution notes. Maintenance navigation also supports manual tickets and seeded historical incidents. Stale edits require a reload rather than silently replacing another operator's changes.
 7. Reset for a reproducible new run. Scenario selection is locked during a run. Each browser owns its own clock; backend requests are stateless.
 
 All sensor, event, and verification inputs are simulated. FK, transforms, evidence correlation, fault detection, and hypothesis ranking are computed. Vacuum threshold is a demonstration parameter, not a validated robot safety threshold. Hypotheses are not proven root causes; ranking is not a probability.
@@ -109,7 +121,7 @@ With both services running, execute `npm --prefix frontend run smoke`. Playwrigh
 - [Verified development status](docs/DEVELOPMENT_STATUS.md)
 - [Milestone scope and report](docs/MILESTONE_1.md)
 
-Remaining V1 includes verified shared cloud persistence, engineering overlays, full Guided Demo, production deployment, and final UX/accessibility/performance hardening. Four failures, Random Failure and local maintenance records are implemented in M2. V2 is excluded. Public hosting and shared durability have **not** been verified; no service has been provisioned. Account entitlement/cost must be verified separately from dependency license cost.
+The simulation scenarios, engineering overlays, six-stage Guided Demo, confirmed handoff and maintenance exports are implemented. Remaining acceptance includes native Windows voice/GPU, native screen readers, longer-session profiling and release hardening. Public hosting/shared durability and account eligibility/cost remain unverified; no deployment follows from local tests. V2 is excluded. See the current status and acceptance reports above.
 
 ## Optional public-demo safeguards (not a deployment)
 
@@ -130,7 +142,7 @@ Backups refuse to overwrite files. Retention preserves seed and active tickets; 
 
 See [Milestone 2 scope/results](docs/MILESTONE_2.md) and [completion report](docs/M2_COMPLETION_REPORT.md). New backend tests use temporary databases only (including new-app/reopen and competing-update checks); they do not modify development records. Shared scenario contract: `fixtures/scenarios.json`. Chromium tests exercise all faults, deterministic replay, linked-ticket repair/history, stale-edit recovery and isolated browser simulations. Screenshots are review artifacts, not a Windows FPS benchmark.
 
-## M3 review and limitations
+## Historical M3 review and limitations
 
 See [M3 scope/results](docs/MILESTONE_3.md), [completion report](docs/M3_COMPLETION_REPORT.md), [hosting decision with current official references](docs/HOSTING_DECISION.md), and [release checklist](docs/RELEASE_CHECKLIST.md). No public URL is deployed or verified. Official Cloudflare docs support FastAPI on Python Workers, but a D1 adapter, Free CPU-budget validation and account/billing/access checks are still required. Current Hugging Face docs require a paid plan for new compute Spaces; that route is rejected. No service, upgrade or paid fallback was activated.
 

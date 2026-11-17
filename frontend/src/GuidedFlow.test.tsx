@@ -280,3 +280,27 @@ it("unavailable evidence shows a truthful fallback without blocking diagnosis-ba
   expect(stage().getByRole("heading")).toHaveTextContent("Maintenance Handoff");
   expect(h.posts()).toHaveLength(0);
 });
+
+it("manual Start is clearly labelled during the guide and preserves takeover without rewinding", async () => {
+  const h = setup();
+  click("Start Guided Demo");
+  const manual = screen.getByRole("button", {
+    name: "Start manually (exit walkthrough)",
+  });
+  expect(manual).not.toHaveClass("primary");
+  expect(
+    screen.getByRole("button", { name: "Walkthrough controls" }),
+  ).toHaveClass("primary");
+  expect(stage().getByRole("button", { name: "Next" })).toHaveClass("primary");
+  click("Next");
+  await advance(6500);
+  const time = Number(screen.getByRole("progressbar").getAttribute("value"));
+  fireEvent.click(manual);
+  expect(screen.queryByRole("region", { name: "Guided Demo" })).toBeNull();
+  expect(screen.getByRole("button", { name: "Start" })).toHaveClass("primary");
+  await advance(500);
+  expect(
+    Number(screen.getByRole("progressbar").getAttribute("value")),
+  ).toBeGreaterThan(time);
+  expect(h.posts()).toHaveLength(0);
+});
