@@ -1,0 +1,9 @@
+{
+  "ticketId": "T-21f74437de135a70b568c2c913296910",
+  "diagnosisId": "D-973774d225afd7785d537ddd",
+  "ticketPosts": 1,
+  "createdEvents": 1,
+  "titlePreserved": true,
+  "descriptionPreserved": true,
+  "method": "Real SQLite commit, delayed response released explicitly after in-app navigation and draft entry; no timer-only assertion"
+}

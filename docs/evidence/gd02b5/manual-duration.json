@@ -1,0 +1,9 @@
+{
+  "method": "Real wall clock, no virtual time, immediate scripted Next after readiness; excludes initial page load; not a comprehension or native speech duration",
+  "stage6Seconds": 13.267899307000043,
+  "confirmedTicketSeconds": 13.671728006000048,
+  "ticketId": "T-062b43f21a685a35be993427154f2f8d",
+  "diagnosisId": "D-973774d225afd7785d537ddd",
+  "navigationAfterSuccess": "Stage 6 / 6 · Maintenance Handoff\n\nThis walkthrough ends with an explanation of future confirmation. No maintenance ticket is created.\n\nShow focus area\nWalkthrough controls",
+  "handoffAfterSuccess": "Review the maintenance handoff\n\nEquipment\nR-01 · Simulated workcell\nRun\nDropped object · seed 42 · page-session run 1\nDiagnosis\nD-973774d225afd7785d537ddd\nTitle\nGuided demo — Dropped object\nDescription\nSynthetic guided demonstration. Object lost between pick and place; root cause remains a hypothesis.\nDropped object · seed 42 · page-session run 1\nNo operator verification or repair has been recorded by this walkthrough.\nProposed initial status\nOpen · no repair or verification recorded\nRecorded evidence, candidate explanations and limitations\nTicket saved: T-062b43f21a685a35be993427154f2f8d\n\nDropped object · seed 42 · page-session run 1 · Diagnosis D-973774d225afd7785d537ddd\n\nAttempt reference: f1fec85c-2d69-40db-96d3-befc72e7f165\n\nView saved ticket"
+}

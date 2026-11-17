@@ -1,0 +1,6 @@
+frontend/e2e/gd02b5.spec.ts(2,34): error TS2307: Cannot find module 'node:fs/promises' or its corresponding type declarations.
+frontend/e2e/gd02b5.spec.ts(3,22): error TS2307: Cannot find module 'node:path' or its corresponding type declarations.
+frontend/e2e/gd02b5.spec.ts(4,29): error TS2307: Cannot find module 'node:perf_hooks' or its corresponding type declarations.
+frontend/e2e/gd02b5.spec.ts(10,16): error TS2580: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node`.
+frontend/e2e/workcellProbe.ts(47,9): error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.
+frontend/e2e/workcellProbe.ts(74,9): error TS2683: 'this' implicitly has type 'any' because it does not have a type annotation.

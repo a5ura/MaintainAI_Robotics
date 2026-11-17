@@ -1,0 +1,907 @@
+{
+  "command": [
+    "./node_modules/.bin/playwright",
+    "test",
+    "--workers=1",
+    "--timeout=120000",
+    "--reporter=line,json"
+  ],
+  "exit_code": 0,
+  "wall_seconds": 933.656,
+  "started_unix": 1794876020.8338234,
+  "label": "browser-final",
+  "stats": {
+    "startTime": "2026-11-17T00:40:21.726Z",
+    "duration": 932733.955,
+    "expected": 68,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "file": "a2.spec.ts",
+      "line": 3,
+      "title": "paged maintenance history preserves all events and an unsaved repair draft",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 5942,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "b01.spec.ts",
+      "line": 3,
+      "title": "conflict reload preserves repair/resolution drafts, uses refreshed version and clears drafts on ticket switch",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2606,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "cycle.spec.ts",
+      "line": 2,
+      "title": "real normal and dropped-object cycles use FastAPI and display evidence",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 27570,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "exports.spec.ts",
+      "line": 11,
+      "title": "saved JSON and Markdown downloads include complete diagnosis/history and preserve every draft without maintenance writes",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 4320,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "exports.spec.ts",
+      "line": 113,
+      "title": "failed or concurrently changed exports create no partial file; manual Unicode Markdown/JSON work after retry",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2319,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "exports.spec.ts",
+      "line": 198,
+      "title": "large Unicode saved evidence downloads intact as JSON and Markdown",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 4466,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd01.spec.ts",
+      "line": 10,
+      "title": "GD01 speech controls remain isolated with six-stage navigation 1366",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 11570,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd01.spec.ts",
+      "line": 10,
+      "title": "GD01 speech controls remain isolated with six-stage navigation 1280",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 12337,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd01.spec.ts",
+      "line": 10,
+      "title": "GD01 speech controls remain isolated with six-stage navigation 390",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 12374,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd01.spec.ts",
+      "line": 107,
+      "title": "GD01 missing voices fall back and recover after discovery",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1712,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd01.spec.ts",
+      "line": 107,
+      "title": "GD01 remote-only voices fall back and recover after discovery",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1475,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd01.spec.ts",
+      "line": 132,
+      "title": "GD01 denied speech, hidden tab and manual navigation cannot restart stale narration or progression",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1845,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd02b1.spec.ts",
+      "line": 11,
+      "title": "GD02B1 Manual lifecycle and zero ticket writes at 1366",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 23592,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd02b1.spec.ts",
+      "line": 11,
+      "title": "GD02B1 Manual lifecycle and zero ticket writes at 1280",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 17446,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd02b1.spec.ts",
+      "line": 11,
+      "title": "GD02B1 Manual lifecycle and zero ticket writes at 390",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 15259,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd02b1.spec.ts",
+      "line": 130,
+      "title": "GD02B1 Automatic waits for real milestones and diagnosis, ends without ticket confirmation",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 7186,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd02b1.spec.ts",
+      "line": 169,
+      "title": "GD02B1 pending/error diagnosis cannot be bypassed by modes or repeated navigation",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 8312,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd02b2.spec.ts",
+      "line": 72,
+      "title": "GD02B2 real Manual investigation and guidance at 1366",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 9239,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd02b2.spec.ts",
+      "line": 72,
+      "title": "GD02B2 real Manual investigation and guidance at 1280",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 9429,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd02b2.spec.ts",
+      "line": 72,
+      "title": "GD02B2 real Manual investigation and guidance at 390",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 7855,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd02b2.spec.ts",
+      "line": 186,
+      "title": "GD02B2 Automatic guidance never steals focus or couples scrolling to telemetry",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 7043,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd02b2.spec.ts",
+      "line": 248,
+      "title": "GD02B2 keyboard navigation, resize, missing targets and hidden-tab pause remain isolated",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3681,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd02b2.spec.ts",
+      "line": 329,
+      "title": "GD02B2 native smooth motion is cancelled by exit and reset leaves no stale target",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1979,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd02b3.spec.ts",
+      "line": 21,
+      "title": "GD02B3 narration follows real Manual stages and remains presentation-only at 1366",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 8544,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd02b3.spec.ts",
+      "line": 21,
+      "title": "GD02B3 narration follows real Manual stages and remains presentation-only at 1280",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 8334,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd02b3.spec.ts",
+      "line": 21,
+      "title": "GD02B3 narration follows real Manual stages and remains presentation-only at 390",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 7940,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd02b3.spec.ts",
+      "line": 105,
+      "title": "GD02B3 Automatic preempts unfinished speech and missing voices never block progression",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 6991,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd02b4.spec.ts",
+      "line": 20,
+      "title": "GD02B4 explicit confirmation, cancellation and persisted history at 1366",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 8877,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd02b4.spec.ts",
+      "line": 20,
+      "title": "GD02B4 explicit confirmation, cancellation and persisted history at 1280",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 8897,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd02b4.spec.ts",
+      "line": 20,
+      "title": "GD02B4 explicit confirmation, cancellation and persisted history at 390",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 7844,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd02b4.spec.ts",
+      "line": 99,
+      "title": "GD02B4 committed-but-lost response survives new runs/navigation; reconciliation is same-ID and preserves manual drafts",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 17512,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd02b5.spec.ts",
+      "line": 53,
+      "title": "GD02B5 six-stage screenshots, evidence and keyboard dialog at 1366",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 12466,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd02b5.spec.ts",
+      "line": 53,
+      "title": "GD02B5 six-stage screenshots, evidence and keyboard dialog at 1280",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 11112,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd02b5.spec.ts",
+      "line": 53,
+      "title": "GD02B5 six-stage screenshots, evidence and keyboard dialog at 390",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 8694,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd02b5.spec.ts",
+      "line": 278,
+      "title": "GD02B5 measured real-clock Manual walkthrough with explicit persisted handoff",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 14667,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd02b5.spec.ts",
+      "line": 337,
+      "title": "GD02B5 measured real-clock Automatic stage order, unfinished speech and zero tickets",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 33983,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd02b5.spec.ts",
+      "line": 388,
+      "title": "GD02B5 five same-page runs retain no selections, ticket writes or retired speech handlers",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 41094,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "gd02b5.spec.ts",
+      "line": 511,
+      "title": "GD02B5 in-flight confirmed response cannot redirect or overwrite a manual creation draft",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 9348,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "m2.spec.ts",
+      "line": 3,
+      "title": "positioning error, diagnosis ticket, concurrent edit recovery and durable history",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 17529,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "m2.spec.ts",
+      "line": 109,
+      "title": "vision failure is unreliable verification and not physical loss",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 14122,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "m2.spec.ts",
+      "line": 134,
+      "title": "unexpected stop freezes displayed robot TCP and clock at interruption",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 8983,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "m2.spec.ts",
+      "line": 158,
+      "title": "random failure replays same evidence for explicit seed",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 25858,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "m2.spec.ts",
+      "line": 184,
+      "title": "separate browser simulations remain independent across reset and scenario changes",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 15449,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "m2.spec.ts",
+      "line": 221,
+      "title": "manual ticket UI and initial API error recovery",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2091,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "m3.spec.ts",
+      "line": 12,
+      "title": "guided real evidence ends without persistence; manual tickets retain backend idempotency",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 19415,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "m3.spec.ts",
+      "line": 119,
+      "title": "guided reset, explicit navigation and exit preserve real results without auto-writing",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 12086,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "m3.spec.ts",
+      "line": 155,
+      "title": "engineering model values, real 3D component picking and keyboard navigation",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 10737,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "m3.spec.ts",
+      "line": 247,
+      "title": "guided backend error recovers through real API retry",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 8011,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "m3.spec.ts",
+      "line": 283,
+      "title": "3D lazy-load error is contained and application reload recovers",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1495,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "m3.spec.ts",
+      "line": 325,
+      "title": "guided pause/reset stays isolated from another browser simulation",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 9961,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "m3.spec.ts",
+      "line": 372,
+      "title": "manual diagnosis ticket handoff exits the non-persisting guide",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 14040,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "m3.spec.ts",
+      "line": 430,
+      "title": "pending diagnosis cannot restore an exited guide or erase manual ticket drafts",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 7920,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "ui01.spec.ts",
+      "line": 45,
+      "title": "UI01 viewport and six real presentation states 1366",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 36694,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "ui01.spec.ts",
+      "line": 45,
+      "title": "UI01 viewport and six real presentation states 1280",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 36253,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "ui01.spec.ts",
+      "line": 45,
+      "title": "UI01 viewport and six real presentation states 390",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 34172,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "ui01.spec.ts",
+      "line": 181,
+      "title": "UI01 resize preserves running and paused simulation state",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2835,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "ui02.spec.ts",
+      "line": 19,
+      "title": "UI02 scenario visuals and camera layout 1366",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 34182,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "ui02.spec.ts",
+      "line": 19,
+      "title": "UI02 scenario visuals and camera layout 1280",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 34777,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "ui02.spec.ts",
+      "line": 19,
+      "title": "UI02 scenario visuals and camera layout 390",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 30887,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "ui02.spec.ts",
+      "line": 155,
+      "title": "UI02 camera and context recovery preserve narration/time and release WebGL resources",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3311,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "ui02.spec.ts",
+      "line": 296,
+      "title": "UI02 unavailable WebGL preserves controls and real backend diagnosis",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3784,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "ui03.spec.ts",
+      "line": 15,
+      "title": "UI03 investigation across six scenarios at 1366",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 36952,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "ui03.spec.ts",
+      "line": 15,
+      "title": "UI03 investigation across six scenarios at 1280",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 35079,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "ui03.spec.ts",
+      "line": 15,
+      "title": "UI03 investigation across six scenarios at 390",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 32112,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "ui03.spec.ts",
+      "line": 228,
+      "title": "UI03 paused guide selection draws and releases a historical marker without domain side effects",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 8813,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "ui03.spec.ts",
+      "line": 460,
+      "title": "UI03 invalid backend FK suppresses spatial highlighting but keeps complete evidence",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 7349,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "ui03.spec.ts",
+      "line": 504,
+      "title": "UI03 WebGL unavailable retains selectable evidence and text inspector",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3720,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "ui03.spec.ts",
+      "line": 536,
+      "title": "GD02A clears an ambiguous reference without retaining a stale historical marker",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 13628,
+          "retry": 0
+        }
+      ]
+    }
+  ]
+}

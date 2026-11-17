@@ -303,12 +303,14 @@ test("UI02 unavailable WebGL preserves controls and real backend diagnosis", asy
     } as typeof original;
   });
   await page.goto("/");
+  // This fallback mounts after the same lazy chunk as the WebGL canvas.
+  // Match the existing 15-second workcell startup allowance; retain every assertion.
   await expect(
     page.getByText(
       "3D rendering unavailable. Simulation and evidence controls remain available.",
       { exact: true },
     ),
-  ).toBeVisible();
+  ).toBeVisible({ timeout: 15000 });
   await page.clock.install();
   await page.getByLabel("Scenario", { exact: true }).selectOption("drop");
   await page.getByRole("button", { name: "Start", exact: true }).click();

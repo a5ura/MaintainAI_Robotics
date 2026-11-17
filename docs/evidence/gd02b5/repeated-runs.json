@@ -1,0 +1,239 @@
+{
+  "rendererInfo": {
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "vendor": "Google Inc. (Google)"
+  },
+  "initialGPU": {
+    "contexts": 2,
+    "renderer": {
+      "id": 2,
+      "liveBuffers": 110,
+      "createdBuffers": 110,
+      "drawCalls": 28,
+      "triangles": 1300
+    },
+    "liveBuffers": 110,
+    "createdBuffers": 110,
+    "deletedBuffers": 0,
+    "lastFrame": {
+      "calls": 28,
+      "triangles": 1300
+    }
+  },
+  "method": "Five virtual-time simulation runs; GC-assisted CDP samples after Exit; test speech logs cleared between samples; short-run screening only, not an overnight leak or Windows GPU benchmark",
+  "samples": [
+    {
+      "run": 1,
+      "speech": {
+        "retainedHandlers": 0,
+        "active": false
+      },
+      "gpu": {
+        "contexts": 2,
+        "renderer": {
+          "id": 2,
+          "liveBuffers": 118,
+          "createdBuffers": 126,
+          "drawCalls": 11272,
+          "triangles": 610824
+        },
+        "liveBuffers": 118,
+        "createdBuffers": 126,
+        "deletedBuffers": 8,
+        "lastFrame": {
+          "calls": 18,
+          "triangles": 1372
+        }
+      },
+      "metrics": [
+        {
+          "name": "Documents",
+          "value": 1
+        },
+        {
+          "name": "JSEventListeners",
+          "value": 242
+        },
+        {
+          "name": "Nodes",
+          "value": 1109
+        },
+        {
+          "name": "JSHeapUsedSize",
+          "value": 8776436
+        }
+      ]
+    },
+    {
+      "run": 2,
+      "speech": {
+        "retainedHandlers": 0,
+        "active": false
+      },
+      "gpu": {
+        "contexts": 2,
+        "renderer": {
+          "id": 2,
+          "liveBuffers": 118,
+          "createdBuffers": 142,
+          "drawCalls": 22454,
+          "triangles": 1216176
+        },
+        "liveBuffers": 118,
+        "createdBuffers": 142,
+        "deletedBuffers": 24,
+        "lastFrame": {
+          "calls": 12,
+          "triangles": 1128
+        }
+      },
+      "metrics": [
+        {
+          "name": "Documents",
+          "value": 1
+        },
+        {
+          "name": "JSEventListeners",
+          "value": 242
+        },
+        {
+          "name": "Nodes",
+          "value": 1109
+        },
+        {
+          "name": "JSHeapUsedSize",
+          "value": 9326104
+        }
+      ]
+    },
+    {
+      "run": 3,
+      "speech": {
+        "retainedHandlers": 0,
+        "active": false
+      },
+      "gpu": {
+        "contexts": 2,
+        "renderer": {
+          "id": 2,
+          "liveBuffers": 118,
+          "createdBuffers": 158,
+          "drawCalls": 33608,
+          "triangles": 1820464
+        },
+        "liveBuffers": 118,
+        "createdBuffers": 158,
+        "deletedBuffers": 40,
+        "lastFrame": {
+          "calls": 8,
+          "triangles": 976
+        }
+      },
+      "metrics": [
+        {
+          "name": "Documents",
+          "value": 1
+        },
+        {
+          "name": "JSEventListeners",
+          "value": 242
+        },
+        {
+          "name": "Nodes",
+          "value": 1109
+        },
+        {
+          "name": "JSHeapUsedSize",
+          "value": 9594008
+        }
+      ]
+    },
+    {
+      "run": 4,
+      "speech": {
+        "retainedHandlers": 0,
+        "active": false
+      },
+      "gpu": {
+        "contexts": 2,
+        "renderer": {
+          "id": 2,
+          "liveBuffers": 118,
+          "createdBuffers": 174,
+          "drawCalls": 44824,
+          "triangles": 2428688
+        },
+        "liveBuffers": 118,
+        "createdBuffers": 174,
+        "deletedBuffers": 56,
+        "lastFrame": {
+          "calls": 27,
+          "triangles": 1800
+        }
+      },
+      "metrics": [
+        {
+          "name": "Documents",
+          "value": 1
+        },
+        {
+          "name": "JSEventListeners",
+          "value": 242
+        },
+        {
+          "name": "Nodes",
+          "value": 1109
+        },
+        {
+          "name": "JSHeapUsedSize",
+          "value": 9732716
+        }
+      ]
+    },
+    {
+      "run": 5,
+      "speech": {
+        "retainedHandlers": 0,
+        "active": false
+      },
+      "gpu": {
+        "contexts": 2,
+        "renderer": {
+          "id": 2,
+          "liveBuffers": 118,
+          "createdBuffers": 190,
+          "drawCalls": 56040,
+          "triangles": 3036912
+        },
+        "liveBuffers": 118,
+        "createdBuffers": 190,
+        "deletedBuffers": 72,
+        "lastFrame": {
+          "calls": 30,
+          "triangles": 1824
+        }
+      },
+      "metrics": [
+        {
+          "name": "Documents",
+          "value": 1
+        },
+        {
+          "name": "JSEventListeners",
+          "value": 242
+        },
+        {
+          "name": "Nodes",
+          "value": 1109
+        },
+        {
+          "name": "JSHeapUsedSize",
+          "value": 9792092
+        }
+      ]
+    }
+  ],
+  "diagnosisPosts": 5,
+  "ticketPosts": 0,
+  "pageErrors": []
+}
