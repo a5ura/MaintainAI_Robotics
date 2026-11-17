@@ -1,0 +1,38 @@
+{
+  "method": "Real wall clock, no virtual time, existing mocks never complete speech; excludes page load",
+  "entries": [
+    {
+      "stage": "Introduction",
+      "seconds": 0.1504872789999936,
+      "captionWords": 52
+    },
+    {
+      "stage": "Robot Operation",
+      "seconds": 4.580604325999971,
+      "captionWords": 50
+    },
+    {
+      "stage": "Fault Detection",
+      "seconds": 14.582351617000008,
+      "captionWords": 55
+    },
+    {
+      "stage": "Evidence Investigation",
+      "seconds": 24.70205451299995,
+      "captionWords": 64
+    },
+    {
+      "stage": "Diagnosis and Next Checks",
+      "seconds": 28.532858483999966,
+      "captionWords": 78
+    },
+    {
+      "stage": "Maintenance Handoff",
+      "seconds": 32.868972563999996,
+      "captionWords": 46
+    }
+  ],
+  "stage6Seconds": 32.89312039399997,
+  "diagnosisPosts": 1,
+  "ticketPosts": 0
+}

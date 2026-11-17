@@ -1,0 +1,125 @@
+{
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "samples": [
+    {
+      "stage": 1,
+      "title": "Introduction",
+      "target": "workcell",
+      "navigationText": "Stage 1 / 6 · Introduction\n\nThis is a simulated pick-and-place workcell, not live hardware.\n\nShow focus area\nWalkthrough controls",
+      "dimensions": {
+        "width": 390,
+        "document": 390
+      },
+      "focus": {
+        "outline": "solid",
+        "color": "rgb(117, 214, 227)"
+      },
+      "simulationTime": "0"
+    },
+    {
+      "stage": 2,
+      "title": "Robot Operation",
+      "target": "workcell",
+      "navigationText": "Stage 2 / 6 · Robot Operation\n\nWatch the real simulation and its run controls. The walkthrough pauses at the recorded loss milestone.\n\nShow focus area\nShow run controls\nWalkthrough controls",
+      "dimensions": {
+        "width": 390,
+        "document": 390
+      },
+      "focus": {
+        "outline": "solid",
+        "color": "rgb(117, 214, 227)"
+      },
+      "simulationTime": "3.807999999999995"
+    },
+    {
+      "stage": 3,
+      "title": "Fault Detection",
+      "target": "fault-status",
+      "navigationText": "Stage 3 / 6 · Fault Detection\n\nCompare the observed loss and sensor state with actual backend analysis progress. A symptom is not a verified cause.\n\nShow focus area\nShow sensor strip\nWalkthrough controls",
+      "dimensions": {
+        "width": 390,
+        "document": 390
+      },
+      "focus": {
+        "outline": "solid",
+        "color": "rgb(117, 214, 227)"
+      },
+      "simulationTime": "6.2040000000000175"
+    },
+    {
+      "stage": 4,
+      "title": "Evidence Investigation",
+      "target": "evidence-timeline",
+      "navigationText": "Stage 4 / 6 · Evidence Investigation\n\nChoose a recorded reading, inspect its evidence, and view its historical TCP marker. Clear Selection leaves the live robot unchanged.\n\nShow focus area\nShow reading inspector\nShow workcell\nWalkthrough controls",
+      "dimensions": {
+        "width": 390,
+        "document": 390
+      },
+      "focus": {
+        "outline": "solid",
+        "color": "rgb(117, 214, 227)"
+      },
+      "simulationTime": "12"
+    },
+    {
+      "stage": 5,
+      "title": "Diagnosis and Next Checks",
+      "target": "candidate-comparison",
+      "navigationText": "Stage 5 / 6 · Diagnosis and Next Checks\n\nCompare supporting and contradicting evidence in backend order. Operator checks still require verification.\n\nShow focus area\nWalkthrough controls",
+      "dimensions": {
+        "width": 390,
+        "document": 390
+      },
+      "focus": {
+        "outline": "solid",
+        "color": "rgb(117, 214, 227)"
+      },
+      "simulationTime": "12"
+    },
+    {
+      "stage": 6,
+      "title": "Maintenance Handoff",
+      "target": "maintenance-handoff",
+      "navigationText": "Stage 6 / 6 · Maintenance Handoff\n\nThis walkthrough ends with an explanation of future confirmation. No maintenance ticket is created.\n\nShow focus area\nWalkthrough controls",
+      "dimensions": {
+        "width": 390,
+        "document": 390
+      },
+      "focus": {
+        "outline": "solid",
+        "color": "rgb(117, 214, 227)"
+      },
+      "simulationTime": "12"
+    }
+  ],
+  "bounds": {
+    "content": 338,
+    "client": 338,
+    "left": 0,
+    "right": 342,
+    "viewport": 390,
+    "document": 390
+  },
+  "focusAtBoundary": {
+    "contained": true,
+    "activeTag": "DIALOG",
+    "activeText": "Confirm maintenance handoffConfirming creates a persistent shared maintenance record. It does not re",
+    "documentFocused": true,
+    "modal": true
+  },
+  "forwardBoundary": {
+    "contained": false,
+    "activeTag": "BODY",
+    "documentFocused": false,
+    "modal": true
+  },
+  "diagnosisId": "D-973774d225afd7785d537ddd",
+  "postCounts": {
+    "diagnosis": 1,
+    "tickets": 0
+  },
+  "pageErrors": []
+}

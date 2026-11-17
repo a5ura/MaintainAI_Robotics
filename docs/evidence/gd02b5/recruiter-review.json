@@ -1,0 +1,40 @@
+{
+  "method": "Codex-led recruiter-persona inspection of actual browser UI; real wall clock without virtual time or scripted reading sleeps; existing speech mock; includes reading, inspection and tool interaction; not a human recruiter study or native voice measurement",
+  "durationSeconds": 204.793327315,
+  "confirmedTicketSeconds": 181.235839132,
+  "viewTicketSeconds": 181.334262271,
+  "stageEntriesSeconds": {
+    "Introduction": 0.090784951,
+    "Robot Operation": 33.539326664,
+    "Fault Detection": 84.76788784,
+    "Evidence Investigation": 107.107878587,
+    "Diagnosis and Next Checks": 128.554496979,
+    "Maintenance Handoff": 159.203997945
+  },
+  "readingsInspected": [
+    "E6",
+    "E5",
+    "E11"
+  ],
+  "clearSelection": true,
+  "cancelAtSeconds": 180.911737289,
+  "diagnosisPosts": 1,
+  "ticketPosts": 1,
+  "ticket": {
+    "id": "T-cf55a33840ca593d966c6a5cb4c53df5",
+    "equipment_id": "R-01",
+    "diagnosis_id": "D-973774d225afd7785d537ddd",
+    "title": "Guided demo \u2014 Dropped object",
+    "status": "Open",
+    "resolution_notes": "",
+    "version": 1
+  },
+  "history": [
+    {
+      "kind": "created",
+      "body": "Open \u2014 Guided demo \u2014 Dropped object"
+    }
+  ],
+  "pageErrors": null,
+  "captureNote": "The interactive driver printed the measured values but its final artifact export failed because a standalone APIRequestContext had no baseURL for a relative GET. These values are transcribed from that terminal trace; persistence/history were then independently validated by read-only SQLite query on the same disposable audit database. This is a harness issue, not an application failure. The driver page-error array was not exported; no zero-error claim is made for this interactive run."
+}

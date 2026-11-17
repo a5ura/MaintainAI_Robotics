@@ -1,0 +1,47 @@
+
+> maintainai-robotics@0.1.0 test
+> vitest run
+
+
+ RUN  v3.1.3 /workspace/MaintainAI_Robotics/frontend
+
+ ✓ src/Maintenance.test.tsx (10 tests) 2084ms
+   ✓ loads another incident page using the last record cursor  1277ms
+ ✓ src/ticketReports.test.tsx (20 tests) 1737ms
+   ✓ downloads complete saved diagnosis/evidence and all 450 history events, with public fields only  1041ms
+ ✓ src/useGuideNarration.test.tsx (21 tests) 89ms
+ ✓ src/GuidedVisuals.test.tsx (17 tests) 247ms
+ ✓ src/ConfirmedHandoff.test.tsx (22 tests) 155ms
+ ✓ src/GuidedFlow.test.tsx (8 tests) 2333ms
+   ✓ complete Manual walkthrough and repeated visits never create tickets or replay run actions  1141ms
+ ✓ src/Investigation.test.tsx (8 tests) 536ms
+ ✓ src/useGuidedDemo.test.tsx (7 tests) 76ms
+ ✓ src/evidenceSelection.test.tsx (9 tests) 39ms
+ ✓ src/InvestigationSummary.test.tsx (10 tests) 150ms
+ ✓ src/App.test.tsx (3 tests) 350ms
+ ✓ src/EvidenceReferences.test.tsx (3 tests) 79ms
+ ✓ src/GuidedBanner.test.tsx (2 tests) 170ms
+ ✓ src/DiagnosticDetails.test.tsx (1 test) 158ms
+stderr | src/Workcell.test.tsx
+WARNING: Multiple instances of Three.js being imported.
+
+ ✓ src/Workcell.test.tsx (3 tests) 61ms
+ ✓ src/workcellVisual.test.tsx (21 tests) 1005ms
+   ✓ both camera presets frame the full existing sweep at desktop and mobile aspects  967ms
+ ✓ src/guideNarration.test.ts (15 tests) 10ms
+ ✓ src/model.test.tsx (8 tests) 307ms
+ ✓ src/guided.test.ts (5 tests) 7ms
+ ✓ src/scenarios.test.ts (9 tests) 23ms
+ ✓ src/engineering.test.ts (3 tests) 99ms
+ ✓ src/api.test.ts (2 tests) 6ms
+
+ Test Files  22 passed (22)
+      Tests  207 passed (207)
+   Start at  00:09:14
+   Duration  23.15s (transform 863ms, setup 0ms, collect 3.32s, tests 9.72s, environment 5.44s, prepare 1.36s)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

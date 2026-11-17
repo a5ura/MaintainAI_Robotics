@@ -1,0 +1,58 @@
+[
+  {
+    "key": null,
+    "tag": "BUTTON",
+    "text": "Cancel",
+    "hasFocus": true,
+    "inside": true,
+    "modal": true
+  },
+  {
+    "key": "Tab",
+    "tag": "BUTTON",
+    "text": "Confirm ticket creation",
+    "hasFocus": true,
+    "inside": true,
+    "modal": true
+  },
+  {
+    "key": "Shift+Tab",
+    "tag": "BUTTON",
+    "text": "Cancel",
+    "hasFocus": true,
+    "inside": true,
+    "modal": true
+  },
+  {
+    "key": "Shift+Tab",
+    "tag": "BODY",
+    "text": "Skip to main contentM / MaintainAI ROBOTICSCell 01 / R-01OperationsDiagnosticsMaintenanceSIMULATIONN",
+    "hasFocus": false,
+    "inside": false,
+    "modal": true
+  },
+  {
+    "key": "Tab",
+    "tag": "BUTTON",
+    "text": "Cancel",
+    "hasFocus": true,
+    "inside": true,
+    "modal": true
+  },
+  {
+    "key": "Tab",
+    "tag": "BUTTON",
+    "text": "Confirm ticket creation",
+    "hasFocus": true,
+    "inside": true,
+    "modal": true
+  },
+  {
+    "key": "Tab",
+    "tag": "BUTTON",
+    "text": "Cancel",
+    "hasFocus": true,
+    "inside": true,
+    "modal": true
+  }
+]

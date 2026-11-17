@@ -1,0 +1,101 @@
+
+Running 61 tests using 1 worker
+
+(node:41262) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/61] e2e/a2.spec.ts:3:1 › paged maintenance history preserves all events and an unsaved repair draft
+[2/61] e2e/b01.spec.ts:3:1 › conflict reload preserves repair/resolution drafts, uses refreshed version and clears drafts on ticket switch
+[3/61] e2e/cycle.spec.ts:2:1 › real normal and dropped-object cycles use FastAPI and display evidence
+[4/61] e2e/exports.spec.ts:11:1 › saved JSON and Markdown downloads include complete diagnosis/history and preserve every draft without maintenance writes
+[5/61] e2e/exports.spec.ts:113:1 › failed or concurrently changed exports create no partial file; manual Unicode Markdown/JSON work after retry
+[6/61] e2e/exports.spec.ts:198:1 › large Unicode saved evidence downloads intact as JSON and Markdown
+[7/61] e2e/gd01.spec.ts:10:3 › GD01 speech controls remain isolated with six-stage navigation 1366
+[8/61] e2e/gd01.spec.ts:10:3 › GD01 speech controls remain isolated with six-stage navigation 1280
+[9/61] e2e/gd01.spec.ts:10:3 › GD01 speech controls remain isolated with six-stage navigation 390
+[10/61] e2e/gd01.spec.ts:107:3 › GD01 missing voices fall back and recover after discovery
+[11/61] e2e/gd01.spec.ts:107:3 › GD01 remote-only voices fall back and recover after discovery
+[12/61] e2e/gd01.spec.ts:132:1 › GD01 denied speech, hidden tab and manual navigation cannot restart stale narration or progression
+[13/61] e2e/gd02b1.spec.ts:11:3 › GD02B1 Manual lifecycle and zero ticket writes at 1366
+[14/61] e2e/gd02b1.spec.ts:11:3 › GD02B1 Manual lifecycle and zero ticket writes at 1280
+[15/61] e2e/gd02b1.spec.ts:11:3 › GD02B1 Manual lifecycle and zero ticket writes at 390
+[16/61] e2e/gd02b1.spec.ts:130:1 › GD02B1 Automatic waits for real milestones and diagnosis, ends without ticket confirmation
+[17/61] e2e/gd02b1.spec.ts:169:1 › GD02B1 pending/error diagnosis cannot be bypassed by modes or repeated navigation
+[18/61] e2e/gd02b2.spec.ts:72:3 › GD02B2 real Manual investigation and guidance at 1366
+[19/61] e2e/gd02b2.spec.ts:72:3 › GD02B2 real Manual investigation and guidance at 1280
+[20/61] e2e/gd02b2.spec.ts:72:3 › GD02B2 real Manual investigation and guidance at 390
+[21/61] e2e/gd02b2.spec.ts:186:1 › GD02B2 Automatic guidance never steals focus or couples scrolling to telemetry
+[22/61] e2e/gd02b2.spec.ts:248:1 › GD02B2 keyboard navigation, resize, missing targets and hidden-tab pause remain isolated
+[23/61] e2e/gd02b2.spec.ts:329:1 › GD02B2 native smooth motion is cancelled by exit and reset leaves no stale target
+[24/61] e2e/gd02b3.spec.ts:21:3 › GD02B3 narration follows real Manual stages and remains presentation-only at 1366
+[25/61] e2e/gd02b3.spec.ts:21:3 › GD02B3 narration follows real Manual stages and remains presentation-only at 1280
+[26/61] e2e/gd02b3.spec.ts:21:3 › GD02B3 narration follows real Manual stages and remains presentation-only at 390
+[27/61] e2e/gd02b3.spec.ts:105:1 › GD02B3 Automatic preempts unfinished speech and missing voices never block progression
+[28/61] e2e/gd02b4.spec.ts:20:3 › GD02B4 explicit confirmation, cancellation and persisted history at 1366
+[29/61] e2e/gd02b4.spec.ts:20:3 › GD02B4 explicit confirmation, cancellation and persisted history at 1280
+[30/61] e2e/gd02b4.spec.ts:20:3 › GD02B4 explicit confirmation, cancellation and persisted history at 390
+[31/61] e2e/gd02b4.spec.ts:99:1 › GD02B4 committed-but-lost response survives new runs/navigation; reconciliation is same-ID and preserves manual drafts
+[32/61] e2e/m2.spec.ts:3:1 › positioning error, diagnosis ticket, concurrent edit recovery and durable history
+[33/61] e2e/m2.spec.ts:109:1 › vision failure is unreliable verification and not physical loss
+[34/61] e2e/m2.spec.ts:134:1 › unexpected stop freezes displayed robot TCP and clock at interruption
+[35/61] e2e/m2.spec.ts:158:1 › random failure replays same evidence for explicit seed
+[36/61] e2e/m2.spec.ts:184:1 › separate browser simulations remain independent across reset and scenario changes
+[37/61] e2e/m2.spec.ts:221:1 › manual ticket UI and initial API error recovery
+[38/61] e2e/m3.spec.ts:12:1 › guided real evidence ends without persistence; manual tickets retain backend idempotency
+[39/61] e2e/m3.spec.ts:119:1 › guided reset, explicit navigation and exit preserve real results without auto-writing
+[40/61] e2e/m3.spec.ts:155:1 › engineering model values, real 3D component picking and keyboard navigation
+[41/61] e2e/m3.spec.ts:247:1 › guided backend error recovers through real API retry
+[42/61] e2e/m3.spec.ts:283:1 › 3D lazy-load error is contained and application reload recovers
+[43/61] e2e/m3.spec.ts:325:1 › guided pause/reset stays isolated from another browser simulation
+[44/61] e2e/m3.spec.ts:372:1 › manual diagnosis ticket handoff exits the non-persisting guide
+[45/61] e2e/m3.spec.ts:430:1 › pending diagnosis cannot restore an exited guide or erase manual ticket drafts
+[46/61] e2e/ui01.spec.ts:45:3 › UI01 viewport and six real presentation states 1366
+[47/61] e2e/ui01.spec.ts:45:3 › UI01 viewport and six real presentation states 1280
+[48/61] e2e/ui01.spec.ts:45:3 › UI01 viewport and six real presentation states 390
+[49/61] e2e/ui01.spec.ts:181:1 › UI01 resize preserves running and paused simulation state
+[50/61] e2e/ui02.spec.ts:19:3 › UI02 scenario visuals and camera layout 1366
+[51/61] e2e/ui02.spec.ts:19:3 › UI02 scenario visuals and camera layout 1280
+[52/61] e2e/ui02.spec.ts:19:3 › UI02 scenario visuals and camera layout 390
+[53/61] e2e/ui02.spec.ts:155:1 › UI02 camera and context recovery preserve narration/time and release WebGL resources
+[54/61] e2e/ui02.spec.ts:296:1 › UI02 unavailable WebGL preserves controls and real backend diagnosis
+  1) e2e/ui02.spec.ts:296:1 › UI02 unavailable WebGL preserves controls and real backend diagnosis ─
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('3D rendering unavailable. Simulation and evidence controls remain available.', { exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('3D rendering unavailable. Simulation and evidence controls remain available.', { exact: true }) with timeout 5000ms
+      - waiting for getByText('3D rendering unavailable. Simulation and evidence controls remain available.', { exact: true })
+
+
+      309 |       { exact: true },
+      310 |     ),
+    > 311 |   ).toBeVisible();
+          |     ^
+      312 |   await page.clock.install();
+      313 |   await page.getByLabel("Scenario", { exact: true }).selectOption("drop");
+      314 |   await page.getByRole("button", { name: "Start", exact: true }).click();
+        at /tmp/maintainai-gd02b5-2l5odjbx/frontend/e2e/ui02.spec.ts:311:5
+
+    Error Context: test-results/ui02-UI02-unavailable-WebG-4eb2a--and-real-backend-diagnosis/error-context.md
+
+
+(node:43720) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[55/61] e2e/ui03.spec.ts:15:3 › UI03 investigation across six scenarios at 1366
+[56/61] e2e/ui03.spec.ts:15:3 › UI03 investigation across six scenarios at 1280
+[57/61] e2e/ui03.spec.ts:15:3 › UI03 investigation across six scenarios at 390
+[58/61] e2e/ui03.spec.ts:228:1 › UI03 paused guide selection draws and releases a historical marker without domain side effects
+[59/61] e2e/ui03.spec.ts:460:1 › UI03 invalid backend FK suppresses spatial highlighting but keeps complete evidence
+[60/61] e2e/ui03.spec.ts:504:1 › UI03 WebGL unavailable retains selectable evidence and text inspector
+[61/61] e2e/ui03.spec.ts:536:1 › GD02A clears an ambiguous reference without retaining a stale historical marker
+  1 failed
+    e2e/ui02.spec.ts:296:1 › UI02 unavailable WebGL preserves controls and real backend diagnosis ──
+  60 passed (13.8m)

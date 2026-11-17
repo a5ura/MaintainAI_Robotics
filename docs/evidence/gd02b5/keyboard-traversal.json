@@ -1,0 +1,1172 @@
+{
+  "method": "Actual Tab/Shift+Tab/Enter/Escape only for every application action; no click or programmatic focus; existing simulation timers accelerated, not sought; keyboard focus outlines checked at targets; not a native screen-reader test",
+  "tabKeystrokes": 192,
+  "steps": [
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Skip to main content",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "M / MaintainAI ROBOTICSCell 01 / R-01",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Operations",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Diagnostics",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Maintenance",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Overview",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Inspection",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Reset View",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Start",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Reset",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "SELECT",
+      "name": "Scenario",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Start Guided Demo",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "INPUT",
+      "name": "Reproducible seed",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Full diagnostics & evidence",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "SELECT",
+      "name": "Playback mode",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Mute narration",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Replay narration",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Pause demo",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Reset demo",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Next",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Exit walkthrough",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "INPUT",
+      "name": "",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BODY",
+      "name": "Skip to main contentM / MaintainAI ROBOTICSCell 01 / R-01OperationsDiagnosticsMaintenanceS",
+      "documentFocused": false
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Skip to main content",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "M / MaintainAI ROBOTICSCell 01 / R-01",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Operations",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Diagnostics",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Maintenance",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Show focus area",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Show run controls",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Walkthrough controls",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Overview",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Inspection",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Reset View",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Start",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Reset",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Full diagnostics & evidence",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "SELECT",
+      "name": "Playback mode",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Mute narration",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Replay narration",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Pause demo",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Reset demo",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Previous",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Next",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Exit walkthrough",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "INPUT",
+      "name": "",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Create maintenance ticket",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Observation E3 at 3.0 seconds: post-pick · grip HOLD · Object at gripper PRESENT · vacuum 65 kPa · verification held · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Observation E6 at 6.0 seconds: transport · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Observation E7 at 7.0 seconds: transport · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Observation E8 at 8.0 seconds: pre-place · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Observation E9 at 9.0 seconds: pre-place · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification missing · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Observation E11 at 12.0 seconds: post-place · grip RELEASE · Object at gripper ABSENT · vacuum 0 kPa · verification missing · camera ok, acquired 12s, confidence 0.98 · observed placement explicitly absent (independent_sensor) · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Observation E6 at 6.0 seconds: transport · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Observation E7 at 7.0 seconds: transport · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "SUMMARY",
+      "name": "Insufficient vacuum / seal loss",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Supports E6 at 6.0 seconds: transport · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Supports E7 at 7.0 seconds: transport · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Supports E8 at 8.0 seconds: pre-place · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Supports E9 at 9.0 seconds: pre-place · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification missing · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "SUMMARY",
+      "name": "Premature release command",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Contradicts E6 at 6.0 seconds: transport · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Contradicts E7 at 7.0 seconds: transport · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Contradicts E8 at 8.0 seconds: pre-place · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Contradicts E9 at 9.0 seconds: pre-place · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification missing · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "SUMMARY",
+      "name": "Object sensor or verification error",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Contradicts E6 at 6.0 seconds: transport · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Contradicts E7 at 7.0 seconds: transport · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Contradicts E8 at 8.0 seconds: pre-place · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Contradicts E9 at 9.0 seconds: pre-place · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification missing · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Contradicts E11 at 12.0 seconds: post-place · grip RELEASE · Object at gripper ABSENT · vacuum 0 kPa · verification missing · camera ok, acquired 12s, confidence 0.98 · observed placement explicitly absent (independent_sensor) · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "E1 · 0.0spre-pick",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "E2 · 2.0spost-pick",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "E3 · 3.0spost-pick",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "E4 · 4.0stransport",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "E5 · 5.0stransport",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "E6 · 6.0stransport",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "E7 · 7.0stransport",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "E8 · 8.0spre-place",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "E9 · 9.0spre-place",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "E10 · 10.0spost-place",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "E11 · 12.0spost-place",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "DIV",
+      "name": "REF / TIMEPHASEGRIP COMMANDOBJECT AT GRIPPERVACUUMVERIFICATIONFK CHECK / JOINTS / TCPEVENT",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BODY",
+      "name": "Skip to main contentM / MaintainAI ROBOTICSCell 01 / R-01OperationsDiagnosticsMaintenanceS",
+      "documentFocused": false
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Skip to main content",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "M / MaintainAI ROBOTICSCell 01 / R-01",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Operations",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Diagnostics",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Maintenance",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Show focus area",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Show sensor strip",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Walkthrough controls",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Overview",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Inspection",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Reset View",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Reset",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Observation E3 at 3.0 seconds: post-pick · grip HOLD · Object at gripper PRESENT · vacuum 65 kPa · verification held · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Observation E6 at 6.0 seconds: transport · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Observation E7 at 7.0 seconds: transport · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Observation E8 at 8.0 seconds: pre-place · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Observation E9 at 9.0 seconds: pre-place · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification missing · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "SUMMARY",
+      "name": "More observations (2)",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Full diagnostics & evidence",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "SELECT",
+      "name": "Playback mode",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Mute narration",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Replay narration",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Pause demo",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Reset demo",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Previous",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Next",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Exit walkthrough",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "INPUT",
+      "name": "",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Create maintenance ticket",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Observation E3 at 3.0 seconds: post-pick · grip HOLD · Object at gripper PRESENT · vacuum 65 kPa · verification held · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Observation E6 at 6.0 seconds: transport · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Observation E7 at 7.0 seconds: transport · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Observation E8 at 8.0 seconds: pre-place · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Observation E9 at 9.0 seconds: pre-place · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification missing · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Observation E11 at 12.0 seconds: post-place · grip RELEASE · Object at gripper ABSENT · vacuum 0 kPa · verification missing · camera ok, acquired 12s, confidence 0.98 · observed placement explicitly absent (independent_sensor) · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Observation E6 at 6.0 seconds: transport · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Observation E7 at 7.0 seconds: transport · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "SUMMARY",
+      "name": "Insufficient vacuum / seal loss",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Supports E6 at 6.0 seconds: transport · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Supports E7 at 7.0 seconds: transport · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Supports E8 at 8.0 seconds: pre-place · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Supports E9 at 9.0 seconds: pre-place · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification missing · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "SUMMARY",
+      "name": "Premature release command",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Contradicts E6 at 6.0 seconds: transport · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Contradicts E7 at 7.0 seconds: transport · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Contradicts E8 at 8.0 seconds: pre-place · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Contradicts E9 at 9.0 seconds: pre-place · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification missing · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "SUMMARY",
+      "name": "Object sensor or verification error",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Contradicts E6 at 6.0 seconds: transport · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Contradicts E7 at 7.0 seconds: transport · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Contradicts E8 at 8.0 seconds: pre-place · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Contradicts E9 at 9.0 seconds: pre-place · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification missing · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Contradicts E11 at 12.0 seconds: post-place · grip RELEASE · Object at gripper ABSENT · vacuum 0 kPa · verification missing · camera ok, acquired 12s, confidence 0.98 · observed placement explicitly absent (independent_sensor) · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "E1 · 0.0spre-pick",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "E2 · 2.0spost-pick",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "E3 · 3.0spost-pick",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "E4 · 4.0stransport",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "E5 · 5.0stransport",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "E6 · 6.0stransport",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "E7 · 7.0stransport",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "E8 · 8.0spre-place",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "E9 · 9.0spre-place",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "E10 · 10.0spost-place",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "E11 · 12.0spost-place",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Inspect selected reading",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "View selected reading in workcell",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "DIV",
+      "name": "REF / TIMEPHASEGRIP COMMANDOBJECT AT GRIPPERVACUUMVERIFICATIONFK CHECK / JOINTS / TCPEVENT",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BODY",
+      "name": "Skip to main contentM / MaintainAI ROBOTICSCell 01 / R-01OperationsDiagnosticsMaintenanceS",
+      "documentFocused": false
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Skip to main content",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "M / MaintainAI ROBOTICSCell 01 / R-01",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Operations",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Diagnostics",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Maintenance",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Show focus area",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Show reading inspector",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Show workcell",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Walkthrough controls",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Overview",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Inspection",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Reset View",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Reset",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Clear Selection",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Observation E3 at 3.0 seconds: post-pick · grip HOLD · Object at gripper PRESENT · vacuum 65 kPa · verification held · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Observation E6 at 6.0 seconds: transport · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Observation E7 at 7.0 seconds: transport · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Observation E8 at 8.0 seconds: pre-place · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Observation E9 at 9.0 seconds: pre-place · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification missing · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "SUMMARY",
+      "name": "More observations (2)",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Full diagnostics & evidence",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "SELECT",
+      "name": "Playback mode",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Inspect E3 at 3.0 seconds: post-pick · grip HOLD · Object at gripper PRESENT · vacuum 65 kPa · verification held · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Inspect E6 at 6.0 seconds: transport · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Inspect E7 at 7.0 seconds: transport · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Inspect E8 at 8.0 seconds: pre-place · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification not sampled · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Inspect E9 at 9.0 seconds: pre-place · grip HOLD · Object at gripper ABSENT · vacuum 12 kPa · verification missing · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "A",
+      "name": "Inspect E11 at 12.0 seconds: post-place · grip RELEASE · Object at gripper ABSENT · vacuum 0 kPa · verification missing · camera ok, acquired 12s, confidence 0.98 · observed placement explicitly absent (independent_sensor) · controller running",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Mute narration",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Replay narration",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Pause demo",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Reset demo",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Previous",
+      "documentFocused": true
+    },
+    {
+      "key": "Tab",
+      "tag": "BUTTON",
+      "name": "Next",
+      "documentFocused": true
+    },
+    {
+      "key": "Shift+Tab",
+      "tag": "BUTTON",
+      "name": "Previous",
+      "documentFocused": true
+    },
+    {
+      "key": "Shift+Tab",
+      "tag": "BUTTON",
+      "name": "Reset demo",
+      "documentFocused": true
+    },
+    {
+      "key": "Shift+Tab",
+      "tag": "BUTTON",
+      "name": "Pause demo",
+      "documentFocused": true
+    },
+    {
+      "key": "Shift+Tab",
+      "tag": "BUTTON",
+      "name": "Replay narration",
+      "documentFocused": true
+    },
+    {
+      "key": "Shift+Tab",
+      "tag": "BUTTON",
+      "name": "Mute narration",
+      "documentFocused": true
+    },
+    {
+      "key": "Shift+Tab",
+      "tag": "BUTTON",
+      "name": "Create maintenance ticket",
+      "documentFocused": true
+    }
+  ],
+  "diagnosisPosts": 1,
+  "ticketPosts": 0,
+  "pageErrors": [],
+  "stages": [
+    "Introduction",
+    "Robot Operation",
+    "Fault Detection",
+    "Evidence Investigation",
+    "Diagnosis and Next Checks",
+    "Maintenance Handoff"
+  ],
+  "historicalSelectionCleared": true,
+  "dialogCancelled": true,
+  "focusRestored": true
+}
