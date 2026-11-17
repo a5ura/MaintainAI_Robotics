@@ -1,0 +1,206 @@
+{
+  "baseline": "6b603e2e515f64464355dc4b23c2b6b159ec13f6",
+  "method": "Fresh cloud recruiter-persona rehearsal of current production build; real wall clock; no virtual timers, speech mocks or production code changes. Narration deliberately muted via normal UI; native speech and hardware performance NOT TESTED. Includes agent reading/tool interaction time, not a human recruiter study.",
+  "browser": "154.0.8037.57",
+  "viewport": {
+    "width": 1366,
+    "height": 768
+  },
+  "renderer": {
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "vendor": "Google Inc. (Google)"
+  },
+  "loadSeconds": 1.565591482,
+  "durationSeconds": 202.324839143,
+  "actions": [
+    {
+      "command": "start",
+      "stage": "Introduction",
+      "seconds": 0.2423535780000002
+    },
+    {
+      "command": "focus",
+      "stage": "Introduction",
+      "seconds": 0.31304402800000025
+    },
+    {
+      "command": "read",
+      "stage": "Introduction",
+      "seconds": 0.502837257000001
+    },
+    {
+      "command": "next",
+      "stage": "Robot Operation",
+      "seconds": 40.249497852
+    },
+    {
+      "command": "focus",
+      "stage": "Robot Operation",
+      "seconds": 40.328219808
+    },
+    {
+      "command": "read",
+      "stage": "Robot Operation",
+      "seconds": 40.755431725
+    },
+    {
+      "command": "focus",
+      "stage": "Robot Operation",
+      "seconds": 79.359516102
+    },
+    {
+      "command": "read",
+      "stage": "Robot Operation",
+      "seconds": 79.49893543800002
+    },
+    {
+      "command": "next",
+      "stage": "Fault Detection",
+      "seconds": 79.566473317
+    },
+    {
+      "command": "focus",
+      "stage": "Fault Detection",
+      "seconds": 79.63182680599999
+    },
+    {
+      "command": "read",
+      "stage": "Fault Detection",
+      "seconds": 79.93281857500001
+    },
+    {
+      "command": "read",
+      "stage": "Fault Detection",
+      "seconds": 91.518561652
+    },
+    {
+      "command": "next",
+      "stage": "Evidence Investigation",
+      "seconds": 91.607926878
+    },
+    {
+      "command": "focus",
+      "stage": "Evidence Investigation",
+      "seconds": 91.64300680500001
+    },
+    {
+      "command": "reading",
+      "argument": "E6",
+      "stage": "Evidence Investigation",
+      "seconds": 91.965315745
+    },
+    {
+      "command": "reading",
+      "argument": "E5",
+      "stage": "Evidence Investigation",
+      "seconds": 114.74423896399999
+    },
+    {
+      "command": "reading",
+      "argument": "E11",
+      "stage": "Evidence Investigation",
+      "seconds": 114.837325079
+    },
+    {
+      "command": "clear",
+      "stage": "Evidence Investigation",
+      "seconds": 114.94647294
+    },
+    {
+      "command": "next",
+      "stage": "Diagnosis and Next Checks",
+      "seconds": 115.02384036400001
+    },
+    {
+      "command": "focus",
+      "stage": "Diagnosis and Next Checks",
+      "seconds": 115.045534689
+    },
+    {
+      "command": "candidates",
+      "stage": "Diagnosis and Next Checks",
+      "seconds": 115.35943498900001
+    },
+    {
+      "command": "read",
+      "stage": "Diagnosis and Next Checks",
+      "seconds": 156.931657381
+    },
+    {
+      "command": "next",
+      "stage": "Maintenance Handoff",
+      "seconds": 157.012819741
+    },
+    {
+      "command": "focus",
+      "stage": "Maintenance Handoff",
+      "seconds": 157.049035912
+    },
+    {
+      "command": "read",
+      "stage": "Maintenance Handoff",
+      "seconds": 157.237579917
+    },
+    {
+      "command": "create",
+      "stage": "Maintenance Handoff",
+      "seconds": 157.321233534
+    },
+    {
+      "command": "cancel",
+      "stage": "Maintenance Handoff",
+      "seconds": 201.398579478
+    },
+    {
+      "command": "create",
+      "stage": "Maintenance Handoff",
+      "seconds": 201.48440329299999
+    },
+    {
+      "command": "confirm",
+      "stage": "Maintenance Handoff",
+      "seconds": 201.772898439
+    },
+    {
+      "command": "view",
+      "stage": "Saved Maintenance record",
+      "seconds": 202.22843611300001
+    },
+    {
+      "command": "finish",
+      "stage": "Saved Maintenance record",
+      "seconds": 202.324839143
+    }
+  ],
+  "diagnosisPosts": 1,
+  "ticketPosts": 1,
+  "ticketCountBefore": 1,
+  "ticketCountAfter": 2,
+  "ticket": {
+    "id": "T-b0843fe5fae759fc97d6a2f4a59c0247",
+    "equipment_id": "R-01",
+    "diagnosis_id": "D-973774d225afd7785d537ddd",
+    "title": "Guided demo — Dropped object",
+    "description": "Synthetic guided demonstration. Object lost between pick and place; root cause remains a hypothesis.\nDropped object · seed 42 · page-session run 1\nNo operator verification or repair has been recorded by this walkthrough.",
+    "status": "Open",
+    "resolution_notes": "",
+    "version": 1,
+    "created_at": "2026-11-17T04:30:44.587509+00:00",
+    "updated_at": "2026-11-17T04:30:44.587509+00:00"
+  },
+  "diagnosisId": "D-973774d225afd7785d537ddd",
+  "history": [
+    {
+      "seq": 3,
+      "ticket_id": "T-b0843fe5fae759fc97d6a2f4a59c0247",
+      "at": "2026-11-17T04:30:44.587509+00:00",
+      "kind": "created",
+      "body": "Open — Guided demo — Dropped object"
+    }
+  ],
+  "pageErrors": [],
+  "requestsOutsideTestOrigin": [],
+  "savedTicketNavigationVerified": true,
+  "nativeSpeech": "NOT TESTED",
+  "windowsGPU": "NOT TESTED"
+}
