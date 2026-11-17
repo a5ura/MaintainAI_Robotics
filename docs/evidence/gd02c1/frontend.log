@@ -1,0 +1,54 @@
+
+> maintainai-robotics@0.1.0 test
+> vitest run
+
+
+ RUN  v3.1.3 /workspace/MaintainAI_Robotics/frontend
+
+ ✓ src/Maintenance.test.tsx (10 tests) 1740ms
+   ✓ loads another incident page using the last record cursor  899ms
+ ✓ src/GuidedVisuals.test.tsx (24 tests) 395ms
+ ✓ src/ticketReports.test.tsx (20 tests) 1976ms
+   ✓ downloads complete saved diagnosis/evidence and all 450 history events, with public fields only  1049ms
+   ✓ preserves every unsaved form draft and status while exporting saved records  431ms
+ ✓ src/useGuideNarration.test.tsx (21 tests) 79ms
+ ✓ src/GuidedFlow.test.tsx (9 tests) 2850ms
+   ✓ complete Manual walkthrough and repeated visits never create tickets or replay run actions  1317ms
+   ✓ Diagnostics exits consistently, preserving available results and allowing the unchanged manual form  349ms
+ ✓ src/ConfirmedHandoff.test.tsx (22 tests) 227ms
+ ✓ src/Investigation.test.tsx (8 tests) 1305ms
+   ✓ exposes workcell clearing for resolved and unresolved references without changing diagnosis or candidates  387ms
+ ✓ src/useGuidedDemo.test.tsx (7 tests) 183ms
+ ✓ src/evidenceSelection.test.tsx (9 tests) 81ms
+ ✓ src/InvestigationSummary.test.tsx (10 tests) 428ms
+ ✓ src/App.test.tsx (3 tests) 783ms
+   ✓ Start, Pause, Reset preserve simulation lifecycle  408ms
+ ✓ src/EvidenceReferences.test.tsx (3 tests) 205ms
+ ✓ src/GuidedBanner.test.tsx (2 tests) 303ms
+ ✓ src/DiagnosticDetails.test.tsx (1 test) 280ms
+stderr | src/Workcell.test.tsx
+WARNING: Multiple instances of Three.js being imported.
+
+ ✓ src/Workcell.test.tsx (3 tests) 362ms
+ ✓ src/workcellVisual.test.tsx (21 tests) 3854ms
+   ✓ both camera presets frame the full existing sweep at desktop and mobile aspects  3768ms
+ ✓ src/guideNarration.test.ts (15 tests) 16ms
+ ✓ src/model.test.tsx (8 tests) 1007ms
+   ✓ kinematic integrity > is deterministic, bounded and continuous  431ms
+   ✓ kinematic integrity > respects documented speed and acceleration bounds  370ms
+ ✓ src/guided.test.ts (5 tests) 7ms
+ ✓ src/scenarios.test.ts (9 tests) 115ms
+ ✓ src/engineering.test.ts (3 tests) 321ms
+   ✓ every frame transform matches independent Three.js world transforms  303ms
+ ✓ src/api.test.ts (2 tests) 12ms
+
+ Test Files  22 passed (22)
+      Tests  215 passed (215)
+   Start at  03:22:05
+   Duration  45.89s (transform 1.23s, setup 0ms, collect 7.87s, tests 16.53s, environment 10.68s, prepare 3.18s)
+
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

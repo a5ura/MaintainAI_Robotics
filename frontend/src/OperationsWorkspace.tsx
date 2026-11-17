@@ -149,11 +149,11 @@ export default function OperationsWorkspace({
           aria-label="Simulation controls"
         >
           <button
-            className="primary"
+            className={guideActive ? undefined : "primary"}
             onClick={onStart}
             disabled={clock.running || clock.t >= endTime(scenario)}
           >
-            Start
+            {guideActive ? "Start manually (exit walkthrough)" : "Start"}
           </button>
           <button onClick={onPause} disabled={!clock.running}>
             Pause

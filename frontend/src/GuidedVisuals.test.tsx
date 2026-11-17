@@ -10,6 +10,7 @@ import {
 import "@testing-library/jest-dom/vitest";
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
 import GuidedVisuals from "./GuidedVisuals";
+import { guideNarrationCue, type NarrationSnapshot } from "./guideNarration";
 import { initialGuide, GUIDE_STAGES, type ActiveGuide } from "./guided";
 import { GUIDE_TARGETS } from "./guideTargets";
 import { visibleTarget, useGuideVisuals } from "./useGuideVisuals";
@@ -321,4 +322,66 @@ it("inactive guidance exposes no empty status role that competes with maintenanc
   expect(screen.getByRole("status")).toHaveTextContent("Introduction");
   rerender(<GuidedVisuals state={null} />);
   expect(screen.queryByRole("status")).toBeNull();
+});
+
+it.each([undefined, "submitting", "success", "rejected", "uncertain"] as const)(
+  "Stage 6 visual and accessible guidance reuse the actual %s narration explanation",
+  (phase) => {
+    target("maintenance-handoff");
+    const state = { ...initialGuide(1), stage: "maintenance-handoff" as const };
+    const handoff: NarrationSnapshot["handoff"] = phase
+      ? { phase, ticketId: phase === "success" ? "T-actual-result" : undefined }
+      : undefined;
+    const cue = guideNarrationCue({
+      state,
+      t: 12,
+      result: null,
+      backendError: "",
+      handoff,
+    })!;
+    render(<GuidedVisuals state={state} handoffExplanation={cue.text} />);
+    frame();
+    expect(
+      screen.getByRole("navigation", { name: "Guided visual navigation" }),
+    ).toHaveTextContent(cue.text);
+    expect(screen.getByRole("status")).toHaveTextContent(cue.text);
+    expect(screen.queryByText(/future confirmation/)).toBeNull();
+    if (phase === "success")
+      expect(screen.getByRole("status")).toHaveTextContent("T-actual-result");
+    else
+      expect(screen.getByRole("status")).not.toHaveTextContent(
+        "T-actual-result",
+      );
+  },
+);
+it("submission copy updates do not restart guidance, scroll or steal focus", () => {
+  target("maintenance-handoff");
+  const state = { ...initialGuide(1), stage: "maintenance-handoff" as const };
+  const { rerender } = render(
+    <GuidedVisuals state={state} handoffExplanation="Awaiting confirmation" />,
+  );
+  frame();
+  act(() => window.dispatchEvent(new Event("scrollend")));
+  const control = screen.getByRole("button", { name: "Walkthrough controls" });
+  control.focus();
+  rerender(
+    <GuidedVisuals state={state} handoffExplanation="Ticket T-result saved" />,
+  );
+  frame();
+  expect(scrollTo).toHaveBeenCalledTimes(1);
+  expect(control).toHaveFocus();
+  expect(screen.getByRole("status")).toHaveTextContent("Ticket T-result saved");
+});
+it("handoff copy cannot leak into other stages", () => {
+  target("workcell");
+  render(
+    <GuidedVisuals
+      state={initialGuide(1)}
+      handoffExplanation="An earlier ticket was saved"
+    />,
+  );
+  expect(screen.getByRole("status")).toHaveTextContent(
+    GUIDE_TARGETS.introduction.why,
+  );
+  expect(screen.getByRole("status")).not.toHaveTextContent("An earlier ticket");
 });

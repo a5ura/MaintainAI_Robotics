@@ -46,7 +46,7 @@ export const GUIDE_TARGETS: Record<
     title: "Maintenance Handoff",
     primary: "maintenance-handoff",
     secondary: [],
-    why: "This walkthrough ends with an explanation of future confirmation. No maintenance ticket is created.",
+    why: "Ticket creation is available after reviewing the handoff and explicitly confirming it. Reaching this stage does not create a ticket.",
   },
 };
 export const TARGET_LABELS: Record<GuideTarget, string> = {

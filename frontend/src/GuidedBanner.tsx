@@ -201,6 +201,7 @@ export default function GuidedBanner({
           Previous
         </button>
         <button
+          className="primary"
           onClick={onNext}
           disabled={
             state.paused ||
