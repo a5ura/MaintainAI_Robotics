@@ -1,5 +1,9 @@
 # MaintainAI Robotics — Project 2 V1
 
+## Authorized V2 M0 boundary — November 17, 2026
+
+The owner authorized only the bounded V2 M0 assignment in [docs/v2/M0_ASSIGNMENT.md](docs/v2/M0_ASSIGNMENT.md), including its scope overlay over historical V2 deferrals. See [V2 context](docs/v2/README.md), [decisions](docs/v2/DECISIONS.md), and the [M0 completion report](docs/v2/M0_COMPLETION_REPORT.md). This checkpoint is PARTIAL-BLOCKED at native Linux/ROS execution preflight; no V2 implementation or native recording is complete. Preserve all V1 rules and protected files, the $0 budget, and the prohibition on V1 database/provider access. Do not merge, deploy, or start M1.
+
 ## Current pre-B.2 checkpoint — November 11, 2026 (America/New_York)
 
 PRs #1–9 are merged. Verified `origin/main` baseline: `a915cae8cae3b6fd4deb46f2b9c7729f41ebafa4` (PR #9), including saved per-ticket JSON/Markdown exports in `1f972b0`. Complete evidence/history, captured-version checks and draft preservation are implemented; see [export acceptance](docs/TICKET_EXPORTS_ACCEPTANCE.md). Earlier statements that exports are missing or PR #9 is unmerged describe historical checkpoints.

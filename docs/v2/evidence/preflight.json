@@ -1,0 +1,199 @@
+{
+  "date_local": "2026-11-17",
+  "timezone": "America/New_York",
+  "verdict": "PARTIAL-BLOCKED",
+  "execution": {
+    "interface": "Codex Desktop",
+    "host": "local Windows AMD64",
+    "initial_workspace": "C:\\Users\\gowth\\Documents\\MaintainAI_Robotics_Project2_V2_Coding",
+    "isolated_checkout": "C:\\Users\\gowth\\Documents\\MaintainAI_Robotics_Project2_V2_Coding\\repository",
+    "checkout_type": "separate clone; managed create_worktree did not complete/register and waiting call was terminated",
+    "os_powershell_api": "10.0.26200",
+    "os_python_api": "10.0.26100-SP0",
+    "os_api_discrepancy_retained": true,
+    "powershell": "7.6.9 Core",
+    "cpu": "Intel Core i7-8750H CPU @ 2.20GHz",
+    "logical_processors": 12,
+    "ram_sample_method": "Windows GlobalMemoryStatusEx via Python ctypes; delegated read-only preflight",
+    "ram_total_bytes": 16962461696,
+    "ram_available_bytes_at_sample": 4983259136,
+    "task_quotas": null,
+    "python": "3.8.3 64-bit",
+    "py_list": "only Python 3.8",
+    "pip": "25.0.1",
+    "pytest": "7.4.3",
+    "node": "v24.19.0",
+    "git": "2.42.0.windows.1",
+    "ros_distribution": null,
+    "rmw": null,
+    "native_recorder": null,
+    "native_reader": null,
+    "mcap_plugin": null
+  },
+  "git": {
+    "repository": "https://github.com/a5ura/MaintainAI_Robotics.git",
+    "approved_base": "f4cbad8565cd4ca3c8da617783b53f62900f6ee4",
+    "fetched_main": "f4cbad8565cd4ca3c8da617783b53f62900f6ee4",
+    "merge_base": "f4cbad8565cd4ca3c8da617783b53f62900f6ee4",
+    "base_tree": "e82b722679751420975a9b599cb100c94d92f00c",
+    "branch": "feature/v2-m0-evidence-ingestion",
+    "initial_m0_head": "f4cbad8565cd4ca3c8da617783b53f62900f6ee4",
+    "original_v1_head": "7f3fe387142cd71973fbe33af2031b83a31d513a",
+    "original_v1_untracked_files": 4,
+    "remote_branch_search_before_creation": "No v2-m0 match in GitHub search or git ls-remote",
+    "main_advanced": false,
+    "managed_worktree_registered": false,
+    "v1_worktree_reset_or_stashed": false
+  },
+  "paths_assessed": [
+    {
+      "path": "existing local Linux/container runtime",
+      "status": "BLOCKED",
+      "commands": [
+        "Get-Command ros2,docker,podman,wsl,gh -ErrorAction SilentlyContinue",
+        "wsl --list --verbose"
+      ],
+      "result": "ros2/docker/podman/gh not discoverable. wsl.exe present; wsl --list --verbose exit 1: The Windows Subsystem for Linux is not installed.",
+      "installation_attempted": false,
+      "reason_no_install": "Assignment excludes host WSL/Docker/ROS installation and persistent configuration changes."
+    },
+    {
+      "path": "existing managed Linux execution",
+      "status": "BLOCKED",
+      "commands": [
+        "list_cloud_environments({})",
+        "tool inventory for active cloud status/shell/attachment"
+      ],
+      "result": "Saved runnable Default and MaintainAI_Robotics configurations listed. No active cloud shell/environment_status/attach-execution tool exposed to this chat. Saved configuration is not evidence of an executing Linux computer.",
+      "new_thread_or_resource_created": false,
+      "ros_setup_attempted": false
+    }
+  ],
+  "network": [
+    {
+      "client": "sandboxed local Python urllib.request.urlopen(timeout=12)",
+      "url": "https://pypi.org/simple/",
+      "result": "URLError <urlopen error [Errno 11001] getaddrinfo failed>"
+    },
+    {
+      "client": "sandboxed local Python urllib.request.urlopen(timeout=12)",
+      "url": "https://packages.ros.org/ros2/ubuntu/dists/noble/Release",
+      "result": "URLError <urlopen error [Errno 11001] getaddrinfo failed>"
+    },
+    {
+      "client": "sandboxed local Python urllib.request.urlopen(timeout=12)",
+      "url": "https://github.com/ros2/rosbag2",
+      "result": "URLError <urlopen error [Errno 11001] getaddrinfo failed>"
+    },
+    {
+      "client": "escalated Git HTTPS",
+      "operation": "fetch origin main; clone --no-checkout",
+      "result": "PASS"
+    },
+    {
+      "client": "connected GitHub",
+      "operation": "fetch main ref and required repository files; branch search",
+      "result": "PASS"
+    }
+  ],
+  "observation_limits": [
+    "CIM OS/CPU queries denied: Access to a CIM resource was not available to the client. CPU registry and memory API used instead.",
+    "No global network or ROS package incompatibility conclusion follows from sandboxed DNS probes.",
+    "No actual Linux OS/ROS compatibility selection or dependency/license validation was performed.",
+    "No GPU, live journal collector, physical robot, or hosted service was tested.",
+    "Included-access allowance/account balances unknown."
+  ],
+  "attachment": {
+    "source_path": "C:\\Users\\gowth\\Documents\\MaintainAI_Robotics_V2_M0_Codex_Assignment.md",
+    "original_sha256": "8c59319b096453f3387de2a14871700b6c0f5e6580364e3ae1c6f13bfd836b55",
+    "original_bytes": 139562,
+    "committed_path": "docs/v2/M0_ASSIGNMENT.md",
+    "normalized_sha256": "df2d43aa6d2f82a0ae8b2612dd0762daca93a97358b565b09554ff7abc834837",
+    "normalized_bytes": 139520,
+    "line_count": 1233,
+    "method": "UTF-8; preserve full wording and appendices; normalize line endings to LF and strip trailing whitespace only"
+  },
+  "required_context_read": {
+    "root": "Read complete assignment including Appendices A/B/C; repository AGENTS.md, docs/PRD.md and docs/ARCHITECTURE.md at approved base",
+    "delegated": "Read complete docs/DEVELOPMENT_STATUS.md, docs/GD02C1_COMPLETION_REPORT.md, docs/GD02C2_WINDOWS_ACCEPTANCE_REPORT.md, docs/PRE_B2_FINAL_HOSTING_VERIFICATION.md at approved base",
+    "historical_results_reused_as_fresh": false
+  },
+  "scope": {
+    "source_implementation": false,
+    "native_capture": false,
+    "schema_cli_adapters": false,
+    "package_installations": 0,
+    "source_fixtures": 0,
+    "capture_import_measurements": null,
+    "env_files_loaded": false,
+    "provider_credentials_requested": false,
+    "v1_database_access": false,
+    "provider_deployment_billing_changes": false,
+    "purchased_credits_or_compute": false,
+    "merge": false,
+    "m1_started": false
+  },
+  "reproduction_preflight_commands": [
+    "$PSVersionTable",
+    "Get-CimInstance Win32_OperatingSystem",
+    "Get-CimInstance Win32_Processor",
+    "[System.Environment]::ProcessorCount",
+    "Get-Command python,python3,py,node,git,ros2,docker,podman,wsl,gh -ErrorAction SilentlyContinue",
+    "python --version",
+    "py --list",
+    "python -m pip --version",
+    "python -m pytest --version",
+    "node --version",
+    "git --version",
+    "wsl --list --verbose",
+    "Get-ItemProperty -LiteralPath 'HKLM:\\HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0' -Name ProcessorNameString",
+    "git fetch origin main",
+    "git rev-parse HEAD",
+    "git worktree list --porcelain",
+    "git ls-remote --heads origin feature/v2-m0*"
+  ],
+  "ram_reproduction_python": "import ctypes\nclass MemoryStatus(ctypes.Structure):\n    _fields_ = [('dwLength', ctypes.c_ulong), ('dwMemoryLoad', ctypes.c_ulong), ('ullTotalPhys', ctypes.c_ulonglong), ('ullAvailPhys', ctypes.c_ulonglong), ('ullTotalPageFile', ctypes.c_ulonglong), ('ullAvailPageFile', ctypes.c_ulonglong), ('ullTotalVirtual', ctypes.c_ulonglong), ('ullAvailVirtual', ctypes.c_ulonglong), ('ullAvailExtendedVirtual', ctypes.c_ulonglong)]\nm = MemoryStatus()\nm.dwLength = ctypes.sizeof(m)\nassert ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(m))\nprint(m.ullTotalPhys, m.ullAvailPhys)\n",
+  "resume_verification": {
+    "checked_at_utc": "2026-11-17T17:38:28.811820+00:00",
+    "requested_head": "fa7ceda87e4950013ddbb8ed823bf3f23fa66d2a",
+    "local_and_remote_initial_head_match": true,
+    "clean_start": true,
+    "fetched_main": "f4cbad8565cd4ca3c8da617783b53f62900f6ee4",
+    "merge_base": "f4cbad8565cd4ca3c8da617783b53f62900f6ee4",
+    "powershell_host": "Win32NT 10.0.26200.0",
+    "javascript_host_probe": {
+      "command": "var os = await import('node:os'); nodeRepl.write({platform:os.platform(),release:os.release(),arch:os.arch(),cwd:nodeRepl.cwd});",
+      "platform": "win32",
+      "release": "10.0.26200",
+      "arch": "x64",
+      "cwd": "C:\\Users\\gowth\\Documents\\MaintainAI_Robotics_Project2_V2_Coding"
+    },
+    "command_discovery": {
+      "command": "Get-Command bash,wsl,docker,podman,ros2,ssh -ErrorAction SilentlyContinue",
+      "found": [
+        "wsl.exe",
+        "ssh.exe"
+      ],
+      "not_found": [
+        "bash",
+        "docker",
+        "podman",
+        "ros2"
+      ]
+    },
+    "wsl_probe": {
+      "command": "wsl --list --verbose",
+      "message": "The Windows Subsystem for Linux is not installed."
+    },
+    "saved_cloud_configuration": "MaintainAI_Robotics still listed ready/runnable; not an attached execution host",
+    "active_linux_shell_tool_available": false,
+    "linux_commands_executed": false,
+    "supported_ros_runtime_established": false,
+    "new_cloud_chat_or_resource_created": false,
+    "installation_or_package_attempts": 0,
+    "implementation_expanded": false,
+    "application_checks_rerun": false,
+    "verdict": "PARTIAL-BLOCKED",
+    "required_next_input": "Execution access to an existing disposable Linux environment; no additional product authorization required."
+  }
+}

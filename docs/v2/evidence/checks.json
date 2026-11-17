@@ -1,0 +1,62 @@
+{
+  "results": [
+    {
+      "name": "backend-check",
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "backend/tests",
+        "-q",
+        "--basetemp",
+        "C:\\Users\\gowth\\Documents\\MaintainAI_Robotics_Project2_V2_Coding\\.m0-output\\pytest"
+      ],
+      "exit_code": 4,
+      "elapsed_seconds": 0.7412406,
+      "log": "backend-check.txt"
+    },
+    {
+      "name": "frontend-test",
+      "command": [
+        "npm.cmd",
+        "--prefix",
+        "frontend",
+        "test"
+      ],
+      "exit_code": 1,
+      "elapsed_seconds": 4.7103728,
+      "log": "frontend-test.txt"
+    },
+    {
+      "name": "frontend-build",
+      "command": [
+        "npm.cmd",
+        "--prefix",
+        "frontend",
+        "run",
+        "build"
+      ],
+      "exit_code": 1,
+      "elapsed_seconds": 1.2218427000000007,
+      "log": "frontend-build.txt"
+    }
+  ],
+  "guard_database_created": false,
+  "fresh_execution": true,
+  "package_installations": 0,
+  "document_checks": {
+    "protected_git_content_matches": "580/580",
+    "historical_agents_text_preserved": true,
+    "evidence_json_parses": "3/3",
+    "missing_relative_markdown_targets": 0,
+    "normalized_assignment_copy_complete": true,
+    "git_diff_cached_check_exit_code": 0,
+    "git_diff_base_check_exit_code": 0,
+    "exact_changed_file_count": 11,
+    "pr_number": 25,
+    "pr_draft": true,
+    "pr_state": "open",
+    "pr_merged": false,
+    "application_regressions_passed": false
+  }
+}

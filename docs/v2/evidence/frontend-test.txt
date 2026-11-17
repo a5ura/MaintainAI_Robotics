@@ -1,0 +1,10 @@
+Command: npm.cmd --prefix frontend test
+Exit code: 1
+Elapsed seconds: 4.710373
+
+
+> maintainai-robotics@0.1.0 test
+> vitest run
+
+'vitest' is not recognized as an internal or external command,
+operable program or batch file.

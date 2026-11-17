@@ -1,0 +1,10 @@
+Command: npm.cmd --prefix frontend run build
+Exit code: 1
+Elapsed seconds: 1.221843
+
+
+> maintainai-robotics@0.1.0 build
+> tsc -b && vite build
+
+'tsc' is not recognized as an internal or external command,
+operable program or batch file.
